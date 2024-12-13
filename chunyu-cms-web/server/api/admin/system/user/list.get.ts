@@ -1,0 +1,9 @@
+import { UserServices } from '~/server/services/admin/system/user/user.services';
+
+const userServices = new UserServices();
+
+export default defineEventHandler(async event => {
+  const query = getQuery(event);
+  const data = await userServices.list(query);
+  return createApiResponse(data);
+});
