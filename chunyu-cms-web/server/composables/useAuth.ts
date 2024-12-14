@@ -1,6 +1,7 @@
 import * as jwt from 'jsonwebtoken';
-import { H3Event, use } from 'h3';
+import { H3Event } from 'h3';
 import { AuthServices } from '~/server/services/admin/auth/auth.services';
+import { USER_PERMISSIONS_KEY } from '~/server/contants/redis.contant';
 
 interface resp {
   userId: number;
@@ -9,6 +10,7 @@ interface resp {
 }
 
 export function useAuth(event: H3Event) {
+  // 验证token
   async function verification(): Promise<resp> {
     const token = getHeader(event, 'authorization');
     if (!token) {
@@ -24,7 +26,26 @@ export function useAuth(event: H3Event) {
     }
   }
 
+  /**
+   * 验证用户是否有权限
+   * @param permission
+   */
+  async function validatePermission(permission: string) {
+    if (permission) {
+      const { userId } = await verification();
+      const userPermission = (await useStorage('redis').getItem(`${USER_PERMISSIONS_KEY}:${userId}`)) as string[];
+      if (userPermission.includes('*:*:*')) {
+        // 超级管理员
+      } else if (userPermission.includes(permission)) {
+        // 通过
+      } else {
+        throw createError({ statusCode: 403, message: '无权限' });
+      }
+    }
+  }
+
   return {
-    verification
+    verification,
+    validatePermission
   };
 }

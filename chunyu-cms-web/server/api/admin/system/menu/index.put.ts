@@ -3,6 +3,8 @@ import { MenuServices } from '~/server/services/admin/system/menu/menu.service';
 const menuServices = new MenuServices();
 
 export default defineEventHandler(async event => {
+  // 验证权限
+  await event.context.validatePermission('system:menu:edit');
   const body = await readBody(event);
   if (!body.menuId) {
     throw createError({

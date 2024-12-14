@@ -45,6 +45,20 @@ export class ExcelServices {
       const element = list[index];
       const inArr = optionArr.map(option => {
         let dataItem = element[option.propertyKey];
+        // 处理‘role.roleName的格式情况’
+        if (typeof option.propertyKey === 'string' && option.propertyKey.includes('.')) {
+          const keys = option.propertyKey.split('.');
+          let current = element;
+          for (const key of keys) {
+            if (current[key] === undefined) {
+              // 如果中间某个属性不存在，可根据需求进行处理，这里简单返回undefined
+              dataItem = undefined;
+              break;
+            }
+            current = current[key];
+          }
+          dataItem = current;
+        }
         if (option.dateFormat) {
           dataItem = dayjs(dataItem).format(option.dateFormat);
         }

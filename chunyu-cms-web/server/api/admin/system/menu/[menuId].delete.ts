@@ -4,6 +4,8 @@ const menuServices = new MenuServices();
 
 /* 删除菜单 */
 export default defineEventHandler(async event => {
+  // 验证权限
+  await event.context.validatePermission('system:menu:remove');
   const menuId = getRouterParam(event, 'menuId');
   if (!menuId) {
     throw createError({

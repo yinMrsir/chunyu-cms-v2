@@ -4,9 +4,9 @@ import { useAuth } from '../composables/useAuth';
 const noVerificationRouters = ['/api/admin/login', '/api/admin/logout', '/api/admin/captchaImage'];
 
 export default defineEventHandler(async event => {
+  const auth = useAuth(event);
   if (!noVerificationRouters.includes(event.path)) {
-    const auth = useAuth(event);
-    const user = await auth.verification();
-    event.context.user = user;
+    event.context.user = await auth.verification();
   }
+  event.context.validatePermission = auth.validatePermission;
 });
