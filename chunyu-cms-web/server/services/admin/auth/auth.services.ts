@@ -3,35 +3,40 @@ import { Storage } from 'unstorage';
 import { CAPTCHA_IMG_KEY, USER_TOKEN_KEY, USER_VERSION_KEY } from '~/server/contants/redis.contant';
 import { UserServices } from '~/server/services/admin/system/user/user.services';
 import { SharedServices } from '~/server/services/admin/share/shared.services';
+import { LogServices } from '~/server/services/admin/monitor/log/log.services';
 
 export class AuthServices {
   private userServices: UserServices;
   private shareServices: SharedServices;
   private redis: Storage<string | number>;
+  private logServices: any;
   constructor() {
     this.userServices = new UserServices();
     this.shareServices = new SharedServices();
+    this.logServices = new LogServices();
     this.redis = useStorage('redis');
   }
 
   /* 判断验证码是否正确 */
-  async checkImgCaptcha(uuid: string, code: string) {
+  async checkImgCaptcha(uuid: string, code: string, { headers, user }: any) {
     const key = `${CAPTCHA_IMG_KEY}:${uuid}`;
     const result: number | string | null = await useStorage('redis').getItem(key);
     if (!lodash.isEmpty(result) || code.toLowerCase() !== String(result).toLowerCase()) {
+      await this.logServices.addLoginInfo({ headers, user }, '验证码错误');
       throw createError({ statusCode: 400, message: '验证码错误' });
     }
     await useStorage('redis').removeItem(key);
   }
 
   /* 判断用户账号密码是否正确 */
-  async validateUser(username: string, password: string) {
+  async validateUser(username: string, password: string, headers: any) {
     const user = await this.userServices.findOneByUsername(username);
     if (!user) {
       throw createError({ statusCode: 400, message: '用户不存在' });
     }
     const comparePassword = this.shareServices.md5(password + user.salt);
     if (comparePassword !== user.password) {
+      await this.logServices.addLoginInfo({ headers, user }, '密码错误');
       throw createError({ statusCode: 400, message: '密码错误' });
     }
     return user;

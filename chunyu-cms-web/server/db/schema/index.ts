@@ -1,4 +1,3 @@
-import * as newsSchema from './news';
 import * as userSchema from './system/user';
 import * as deptSchema from './system/dept';
 import * as dictSchema from './system/dict';
@@ -8,9 +7,9 @@ import * as roleToMenuSchema from './system/roleToMenu';
 import * as userToRoleSchema from './system/userToRole';
 import * as postSchema from './system/post';
 import * as userToPostSchema from './system/userToPost';
+import * as loginInfoSchema from './monitor/log/logininfo';
 
 export default {
-  ...newsSchema,
   ...userSchema,
   ...deptSchema,
   ...dictSchema,
@@ -19,5 +18,6 @@ export default {
   ...roleToMenuSchema,
   ...userToRoleSchema,
   ...postSchema,
-  ...userToPostSchema
+  ...userToPostSchema,
+  ...loginInfoSchema
 };

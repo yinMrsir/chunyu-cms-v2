@@ -17,6 +17,7 @@ import { SharedServices } from '~/server/services/admin/share/shared.services';
 import { UserServices } from '~/server/services/admin/system/user/user.services';
 import { MenuServices } from '~/server/services/admin/system/menu/menu.service';
 import { AuthServices } from '~/server/services/admin/auth/auth.services';
+import { LogServices } from '~/server/services/admin/monitor/log/log.services';
 
 export class LoginServices {
   private userServices: UserServices;
@@ -24,11 +25,13 @@ export class LoginServices {
   private menuServices: MenuServices;
   private authServices: AuthServices;
   private redis: Storage<string | number | null>;
+  private logServices: LogServices;
   constructor() {
     this.sharedServices = new SharedServices();
     this.userServices = new UserServices();
     this.menuServices = new MenuServices();
     this.authServices = new AuthServices();
+    this.logServices = new LogServices();
     this.redis = useStorage('redis');
   }
 
@@ -55,15 +58,24 @@ export class LoginServices {
     }
   }
 
-  async login(username: string, password: string) {
+  async login(username: string, password: string, headers: any) {
     try {
-      const user = await this.authServices.validateUser(username, password);
+      const user = await this.authServices.validateUser(username, password, headers);
       const payload = { userId: user.userId, userName: user.userName, pv: 1 };
       const token = (jwt as any).default.sign(payload, useRuntimeConfig().jwt.secret, { expiresIn: '1d' });
       // 存储密码版本号，防止登录期间 密码被管理员更改后 还能继续登录
       await this.redis.setItem(`${USER_VERSION_KEY}:${user.userId}`, 1);
       // 存储token, 防止重复登录问题，设置token过期时间(1天后 token 自动过期)，以及主动注销token。
       await this.redis.setItem(`${USER_TOKEN_KEY}:${user.userId}`, token, { ex: 60 * 60 * 24 });
+      // 调用存储在线用户接口
+      await this.logServices.addLoginInfo(
+        {
+          headers,
+          user
+        },
+        '登录成功',
+        `${USER_TOKEN_KEY}:${user.userId}`
+      );
       return { token };
     } catch (error) {
       throw createError({ statusCode: 400, message: String(error) });

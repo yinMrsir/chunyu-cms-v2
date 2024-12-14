@@ -56,7 +56,7 @@ export class SharedServices {
   }
 
   /* 获取请求IP */
-  getReqIP(req: Request): string {
+  getReqIP(req: any): string {
     return (
       // 判断是否有反向代理 IP
       (

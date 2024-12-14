@@ -50,7 +50,7 @@
          </el-form-item>
       </el-form>
 
-      <el-row :gutter="10" class="mb8">
+<!--      <el-row :gutter="10" class="mb8">
          <el-col :span="1.5">
             <el-button
                type="danger"
@@ -90,10 +90,10 @@
             >导出</el-button>
          </el-col>
          <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
-      </el-row>
+      </el-row>-->
 
       <el-table ref="logininforRef" v-loading="loading" :data="logininforList" @selection-change="handleSelectionChange" :default-sort="defaultSort" @sort-change="handleSortChange">
-         <el-table-column type="selection" width="55" align="center" />
+<!--         <el-table-column type="selection" width="55" align="center" />-->
          <el-table-column label="访问编号" align="center" prop="infoId" />
          <el-table-column label="用户名称" align="center" prop="userName" :show-overflow-tooltip="true" sortable="custom" :sort-orders="['descending', 'ascending']" />
          <el-table-column label="地址" align="center" prop="ipaddr" :show-overflow-tooltip="true" />
@@ -155,8 +155,8 @@ const queryParams = ref({
 function getList(sort = {}) {
   loading.value = true;
   list(proxy.addDateRange(queryParams.value, dateRange.value)).then(response => {
-    logininforList.value = response.rows;
-    total.value = response.total;
+    logininforList.value = response.data.rows;
+    total.value = response.data.total;
     loading.value = false;
   });
 }

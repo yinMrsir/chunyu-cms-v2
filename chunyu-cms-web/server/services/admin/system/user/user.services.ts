@@ -27,6 +27,9 @@ export class UserServices {
         password: true,
         salt: true
       },
+      with: {
+        dept: true
+      },
       where: (userTable, { eq, and }) =>
         and(eq(userTable.userName, username), eq(userTable.status, '0'), eq(userTable.delFlag, '0'))
     });
