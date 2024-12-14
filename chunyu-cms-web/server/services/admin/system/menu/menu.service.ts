@@ -135,7 +135,7 @@ export class MenuServices {
     return menuArr.map(menu => menu.menuId);
   }
 
-  // 假设这是在某个类中，this.db是已经初始化好的Drizzle ORM的数据库实例
+  // 获取菜单树
   async getMenuList(isAdmin: boolean, roleIdArr: number[]) {
     const whereList = [];
     whereList.push(inArray(menuTable.menuType, ['M', 'C']));
