@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"systeminformation": "^5.23.13",
 		"ua-parser-js": "^2.0.0"
 	}
 }

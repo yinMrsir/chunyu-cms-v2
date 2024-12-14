@@ -44,24 +44,20 @@
                 <tr>
                   <th class="el-table__cell is-leaf"><div class="cell">属性</div></th>
                   <th class="el-table__cell is-leaf"><div class="cell">内存</div></th>
-                  <th class="el-table__cell is-leaf"><div class="cell">JVM</div></th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td class="el-table__cell is-leaf"><div class="cell">总内存</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.mem">{{ server.mem.total }}G</div></td>
-                  <td class="el-table__cell is-leaf"><div class="cell" v-if="server.jvm">{{ server.jvm.total }}M</div></td>
                 </tr>
                 <tr>
                   <td class="el-table__cell is-leaf"><div class="cell">已用内存</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.mem">{{ server.mem.used}}G</div></td>
-                  <td class="el-table__cell is-leaf"><div class="cell" v-if="server.jvm">{{ server.jvm.used}}M</div></td>
                 </tr>
                 <tr>
                   <td class="el-table__cell is-leaf"><div class="cell">剩余内存</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.mem">{{ server.mem.free }}G</div></td>
-                  <td class="el-table__cell is-leaf"><div class="cell" v-if="server.jvm">{{ server.jvm.free }}M</div></td>
                 </tr>
                 <tr>
                   <td class="el-table__cell is-leaf"><div class="cell">使用率</div></td>

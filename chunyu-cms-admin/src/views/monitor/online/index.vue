@@ -77,8 +77,8 @@ const queryParams = ref({
 function getList() {
   loading.value = true;
   initData(queryParams.value).then(response => {
-    onlineList.value = response.rows;
-    total.value = response.total;
+    onlineList.value = response.data.rows;
+    total.value = response.data.total;
     loading.value = false;
   });
 }

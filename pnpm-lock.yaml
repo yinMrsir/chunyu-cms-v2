@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  systeminformation:
+    specifier: ^5.23.13
+    version: 5.23.13
   ua-parser-js:
     specifier: ^2.0.0
     version: 2.0.0
@@ -17,6 +20,13 @@ packages:
 
   /is-standalone-pwa@0.1.1:
     resolution: {integrity: sha512-9Cbovsa52vNQCjdXOzeQq5CnCbAcRk05aU62K20WO372NrTv0NxibLFCK6lQ4/iZEFdEA3p3t2VNOn8AJ53F5g==}
+    dev: false
+
+  /systeminformation@5.23.13:
+    resolution: {integrity: sha512-4Cn39sTXp7eN9rV/60aNdCXgpQ5xPcUUPIbwJjqTKj4/bNcSYtgZvFdXvZj6pRHP4h17uk6MfdMP5Fm6AK/b0Q==}
+    engines: {node: '>=8.0.0'}
+    os: [darwin, linux, win32, freebsd, openbsd, netbsd, sunos, android]
+    hasBin: true
     dev: false
 
   /ua-is-frozen@0.1.2:

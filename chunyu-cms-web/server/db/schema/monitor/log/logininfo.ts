@@ -2,7 +2,7 @@ import { mysqlTable, varchar, char, datetime, text, int } from 'drizzle-orm/mysq
 
 export const loginInfoTable = mysqlTable('login_info', {
   // 访问id
-  infoId: int('info_id').primaryKey().notNull(),
+  infoId: int('info_id').autoincrement().primaryKey().notNull(),
 
   // 用户账号
   userName: varchar('user_name', { length: 50 }).default('').notNull(),

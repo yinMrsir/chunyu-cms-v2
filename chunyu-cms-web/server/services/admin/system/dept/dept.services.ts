@@ -1,7 +1,6 @@
 import { and, eq, like, not, sql } from 'drizzle-orm';
 import { SharedServices } from '../../share/shared.services';
 import { Dept, deptTable, NewDept } from '~/server/db/schema/system/dept';
-import { roleTable } from '~/server/db/schema/system/role';
 
 export class DeptServices {
   sharedService: SharedServices;

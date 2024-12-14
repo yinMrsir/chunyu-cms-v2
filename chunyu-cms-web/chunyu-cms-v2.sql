@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 14/12/2024 15:10:35
+ Date: 14/12/2024 17:23:14
 */
 
 SET NAMES utf8mb4;
@@ -34,11 +34,18 @@ CREATE TABLE `dept` (
   `mpath` varchar(255) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT NULL,
+  `create_time` datetime DEFAULT '2024-12-14 09:20:20',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT '2024-12-14 09:20:20',
   PRIMARY KEY (`dept_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of dept
+-- ----------------------------
+BEGIN;
+INSERT INTO `dept` VALUES (1, '淳渔', 1, '', '', '', '0', '0', 0, '', '', 'admin', NULL, 'admin', NULL);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for dict_data
@@ -56,9 +63,9 @@ CREATE TABLE `dict_data` (
   `dict_type_id` int DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT NULL,
+  `create_time` datetime DEFAULT '2024-12-14 09:20:20',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT '2024-12-14 09:20:20',
   PRIMARY KEY (`dict_data_id`),
   KEY `dict_data_dict_type_id_dict_type_dict_id_fk` (`dict_type_id`),
   CONSTRAINT `dict_data_dict_type_id_dict_type_dict_id_fk` FOREIGN KEY (`dict_type_id`) REFERENCES `dict_type` (`dict_id`)
@@ -109,9 +116,9 @@ CREATE TABLE `dict_type` (
   `status` char(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT NULL,
+  `create_time` datetime DEFAULT '2024-12-14 09:20:20',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT '2024-12-14 09:20:20',
   PRIMARY KEY (`dict_id`),
   UNIQUE KEY `dict_type_dict_type_unique` (`dict_type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -137,7 +144,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `login_info`;
 CREATE TABLE `login_info` (
-  `info_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `info_id` int NOT NULL AUTO_INCREMENT,
   `user_name` varchar(50) NOT NULL DEFAULT '',
   `ipaddr` varchar(128) NOT NULL DEFAULT '',
   `login_location` varchar(255) NOT NULL DEFAULT '',
@@ -146,19 +153,14 @@ CREATE TABLE `login_info` (
   `status` char(1) NOT NULL DEFAULT '0',
   `msg` text NOT NULL DEFAULT (_utf8mb4''),
   `login_time` datetime NOT NULL,
-  PRIMARY KEY (`info_id`),
-  UNIQUE KEY `info_id` (`info_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`info_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of login_info
 -- ----------------------------
 BEGIN;
-INSERT INTO `login_info` VALUES (1, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-14 06:16:50');
-INSERT INTO `login_info` VALUES (2, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '1', '密码错误', '2024-12-14 06:38:12');
-INSERT INTO `login_info` VALUES (3, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '1', '密码错误', '2024-12-14 06:40:57');
-INSERT INTO `login_info` VALUES (4, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '1', '密码错误', '2024-12-14 06:42:02');
-INSERT INTO `login_info` VALUES (5, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-14 06:42:05');
+INSERT INTO `login_info` VALUES (1, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-14 09:20:39');
 COMMIT;
 
 -- ----------------------------
@@ -183,9 +185,9 @@ CREATE TABLE `menu` (
   `mpath` varchar(255) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT NULL,
+  `create_time` datetime DEFAULT '2024-12-14 09:20:20',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT '2024-12-14 09:20:20',
   PRIMARY KEY (`menu_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -194,7 +196,7 @@ CREATE TABLE `menu` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `menu` VALUES (1, '系统管理', 8, 'system', NULL, NULL, 1, '0', 'M', '0', '0', NULL, 'system', NULL, '1.', '', '', '2021-12-22 10:43:24', 'admin', '2023-01-16 11:35:17');
-INSERT INTO `menu` VALUES (2, '系统监控', 9, 'monitor', NULL, NULL, 1, '0', 'M', '1', '1', NULL, 'monitor', 0, '', '', '', '2021-12-22 10:43:24', 'admin', '2024-12-14 01:43:46');
+INSERT INTO `menu` VALUES (2, '系统监控', 9, 'monitor', NULL, NULL, 1, '0', 'M', '0', '0', NULL, 'monitor', 0, '', '', '', '2021-12-22 10:43:24', 'admin', '2024-12-14 08:48:41');
 INSERT INTO `menu` VALUES (3, '系统工具', 10, 'tool', NULL, NULL, 1, '0', 'M', '1', '1', NULL, 'tool', 0, '', '', '', '2021-12-22 10:43:24', 'admin', '2024-12-14 01:43:41');
 INSERT INTO `menu` VALUES (4, '用户管理', 1, 'user', 'system/user/index', NULL, 1, '0', 'C', '0', '0', 'system:user:list', 'user', 1, '1.4.', '', '', '2021-12-22 10:43:24', '', '2023-01-16 11:35:17');
 INSERT INTO `menu` VALUES (5, '角色管理', 2, 'role', 'system/role/index', NULL, 1, '0', 'C', '0', '0', 'system:role:list', 'peoples', 1, '1.5.', '', '', '2021-12-22 10:43:24', '', '2023-01-16 11:35:17');
@@ -238,7 +240,7 @@ INSERT INTO `menu` VALUES (42, '岗位导出', 5, '', NULL, NULL, 1, '0', 'F', '
 INSERT INTO `menu` VALUES (43, '在线用户', 1, 'online', 'monitor/online/index', NULL, 1, '0', 'C', '0', '0', 'monitor:online:list', 'online', 2, '2.43.', '', '', '2021-12-23 21:10:14', '', '2023-01-16 11:34:54');
 INSERT INTO `menu` VALUES (44, '表单构建', 1, 'build', 'tool/build/index', NULL, 1, '0', 'C', '1', '0', 'tool:build:list', 'build', 3, '3.44.', '', '', '2021-12-24 11:19:41', 'admin', '2023-01-29 15:57:10');
 INSERT INTO `menu` VALUES (45, '系统接口', 2, 'swagger', 'tool/swagger/index', NULL, 1, '0', 'C', '0', '0', 'tool:swagger:list', 'swagger', 3, '3.45.', '', '', '2021-12-24 11:20:28', '', '2023-01-16 11:34:45');
-INSERT INTO `menu` VALUES (46, '定时任务', 2, 'job', 'monitor/job/index', NULL, 1, '0', 'C', '0', '0', 'monitor:job:list', 'job', 2, '2.46.', '', '', '2021-12-24 11:53:24', '', '2023-01-16 11:34:54');
+INSERT INTO `menu` VALUES (46, '定时任务', 2, 'job', 'monitor/job/index', NULL, 1, '0', 'C', '0', '1', 'monitor:job:list', 'job', 2, '46.', '', '', '2021-12-24 11:53:24', 'admin', '2024-12-14 09:10:09');
 INSERT INTO `menu` VALUES (48, '服务监控', 4, 'server', 'monitor/server/index', NULL, 1, '0', 'C', '0', '0', 'monitor:server:list', 'server', 2, '2.48.', '', '', '2021-12-24 11:55:16', '', '2023-01-16 11:34:54');
 INSERT INTO `menu` VALUES (49, '字典查询', 1, '', NULL, NULL, 1, '0', 'F', '0', '0', 'system:dict:query', '#', 9, '1.9.49.', '', '', '2021-12-29 14:58:27', '', '2023-01-16 11:35:17');
 INSERT INTO `menu` VALUES (50, '字典新增', 2, '', NULL, NULL, 1, '0', 'F', '0', '0', 'system:dict:add', '#', 9, '1.9.50.', '', '', '2021-12-29 14:59:15', '', '2023-01-16 11:35:17');
@@ -279,12 +281,19 @@ CREATE TABLE `post` (
   `status` varchar(1) NOT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT NULL,
+  `create_time` datetime DEFAULT '2024-12-14 09:20:20',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT '2024-12-14 09:20:20',
   PRIMARY KEY (`post_id`),
   UNIQUE KEY `post_post_code_unique` (`post_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of post
+-- ----------------------------
+BEGIN;
+INSERT INTO `post` VALUES (1, '1', '董事长', 1, '0', '', 'admin', '2024-12-14 09:20:20', 'admin', '2024-12-14 09:20:20');
+COMMIT;
 
 -- ----------------------------
 -- Table structure for role
@@ -302,9 +311,9 @@ CREATE TABLE `role` (
   `del_flag` char(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT NULL,
+  `create_time` datetime DEFAULT '2024-12-14 09:20:20',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT '2024-12-14 09:20:20',
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -350,9 +359,9 @@ CREATE TABLE `user` (
   `dept_id` int DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT NULL,
+  `create_time` datetime DEFAULT '2024-12-14 09:20:20',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT '2024-12-14 09:20:20',
   PRIMARY KEY (`user_id`),
   KEY `user_dept_id_dept_dept_id_fk` (`dept_id`),
   CONSTRAINT `user_dept_id_dept_dept_id_fk` FOREIGN KEY (`dept_id`) REFERENCES `dept` (`dept_id`)
@@ -362,7 +371,7 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES (1, 'admin', 'admin', '00', '5428@qq.com', '15677777777', '0', '', '9c68fb331431f8dcfb7defef22b0c527', 'Y2uPc7hyq8Vi5qBc879Ut', '0', '0', '', NULL, NULL, '', '', NULL, '', '2024-12-13 15:54:02');
+INSERT INTO `user` VALUES (1, 'admin', 'admin', '00', '5428@qq.com', '15677777777', '0', '', '9c68fb331431f8dcfb7defef22b0c527', 'Y2uPc7hyq8Vi5qBc879Ut', '0', '0', '', NULL, 1, '', '', NULL, '', '2024-12-14 09:14:45');
 COMMIT;
 
 -- ----------------------------
