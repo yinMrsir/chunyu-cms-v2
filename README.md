@@ -15,8 +15,90 @@
 
 当然，NestJs有它的优势，也有很多基于它的模块，在有些功能上实现会更方便，如何你喜欢NestJs，可以继续使用之前的版本。
 
-## 后续
-1. 当前仅能使用系统模块相关功能，后续将整体迁移到Nuxt3。
-2. 用户端界面UI重构，如果你能提供一些设计，那更好了。
+## 使用前
 
-* 由于利用业余时间，所有会更新较慢。
+如未安装`mysql`数据库和`redis`请先自行安装。mysql8.x，redis7。[安装教程](#相关链接)
+
+**mysql**和**redis**配置你可以到`chunyu-cms-web/nuxt.config.ts`进行配置。你也可以创建一个`chunyu-cms-web/.env`文件
+
+```dotenv
+DATABASE_USERNAME=root
+DATABASE_PASSWORD=123456
+DATABASE_HOST=127.0.0.1
+DATABASE_PORT=3306
+DATABASE_DB=chunyu-cms-v2
+
+JWT_SECRET=chunyu-cms-v2
+
+REDIS_HOST=127.0.0.1
+REDIS_PORT=6379
+REDIS_USERNAME=
+REDIS_PASSWORD=
+REDIS_DB=0
+```
+
+**注意：** `mysql`和`redis`的端口号，用户名，密码，数据库名称，jwt加密密钥，请自行修改。
+
+## 数据库初始化
+
+1. 先到数据库目录下，创建数据库`chunyu-cms-v2`
+2. 导入数据库文件`chunyu-cms-web/chunyu-cms-v2.sql`
+
+## 本地开发
+
+### 服务端和用户端同时启动
+
+```shell
+cd chunyu-cms-web
+pnpm install
+pnpm dev
+```
+
+### 管理端启动
+
+```shell
+cd chunyu-cms-admin
+pnpm install
+pnpm dev
+```
+
+启动成功后，请访问：http://localhost:4000, 用户名：admin，密码：admin123
+
+## 部署
+
+### 构建管理端
+
+执行以下命令会生成`dist`目录，可通过`nginx`指定到目录。
+
+```shell
+cd chunyu-cms-admin
+pnpm isntall
+pnpm build:prod
+```
+
+### 构建服务端和用户端
+
+```shell
+cd chunyu-cms-web
+pnpm isntall
+pnpm build
+```
+
+构建完成后，可通过pm2进行部署，未安装的可执行`npm install -g pm2`安装
+
+执行以下命令启动服务：
+```shell
+pm2 start pm2.config.cjs
+```
+
+Nuxt项目部署文档：https://nuxt.com/docs/getting-started/deployment
+
+## 相关链接
+
+win安装Docker: https://zhuanlan.zhihu.com/p/441965046
+
+docker安装redis：https://www.yinchunyu.com/other/redis.html
+
+docker安装mysql：https://www.runoob.com/docker/docker-install-mysql.html
+
+解决Navicat连接数据库提示`client does not support authentication：https://blog.csdn.net/lovedingd/article/details/106728292

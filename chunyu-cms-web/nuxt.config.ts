@@ -42,28 +42,33 @@ export default defineNuxtConfig({
       }
     },
     storage: {
+      // redis连接配置
       redis: {
         driver: 'redis',
-        port: 6379, // Redis port
-        host: '127.0.0.1', // Redis host
-        username: '', // needs Redis >= 6
-        password: '',
-        db: 0 // Defaults to 0
+        port: process.env.REDIS_PORT || 6379, // Redis port
+        host: process.env.REDIS_HOST || '127.0.0.1', // Redis host
+        username: process.env.REDIS_USERNAME || '', // needs Redis >= 6
+        password: process.env.REDIS_PASSWORD || '',
+        db: process.env.REDIS_DB || 0 // Defaults to 0
       }
     }
   },
   runtimeConfig: {
+    // mysql连接配置
     mysql: {
-      host: process.env.DATABASE_HOST,
+      host: process.env.DATABASE_HOST || 'localhost',
       port: Number(process.env.DATABASE_PORT) || 3306,
-      user: process.env.DATABASE_USERNAME,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_DB
+      user: process.env.DATABASE_USERNAME || 'root',
+      password: process.env.DATABASE_PASSWORD || '123456',
+      database: process.env.DATABASE_DB || 'chunyu-cms-v2'
     },
+    // jwt加密
     jwt: {
-      secret: process.env.JWT_SECRET
+      secret: process.env.JWT_SECRET || 'chunyu-cms-v2'
     },
+    // 上传文件保存路径
     uploadPath: '/uploads',
+    // 上传图片访问host
     imgHost: 'http://localhost:3000'
   },
   compatibilityDate: '2024-11-04'

@@ -1,20 +1,12 @@
-aicpb.com/
+chunyu-cms-web/
 ├── app.vue
 ├── components/
 │   ├── TheHeader.vue
-│   ├── TheNavigation.vue
-│   ├── DailyReport.vue
-│   ├── Pagination.vue
-│   ├── ProfileCard.vue
-│   ├── AboutSection.vue
-│   └── TheFooter.vue
 ├── pages/
 │   └── index.vue
 ├── public/
 │   └── images/
 │       ├── logo.png
-│       ├── day_export.png
-│       ├── wechat.png
 │       └── avatar.png
 └── assets/
     └── css/
