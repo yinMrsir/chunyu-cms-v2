@@ -1,7 +1,7 @@
 import { RoleServices } from '~/server/services/admin/system/role/role.services';
 
-/* 通过Id 查询角色 */
 export default defineEventHandler(async event => {
+  await event.context.validatePermission('system:role:remove');
   const roleId = getRouterParam(event, 'roleId');
   if (!roleId) {
     throw createError({ statusCode: 400, message: '未传入角色ID' });

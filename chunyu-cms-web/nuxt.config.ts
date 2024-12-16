@@ -62,7 +62,9 @@ export default defineNuxtConfig({
     },
     jwt: {
       secret: process.env.JWT_SECRET
-    }
+    },
+    uploadPath: '/uploads',
+    imgHost: 'http://localhost:3000'
   },
   compatibilityDate: '2024-11-04'
 });

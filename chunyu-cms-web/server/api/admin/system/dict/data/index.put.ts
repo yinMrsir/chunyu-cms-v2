@@ -1,9 +1,9 @@
-import { useAuth } from '~/server/composables/useAuth';
 import { DictServices } from '~/server/services/admin/system/dict/dict.services';
 
 const dictService = new DictServices();
 
 export default defineEventHandler(async event => {
+  await event.context.validatePermission('system:dict:edit');
   const body = await readBody(event);
   body.updateBy = event.context.user.userName;
   body.updateTime = new Date();

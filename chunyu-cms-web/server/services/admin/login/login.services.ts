@@ -125,4 +125,11 @@ export class LoginServices {
     if (!isAdmin && !roleIdArr.length) return [];
     return await this.menuServices.getMenuList(isAdmin, roleIdArr);
   }
+
+  /* 退出登录 */
+  async logout(userId: string) {
+    if (await this.redis.getItem(`${USER_TOKEN_KEY}:${userId}`)) {
+      await this.redis.removeItem(`${USER_TOKEN_KEY}:${userId}`);
+    }
+  }
 }

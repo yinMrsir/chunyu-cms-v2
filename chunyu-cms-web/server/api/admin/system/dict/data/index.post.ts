@@ -4,6 +4,7 @@ import { DictServices } from '~/server/services/admin/system/dict/dict.services'
 const dictService = new DictServices();
 
 export default defineEventHandler(async event => {
+  await event.context.validatePermission('system:dict:add');
   const body = await readBody(event);
   const dictData = await dictService.getDictDataByTypeOrValue(body.dictType, body.dictValue);
   if (dictData) {

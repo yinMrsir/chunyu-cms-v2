@@ -142,7 +142,7 @@ export class SharedServices {
    */
   generateRandomValue(
     length: number,
-    placeholder = '1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
+    placeholder: any = '1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
   ): string {
     const customNanoid = customAlphabet(placeholder, length);
     return customNanoid();

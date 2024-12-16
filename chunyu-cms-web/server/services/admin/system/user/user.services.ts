@@ -13,9 +13,11 @@ import { USER_VERSION_KEY } from '~/server/contants/redis.contant';
 export class UserServices {
   private sharedServices: SharedServices;
   private redis: Storage<string | number>;
+  private runtimeConfig: any;
   constructor() {
     this.sharedServices = new SharedServices();
     this.redis = useStorage('redis');
+    this.runtimeConfig = useRuntimeConfig();
   }
 
   /* 通过用户名获取用户,排除停用和删除的,用于登录 */
@@ -171,6 +173,22 @@ export class UserServices {
   /* 通过id 查找用户的所有信息 */
   async userAllInfo(userId: number | string) {
     const userInfo = await db.query.userTable.findFirst({
+      columns: {
+        userId: true,
+        userName: true,
+        nickName: true,
+        email: true,
+        phonenumber: true,
+        sex: true,
+        avatar: true,
+        status: true,
+        loginIp: true,
+        loginDate: true,
+        createBy: true,
+        createTime: true,
+        remark: true,
+        deptId: true
+      },
       with: {
         dept: true,
         userToRole: {
@@ -189,6 +207,7 @@ export class UserServices {
 
     const result = {
       ...userInfo,
+      avatar: userInfo?.avatar ? `${this.runtimeConfig.imgHost}${userInfo.avatar}` : '',
       roles: userInfo?.userToRole?.filter(item => item.role?.delFlag === '0').map(item => item.role),
       posts: userInfo?.userToPost?.map(item => item.post)
     };
@@ -202,6 +221,22 @@ export class UserServices {
     userId: number | string
   ): Promise<User & { dept: Dept | null; roles: Role[]; posts: Post[] }> {
     const userInfo = await db.query.userTable.findFirst({
+      columns: {
+        userId: true,
+        userName: true,
+        nickName: true,
+        email: true,
+        phonenumber: true,
+        sex: true,
+        avatar: true,
+        status: true,
+        loginIp: true,
+        loginDate: true,
+        createBy: true,
+        createTime: true,
+        remark: true,
+        deptId: true
+      },
       with: {
         dept: true,
         userToRole: {
@@ -221,6 +256,7 @@ export class UserServices {
 
     const result = {
       ...userInfo,
+      avatar: userInfo?.avatar ? `${this.runtimeConfig.imgHost}${userInfo.avatar}` : '',
       dept: userInfo?.dept?.status === '0' && userInfo?.dept?.delFlag === '0' ? userInfo?.dept : null,
       roles: userInfo?.userToRole
         ?.filter(item => item.role?.delFlag === '0' && item.role?.status === '0')
@@ -257,7 +293,7 @@ export class UserServices {
   }
 
   /* 更改个人用户信息 */
-  async updateProfile(user: User, userId: number) {
+  async updateProfile(user: Partial<User>, userId: number) {
     await db.update(userTable).set(user).where(eq(userTable.userId, userId));
   }
 

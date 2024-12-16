@@ -49,6 +49,8 @@
     "node-xlsx": "^0.24.0",
     "sass": "^1.80.6",
     "showdown": "^2.1.0",
-    "svg-captcha": "^1.4.0"
+    "svg-captcha": "^1.4.0",
+    "systeminformation": "^5.23.13",
+    "ua-parser-js": "^2.0.0"
   }
 }

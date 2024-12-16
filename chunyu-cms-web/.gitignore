@@ -26,3 +26,4 @@ logs
 ssl
 
 .data
+/public/uploads/
