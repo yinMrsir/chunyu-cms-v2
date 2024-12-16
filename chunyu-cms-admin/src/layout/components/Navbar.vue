@@ -81,7 +81,7 @@ function logout() {
     type: 'warning'
   }).then(() => {
     userStore.logOut().then(() => {
-      location.href = '/index';
+      location.href = import.meta.env.VITE_APP_BUILD_BASE || '/';
     })
   }).catch(() => { });
 }

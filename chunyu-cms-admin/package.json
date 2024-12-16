@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build:prod": "vite build",
-    "build:stage": "vite build --mode staging",
+    "build:single": "vite build --mode single",
     "preview": "vite preview"
   },
   "repository": {

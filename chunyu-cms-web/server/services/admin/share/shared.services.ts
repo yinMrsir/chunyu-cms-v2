@@ -62,7 +62,7 @@ export class SharedServices {
       (
         ((req.headers as any)['x-forwarded-for'] as string) ||
         // 判断后端的 socket 的 IP
-        (req as any).socket.remoteAddress ||
+        (req as any).socket?.remoteAddress ||
         ''
       ).replace('::ffff:', '')
     );

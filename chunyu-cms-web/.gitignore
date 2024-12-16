@@ -27,3 +27,4 @@ ssl
 
 .data
 /public/uploads/
+/public/admin/
