@@ -49,7 +49,8 @@ export default defineNuxtConfig({
         host: process.env.REDIS_HOST || '127.0.0.1', // Redis host
         username: process.env.REDIS_USERNAME || '', // needs Redis >= 6
         password: process.env.REDIS_PASSWORD || '',
-        db: process.env.REDIS_DB || 0 // Defaults to 0
+        db: process.env.REDIS_DB || 0, // Defaults to 0
+        ttl: process.env.REDIS_TTL || 60 * 60 * 24 // 默认存储一天
       }
     }
   },

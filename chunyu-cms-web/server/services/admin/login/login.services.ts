@@ -66,7 +66,7 @@ export class LoginServices {
       // 存储密码版本号，防止登录期间 密码被管理员更改后 还能继续登录
       await this.redis.setItem(`${USER_VERSION_KEY}:${user.userId}`, 1);
       // 存储token, 防止重复登录问题，设置token过期时间(1天后 token 自动过期)，以及主动注销token。
-      await this.redis.setItem(`${USER_TOKEN_KEY}:${user.userId}`, token, { ex: 60 * 60 * 24 });
+      await this.redis.setItem(`${USER_TOKEN_KEY}:${user.userId}`, token, { ttl: 60 * 60 * 24 });
       // 调用存储在线用户接口
       await this.logServices.addLoginInfo(
         {
