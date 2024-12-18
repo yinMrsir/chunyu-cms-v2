@@ -48,7 +48,8 @@ export class LoginServices {
         height: 38
       });
       const uuid = this.sharedServices.generateUUID();
-      await this.redis.setItem(`${CAPTCHA_IMG_KEY}:${uuid}`, text);
+      // 验证码 有效期3分钟
+      await this.redis.setItem(`${CAPTCHA_IMG_KEY}:${uuid}`, text, { ttl: 60 * 3 });
       return {
         img: data.toString(),
         uuid
