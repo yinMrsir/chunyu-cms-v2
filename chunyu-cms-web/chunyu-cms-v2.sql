@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 14/12/2024 17:23:14
+ Date: 19/12/2024 22:54:16
 */
 
 SET NAMES utf8mb4;
@@ -154,13 +154,24 @@ CREATE TABLE `login_info` (
   `msg` text NOT NULL DEFAULT (_utf8mb4''),
   `login_time` datetime NOT NULL,
   PRIMARY KEY (`info_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of login_info
 -- ----------------------------
 BEGIN;
 INSERT INTO `login_info` VALUES (1, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-14 09:20:39');
+INSERT INTO `login_info` VALUES (2, 'test', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-14 14:09:49');
+INSERT INTO `login_info` VALUES (3, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-16 01:36:30');
+INSERT INTO `login_info` VALUES (4, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-16 09:23:29');
+INSERT INTO `login_info` VALUES (5, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-16 09:37:08');
+INSERT INTO `login_info` VALUES (6, 'admin', '', '未知', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-16 10:55:47');
+INSERT INTO `login_info` VALUES (7, 'admin', '', '未知', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-16 11:28:42');
+INSERT INTO `login_info` VALUES (8, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-16 11:54:32');
+INSERT INTO `login_info` VALUES (9, 'admin', '', '未知', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-16 11:57:32');
+INSERT INTO `login_info` VALUES (10, 'admin', '', '未知', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-16 11:59:56');
+INSERT INTO `login_info` VALUES (11, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-19 14:27:16');
+INSERT INTO `login_info` VALUES (12, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-19 14:52:50');
 COMMIT;
 
 -- ----------------------------
@@ -189,7 +200,7 @@ CREATE TABLE `menu` (
   `update_by` varchar(64) DEFAULT '',
   `update_time` datetime DEFAULT '2024-12-14 09:20:20',
   PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of menu
@@ -197,7 +208,7 @@ CREATE TABLE `menu` (
 BEGIN;
 INSERT INTO `menu` VALUES (1, '系统管理', 8, 'system', NULL, NULL, 1, '0', 'M', '0', '0', NULL, 'system', NULL, '1.', '', '', '2021-12-22 10:43:24', 'admin', '2023-01-16 11:35:17');
 INSERT INTO `menu` VALUES (2, '系统监控', 9, 'monitor', NULL, NULL, 1, '0', 'M', '0', '0', NULL, 'monitor', 0, '', '', '', '2021-12-22 10:43:24', 'admin', '2024-12-14 08:48:41');
-INSERT INTO `menu` VALUES (3, '系统工具', 10, 'tool', NULL, NULL, 1, '0', 'M', '1', '1', NULL, 'tool', 0, '', '', '', '2021-12-22 10:43:24', 'admin', '2024-12-14 01:43:41');
+INSERT INTO `menu` VALUES (3, '系统工具', 10, 'tool', NULL, NULL, 1, '0', 'M', '1', '1', NULL, 'tool', 0, '', '', '', '2021-12-22 10:43:24', 'test', '2024-12-14 14:18:09');
 INSERT INTO `menu` VALUES (4, '用户管理', 1, 'user', 'system/user/index', NULL, 1, '0', 'C', '0', '0', 'system:user:list', 'user', 1, '1.4.', '', '', '2021-12-22 10:43:24', '', '2023-01-16 11:35:17');
 INSERT INTO `menu` VALUES (5, '角色管理', 2, 'role', 'system/role/index', NULL, 1, '0', 'C', '0', '0', 'system:role:list', 'peoples', 1, '1.5.', '', '', '2021-12-22 10:43:24', '', '2023-01-16 11:35:17');
 INSERT INTO `menu` VALUES (6, '菜单管理', 3, 'menu', 'system/menu/index', NULL, 1, '0', 'C', '0', '0', 'system:menu:list', 'tree-table', 1, '1.6.', '', '', '2021-12-22 10:43:24', '', '2023-01-16 11:35:17');
@@ -263,10 +274,13 @@ INSERT INTO `menu` VALUES (66, '批量强退', 2, '', NULL, NULL, 1, '0', 'F', '
 INSERT INTO `menu` VALUES (67, '单条强退', 3, '', NULL, NULL, 1, '0', 'F', '0', '0', 'monitor:online:forceLogout', '#', 43, '2.43.67.', '', '', '2021-12-29 15:35:51', '', '2023-01-16 11:34:54');
 INSERT INTO `menu` VALUES (68, '任务查询', 1, '', NULL, NULL, 1, '0', 'F', '0', '0', 'monitor:job:query', '#', 46, '2.46.68.', '', '', '2021-12-29 15:36:13', '', '2023-01-16 11:34:54');
 INSERT INTO `menu` VALUES (69, '任务新增', 2, '', NULL, NULL, 1, '0', 'F', '0', '0', 'monitor:job:add', '#', 46, '2.46.69.', '', '', '2021-12-29 15:36:25', '', '2023-01-16 11:34:54');
-INSERT INTO `menu` VALUES (70, '任务修改', 3, '', NULL, NULL, 1, '0', 'F', '0', '0', '	 monitor:job:edit', '#', 46, '2.46.70.', '', '', '2021-12-29 15:36:36', '', '2023-01-16 11:34:54');
+INSERT INTO `menu` VALUES (70, '任务修改', 3, '', NULL, NULL, 1, '0', 'F', '0', '0', 'monitor:job:edit', '#', 46, '2.46.70.', '', '', '2021-12-29 15:36:36', '', '2023-01-16 11:34:54');
 INSERT INTO `menu` VALUES (71, '任务删除', 4, '', NULL, NULL, 1, '0', 'F', '0', '0', 'monitor:job:remove', '#', 46, '2.46.71.', '', '', '2021-12-29 15:36:48', '', '2023-01-16 11:34:54');
 INSERT INTO `menu` VALUES (72, '状态修改', 5, '', NULL, NULL, 1, '0', 'F', '0', '0', 'monitor:job:changeStatus', '#', 46, '2.46.72.', '', '', '2021-12-29 15:36:58', '', '2023-01-16 11:34:54');
 INSERT INTO `menu` VALUES (73, '任务导出', 7, '', NULL, NULL, 1, '0', 'F', '0', '0', 'monitor:job:export', '#', 46, '2.46.73.', '', '', '2021-12-29 15:37:31', '', '2023-01-16 11:34:54');
+INSERT INTO `menu` VALUES (93, '缓存管理', 1, 'cache', 'monitor/cache/index', NULL, 1, '0', 'C', '0', '0', 'monitor:cache:list', 'redis', 2, '2.93.', '', 'admin', '2023-03-27 14:14:04', 'admin', '2023-03-27 15:06:32');
+INSERT INTO `menu` VALUES (96, '缓存查询', 1, '', NULL, NULL, 1, '0', 'F', '0', '0', 'monitor:cache:query', '#', 93, '2.93.96.', '', 'admin', '2023-03-27 16:08:06', 'admin', '2023-03-27 16:08:20');
+INSERT INTO `menu` VALUES (97, '缓存删除', 2, '', NULL, NULL, 1, '0', 'F', '0', '0', 'monitor:cache:remove', '#', 93, '2.93.97.', '', 'admin', '2023-03-27 16:09:19', 'admin', '2023-03-27 16:09:50');
 COMMIT;
 
 -- ----------------------------
@@ -315,13 +329,14 @@ CREATE TABLE `role` (
   `update_by` varchar(64) DEFAULT '',
   `update_time` datetime DEFAULT '2024-12-14 09:20:20',
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of role
 -- ----------------------------
 BEGIN;
 INSERT INTO `role` VALUES (1, '超级管理员', 'admin', 1, '1', 1, 1, '0', '0', '', '', NULL, '', NULL);
+INSERT INTO `role` VALUES (2, '管理员', '2', 2, '1', 1, 1, '0', '0', '', 'admin', '2024-12-14 09:20:20', 'test', '2024-12-14 14:17:55');
 COMMIT;
 
 -- ----------------------------
@@ -336,6 +351,68 @@ CREATE TABLE `role_to_menu` (
   CONSTRAINT `role_to_menu_menu_id_menu_menu_id_fk` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`menu_id`),
   CONSTRAINT `role_to_menu_role_id_role_role_id_fk` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of role_to_menu
+-- ----------------------------
+BEGIN;
+INSERT INTO `role_to_menu` VALUES (2, 1);
+INSERT INTO `role_to_menu` VALUES (2, 4);
+INSERT INTO `role_to_menu` VALUES (2, 15);
+INSERT INTO `role_to_menu` VALUES (2, 16);
+INSERT INTO `role_to_menu` VALUES (2, 17);
+INSERT INTO `role_to_menu` VALUES (2, 18);
+INSERT INTO `role_to_menu` VALUES (2, 19);
+INSERT INTO `role_to_menu` VALUES (2, 20);
+INSERT INTO `role_to_menu` VALUES (2, 21);
+INSERT INTO `role_to_menu` VALUES (2, 5);
+INSERT INTO `role_to_menu` VALUES (2, 22);
+INSERT INTO `role_to_menu` VALUES (2, 23);
+INSERT INTO `role_to_menu` VALUES (2, 24);
+INSERT INTO `role_to_menu` VALUES (2, 25);
+INSERT INTO `role_to_menu` VALUES (2, 6);
+INSERT INTO `role_to_menu` VALUES (2, 26);
+INSERT INTO `role_to_menu` VALUES (2, 27);
+INSERT INTO `role_to_menu` VALUES (2, 28);
+INSERT INTO `role_to_menu` VALUES (2, 29);
+INSERT INTO `role_to_menu` VALUES (2, 7);
+INSERT INTO `role_to_menu` VALUES (2, 30);
+INSERT INTO `role_to_menu` VALUES (2, 31);
+INSERT INTO `role_to_menu` VALUES (2, 32);
+INSERT INTO `role_to_menu` VALUES (2, 33);
+INSERT INTO `role_to_menu` VALUES (2, 8);
+INSERT INTO `role_to_menu` VALUES (2, 38);
+INSERT INTO `role_to_menu` VALUES (2, 39);
+INSERT INTO `role_to_menu` VALUES (2, 40);
+INSERT INTO `role_to_menu` VALUES (2, 41);
+INSERT INTO `role_to_menu` VALUES (2, 42);
+INSERT INTO `role_to_menu` VALUES (2, 9);
+INSERT INTO `role_to_menu` VALUES (2, 49);
+INSERT INTO `role_to_menu` VALUES (2, 50);
+INSERT INTO `role_to_menu` VALUES (2, 51);
+INSERT INTO `role_to_menu` VALUES (2, 52);
+INSERT INTO `role_to_menu` VALUES (2, 53);
+INSERT INTO `role_to_menu` VALUES (2, 10);
+INSERT INTO `role_to_menu` VALUES (2, 54);
+INSERT INTO `role_to_menu` VALUES (2, 55);
+INSERT INTO `role_to_menu` VALUES (2, 56);
+INSERT INTO `role_to_menu` VALUES (2, 57);
+INSERT INTO `role_to_menu` VALUES (2, 58);
+INSERT INTO `role_to_menu` VALUES (2, 11);
+INSERT INTO `role_to_menu` VALUES (2, 35);
+INSERT INTO `role_to_menu` VALUES (2, 34);
+INSERT INTO `role_to_menu` VALUES (2, 36);
+INSERT INTO `role_to_menu` VALUES (2, 37);
+INSERT INTO `role_to_menu` VALUES (2, 12);
+INSERT INTO `role_to_menu` VALUES (2, 13);
+INSERT INTO `role_to_menu` VALUES (2, 59);
+INSERT INTO `role_to_menu` VALUES (2, 60);
+INSERT INTO `role_to_menu` VALUES (2, 61);
+INSERT INTO `role_to_menu` VALUES (2, 14);
+INSERT INTO `role_to_menu` VALUES (2, 62);
+INSERT INTO `role_to_menu` VALUES (2, 63);
+INSERT INTO `role_to_menu` VALUES (2, 64);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for user
@@ -365,13 +442,14 @@ CREATE TABLE `user` (
   PRIMARY KEY (`user_id`),
   KEY `user_dept_id_dept_dept_id_fk` (`dept_id`),
   CONSTRAINT `user_dept_id_dept_dept_id_fk` FOREIGN KEY (`dept_id`) REFERENCES `dept` (`dept_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES (1, 'admin', 'admin', '00', '5428@qq.com', '15677777777', '0', '', '9c68fb331431f8dcfb7defef22b0c527', 'Y2uPc7hyq8Vi5qBc879Ut', '0', '0', '', NULL, 1, '', '', NULL, '', '2024-12-14 09:14:45');
+INSERT INTO `user` VALUES (1, 'admin', 'admin', '00', '5428@qq.com', '15677777777', '0', '/uploads/dKcizJXRB.png', '9c68fb331431f8dcfb7defef22b0c527', 'Y2uPc7hyq8Vi5qBc879Ut', '0', '0', '', NULL, 1, '', '', NULL, '', '2024-12-14 09:14:45');
+INSERT INTO `user` VALUES (2, 'test', 'test', '00', NULL, NULL, '0', '', '728c992f87ae532307c688d1e212394f', 'BBIs09BXeYNzzzILTqPXQ', '0', '0', '', NULL, 1, '', 'admin', '2024-12-14 09:20:20', 'admin', '2024-12-14 09:20:20');
 COMMIT;
 
 -- ----------------------------
@@ -386,6 +464,13 @@ CREATE TABLE `user_to_post` (
   CONSTRAINT `user_to_post_post_id_post_post_id_fk` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`),
   CONSTRAINT `user_to_post_user_id_user_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of user_to_post
+-- ----------------------------
+BEGIN;
+INSERT INTO `user_to_post` VALUES (2, 1);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for user_to_role
@@ -405,6 +490,7 @@ CREATE TABLE `user_to_role` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `user_to_role` VALUES (1, 1);
+INSERT INTO `user_to_role` VALUES (2, 2);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
