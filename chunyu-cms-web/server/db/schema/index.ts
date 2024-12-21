@@ -8,6 +8,7 @@ import * as userToRoleSchema from './system/userToRole';
 import * as postSchema from './system/post';
 import * as userToPostSchema from './system/userToPost';
 import * as loginInfoSchema from './monitor/log/logininfo';
+import * as jobSchema from './monitor/job';
 
 export default {
   ...userSchema,
@@ -19,5 +20,6 @@ export default {
   ...userToRoleSchema,
   ...postSchema,
   ...userToPostSchema,
-  ...loginInfoSchema
+  ...loginInfoSchema,
+  ...jobSchema
 };
