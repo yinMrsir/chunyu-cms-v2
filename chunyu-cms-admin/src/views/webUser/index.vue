@@ -25,7 +25,7 @@ const { proxy } = getCurrentInstance()
 const { sys_normal_disable } = proxy.useDict("sys_normal_disable");
 
 const columns = ref([
-  { title: '用户ID', field: 'userId' },
+  {title: '用户ID', field: 'userId' },
   { title: '账号', field: 'email' },
   { title: '状态', field: 'status', type: 'select', options: sys_normal_disable, add: true, slot: 'status' },
   { title: '收藏影视', field: 'userCollectCount' },

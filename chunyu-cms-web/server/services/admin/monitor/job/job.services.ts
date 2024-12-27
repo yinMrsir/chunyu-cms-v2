@@ -1,5 +1,5 @@
 import * as schedule from 'node-schedule';
-import { and, eq, inArray, like } from 'drizzle-orm';
+import { and, eq, inArray } from 'drizzle-orm';
 import { Job, jobTable, NewJob } from '~/server/db/schema/monitor/job';
 import { JobLog, jobLogTable } from '~/server/db/schema/monitor/jobLog';
 import { queryParams } from '~/server/db/query.helper';
@@ -25,7 +25,7 @@ class JobServices {
   async init() {
     const jobList = await this.findAllJob({ status: '0' });
     for (const job of jobList) {
-      this.start(job);
+      await this.start(job);
     }
     return {
       length: jobList.length
@@ -36,7 +36,7 @@ class JobServices {
     this.hasMethod(job.invokeTarget);
     const [jobItem] = await db.insert(jobTable).values(job).$returningId();
     if (job.status === '0') {
-      this.start({
+      await this.start({
         jobId: jobItem.jobId,
         ...job
       } as Job);
@@ -48,7 +48,7 @@ class JobServices {
     const jobItem = (await this.oneJob(job.jobId)) as Job;
     if (jobItem.status === '0') {
       await this.stop(jobItem);
-      this.start(jobItem);
+      await this.start(jobItem);
     } else {
       await this.stop(jobItem);
     }
@@ -94,38 +94,62 @@ class JobServices {
     await db.update(jobTable).set({ status }).where(eq(jobTable.jobId, jobId));
     const job = (await this.oneJob(jobId)) as Job;
     if (status === '0') {
-      this.start(job);
+      await this.start(job);
     } else {
       await this.stop(job);
     }
   }
 
-  start(job: Job) {
-    this.jobs[job.jobName] = schedule.scheduleJob(job.cronExpression as string, async () => {
-      try {
-        const { funName, argumens } = this.hasMethod(job.invokeTarget);
-        // @ts-ignore
-        this[funName](argumens);
-        await db.insert(jobLogTable).values({
-          jobName: job.jobName,
-          jobGroup: job.jobGroup,
-          invokeTarget: job.invokeTarget,
-          jobMessage: '执行任务成功',
-          status: '0',
-          exceptionInfo: '',
-          createTime: new Date()
-        });
-      } catch (error) {
-        await db.insert(jobLogTable).values({
-          jobName: job.jobName,
-          jobGroup: job.jobGroup,
-          invokeTarget: job.invokeTarget,
-          jobMessage: '执行任务失败',
-          status: '1',
-          exceptionInfo: String(error),
-          createTime: new Date()
-        });
-      }
+  async start(job: Job) {
+    this.jobs[job.jobName] = schedule.scheduleJob(job.cronExpression as string, () => {
+      const { funName, argumens } = this.hasMethod(job.invokeTarget);
+      // @ts-ignore
+      this[funName](argumens);
+    });
+    await db.insert(jobLogTable).values({
+      jobName: job.jobName,
+      jobGroup: job.jobGroup,
+      invokeTarget: job.invokeTarget,
+      jobMessage: '启动任务成功',
+      status: '0',
+      exceptionInfo: '',
+      createTime: new Date()
+    });
+
+    this.jobs[job.jobName].on('success', async () => {
+      await db.insert(jobLogTable).values({
+        jobName: job.jobName,
+        jobGroup: job.jobGroup,
+        invokeTarget: job.invokeTarget,
+        jobMessage: '执行任务成功',
+        status: '0',
+        exceptionInfo: '',
+        createTime: new Date()
+      });
+    });
+
+    this.jobs[job.jobName].on('error', async (error: any) => {
+      await db.insert(jobLogTable).values({
+        jobName: job.jobName,
+        jobGroup: job.jobGroup,
+        invokeTarget: job.invokeTarget,
+        jobMessage: '执行任务失败',
+        status: '1',
+        exceptionInfo: String(error),
+        createTime: new Date()
+      });
+    });
+
+    this.jobs[job.jobName].on('canceled', async () => {
+      await db.insert(jobLogTable).values({
+        jobName: job.jobName,
+        jobGroup: job.jobGroup,
+        invokeTarget: job.invokeTarget,
+        jobMessage: '停止任务成功',
+        status: '0',
+        exceptionInfo: '',
+        createTime: new Date()
+      });
     });
   }
 
@@ -133,15 +157,6 @@ class JobServices {
     if (this.jobs[job.jobName]) {
       try {
         this.jobs[job.jobName].cancel();
-        await db.insert(jobLogTable).values({
-          jobName: job.jobName,
-          jobGroup: job.jobGroup,
-          invokeTarget: job.invokeTarget,
-          jobMessage: '停止任务成功',
-          status: '0',
-          exceptionInfo: '',
-          createTime: new Date()
-        });
       } catch (error) {
         await db.insert(jobLogTable).values({
           jobName: job.jobName,
