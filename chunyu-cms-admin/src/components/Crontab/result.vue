@@ -108,215 +108,220 @@ function expressionChange() {
     if (nMin !== mDate[mIdx]) {
         resetSecond();
     }
-    // 循环年份数组
-    goYear: for (let Yi = YIdx; Yi < YDate.length; Yi++) {
-        let YY = YDate[Yi];
-        // 如果到达最大值时
-        if (nMonth > MDate[MDate.length - 1]) {
-            resetMonth();
-            continue;
+  // 循环年份数组
+  goYear: for (let Yi = YIdx; Yi < YDate.length; Yi++) {
+    let YY = YDate[Yi];
+    // 如果到达最大值时
+    if (nMonth > MDate[MDate.length - 1]) {
+      resetMonth();
+      continue;
+    }
+    // 循环月份数组
+    goMonth: for (let Mi = MIdx; Mi < MDate.length; Mi++) {
+      // 赋值、方便后面运算
+      let MM = MDate[Mi];
+      MM = MM < 10 ? '0' + MM : MM;
+      // 如果到达最大值时
+      if (nDay > DDate[DDate.length - 1]) {
+        resetDay();
+        if (Mi === MDate.length - 1) {
+          resetMonth();
+          continue goYear;
         }
-        // 循环月份数组
-        goMonth: for (let Mi = MIdx; Mi < MDate.length; Mi++) {
-            // 赋值、方便后面运算
-            let MM = MDate[Mi];
-            MM = MM < 10 ? '0' + MM : MM;
+        continue;
+      }
+      // 循环日期数组
+      goDay: for (let Di = DIdx; Di < DDate.length; Di++) {
+        // 赋值、方便后面运算
+        let DD = DDate[Di];
+        let thisDD = DD < 10 ? '0' + DD : DD;
+        // 如果到达最大值时
+        if (nHour > hDate[hDate.length - 1]) {
+          resetHour();
+          if (Di === DDate.length - 1) {
+            resetDay();
+            if (Mi === MDate.length - 1) {
+              resetMonth();
+              continue goYear;
+            }
+            continue goMonth;
+          }
+          continue;
+        }
+        // 判断日期的合法性，不合法的话也是跳出当前循环
+        if (
+            checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true &&
+            dayRule.value !== 'workDay' &&
+            dayRule.value !== 'lastWeek' &&
+            dayRule.value !== 'lastDay'
+        ) {
+          resetDay();
+          continue goMonth;
+        }
+        // 如果日期规则中有值时
+        if (dayRule.value === 'lastDay') {
+          // 如果不是合法日期则需要将前将日期调到合法日期即月末最后一天
+          if (checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true) {
+            while (DD > 0 && checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true) {
+              DD--;
+              thisDD = DD < 10 ? '0' + DD : DD;
+            }
+          }
+        } else if (dayRule.value === 'workDay') {
+          // 校验并调整如果是 2 月 30 号这种日期传进来时需调整至正常月底
+          if (checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true) {
+            while (DD > 0 && checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true) {
+              DD--;
+              thisDD = DD < 10 ? '0' + DD : DD;
+            }
+          }
+          // 获取达到条件的日期是星期 X
+          let thisWeek = formatDate(new Date(YY + '-' + MM + '-' + thisDD + ' 00:00:00'), 'week');
+          // 当星期日时
+          if (thisWeek === 7) {
+            // 先找下一个日，并判断是否为月底
+            DD++;
+            thisDD = DD < 10 ? '0' + DD : DD;
+            // 判断下一日已经不是合法日期
+            if (checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true) {
+              DD -= 3;
+            }
+          } else if (thisWeek === 1) {
+            // 当星期一
+            if (dayRuleSup.value !== 1) {
+              DD--;
+            } else {
+              DD += 2;
+            }
+          }
+        } else if (dayRule.value === 'weekDay') {
+          // 如果指定了是星期几
+          // 获取当前日期是属于星期几
+          let thisWeek = formatDate(new Date(YY + '-' + MM + '-' + DD + ' 00:00:00'), 'week');
+          // 校验当前星期是否在星期池（dayRuleSup）中
+          if (dayRuleSup.value.indexOf(thisWeek) < 0) {
             // 如果到达最大值时
-            if (nDay > DDate[DDate.length - 1]) {
+            if (Di === DDate.length - 1) {
+              resetDay();
+              if (Mi === MDate.length - 1) {
+                resetMonth();
+                continue goYear;
+              }
+              continue goMonth;
+            }
+            continue;
+          }
+        } else if (dayRule.value === 'assWeek') {
+          // 如果指定了是第几周的星期几
+          // 获取每月 1 号是属于星期几
+          let thisWeek = formatDate(new Date(YY + '-' + MM + '-' + DD + ' 00:00:00'), 'week');
+          if (dayRuleSup.value[1] >= thisWeek) {
+            DD = (dayRuleSup.value[0] - 1) * 7 + dayRuleSup.value[1] - thisWeek + 1;
+          } else {
+            DD = dayRuleSup.value[0] * 7 + dayRuleSup.value[1] - thisWeek + 1;
+          }
+        } else if (dayRule.value === 'lastWeek') {
+          // 如果指定了每月最后一个星期几
+          // 校验并调整如果是 2 月 30 号这种日期传进来时需调整至正常月底
+          if (checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true) {
+            while (DD > 0 && checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true) {
+              DD--;
+              thisDD = DD < 10 ? '0' + DD : DD;
+            }
+          }
+          // 获取月末最后一天是星期几
+          let thisWeek = formatDate(new Date(YY + '-' + MM + '-' + thisDD + ' 00:00:00'), 'week');
+          // 找到要求中最近的那个星期几
+          if (dayRuleSup.value < thisWeek) {
+            DD -= thisWeek - dayRuleSup.value;
+          } else if (dayRuleSup.value > thisWeek) {
+            DD -= 7 - (dayRuleSup.value - thisWeek);
+          }
+        }
+        // 判断时间值是否小于 10 置换成“05”这种格式
+        DD = DD < 10 ? '0' + DD : DD;
+        // 循环“时”数组
+        goHour: for (let hi = hIdx; hi < hDate.length; hi++) {
+          let hh = hDate[hi] < 10 ? '0' + hDate[hi] : hDate[hi];
+          // 如果到达最大值时
+          if (nMin > mDate[mDate.length - 1]) {
+            resetMin();
+            if (hi === hDate.length - 1) {
+              resetHour();
+              if (Di === DDate.length - 1) {
                 resetDay();
                 if (Mi === MDate.length - 1) {
-                    resetMonth();
-                    continue goYear;
+                  resetMonth();
+                  continue goYear;
                 }
-                continue;
+                continue goMonth;
+              }
+              continue goDay;
             }
-            // 循环日期数组
-            goDay: for (let Di = DIdx; Di < DDate.length; Di++) {
-                // 赋值、方便后面运算
-                let DD = DDate[Di];
-                let thisDD = DD < 10 ? '0' + DD : DD;
-                // 如果到达最大值时
-                if (nHour > hDate[hDate.length - 1]) {
+            continue;
+          }
+          // 循环"分"数组
+          goMin: for (let mi = mIdx; mi < mDate.length; mi++) {
+            let mm = mDate[mi] < 10 ? '0' + mDate[mi] : mDate[mi];
+            // 如果到达最大值时
+            if (nSecond > sDate[sDate.length - 1]) {
+              resetSecond();
+              if (mi === mDate.length - 1) {
+                resetMin();
+                if (hi === hDate.length - 1) {
+                  resetHour();
+                  if (Di === DDate.length - 1) {
+                    resetDay();
+                    if (Mi === MDate.length - 1) {
+                      resetMonth();
+                      continue goYear;
+                    }
+                    continue goMonth;
+                  }
+                  continue goDay;
+                }
+                continue goHour;
+              }
+              continue;
+            }
+            // 循环"秒"数组
+            goSecond: for (let si = sIdx; si <= sDate.length - 1; si++) {
+              let ss = sDate[si] < 10 ? '0' + sDate[si] : sDate[si];
+              // 添加当前时间（时间合法性在日期循环时已经判断）
+              if (MM !== '00' && DD !== '00') {
+                resultArr.push(YY + '-' + MM + '-' + DD + ' ' + hh + ':' + mm + ':' + ss);
+                nums++;
+              }
+              // 如果条数满了就退出循环
+              if (nums === 5) break goYear;
+              // 如果到达最大值时
+              if (si === sDate.length - 1) {
+                resetSecond();
+                if (mi === mDate.length - 1) {
+                  resetMin();
+                  if (hi === hDate.length - 1) {
                     resetHour();
                     if (Di === DDate.length - 1) {
-                        resetDay();
-                        if (Mi === MDate.length - 1) {
-                            resetMonth();
-                            continue goYear;
-                        }
-                        continue goMonth;
+                      resetDay();
+                      if (Mi === MDate.length - 1) {
+                        resetMonth();
+                        continue goYear;
+                      }
+                      continue goMonth;
                     }
-                    continue;
+                    continue goDay;
+                  }
+                  continue goHour;
                 }
-                // 判断日期的合法性，不合法的话也是跳出当前循环
-                if (checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true && dayRule.value !== 'workDay' && dayRule.value !== 'lastWeek' && dayRule.value !== 'lastDay') {
-                    resetDay();
-                    continue goMonth;
-                }
-                // 如果日期规则中有值时
-                if (dayRule.value === 'lastDay') {
-                    // 如果不是合法日期则需要将前将日期调到合法日期即月末最后一天
-                    if (checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true) {
-                        while (DD > 0 && checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true) {
-                            DD--;
-                            thisDD = DD < 10 ? '0' + DD : DD;
-                        }
-                    }
-                } else if (dayRule.value === 'workDay') {
-                    // 校验并调整如果是2月30号这种日期传进来时需调整至正常月底
-                    if (checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true) {
-                        while (DD > 0 && checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true) {
-                            DD--;
-                            thisDD = DD < 10 ? '0' + DD : DD;
-                        }
-                    }
-                    // 获取达到条件的日期是星期X
-                    let thisWeek = formatDate(new Date(YY + '-' + MM + '-' + thisDD + ' 00:00:00'), 'week');
-                    // 当星期日时
-                    if (thisWeek === 1) {
-                        // 先找下一个日，并判断是否为月底
-                        DD++;
-                        thisDD = DD < 10 ? '0' + DD : DD;
-                        // 判断下一日已经不是合法日期
-                        if (checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true) {
-                            DD -= 3;
-                        }
-                    } else if (thisWeek === 7) {
-                        // 当星期6时只需判断不是1号就可进行操作
-                        if (dayRuleSup.value !== 1) {
-                            DD--;
-                        } else {
-                            DD += 2;
-                        }
-                    }
-                } else if (dayRule.value === 'weekDay') {
-                    // 如果指定了是星期几
-                    // 获取当前日期是属于星期几
-                    let thisWeek = formatDate(new Date(YY + '-' + MM + '-' + DD + ' 00:00:00'), 'week');
-                    // 校验当前星期是否在星期池（dayRuleSup）中
-                    if (dayRuleSup.value.indexOf(thisWeek) < 0) {
-                        // 如果到达最大值时
-                        if (Di === DDate.length - 1) {
-                            resetDay();
-                            if (Mi === MDate.length - 1) {
-                                resetMonth();
-                                continue goYear;
-                            }
-                            continue goMonth;
-                        }
-                        continue;
-                    }
-                } else if (dayRule.value === 'assWeek') {
-                    // 如果指定了是第几周的星期几
-                    // 获取每月1号是属于星期几
-                    let thisWeek = formatDate(new Date(YY + '-' + MM + '-' + DD + ' 00:00:00'), 'week');
-                    if (dayRuleSup.value[1] >= thisWeek) {
-                        DD = (dayRuleSup.value[0] - 1) * 7 + dayRuleSup.value[1] - thisWeek + 1;
-                    } else {
-                        DD = dayRuleSup.value[0] * 7 + dayRuleSup.value[1] - thisWeek + 1;
-                    }
-                } else if (dayRule.value === 'lastWeek') {
-                    // 如果指定了每月最后一个星期几
-                    // 校验并调整如果是2月30号这种日期传进来时需调整至正常月底
-                    if (checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true) {
-                        while (DD > 0 && checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true) {
-                            DD--;
-                            thisDD = DD < 10 ? '0' + DD : DD;
-                        }
-                    }
-                    // 获取月末最后一天是星期几
-                    let thisWeek = formatDate(new Date(YY + '-' + MM + '-' + thisDD + ' 00:00:00'), 'week');
-                    // 找到要求中最近的那个星期几
-                    if (dayRuleSup.value < thisWeek) {
-                        DD -= thisWeek - dayRuleSup.value;
-                    } else if (dayRuleSup.value > thisWeek) {
-                        DD -= 7 - (dayRuleSup.value - thisWeek)
-                    }
-                }
-                // 判断时间值是否小于10置换成“05”这种格式
-                DD = DD < 10 ? '0' + DD : DD;
-                // 循环“时”数组
-                goHour: for (let hi = hIdx; hi < hDate.length; hi++) {
-                    let hh = hDate[hi] < 10 ? '0' + hDate[hi] : hDate[hi]
-                    // 如果到达最大值时
-                    if (nMin > mDate[mDate.length - 1]) {
-                        resetMin();
-                        if (hi === hDate.length - 1) {
-                            resetHour();
-                            if (Di === DDate.length - 1) {
-                                resetDay();
-                                if (Mi === MDate.length - 1) {
-                                    resetMonth();
-                                    continue goYear;
-                                }
-                                continue goMonth;
-                            }
-                            continue goDay;
-                        }
-                        continue;
-                    }
-                    // 循环"分"数组
-                    goMin: for (let mi = mIdx; mi < mDate.length; mi++) {
-                        let mm = mDate[mi] < 10 ? '0' + mDate[mi] : mDate[mi];
-                        // 如果到达最大值时
-                        if (nSecond > sDate[sDate.length - 1]) {
-                            resetSecond();
-                            if (mi === mDate.length - 1) {
-                                resetMin();
-                                if (hi === hDate.length - 1) {
-                                    resetHour();
-                                    if (Di === DDate.length - 1) {
-                                        resetDay();
-                                        if (Mi === MDate.length - 1) {
-                                            resetMonth();
-                                            continue goYear;
-                                        }
-                                        continue goMonth;
-                                    }
-                                    continue goDay;
-                                }
-                                continue goHour;
-                            }
-                            continue;
-                        }
-                        // 循环"秒"数组
-                        goSecond: for (let si = sIdx; si <= sDate.length - 1; si++) {
-                            let ss = sDate[si] < 10 ? '0' + sDate[si] : sDate[si];
-                            // 添加当前时间（时间合法性在日期循环时已经判断）
-                            if (MM !== '00' && DD !== '00') {
-                                resultArr.push(YY + '-' + MM + '-' + DD + ' ' + hh + ':' + mm + ':' + ss)
-                                nums++;
-                            }
-                            // 如果条数满了就退出循环
-                            if (nums === 5) break goYear;
-                            // 如果到达最大值时
-                            if (si === sDate.length - 1) {
-                                resetSecond();
-                                if (mi === mDate.length - 1) {
-                                    resetMin();
-                                    if (hi === hDate.length - 1) {
-                                        resetHour();
-                                        if (Di === DDate.length - 1) {
-                                            resetDay();
-                                            if (Mi === MDate.length - 1) {
-                                                resetMonth();
-                                                continue goYear;
-                                            }
-                                            continue goMonth;
-                                        }
-                                        continue goDay;
-                                    }
-                                    continue goHour;
-                                }
-                                continue goMin;
-                            }
-                        } //goSecond
-                    } //goMin
-                }//goHour
-            }//goDay
-        }//goMonth
-    }
-    // 判断100年内的结果条数
+                continue goMin;
+              }
+            } //goSecond
+          } //goMin
+        } //goHour
+      } //goDay
+    } //goMonth
+  }
+  // 判断100年内的结果条数
     if (resultArr.length === 0) {
         resultList.value = ['没有达到条件的结果！'];
     } else {
