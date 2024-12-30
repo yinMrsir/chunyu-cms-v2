@@ -98,13 +98,13 @@ const weekday = ref(2)
 const checkboxList = ref([])
 const checkCopy = ref([2])
 const weekList = ref([
-    {key: 1, value: '星期日'},
-    {key: 2, value: '星期一'},
-    {key: 3, value: '星期二'},
-    {key: 4, value: '星期三'},
-    {key: 5, value: '星期四'},
-    {key: 6, value: '星期五'},
-    {key: 7, value: '星期六'}
+  { key: 1, value: '星期一' },
+  { key: 2, value: '星期二' },
+  { key: 3, value: '星期三' },
+  { key: 4, value: '星期四' },
+  { key: 5, value: '星期五' },
+  { key: 6, value: '星期六' },
+  { key: 7, value: '星期日' }
 ])
 const cycleTotal = computed(() => {
     cycle01.value = props.check(cycle01.value, 1, 6)
