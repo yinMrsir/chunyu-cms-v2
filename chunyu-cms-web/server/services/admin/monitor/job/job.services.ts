@@ -4,7 +4,7 @@ import { Job, jobTable, NewJob } from '~/server/db/schema/monitor/job';
 import { JobLog, jobLogTable } from '~/server/db/schema/monitor/jobLog';
 import { queryParams } from '~/server/db/query.helper';
 
-class JobServices {
+export class JobServices {
   private static instance: any;
   private readonly jobs: any;
   private constructor() {
@@ -256,7 +256,7 @@ class JobServices {
   }
 
   test(params: any[]) {
-    console.log(params);
+    console.log('定时任务参数', params);
   }
 }
 

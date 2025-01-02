@@ -10,6 +10,7 @@ import * as userToPostSchema from './system/userToPost';
 import * as loginInfoSchema from './monitor/log/logininfo';
 import * as jobSchema from './monitor/job';
 import * as jobLogSchema from './monitor/jobLog';
+import * as sysConfigSchema from './system/sysConfig';
 
 export default {
   ...userSchema,
@@ -23,5 +24,6 @@ export default {
   ...userToPostSchema,
   ...loginInfoSchema,
   ...jobSchema,
-  ...jobLogSchema
+  ...jobLogSchema,
+  ...sysConfigSchema
 };

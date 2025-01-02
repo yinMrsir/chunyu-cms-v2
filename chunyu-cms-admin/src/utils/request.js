@@ -86,7 +86,7 @@ service.interceptors.response.use(res => {
           .then(() => {
             isRelogin.show = false;
             useUserStore().logOut().then(() => {
-              location.href = '/index';
+              location.href = import.meta.env.VITE_APP_BUILD_BASE;
             })
           }).catch(() => {
           isRelogin.show = false;
