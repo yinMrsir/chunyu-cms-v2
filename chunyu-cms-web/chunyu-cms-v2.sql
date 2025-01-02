@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 19/12/2024 22:54:16
+ Date: 02/01/2025 10:18:15
 */
 
 SET NAMES utf8mb4;
@@ -34,9 +34,9 @@ CREATE TABLE `dept` (
   `mpath` varchar(255) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2024-12-14 09:20:20',
+  `create_time` datetime DEFAULT '2025-01-02 01:49:54',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2024-12-14 09:20:20',
+  `update_time` datetime DEFAULT '2025-01-02 01:49:54',
   PRIMARY KEY (`dept_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -63,9 +63,9 @@ CREATE TABLE `dict_data` (
   `dict_type_id` int DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2024-12-14 09:20:20',
+  `create_time` datetime DEFAULT '2025-01-02 01:49:54',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2024-12-14 09:20:20',
+  `update_time` datetime DEFAULT '2025-01-02 01:49:54',
   PRIMARY KEY (`dict_data_id`),
   KEY `dict_data_dict_type_id_dict_type_dict_id_fk` (`dict_type_id`),
   CONSTRAINT `dict_data_dict_type_id_dict_type_dict_id_fk` FOREIGN KEY (`dict_type_id`) REFERENCES `dict_type` (`dict_id`)
@@ -116,9 +116,9 @@ CREATE TABLE `dict_type` (
   `status` char(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2024-12-14 09:20:20',
+  `create_time` datetime DEFAULT '2025-01-02 01:49:54',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2024-12-14 09:20:20',
+  `update_time` datetime DEFAULT '2025-01-02 01:49:54',
   PRIMARY KEY (`dict_id`),
   UNIQUE KEY `dict_type_dict_type_unique` (`dict_type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -140,6 +140,99 @@ INSERT INTO `dict_type` VALUES (10, '任务分组', 'sys_job_group', '0', '任�
 COMMIT;
 
 -- ----------------------------
+-- Table structure for job
+-- ----------------------------
+DROP TABLE IF EXISTS `job`;
+CREATE TABLE `job` (
+  `job_id` int NOT NULL AUTO_INCREMENT,
+  `job_name` varchar(64) NOT NULL,
+  `job_group` varchar(64) DEFAULT 'DEFAULT',
+  `invoke_target` varchar(225) NOT NULL,
+  `cron_expression` varchar(225) NOT NULL,
+  `misfire_policy` varchar(20) DEFAULT '3',
+  `concurrent` varchar(1) DEFAULT '1',
+  `status` varchar(1) DEFAULT '0',
+  `remark` varchar(500) DEFAULT '',
+  `create_by` varchar(64) DEFAULT '',
+  `create_time` datetime DEFAULT '2025-01-02 01:49:54',
+  `update_by` varchar(64) DEFAULT '',
+  `update_time` datetime DEFAULT '2025-01-02 01:49:54',
+  PRIMARY KEY (`job_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of job
+-- ----------------------------
+BEGIN;
+INSERT INTO `job` VALUES (1, 'test', 'DEFAULT', 'test1(\'helloworld\')', '0 * * * * ?', '2', '1', '1', '', '', '2024-12-22 03:13:18', '', '2024-12-22 03:30:17');
+INSERT INTO `job` VALUES (2, 'test111', 'DEFAULT', 'test()', '0,1,2 * * * * ?', '1', '1', '1', '', '', '2024-12-22 03:25:42', '', '2024-12-22 03:41:45');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for job_log
+-- ----------------------------
+DROP TABLE IF EXISTS `job_log`;
+CREATE TABLE `job_log` (
+  `job_log_id` int NOT NULL AUTO_INCREMENT,
+  `job_name` varchar(64) DEFAULT NULL,
+  `job_group` varchar(64) DEFAULT NULL,
+  `invoke_target` varchar(500) DEFAULT NULL,
+  `job_message` varchar(500) DEFAULT '',
+  `status` varchar(1) DEFAULT '0',
+  `exception_info` varchar(2000) DEFAULT '',
+  `create_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`job_log_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of job_log
+-- ----------------------------
+BEGIN;
+INSERT INTO `job_log` VALUES (69, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:49:00');
+INSERT INTO `job_log` VALUES (70, 'test', 'DEFAULT', 'test1(\'helloworld\')', '执行任务失败', '1', 'Error: 方法不存在', '2024-12-22 03:49:00');
+INSERT INTO `job_log` VALUES (71, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:49:01');
+INSERT INTO `job_log` VALUES (72, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:49:02');
+INSERT INTO `job_log` VALUES (73, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:50:00');
+INSERT INTO `job_log` VALUES (74, 'test', 'DEFAULT', 'test1(\'helloworld\')', '执行任务失败', '1', 'Error: 方法不存在', '2024-12-22 03:50:00');
+INSERT INTO `job_log` VALUES (75, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:50:01');
+INSERT INTO `job_log` VALUES (76, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:50:02');
+INSERT INTO `job_log` VALUES (77, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:51:00');
+INSERT INTO `job_log` VALUES (78, 'test', 'DEFAULT', 'test1(\'helloworld\')', '执行任务失败', '1', 'Error: 方法不存在', '2024-12-22 03:51:00');
+INSERT INTO `job_log` VALUES (79, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:51:01');
+INSERT INTO `job_log` VALUES (80, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:51:02');
+INSERT INTO `job_log` VALUES (81, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:52:00');
+INSERT INTO `job_log` VALUES (82, 'test', 'DEFAULT', 'test1(\'helloworld\')', '执行任务失败', '1', 'Error: 方法不存在', '2024-12-22 03:52:00');
+INSERT INTO `job_log` VALUES (83, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:52:01');
+INSERT INTO `job_log` VALUES (84, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:52:02');
+INSERT INTO `job_log` VALUES (85, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:53:00');
+INSERT INTO `job_log` VALUES (86, 'test', 'DEFAULT', 'test1(\'helloworld\')', '执行任务失败', '1', 'Error: 方法不存在', '2024-12-22 03:53:00');
+INSERT INTO `job_log` VALUES (87, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:53:01');
+INSERT INTO `job_log` VALUES (88, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:53:02');
+INSERT INTO `job_log` VALUES (89, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:54:00');
+INSERT INTO `job_log` VALUES (90, 'test', 'DEFAULT', 'test1(\'helloworld\')', '执行任务失败', '1', 'Error: 方法不存在', '2024-12-22 03:54:00');
+INSERT INTO `job_log` VALUES (91, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:54:01');
+INSERT INTO `job_log` VALUES (92, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:54:02');
+INSERT INTO `job_log` VALUES (93, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:55:00');
+INSERT INTO `job_log` VALUES (94, 'test', 'DEFAULT', 'test1(\'helloworld\')', '执行任务失败', '1', 'Error: 方法不存在', '2024-12-22 03:55:00');
+INSERT INTO `job_log` VALUES (95, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:55:01');
+INSERT INTO `job_log` VALUES (96, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:55:02');
+INSERT INTO `job_log` VALUES (97, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:56:00');
+INSERT INTO `job_log` VALUES (98, 'test', 'DEFAULT', 'test1(\'helloworld\')', '执行任务失败', '1', 'Error: 方法不存在', '2024-12-22 03:56:00');
+INSERT INTO `job_log` VALUES (99, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:56:01');
+INSERT INTO `job_log` VALUES (100, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2024-12-22 03:56:02');
+INSERT INTO `job_log` VALUES (101, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2025-01-02 01:39:00');
+INSERT INTO `job_log` VALUES (102, 'test', 'DEFAULT', 'test1(\'helloworld\')', '执行任务失败', '1', 'Error: 方法不存在', '2025-01-02 01:39:00');
+INSERT INTO `job_log` VALUES (103, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2025-01-02 01:39:01');
+INSERT INTO `job_log` VALUES (104, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2025-01-02 01:39:02');
+INSERT INTO `job_log` VALUES (105, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2025-01-02 01:40:00');
+INSERT INTO `job_log` VALUES (106, 'test', 'DEFAULT', 'test1(\'helloworld\')', '执行任务失败', '1', 'Error: 方法不存在', '2025-01-02 01:40:00');
+INSERT INTO `job_log` VALUES (107, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2025-01-02 01:40:01');
+INSERT INTO `job_log` VALUES (108, 'test111', 'DEFAULT', 'test()', '执行任务成功', '0', '', '2025-01-02 01:40:02');
+INSERT INTO `job_log` VALUES (109, 'test', 'DEFAULT', 'test1(\'helloworld\')', '停止任务成功', '0', '', '2025-01-02 01:40:24');
+INSERT INTO `job_log` VALUES (110, 'test111', 'DEFAULT', 'test()', '停止任务成功', '0', '', '2025-01-02 01:40:25');
+COMMIT;
+
+-- ----------------------------
 -- Table structure for login_info
 -- ----------------------------
 DROP TABLE IF EXISTS `login_info`;
@@ -154,7 +247,7 @@ CREATE TABLE `login_info` (
   `msg` text NOT NULL DEFAULT (_utf8mb4''),
   `login_time` datetime NOT NULL,
   PRIMARY KEY (`info_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of login_info
@@ -172,6 +265,8 @@ INSERT INTO `login_info` VALUES (9, 'admin', '', '未知', 'Chrome131', 'macOS10
 INSERT INTO `login_info` VALUES (10, 'admin', '', '未知', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-16 11:59:56');
 INSERT INTO `login_info` VALUES (11, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-19 14:27:16');
 INSERT INTO `login_info` VALUES (12, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-19 14:52:50');
+INSERT INTO `login_info` VALUES (13, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-21 15:24:23');
+INSERT INTO `login_info` VALUES (14, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2025-01-02 01:39:13');
 COMMIT;
 
 -- ----------------------------
@@ -196,9 +291,9 @@ CREATE TABLE `menu` (
   `mpath` varchar(255) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2024-12-14 09:20:20',
+  `create_time` datetime DEFAULT '2025-01-02 01:49:54',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2024-12-14 09:20:20',
+  `update_time` datetime DEFAULT '2025-01-02 01:49:54',
   PRIMARY KEY (`menu_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -215,7 +310,7 @@ INSERT INTO `menu` VALUES (6, '菜单管理', 3, 'menu', 'system/menu/index', NU
 INSERT INTO `menu` VALUES (7, '部门管理', 4, 'dept', 'system/dept/index', NULL, 1, '0', 'C', '0', '0', 'system:dept:list', 'tree', 1, '1.7.', '', '', '2021-12-22 10:43:24', '', '2023-01-16 11:35:17');
 INSERT INTO `menu` VALUES (8, '岗位管理', 5, 'post', 'system/post/index', NULL, 1, '0', 'C', '0', '0', 'system:post:list', 'post', 1, '1.8.', '', '', '2021-12-22 10:43:24', '', '2023-01-16 11:35:17');
 INSERT INTO `menu` VALUES (9, '字典管理', 6, 'dict', 'system/dict/index', NULL, 1, '0', 'C', '0', '0', 'system:dict:list', 'dict', 1, '1.9.', '', '', '2021-12-22 10:43:24', '', '2023-01-16 11:35:17');
-INSERT INTO `menu` VALUES (10, '参数设置', 7, 'config', 'system/config/index', NULL, 1, '0', 'C', '1', '1', 'system:config:list', 'edit', 1, '1.10.', '', '', '2021-12-22 10:43:24', 'admin', '2024-12-14 07:05:11');
+INSERT INTO `menu` VALUES (10, '参数设置', 7, 'config', 'system/config/index', NULL, 1, '0', 'C', '0', '0', 'system:config:list', 'edit', 1, '1.10.', '', '', '2021-12-22 10:43:24', 'admin', '2025-01-02 01:50:19');
 INSERT INTO `menu` VALUES (11, '通知公告', 8, 'notice', 'system/notice/index', NULL, 1, '0', 'C', '1', '1', 'system:notice:list', 'message', 1, '1.11.', '', '', '2021-12-22 10:43:24', 'admin', '2024-12-14 07:05:06');
 INSERT INTO `menu` VALUES (12, '日志管理', 9, 'log', NULL, NULL, 1, '0', 'M', '0', '0', NULL, 'log', 1, '1.12.', '', '', '2021-12-22 10:43:24', '', '2023-01-16 11:35:17');
 INSERT INTO `menu` VALUES (13, '操作日志', 1, 'operlog', 'monitor/operlog/index', NULL, 1, '0', 'C', '1', '1', 'monitor:operlog:list', 'form', 12, '1.12.13.', '', '', '2021-12-22 10:43:24', 'admin', '2024-12-14 07:05:01');
@@ -251,7 +346,7 @@ INSERT INTO `menu` VALUES (42, '岗位导出', 5, '', NULL, NULL, 1, '0', 'F', '
 INSERT INTO `menu` VALUES (43, '在线用户', 1, 'online', 'monitor/online/index', NULL, 1, '0', 'C', '0', '0', 'monitor:online:list', 'online', 2, '2.43.', '', '', '2021-12-23 21:10:14', '', '2023-01-16 11:34:54');
 INSERT INTO `menu` VALUES (44, '表单构建', 1, 'build', 'tool/build/index', NULL, 1, '0', 'C', '1', '0', 'tool:build:list', 'build', 3, '3.44.', '', '', '2021-12-24 11:19:41', 'admin', '2023-01-29 15:57:10');
 INSERT INTO `menu` VALUES (45, '系统接口', 2, 'swagger', 'tool/swagger/index', NULL, 1, '0', 'C', '0', '0', 'tool:swagger:list', 'swagger', 3, '3.45.', '', '', '2021-12-24 11:20:28', '', '2023-01-16 11:34:45');
-INSERT INTO `menu` VALUES (46, '定时任务', 2, 'job', 'monitor/job/index', NULL, 1, '0', 'C', '0', '1', 'monitor:job:list', 'job', 2, '46.', '', '', '2021-12-24 11:53:24', 'admin', '2024-12-14 09:10:09');
+INSERT INTO `menu` VALUES (46, '定时任务', 2, 'job', 'monitor/job/index', NULL, 1, '0', 'C', '0', '0', 'monitor:job:list', 'job', 2, '46.', '', '', '2021-12-24 11:53:24', 'admin', '2024-12-21 15:24:39');
 INSERT INTO `menu` VALUES (48, '服务监控', 4, 'server', 'monitor/server/index', NULL, 1, '0', 'C', '0', '0', 'monitor:server:list', 'server', 2, '2.48.', '', '', '2021-12-24 11:55:16', '', '2023-01-16 11:34:54');
 INSERT INTO `menu` VALUES (49, '字典查询', 1, '', NULL, NULL, 1, '0', 'F', '0', '0', 'system:dict:query', '#', 9, '1.9.49.', '', '', '2021-12-29 14:58:27', '', '2023-01-16 11:35:17');
 INSERT INTO `menu` VALUES (50, '字典新增', 2, '', NULL, NULL, 1, '0', 'F', '0', '0', 'system:dict:add', '#', 9, '1.9.50.', '', '', '2021-12-29 14:59:15', '', '2023-01-16 11:35:17');
@@ -295,9 +390,9 @@ CREATE TABLE `post` (
   `status` varchar(1) NOT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2024-12-14 09:20:20',
+  `create_time` datetime DEFAULT '2025-01-02 01:49:54',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2024-12-14 09:20:20',
+  `update_time` datetime DEFAULT '2025-01-02 01:49:54',
   PRIMARY KEY (`post_id`),
   UNIQUE KEY `post_post_code_unique` (`post_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -325,9 +420,9 @@ CREATE TABLE `role` (
   `del_flag` char(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2024-12-14 09:20:20',
+  `create_time` datetime DEFAULT '2025-01-02 01:49:54',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2024-12-14 09:20:20',
+  `update_time` datetime DEFAULT '2025-01-02 01:49:54',
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -415,6 +510,31 @@ INSERT INTO `role_to_menu` VALUES (2, 64);
 COMMIT;
 
 -- ----------------------------
+-- Table structure for sys_config
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_config`;
+CREATE TABLE `sys_config` (
+  `sys_config_id` int NOT NULL AUTO_INCREMENT,
+  `config_name` varchar(100) DEFAULT '',
+  `config_key` varchar(100) DEFAULT '',
+  `config_value` text DEFAULT (_utf8mb4''),
+  `config_type` enum('Y','N') DEFAULT 'N',
+  `remark` varchar(500) DEFAULT '',
+  `create_by` varchar(64) DEFAULT '',
+  `create_time` datetime DEFAULT '2025-01-02 01:49:54',
+  `update_by` varchar(64) DEFAULT '',
+  `update_time` datetime DEFAULT '2025-01-02 01:49:54',
+  PRIMARY KEY (`sys_config_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of sys_config
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_config` VALUES (1, '默认密码', 'keyword', '123456', 'Y', '', '', '2025-01-02 01:53:49', '', '2025-01-02 01:53:49');
+COMMIT;
+
+-- ----------------------------
 -- Table structure for user
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
@@ -436,9 +556,9 @@ CREATE TABLE `user` (
   `dept_id` int DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2024-12-14 09:20:20',
+  `create_time` datetime DEFAULT '2025-01-02 01:49:54',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2024-12-14 09:20:20',
+  `update_time` datetime DEFAULT '2025-01-02 01:49:54',
   PRIMARY KEY (`user_id`),
   KEY `user_dept_id_dept_dept_id_fk` (`dept_id`),
   CONSTRAINT `user_dept_id_dept_dept_id_fk` FOREIGN KEY (`dept_id`) REFERENCES `dept` (`dept_id`)
