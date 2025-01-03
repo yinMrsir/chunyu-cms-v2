@@ -1,25 +1,26 @@
 import { like, eq, between, and, not, inArray } from 'drizzle-orm';
 import dayjs from 'dayjs';
-import { sysConfigTable } from '~/server/db/schema/system/sysConfig';
+import { NewSysConfig, SysConfig, sysConfigTable } from '~/server/db/schema/system/sysConfig';
+import { queryParams } from '~/server/db/query.helper';
 
 export class SysConfigServices {
-  async add(body) {
-    const sysConfig = await this.findByConfigKey(body.configKey, body.sysConfigId);
+  async add(body: NewSysConfig) {
+    const sysConfig = await this.findByConfigKey(body.configKey as string, body.sysConfigId);
     if (sysConfig) {
       throw createError({ statusCode: 400, statusMessage: '配置键名已存在' });
     }
     return db.insert(sysConfigTable).values(body);
   }
 
-  async update(body) {
-    const sysConfig = await this.findByConfigKey(body.configKey, body.sysConfigId);
+  async update(body: SysConfig) {
+    const sysConfig = await this.findByConfigKey(body.configKey as string, body.sysConfigId);
     if (sysConfig) {
       throw createError({ statusCode: 400, statusMessage: '配置键名已存在' });
     }
     return db.update(sysConfigTable).set(body).where(eq(sysConfigTable.sysConfigId, body.sysConfigId));
   }
 
-  async list(params) {
+  async list(params: Partial<SysConfig & queryParams>) {
     const { pageNum = 1, limit = 10 } = params || {};
     const offset = (pageNum - 1) * limit;
 
@@ -44,7 +45,7 @@ export class SysConfigServices {
     const where = and(...whereList);
     const rowsQuery = await db.query.sysConfigTable.findMany({
       where,
-      pageNum: Number(pageNum),
+      limit,
       offset
     });
     const totalQuery = db.$count(sysConfigTable, where);
@@ -75,10 +76,10 @@ export class SysConfigServices {
   }
 
   /* 通过字参数键名查询 */
-  async findByConfigKey(configKey: string, sysConfigId?: number) {
+  async findByConfigKey(configKey: string, sysConfigId?: number): Promise<SysConfig | undefined> {
     const whereList = [eq(sysConfigTable.configKey, configKey)];
     if (sysConfigId) {
-      whereList.push(not(sysConfigTable.sysConfigId, sysConfigId));
+      whereList.push(not(eq(sysConfigTable.sysConfigId, sysConfigId)));
     }
     const where = and(...whereList);
     return await db.query.sysConfigTable.findFirst({

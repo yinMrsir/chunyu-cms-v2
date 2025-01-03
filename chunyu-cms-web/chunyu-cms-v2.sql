@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 02/01/2025 10:18:15
+ Date: 03/01/2025 11:15:09
 */
 
 SET NAMES utf8mb4;
@@ -247,7 +247,7 @@ CREATE TABLE `login_info` (
   `msg` text NOT NULL DEFAULT (_utf8mb4''),
   `login_time` datetime NOT NULL,
   PRIMARY KEY (`info_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of login_info
@@ -267,6 +267,10 @@ INSERT INTO `login_info` VALUES (11, 'admin', '127.0.0.1', '内网IP', 'Chrome13
 INSERT INTO `login_info` VALUES (12, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-19 14:52:50');
 INSERT INTO `login_info` VALUES (13, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-21 15:24:23');
 INSERT INTO `login_info` VALUES (14, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2025-01-02 01:39:13');
+INSERT INTO `login_info` VALUES (15, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2025-01-02 09:02:29');
+INSERT INTO `login_info` VALUES (16, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2025-01-02 09:03:54');
+INSERT INTO `login_info` VALUES (17, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2025-01-02 09:04:54');
+INSERT INTO `login_info` VALUES (18, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2025-01-02 09:06:22');
 COMMIT;
 
 -- ----------------------------
@@ -531,7 +535,7 @@ CREATE TABLE `sys_config` (
 -- Records of sys_config
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_config` VALUES (1, '默认密码', 'keyword', '123456', 'Y', '', '', '2025-01-02 01:53:49', '', '2025-01-02 01:53:49');
+INSERT INTO `sys_config` VALUES (1, '登录过期时长', 'loginTime', '86400', 'Y', '一天(60 * 60 * 24)', '', '2025-01-02 01:53:49', '', '2025-01-03 02:20:44');
 COMMIT;
 
 -- ----------------------------

@@ -3,14 +3,8 @@ import dayjs from 'dayjs';
 import { queryParams } from '~/server/db/query.helper';
 import { NewRole, Role, roleTable } from '~/server/db/schema/system/role';
 import { roleToMenuTable } from '~/server/db/schema/system/roleToMenu';
-import { DeptServices } from '~/server/services/admin/system/dept/dept.services';
 
 export class RoleServices {
-  private deptService: DeptServices;
-  constructor() {
-    this.deptService = new DeptServices();
-  }
-
   /* 新增角色 */
   async add(role: NewRole & { menuIds: number[] }) {
     try {

@@ -43,6 +43,7 @@
     "element-plus": "^2.8.7",
     "exceljs": "^4.4.0",
     "gsap": "^3.12.5",
+    "image-size": "^1.2.0",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "mysql2": "^3.11.4",

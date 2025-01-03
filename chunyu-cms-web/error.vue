@@ -13,7 +13,7 @@
   });
 
   useHead({
-    title: `${props.error.statusCode} - ${message} | AI产品榜`
+    title: `${props.error.statusCode} | 淳渔`
   });
 </script>
 

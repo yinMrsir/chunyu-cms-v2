@@ -1,35 +1,35 @@
 <template>
   <el-select
-      class="remote-select"
-      :loading="loading"
-      :popper-append-to-body="false"
-      :model-value="modelValue"
-      :size="size"
-      :disabled="disabled"
-      filterable
-      clearable
-      remote
-      :multiple="multiple"
-      :remote-method="remoteSearch"
-      @change="onChange"
-      :placeholder="placeholder"
+    class="remote-select"
+    :loading="loading"
+    :popper-append-to-body="false"
+    :model-value="modelValue"
+    :size="size"
+    :disabled="disabled"
+    filterable
+    clearable
+    remote
+    :multiple="multiple"
+    :remote-method="remoteSearch"
+    :placeholder="placeholder"
+    @change="onChange"
   >
     <el-option
-        v-for="item in list"
-        :key="item.id"
-        :label="item.name || item.title"
-        :value="item.id"
+      v-for="item in list"
+      :key="item.id"
+      :label="item.name || item.title"
+      :value="item.id"
     >
       <!-- 影视 -->
       <div v-if="type === 'movie'" class="custom-option movie">
-        <img :src="item.poster"  alt=""/>
+        <img :src="item.poster" alt="" />
         <div class="content">
-          <span
-          >{{ item.title }}
-            <span class="rating" v-if="item.rating">
-              ({{ item.rating }}分)</span
-            ></span
-          >
+          <span>
+            {{ item.title }}
+            <span v-if="item.rating" class="rating">
+              ({{ item.rating }}分)
+            </span>
+          </span>
           <div class="label">
             {{ item.year }} {{ item.countries }} {{ item.genres }}
           </div>
@@ -38,10 +38,10 @@
 
       <!-- 影人/角色 -->
       <div
-          v-else-if="type === 'actor' || type === 'role'"
-          class="custom-option"
+        v-else-if="type === 'actor' || type === 'role'"
+        class="custom-option"
       >
-        <img :src="item.avatar"  alt=""/>
+        <img :src="item.avatar" alt="" />
         <div class="content">
           <span>{{ item.name }}</span>
         </div>
@@ -50,7 +50,7 @@
       <!-- 国家/地区 -->
       <div v-else-if="type === 'country'" class="custom-option country">
         <div class="flag">
-          <img :src="item.flag"  alt=""/>
+          <img :src="item.flag" alt="" />
         </div>
         <div class="name">
           <span>{{ item.name }}</span>
@@ -67,34 +67,49 @@
       </div>
     </el-option>
 
-    <template slot="empty">
+    <template #empty>
       <slot name="empty"></slot>
     </template>
   </el-select>
 </template>
 
-<script setup name="RemoteSelect">
-import {getActorList, getCountryList, getLanguageList, getRoleList} from './services'
+<script setup>
+import {
+  getActorList,
+  getCountryList,
+  getLanguageList,
+  getRoleList,
+} from "./services";
 
-const emit = defineEmits()
+defineOptions({
+  name: "RemoteSelect",
+});
+const emit = defineEmits(["update:modelValue", "on-change"]);
 const props = defineProps({
   // 搜索类型
   type: {
     required: true,
     type: String,
     validator(val) {
-      return ['movie', 'actor', 'role', 'country', 'company', 'language'].includes(val)
+      return [
+        "movie",
+        "actor",
+        "role",
+        "country",
+        "company",
+        "language",
+      ].includes(val);
     },
   },
 
   disabled: {
     type: Boolean,
-    default: false
+    default: false,
   },
 
   options: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
 
   multiple: {
@@ -103,7 +118,10 @@ const props = defineProps({
   },
 
   // 传入值
-  modelValue: [String, Object, Array, Number],
+  modelValue: {
+    type: [String, Object, Array, Number],
+    default: "",
+  },
 
   //
   size: {
@@ -121,74 +139,84 @@ const props = defineProps({
     type: Number,
     default: 20,
   },
-})
+});
 
 const loading = ref(false);
-const list = ref([])
+const list = ref([]);
 
-watch(() => props.modelValue, (val) => {
-  if(!val) {
-    list.value = []
-  }
-})
+watch(
+  () => props.modelValue,
+  (val) => {
+    if (!val) {
+      list.value = [];
+    }
+  },
+);
 
-watch(() => props.options, (nVal) => {
-  list.value = nVal
-}, {
-  deep: true,
-  immediate: true
-})
+watch(
+  () => props.options,
+  (nVal) => {
+    list.value = nVal;
+  },
+  {
+    deep: true,
+    immediate: true,
+  },
+);
 
 async function remoteSearch(keyword) {
-  if(!keyword) {
-    list.value = []
-    return
+  if (!keyword) {
+    list.value = [];
+    return;
   }
 
   let request = null;
 
   switch (props.type) {
-    case 'movie':
-      request = () => {}
+    case "movie":
+      request = () => {};
       break;
 
-    case 'actor':
-      request = getActorList
+    case "actor":
+      request = getActorList;
       break;
 
-    case 'role':
-      request = getRoleList
+    case "role":
+      request = getRoleList;
       break;
 
-    case 'country':
+    case "country":
       request = getCountryList;
       break;
 
-    case 'company':
-      request = () => {}
+    case "company":
+      request = () => {};
       break;
 
-    case 'language':
+    case "language":
       request = getLanguageList;
       break;
   }
 
-  let params = {
+  const params = {
     pageSize: props.perPage,
-    keyword
-  }
+    keyword,
+  };
 
   loading.value = true;
-  const { code, rows } = await request(params);
+  const {
+    code,
+    data: { rows },
+  } = await request(params);
   loading.value = false;
 
-  if(code === 200) {
-    if(['language'].includes(props.type)) {
-      rows.map(item => item.id = item.name)
+  if (code === 200) {
+    if (["language"].includes(props.type)) {
+      rows.map((item) => (item.id = item.name));
     }
 
-    if(['movie'].includes(props.type)) {
-      rows.map(item => item.genres = item.genres.join(','))
+    if (["movie"].includes(props.type)) {
+      rows.map((item) => (item.genres = item.genres.join(",")));
       // data.map(item => item.countries = item.countries.join(','))
     }
 
@@ -197,8 +225,8 @@ async function remoteSearch(keyword) {
 }
 
 function onChange(val) {
-  emit('update:modelValue', val)
-  emit('on-change', val)
+  emit("update:modelValue", val);
+  emit("on-change", val);
 }
 </script>
 
@@ -280,4 +308,3 @@ function onChange(val) {
   }
 }
 </style>
-
