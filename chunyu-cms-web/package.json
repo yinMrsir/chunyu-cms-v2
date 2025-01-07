@@ -6,7 +6,7 @@
     "dev": "nuxt dev --host 0.0.0.0",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "start": "pnpm build && pm2 restart aicpb.com",
+    "start": "pnpm build && pm2 restart chunyu-cms-web",
     "lint:js": "eslint --ext \".ts,.vue\" --ignore-path .gitignore .",
     "lint:prettier": "prettier --check .",
     "lint": "pnpm lint:js && pnpm lint:prettier",
