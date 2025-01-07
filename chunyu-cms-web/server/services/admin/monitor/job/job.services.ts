@@ -3,16 +3,13 @@ import { and, eq, inArray } from 'drizzle-orm';
 import { Job, jobTable, NewJob } from '~/server/db/schema/monitor/job';
 import { JobLog, jobLogTable } from '~/server/db/schema/monitor/jobLog';
 import { queryParams } from '~/server/db/query.helper';
+import { JOB_TASK_KEY } from '~/server/contants/redis.contant';
 
 export class JobServices {
   private static instance: any;
   private readonly jobs: any;
   private constructor() {
     this.jobs = {};
-
-    this.init().then(({ length }) => {
-      console.log(`定时任务启动成功: ${length}个`);
-    });
   }
 
   public static getInstance(): JobServices {
@@ -27,9 +24,6 @@ export class JobServices {
     for (const job of jobList) {
       await this.start(job);
     }
-    return {
-      length: jobList.length
-    };
   }
 
   async addJob(job: NewJob) {
@@ -106,6 +100,7 @@ export class JobServices {
       // @ts-ignore
       this[funName](argumens);
     });
+    console.info(`启动任务成功：${job.jobName}`);
     await db.insert(jobLogTable).values({
       jobName: job.jobName,
       jobGroup: job.jobGroup,

@@ -17,7 +17,7 @@ export class OnlineServices {
     const allOnline = await Promise.all(promiseArr);
     const rows = allOnline.filter((item: any) => {
       if (!item) return false;
-      return item.ipaddr.includes(ipaddr) && item.userName.includes(userName);
+      return item.ipaddr?.includes(ipaddr) && item.userName?.includes(userName);
     });
     return {
       rows,
