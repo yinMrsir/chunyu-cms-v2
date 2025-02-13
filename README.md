@@ -22,7 +22,7 @@
 
 ## 使用前
 
-如未安装`mysql`数据库和`redis`请先自行安装。mysql8.x，redis7。[安装教程](#相关链接)
+如未安装`mysql`数据库和`redis`请先自行安装。mysql8.x，redis7。[安装教程](#相关链接), 或[点击此处服务器部署流程](服务器部署流程.md)
 
 **mysql**和**redis**配置你可以到`chunyu-cms-web/nuxt.config.ts`进行配置。你也可以创建一个`chunyu-cms-web/.env`文件
 
@@ -85,7 +85,7 @@ node bin/deploy.js
 管理端：http://localhost:3000/admin/
 用户名：admin，密码：admin123
 
-此方式会把管理端代码拷贝到`chunyu-cms-web/public/admin`目录中，所以不需要再部署管理端。但此方式路由使用的是hash模式。
+此方式会把管理端代码拷贝到`chunyu-cms-web/admin`目录中，所以不需要再部署管理端。但此方式路由使用的是hash模式。
 
 ### 方式二：自行部署
 
