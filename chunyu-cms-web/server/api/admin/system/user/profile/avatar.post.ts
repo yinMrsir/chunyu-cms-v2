@@ -22,7 +22,7 @@ export default defineEventHandler(async (event: H3Event) => {
     // 提取文件扩展名（例如:png）
     const fileExtension = mimeType?.split('/')[1];
     const fileName = `${uploadPath}/${shareServices.generateRandomValue(9)}.${fileExtension}`;
-    const filePath = join(process.cwd(), '/public', fileName);
+    const filePath = join(process.cwd(), fileName);
     // 将文件内容写入到服务器上的指定路径
     await writeFile(filePath, file.data);
     await new UserServices().updateProfile({ avatar: fileName }, event.context.user.userId);

@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { writeFile } from 'fs/promises';
 import * as fs from 'fs';
-import { readMultipartFormData } from 'h3';
+import { EventHandlerRequest, H3Event, readMultipartFormData } from 'h3';
 import dayjs from 'dayjs';
 import * as sizeOf from 'image-size';
 import { SharedServices } from '~/server/services/admin/share/shared.services';
@@ -9,7 +9,7 @@ import { SharedServices } from '~/server/services/admin/share/shared.services';
 const shareServices = new SharedServices();
 const { uploadPath, imgHost } = useRuntimeConfig();
 
-export default defineEventHandler(async event => {
+export default defineEventHandler(async (event: H3Event<EventHandlerRequest>) => {
   try {
     const formData = await readMultipartFormData(event);
     const file = formData?.find(item => item.name === 'file');
@@ -24,7 +24,7 @@ export default defineEventHandler(async event => {
     // 提取文件扩展名（例如:png）
     const fileExtension = mimeType?.split('/')[1];
     const currentDate = dayjs().format('YYYY-MM-DD');
-    const dir = `public${uploadPath}/${currentDate}`;
+    const dir = `${uploadPath}/${currentDate}`;
     // 创建目录
     shareServices.createDirectorySync(dir);
     const fileName = `/${shareServices.generateRandomValue(9)}.${fileExtension}`;

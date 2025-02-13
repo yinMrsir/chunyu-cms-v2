@@ -1,3 +1,5 @@
+import path from 'path';
+
 export default defineNuxtConfig({
   // @ts-ignore
   devtools: true,
@@ -52,7 +54,18 @@ export default defineNuxtConfig({
         db: process.env.REDIS_DB || 0, // Defaults to 0
         ttl: process.env.REDIS_TTL || 60 * 60 * 24 // 默认存储一天
       }
-    }
+    },
+    // 注意生产环境需要配置nginx代理，详见nginx.conf
+    publicAssets: [
+      {
+        dir: path.resolve(__dirname, 'uploads'),
+        baseURL: '/uploads'
+      },
+      {
+        dir: path.resolve(__dirname, 'admin'),
+        baseURL: '/admin'
+      }
+    ]
   },
   runtimeConfig: {
     // mysql连接配置
