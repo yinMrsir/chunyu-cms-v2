@@ -26,5 +26,5 @@ logs
 ssl
 
 .data
-/public/uploads/
-/public/admin/
+uploads/
+admin/
