@@ -14,6 +14,11 @@ import * as sysConfigSchema from './system/sysConfig';
 // 以下是业务模块
 import * as countrySchema from './basic/country';
 import * as languageSchema from './basic/language';
+import * as bannerSchema from './basic/banner';
+import * as genreSchema from './basic/genre';
+import * as movieLevelSchema from './basic/movieLevel';
+import * as professionSchema from './basic/profession';
+import * as columnsSchema from './basic/columns';
 
 export default {
   ...userSchema,
@@ -30,5 +35,10 @@ export default {
   ...jobLogSchema,
   ...sysConfigSchema,
   ...countrySchema,
-  ...languageSchema
+  ...languageSchema,
+  ...bannerSchema,
+  ...genreSchema,
+  ...movieLevelSchema,
+  ...professionSchema,
+  ...columnsSchema
 };

@@ -85,7 +85,7 @@ node bin/deploy.js
 管理端：http://localhost:3000/admin/
 用户名：admin，密码：admin123
 
-此方式会把管理端代码拷贝到`chunyu-cms-web/admin`目录中，所以不需要再部署管理端。但此方式路由使用的是hash模式。
+此方式会把管理端代码拷贝到`chunyu-cms-web/public/admin`目录中，所以不需要再部署管理端。但此方式路由使用的是hash模式。
 
 ### 方式二：自行部署
 
@@ -115,13 +115,3 @@ pm2 start pm2.config.cjs
 ```
 
 Nuxt项目部署文档：https://nuxt.com/docs/getting-started/deployment
-
-## 相关链接
-
-win安装Docker: https://zhuanlan.zhihu.com/p/441965046
-
-docker安装redis：https://www.yinchunyu.com/other/redis.html
-
-docker安装mysql：https://www.runoob.com/docker/docker-install-mysql.html
-
-解决Navicat连接数据库提示`client does not support authentication：https://blog.csdn.net/lovedingd/article/details/106728292

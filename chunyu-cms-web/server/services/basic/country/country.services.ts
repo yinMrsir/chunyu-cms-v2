@@ -1,4 +1,4 @@
-import { and, inArray, like, sql } from 'drizzle-orm';
+import { and, eq, inArray, like, sql } from 'drizzle-orm';
 import { Country, countryTable, NewCountry } from '~/server/db/schema/basic/country';
 import { queryParams } from '~/server/db/query.helper';
 
@@ -10,7 +10,7 @@ export class CountryServices {
 
   /* 更新 */
   async update(body: Country) {
-    await db.update(countryTable).set(body);
+    await db.update(countryTable).set(body).where(eq(countryTable.countryId, body.countryId));
   }
 
   /* 分页查询 */

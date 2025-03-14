@@ -1,4 +1,4 @@
-import { and, inArray, like, sql } from 'drizzle-orm';
+import { and, eq, inArray, like, sql } from 'drizzle-orm';
 import { queryParams } from '~/server/db/query.helper';
 import { Language, languageTable, NewLanguage } from '~/server/db/schema/basic/language';
 import { countryTable } from '~/server/db/schema/basic/country';
@@ -11,7 +11,7 @@ export class LanguageServices {
 
   /* 更新 */
   async update(body: Language) {
-    await db.update(languageTable).set(body);
+    await db.update(languageTable).set(body).where(eq(languageTable.languageId, body.languageId));
   }
 
   /* 分页查询 */
