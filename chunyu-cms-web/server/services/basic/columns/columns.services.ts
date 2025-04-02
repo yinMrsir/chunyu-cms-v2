@@ -21,6 +21,12 @@ export class ColumnsServices {
     if (params?.name || params?.keyword) {
       whereList.push(like(columnsTable.name, `%${params.name || params.keyword}%`));
     }
+    if (params?.type) {
+      whereList.push(eq(columnsTable.type, params.type));
+    }
+    if (params?.status) {
+      whereList.push(eq(columnsTable.status, params.status));
+    }
     const where = and(...whereList);
 
     const rowsQuery = db.query.columnsTable.findMany({
@@ -37,6 +43,27 @@ export class ColumnsServices {
       rows,
       total
     };
+  }
+
+  allList(params?: Partial<Columns & { keyword: string }>) {
+    const whereList = [];
+    if (params?.name || params?.keyword) {
+      whereList.push(like(columnsTable.name, `%${params.name || params.keyword}%`));
+    }
+    if (params?.type) {
+      whereList.push(eq(columnsTable.type, params.type));
+    }
+    if (params?.status) {
+      whereList.push(eq(columnsTable.status, params.status));
+    }
+    const where = and(...whereList);
+
+    return db.query.columnsTable.findMany({
+      extras: {
+        id: sql`${columnsTable.columnId}`.as('id')
+      },
+      where
+    });
   }
 
   /* 删除 */

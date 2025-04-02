@@ -221,7 +221,7 @@ const { queryParams, form } = toRefs(data);
 /** 查询国家列表 */
 async function getList() {
   loading.value = true;
-  const data = await getGenreList(queryParams.value);
+  const { data } = await getGenreList(queryParams.value);
   list.value = data.rows;
   total.value = data.total;
   loading.value = false;

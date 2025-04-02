@@ -2,32 +2,26 @@
   <div class="app-container">
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button
-            type="primary"
-            plain
-            icon="Plus"
-            @click="handleAdd"
-        >新增</el-button>
+        <el-button type="primary" plain icon="Plus" @click="handleAdd"
+          >新增</el-button
+        >
       </el-col>
-      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar
+        v-model:show-search="showSearch"
+        @query-table="getList"
+      ></right-toolbar>
     </el-row>
-    <el-table border stripe v-loading="loading" :data="list" :span-method="spanMethod">
-      <el-table-column
-          prop="country.name"
-          label="所属国家"
-          width="120"
-      />
-      <el-table-column
-          prop="level"
-          label="家长引导"
-          width="120"
-      />
-      <el-table-column
-          prop="levelZh"
-          label="家长引导中文"
-          width="120"
-      />
-      <el-table-column prop="descript" label="引导模板" align="left" />
+    <el-table
+      v-loading="loading"
+      border
+      stripe
+      :data="list"
+      :span-method="spanMethod"
+    >
+      <el-table-column prop="country.name" label="所属国家" width="120" />
+      <el-table-column prop="level" label="家长引导" width="120" />
+      <el-table-column prop="levelZh" label="家长引导中文" width="120" />
+      <el-table-column prop="description" label="引导模板" align="left" />
       <el-table-column prop="status" label="类型状态" width="100">
         <template #default="scope">
           <dict-tag :options="sys_normal_disable" :value="scope.row.status" />
@@ -35,32 +29,32 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="130">
         <template #default="scope">
-          <el-button link type="primary" @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button link type="primary" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button link type="primary" @click="handleUpdate(scope.row)"
+            >编辑</el-button
+          >
+          <el-button link type="primary" @click="handleDelete(scope.row)"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
 
     <pagination
-        v-show="total > 0"
-        :total="total"
-        v-model:page="queryParams.pageNum"
-        v-model:limit="queryParams.pageSize"
-        @pagination="getList"
+      v-show="total > 0"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
+      :total="total"
+      @pagination="getList"
     />
 
-    <el-dialog
-        :title="title"
-        v-model="open"
-        width="800px"
-        append-to-body>
+    <el-dialog v-model="open" :title="title" width="800px" append-to-body>
       <el-form ref="levelRef" :model="form" label-width="100px" :rules="rules">
         <el-form-item label="国家/地区：" prop="countryId">
           <remote-select
-              v-model="form.countryId"
-              :options="country"
-              type="country"
-              placeholder="语言所属国家/地区"
+            v-model="form.countryId"
+            :options="country"
+            type="country"
+            placeholder="语言所属国家/地区"
           />
         </el-form-item>
 
@@ -70,35 +64,35 @@
 
         <el-form-item label="引导中文：" prop="levelZh">
           <el-input
-              v-model="form.levelZh"
-              placeholder="请输入家长引导中文等级"
+            v-model="form.levelZh"
+            placeholder="请输入家长引导中文等级"
           />
         </el-form-item>
 
         <el-form-item label="类型状态" prop="status">
           <el-select
-              v-model="form.status"
-              placeholder="状态"
-              clearable
-              style="width: 240px"
+            v-model="form.status"
+            placeholder="状态"
+            clearable
+            style="width: 240px"
           >
             <el-option
-                v-for="dict in sys_normal_disable"
-                :key="+dict.value"
-                :label="dict.label"
-                :value="+dict.value"
+              v-for="dict in sys_normal_disable"
+              :key="dict.value"
+              :label="dict.label"
+              :value="dict.value"
             />
           </el-select>
         </el-form-item>
 
-        <el-form-item label="引导模板：" prop="descript">
+        <el-form-item label="引导模板：" prop="description">
           <el-input
-              type="textarea"
-              v-model="form.descript"
-              :autosize="{ minRows: 4, maxRows: 8 }"
-              maxlength="100"
-              show-word-limit
-              placeholder="例：本片在${country}的评级为【${level}】，适合任何年龄观看。"
+            v-model="form.description"
+            type="textarea"
+            :autosize="{ minRows: 4, maxRows: 8 }"
+            maxlength="100"
+            show-word-limit
+            placeholder="例：本片在${country}的评级为【${level}】，适合任何年龄观看。"
           />
         </el-form-item>
       </el-form>
@@ -112,9 +106,13 @@
   </div>
 </template>
 
-
 <script setup>
-import { getLevelList, createLevel, deleteLevel, updateLevel } from './services'
+import {
+  getLevelList,
+  createLevel,
+  deleteLevel,
+  updateLevel,
+} from "./services";
 const { proxy } = getCurrentInstance();
 const { sys_normal_disable } = proxy.useDict("sys_normal_disable");
 
@@ -146,7 +144,7 @@ const rules = {
       trigger: "change",
     },
   ],
-  descript: [
+  description: [
     {
       required: true,
       trigger: "blur",
@@ -158,21 +156,21 @@ const rules = {
       trigger: "blur",
     },
   ],
-}
-const list = ref([])
-const total = ref(0)
-const loading = ref(true)
-const title = ref("")
-const open = ref(false)
-const country = []
+};
+const list = ref([]);
+const total = ref(0);
+const loading = ref(true);
+const title = ref("");
+const open = ref(false);
+const country = [];
 const data = reactive({
   form: {},
   queryParams: {
     keyword: undefined,
     pageNum: 1,
     pageSize: 10,
-  }
-})
+  },
+});
 
 const { queryParams, form } = toRefs(data);
 /** 新增按钮操作 */
@@ -183,10 +181,10 @@ function handleAdd() {
 }
 /** 提交按钮 */
 function submitForm() {
-  proxy.$refs["levelRef"].validate(valid => {
+  proxy.$refs.levelRef.validate((valid) => {
     if (valid) {
       if (form.value.id) {
-        console.log(form.value)
+        console.log(form.value);
         updateLevel(form.value).then(() => {
           proxy.$modal.msgSuccess("修改成功");
           open.value = false;
@@ -219,14 +217,14 @@ function handleDelete(row) {
     await deleteLevel(id);
     getList();
     proxy.$modal.msgSuccess("删除成功");
-  })
+  });
 }
 /** 修改按钮操作 */
 function handleUpdate(row) {
   reset();
   const id = row.id || ids.value[0];
   open.value = true;
-  const item = row.id ? row : list.value.find(value => value.id === id);
+  const item = row.id ? row : list.value.find((value) => value.id === id);
   form.value = { ...item };
   country.value = item.country ? [item.country] : [];
   title.value = "修改家长引导";
@@ -234,7 +232,7 @@ function handleUpdate(row) {
 /** 查询列表 */
 async function getList() {
   loading.value = true;
-  const data = await getLevelList(queryParams.value)
+  const { data } = await getLevelList(queryParams.value);
   list.value = data.rows;
   total.value = data.total;
   loading.value = false;
@@ -243,10 +241,7 @@ async function getList() {
 function spanMethod({ row, column, rowIndex, columnIndex }) {
   if (columnIndex === 0) {
     // 当 当前行与上一行内容相同时 返回0 0 意味消除
-    if (
-        rowIndex > 0 &&
-        row.countryId === list.value[rowIndex - 1]["countryId"]
-    ) {
+    if (rowIndex > 0 && row.countryId === list.value[rowIndex - 1].countryId) {
       return {
         rowspan: 0,
         colspan: 0,
@@ -254,7 +249,7 @@ function spanMethod({ row, column, rowIndex, columnIndex }) {
     } else {
       let rows = 1;
       for (let i = rowIndex; i < list.value.length - 1; i++) {
-        if (row["countryId"] === list.value[i + 1]["countryId"]) {
+        if (row.countryId === list.value[i + 1].countryId) {
           rows++;
         }
       }
@@ -267,5 +262,5 @@ function spanMethod({ row, column, rowIndex, columnIndex }) {
   }
 }
 
-getList()
+getList();
 </script>
