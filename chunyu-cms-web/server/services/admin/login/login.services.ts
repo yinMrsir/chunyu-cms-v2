@@ -87,7 +87,7 @@ export class LoginServices {
       );
       return { token };
     } catch (error) {
-      throw createError({ statusCode: 400, message: String(error) });
+      throw createError({ statusCode: 400, message: (error as any).message });
     }
   }
 
