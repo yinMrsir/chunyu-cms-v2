@@ -10,7 +10,7 @@ export const languageTable = mysqlTable('language', {
   // 中文全称
   fullName: varchar('full_name', { length: 50 }),
   // 所属国家
-  countryId: int('country_id').references(() => countryTable.countryId),
+  countryId: int('country_id'),
   // 英文简称
   nameEn: varchar('name_en', { length: 50 }),
   // 英文全称

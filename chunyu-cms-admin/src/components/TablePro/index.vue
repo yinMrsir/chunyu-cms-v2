@@ -147,7 +147,7 @@
                       ? scope.row[item.field]
                       : baseUrl + (scope.row[item.field] || '/default.jpg')
                 "
-                :style="item.style || { width: '70px', maxHeight: '100px' }"
+                :style="item.style || { width: '50px', maxHeight: '100px' }"
                 fit="cover"
               />
             </template>

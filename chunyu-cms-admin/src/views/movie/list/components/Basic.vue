@@ -80,9 +80,13 @@
             v-model="movie.columnValue"
             @change="columnValueChangeHandle"
           >
-            <el-radio v-for="dict in allColumn" :label="dict.value">{{
-              dict.name
-            }}</el-radio>
+            <el-radio
+              v-for="dict in allColumn"
+              :key="dict.id"
+              :label="dict.value"
+            >
+              {{ dict.name }}
+            </el-radio>
           </el-radio-group>
         </el-form-item>
 
@@ -255,7 +259,7 @@ import { getGenreAll } from "@/views/basic/genre/services";
 import { getColumnAll } from "@/views/basic/column/services";
 
 const { proxy } = getCurrentInstance();
-const emit = defineEmits();
+const emit = defineEmits(["success"]);
 const { movie_category_type } = proxy.useDict("movie_category_type");
 
 const id = ref("");
@@ -349,8 +353,13 @@ async function getMovieData() {
     genres: data.genres?.split(",") || [],
     versions: data.versions?.split(",") || [],
     languages: data.languages?.split(",") || [],
-    countryIds: data.countryIds?.split(",").map((value) => Number(value)) || [],
-    countryList: data.country,
+    countryIds: data.movieBasicToCountry?.map((value) => value.countryId) || [],
+    countryList:
+      data.movieBasicToCountry?.map((value) => ({
+        name: value.country.name,
+        id: value.country.countryId,
+        flag: value.country.flag,
+      })) || [],
     akas: data.akas?.split(",") || [],
     tags: data.tags?.split(",") || [],
   };
@@ -401,9 +410,7 @@ async function handleSubmit(formEl) {
       params.languages = movie.value.languages.length
         ? movie.value.languages.join(",")
         : null;
-      params.countryIds = movie.value.countryIds.length
-        ? movie.value.countryIds.join(",")
-        : null;
+      params.countryIds = movie.value.countryIds;
       params.genres = movie.value.genres.length
         ? movie.value.genres.join(",")
         : null;
@@ -412,7 +419,7 @@ async function handleSubmit(formEl) {
         : null;
       params.akas = movie.value.akas.length ? movie.value.akas.join(",") : null;
       params.tags = movie.value.tags.length ? movie.value.tags.join(",") : null;
-      if (params.id) {
+      if (params.movieBasicsId) {
         await updateMovie(params);
         proxy.$modal.msgSuccess("修改成功");
       } else {
@@ -428,7 +435,7 @@ async function handleSubmit(formEl) {
 
 /** 获取栏目 */
 async function getColumns() {
-  const { data } = await getColumnAll();
+  const { data } = await getColumnAll({ type: "1" });
   allColumn.value = data;
 }
 

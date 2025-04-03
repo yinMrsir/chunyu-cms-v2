@@ -14,10 +14,7 @@ export default defineEventHandler(async (event: H3Event<EventHandlerRequest>) =>
     const formData = await readMultipartFormData(event);
     const file = formData?.find(item => item.name === 'file');
     if (!file) {
-      return {
-        code: 400,
-        message: '未选择文件'
-      };
+      return createError({ statusCode: 400, statusMessage: '未选择文件' });
     }
     // 获取图片的MIME类型（例如:image/png）
     const mimeType = file.type;
@@ -31,20 +28,28 @@ export default defineEventHandler(async (event: H3Event<EventHandlerRequest>) =>
     const filePath = join(process.cwd(), dir, fileName);
     // 将文件内容写入到服务器上的指定路径
     await writeFile(filePath, file.data);
-    const dimensions = sizeOf.default(filePath);
-    const stats = fs.statSync(filePath);
-    return createApiResponse({
-      name: file.filename,
-      url: imgHost + `${uploadPath}/${currentDate}${fileName}`,
-      mimeType,
-      width: dimensions.width,
-      height: dimensions.height,
-      size: stats.size
-    });
-  } catch (error) {
-    return {
-      code: 500,
-      msg: String(error)
-    };
+    const size = fs.statSync(filePath).size;
+    if (mimeType === 'video/mp4') {
+      return createApiResponse({
+        name: file.filename,
+        url: imgHost + `${uploadPath}/${currentDate}${fileName}`,
+        mimeType,
+        size,
+        path: filePath
+      });
+    } else {
+      const dimensions = sizeOf.default(filePath);
+      const stats = fs.statSync(filePath);
+      return createApiResponse({
+        name: file.filename,
+        url: imgHost + `${uploadPath}/${currentDate}${fileName}`,
+        mimeType,
+        width: dimensions.width,
+        height: dimensions.height,
+        size: stats.size
+      });
+    }
+  } catch (error: any) {
+    return createError({ statusCode: 500, statusMessage: error.message });
   }
 });

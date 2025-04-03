@@ -51,6 +51,21 @@ export class LanguageServices {
     };
   }
 
+  async allList(params?: Partial<Language & { keyword: string }>) {
+    const whereList = [];
+    if (params?.name || params?.keyword) {
+      whereList.push(like(languageTable.name, `%${params.name || params.keyword}%`));
+    }
+    const where = and(...whereList);
+
+    return await db.query.languageTable.findMany({
+      extras: {
+        id: sql`${languageTable.languageId}`.as('id')
+      },
+      where
+    });
+  }
+
   /* 删除 */
   async delete(languageIds: string[]) {
     await db.delete(languageTable).where(

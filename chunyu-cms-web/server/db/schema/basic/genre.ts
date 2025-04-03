@@ -10,7 +10,7 @@ export const genreTable = mysqlTable('genre', {
   // 英文名称
   nameEn: varchar('name_en', { length: 50 }),
   // 状态
-  status: char('status').default('0'),
+  status: char('status', { length: 1 }).default('0'),
   ...columnsHelpers
 });
 

@@ -19,6 +19,10 @@ import * as genreSchema from './basic/genre';
 import * as movieLevelSchema from './basic/movieLevel';
 import * as professionSchema from './basic/profession';
 import * as columnsSchema from './basic/columns';
+import * as actorSchema from './movie/actor';
+import * as videoSchema from './movie/video';
+import * as movieBasicsSchema from './movie/movieBasics';
+import * as movieBasicToCountrySchema from './movie/movieBasicToCountry';
 
 export default {
   ...userSchema,
@@ -40,5 +44,9 @@ export default {
   ...genreSchema,
   ...movieLevelSchema,
   ...professionSchema,
-  ...columnsSchema
+  ...columnsSchema,
+  ...actorSchema,
+  ...videoSchema,
+  ...movieBasicsSchema,
+  ...movieBasicToCountrySchema
 };

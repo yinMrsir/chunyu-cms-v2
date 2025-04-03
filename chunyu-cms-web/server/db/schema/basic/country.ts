@@ -8,7 +8,7 @@ export const countryTable = mysqlTable('country', {
   // 编码
   code: varchar('code', { length: 255 }).default(''),
   // 类型 0:国家 1：地区
-  type: char('type').default('0'),
+  type: char('type', { length: 1 }).default('0'),
   // 中文全称
   fullName: varchar('full_name', { length: 255 }).default(''),
   // 所属大洲

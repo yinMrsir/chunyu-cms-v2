@@ -39,6 +39,21 @@ export class CountryServices {
     };
   }
 
+  async allList(params?: Partial<Country & { keyword: string }>) {
+    const whereList = [];
+    if (params?.name || params?.keyword) {
+      whereList.push(like(countryTable.name, `%${params.name || params.keyword}%`));
+    }
+    const where = and(...whereList);
+
+    return await db.query.countryTable.findMany({
+      extras: {
+        id: sql`${countryTable.countryId}`.as('id')
+      },
+      where
+    });
+  }
+
   /* 删除 */
   async delete(countryIds: string[]) {
     await db.delete(countryTable).where(

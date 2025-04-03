@@ -39,6 +39,24 @@ export class GenreServices {
     };
   }
 
+  async allList(params?: Partial<Genre & { keyword: string }>) {
+    const whereList = [];
+    if (params?.name || params?.keyword) {
+      whereList.push(like(genreTable.name, `%${params.name || params.keyword}%`));
+    }
+    if (params?.columnValue) {
+      whereList.push(eq(genreTable.columnValue, params.columnValue));
+    }
+    const where = and(...whereList);
+
+    return await db.query.genreTable.findMany({
+      extras: {
+        id: sql`${genreTable.genreId}`.as('id')
+      },
+      where
+    });
+  }
+
   /* 删除 */
   async delete(genreIds: string[]) {
     await db.delete(genreTable).where(

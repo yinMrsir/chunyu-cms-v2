@@ -159,7 +159,11 @@
       ></el-table-column>
       <el-table-column prop="address" label="国家/地区" min-width="160px">
         <template #default="scope">
-          {{ scope.row.country.map((value) => value.name).join(",") }}
+          {{
+            scope.row.movieBasicToCountry
+              ?.map((value) => value.country.name)
+              .join(",")
+          }}
         </template>
       </el-table-column>
       <el-table-column prop="year" label="年代"></el-table-column>
@@ -227,7 +231,7 @@ import { getGenreAll } from "@/views/basic/genre/services";
 import { getCountryAll } from "@/views/basic/country/services";
 import { getLanguageAll } from "@/views/basic/language/services";
 import { getColumnAll } from "@/views/basic/column/services";
-const baseUrl = import.meta.env.VITE_APP_BASE_API;
+
 const { proxy } = getCurrentInstance();
 const { movie_category_type } = proxy.useDict("movie_category_type");
 
@@ -239,7 +243,7 @@ const showSearch = ref(true);
 const queryParams = ref({
   keyword: undefined,
   pageNum: 1,
-  pageSize: 10,
+  limit: 10,
   columnValue: undefined,
   genres: undefined,
   country: undefined,
@@ -269,7 +273,7 @@ function handleAdd() {
 /** 查询国家列表 */
 async function getList() {
   loading.value = true;
-  const data = await getMovieList(queryParams.value);
+  const { data } = await getMovieList(queryParams.value);
   list.value = data.rows;
   total.value = data.total;
   loading.value = false;

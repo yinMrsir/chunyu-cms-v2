@@ -166,11 +166,9 @@ export class SharedServices {
   createDirectorySync(directoryPath: string) {
     try {
       if (fs.existsSync(process.cwd() + '/' + directoryPath)) {
-        console.log(`${directoryPath} 目录已经存在。`);
         return;
       }
       fs.mkdirSync(process.cwd() + '/' + directoryPath);
-      console.log(`${directoryPath} 目录已创建。`);
     } catch (err) {
       console.error(`创建目录 ${directoryPath} 时出错：`, err);
     }
