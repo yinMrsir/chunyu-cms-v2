@@ -11,11 +11,45 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 02/04/2025 16:31:08
+ Date: 03/04/2025 21:03:12
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for actor
+-- ----------------------------
+DROP TABLE IF EXISTS `actor`;
+CREATE TABLE `actor` (
+  `actor_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `avatar` varchar(255) DEFAULT '',
+  `name` varchar(255) NOT NULL,
+  `name_en` varchar(255) DEFAULT '',
+  `name_more` varchar(255) DEFAULT '',
+  `name_en_more` varchar(255) DEFAULT '',
+  `gender` varchar(10) DEFAULT '3',
+  `birthday` date DEFAULT NULL,
+  `death_day` date DEFAULT NULL,
+  `country_id` int DEFAULT NULL,
+  `born_place` varchar(255) NOT NULL DEFAULT '',
+  `brief` text,
+  `remark` varchar(500) DEFAULT '',
+  `create_by` varchar(64) DEFAULT '',
+  `create_time` datetime DEFAULT '2025-04-03 12:28:21',
+  `update_by` varchar(64) DEFAULT '',
+  `update_time` datetime DEFAULT '2025-04-03 12:28:21',
+  PRIMARY KEY (`actor_id`),
+  UNIQUE KEY `actor_id` (`actor_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of actor
+-- ----------------------------
+BEGIN;
+INSERT INTO `actor` VALUES (1, 'http://localhost:3000/uploads/2025-04-03/pDRmWJag7.jpeg', '申奥', '', '', '', '1', NULL, NULL, 1, '', NULL, '', '', '2025-04-03 03:25:01', '', '2025-04-03 05:56:50');
+INSERT INTO `actor` VALUES (2, 'http://localhost:3000/uploads/2025-04-03/BqDkpQUEo.jpeg', '王一博', 'Yibo Wang', '白牡丹,小王子', '', '1', '1997-08-05', NULL, 1, '', NULL, '', '', '2025-04-03 03:25:01', '', '2025-04-03 03:25:01');
+COMMIT;
 
 -- ----------------------------
 -- Table structure for banner
@@ -29,9 +63,9 @@ CREATE TABLE `banner` (
   `url_type` char(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `create_time` datetime DEFAULT '2025-04-03 12:28:21',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `update_time` datetime DEFAULT '2025-04-03 12:28:21',
   PRIMARY KEY (`banner_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -68,7 +102,7 @@ CREATE TABLE `country` (
   `country_id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `code` varchar(255) DEFAULT '',
-  `type` int DEFAULT '0',
+  `type` char(1) DEFAULT '0',
   `full_name` varchar(255) DEFAULT '',
   `continent` varchar(255) DEFAULT '',
   `name_en` varchar(255) DEFAULT '',
@@ -80,9 +114,9 @@ CREATE TABLE `country` (
   `brief` text DEFAULT (_utf8mb4''),
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `create_time` datetime DEFAULT '2025-04-03 12:28:21',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `update_time` datetime DEFAULT '2025-04-03 12:28:21',
   `end_date` date DEFAULT NULL,
   PRIMARY KEY (`country_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -91,11 +125,11 @@ CREATE TABLE `country` (
 -- Records of country
 -- ----------------------------
 BEGIN;
-INSERT INTO `country` VALUES (1, '中国', '', 0, '中华人民共和国', '亚洲', 'china', 'the People\'s Republic of China', '', NULL, NULL, 'http://localhost:3000/uploads/2025-01-03/nGKCeZYRd.jpeg', '', '', '', '2025-01-03 06:51:20', '', '2025-02-13 08:49:16', NULL);
-INSERT INTO `country` VALUES (2, '美国', 'USA', 0, '美利坚合众国', '北美洲', '', 'The United States of America', '', NULL, NULL, 'http://localhost:3000/uploads/2025-01-03/bvBagglbR.jpeg', '', '', '', '2025-01-03 06:51:20', '', '2025-01-03 06:54:40', NULL);
-INSERT INTO `country` VALUES (7, '英国', 'GBR', 0, '大不列颠及北爱尔兰联合王国', '欧洲', '', 'United Kingdom of Great Britain and Northern Ireland', '', NULL, NULL, NULL, '', '', '', '2025-02-14 02:41:05', '', '2025-02-14 02:41:05', NULL);
-INSERT INTO `country` VALUES (8, '韩国', '', 0, '大韩民国', '亚洲', '', 'Republic of Korea', '대한민국', NULL, NULL, NULL, '', '', '', '2025-02-14 02:41:05', '', '2025-02-14 02:41:05', NULL);
-INSERT INTO `country` VALUES (9, '日本', '', 0, '日本国', '亚洲', 'Japan', 'Japan', 'にほんこく', NULL, NULL, NULL, '', '', '', '2025-02-14 02:41:05', '', '2025-02-14 02:41:05', NULL);
+INSERT INTO `country` VALUES (1, '中国', '', '0', '中华人民共和国', '亚洲', 'china', 'the People\'s Republic of China', '', NULL, NULL, 'http://localhost:3000/uploads/2025-01-03/nGKCeZYRd.jpeg', '', '', '', '2025-01-03 06:51:20', '', '2025-02-13 08:49:16', NULL);
+INSERT INTO `country` VALUES (2, '美国', 'USA', '0', '美利坚合众国', '北美洲', '', 'The United States of America', '', NULL, NULL, 'http://localhost:3000/uploads/2025-01-03/bvBagglbR.jpeg', '', '', '', '2025-01-03 06:51:20', '', '2025-01-03 06:54:40', NULL);
+INSERT INTO `country` VALUES (7, '英国', 'GBR', '0', '大不列颠及北爱尔兰联合王国', '欧洲', '', 'United Kingdom of Great Britain and Northern Ireland', '', NULL, NULL, NULL, '', '', '', '2025-02-14 02:41:05', '', '2025-02-14 02:41:05', NULL);
+INSERT INTO `country` VALUES (8, '韩国', '', '0', '大韩民国', '亚洲', '', 'Republic of Korea', '대한민국', NULL, NULL, NULL, '', '', '', '2025-02-14 02:41:05', '', '2025-02-14 02:41:05', NULL);
+INSERT INTO `country` VALUES (9, '日本', '', '0', '日本国', '亚洲', 'Japan', 'Japan', 'にほんこく', NULL, NULL, NULL, '', '', '', '2025-02-14 02:41:05', '', '2025-02-14 02:41:05', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -115,9 +149,9 @@ CREATE TABLE `dept` (
   `mpath` varchar(255) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `create_time` datetime DEFAULT '2025-04-03 12:28:21',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `update_time` datetime DEFAULT '2025-04-03 12:28:21',
   PRIMARY KEY (`dept_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -144,13 +178,13 @@ CREATE TABLE `dict_data` (
   `dict_type_id` int DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `create_time` datetime DEFAULT '2025-04-03 12:28:21',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `update_time` datetime DEFAULT '2025-04-03 12:28:21',
   PRIMARY KEY (`dict_data_id`),
   KEY `dict_data_dict_type_id_dict_type_dict_id_fk` (`dict_type_id`),
   CONSTRAINT `dict_data_dict_type_id_dict_type_dict_id_fk` FOREIGN KEY (`dict_type_id`) REFERENCES `dict_type` (`dict_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of dict_data
@@ -186,6 +220,9 @@ INSERT INTO `dict_data` VALUES (27, 1, '默认', 'DEFAULT', NULL, 'default', 'N'
 INSERT INTO `dict_data` VALUES (28, 2, '系统', 'SYSTEM', NULL, 'default', 'N', '0', 10, '系统分组', '', '2022-01-06 17:32:12', '', '2022-01-06 17:32:12');
 INSERT INTO `dict_data` VALUES (29, 1, '网站', '1', NULL, 'default', 'N', '0', 11, '', '', '2025-02-14 02:41:05', '', '2025-02-14 02:41:05');
 INSERT INTO `dict_data` VALUES (30, 2, '外链', '2', NULL, 'default', 'N', '0', 11, '', '', '2025-02-14 02:41:05', '', '2025-02-14 02:41:05');
+INSERT INTO `dict_data` VALUES (31, 1, '男', '1', NULL, 'primary', 'N', '0', 12, '', '', '2025-04-03 03:25:01', 'admin', '2025-04-03 03:45:18');
+INSERT INTO `dict_data` VALUES (32, 2, '女', '2', NULL, 'danger', 'N', '0', 12, '', '', '2025-04-03 03:25:01', '', '2025-04-03 03:25:01');
+INSERT INTO `dict_data` VALUES (33, 3, '未知', '3', NULL, 'info', 'N', '0', 12, '', '', '2025-04-03 03:25:01', '', '2025-04-03 03:25:01');
 COMMIT;
 
 -- ----------------------------
@@ -199,12 +236,12 @@ CREATE TABLE `dict_type` (
   `status` char(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `create_time` datetime DEFAULT '2025-04-03 12:28:21',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `update_time` datetime DEFAULT '2025-04-03 12:28:21',
   PRIMARY KEY (`dict_id`),
   UNIQUE KEY `dict_type_dict_type_unique` (`dict_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of dict_type
@@ -221,6 +258,7 @@ INSERT INTO `dict_type` VALUES (8, '系统状态', 'sys_common_status', '0', '�
 INSERT INTO `dict_type` VALUES (9, '任务状态', 'sys_job_status', '0', '任务状态列表', '', '2022-01-06 17:21:50', 'admin', '2022-12-13 15:12:17');
 INSERT INTO `dict_type` VALUES (10, '任务分组', 'sys_job_group', '0', '任务分组列表', '', '2022-01-06 17:22:00', '', '2022-01-06 17:22:00');
 INSERT INTO `dict_type` VALUES (11, '栏目类型', 'column_type', '0', '', '', '2025-02-14 02:41:05', '', '2025-02-14 02:41:05');
+INSERT INTO `dict_type` VALUES (12, '性别类型', 'sex_type', '0', '', '', '2025-04-03 03:25:01', '', '2025-04-03 03:25:01');
 COMMIT;
 
 -- ----------------------------
@@ -235,9 +273,9 @@ CREATE TABLE `genre` (
   `status` char(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `create_time` datetime DEFAULT '2025-04-03 12:28:21',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `update_time` datetime DEFAULT '2025-04-03 12:28:21',
   PRIMARY KEY (`genre_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -287,9 +325,9 @@ CREATE TABLE `job` (
   `status` varchar(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `create_time` datetime DEFAULT '2025-04-03 12:28:21',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `update_time` datetime DEFAULT '2025-04-03 12:28:21',
   PRIMARY KEY (`job_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -333,12 +371,10 @@ CREATE TABLE `language` (
   `brief` varchar(500) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `create_time` datetime DEFAULT '2025-04-03 12:28:21',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-02-14 02:41:05',
-  PRIMARY KEY (`language_id`),
-  KEY `language_country_id_country_country_id_fk` (`country_id`),
-  CONSTRAINT `language_country_id_country_country_id_fk` FOREIGN KEY (`country_id`) REFERENCES `country` (`country_id`)
+  `update_time` datetime DEFAULT '2025-04-03 12:28:21',
+  PRIMARY KEY (`language_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
@@ -366,7 +402,7 @@ CREATE TABLE `login_info` (
   `msg` text NOT NULL DEFAULT (_utf8mb4''),
   `login_time` datetime NOT NULL,
   PRIMARY KEY (`info_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of login_info
@@ -405,6 +441,8 @@ INSERT INTO `login_info` VALUES (30, 'admin', '127.0.0.1', '内网IP', 'Chrome13
 INSERT INTO `login_info` VALUES (31, 'admin', '127.0.0.1', '内网IP', 'Chrome134', 'macOS10.15.7', '1', '密码错误', '2025-04-02 06:04:25');
 INSERT INTO `login_info` VALUES (32, 'admin', '127.0.0.1', '内网IP', 'Chrome134', 'macOS10.15.7', '1', '验证码错误', '2025-04-02 06:05:42');
 INSERT INTO `login_info` VALUES (33, 'admin', '127.0.0.1', '内网IP', 'Chrome134', 'macOS10.15.7', '0', '登录成功', '2025-04-02 06:06:08');
+INSERT INTO `login_info` VALUES (34, 'admin', '127.0.0.1', '内网IP', 'Chrome134', 'macOS10.15.7', '0', '登录成功', '2025-04-03 06:19:34');
+INSERT INTO `login_info` VALUES (35, 'admin', '127.0.0.1', '内网IP', 'Chrome134', 'macOS10.15.7', '0', '登录成功', '2025-04-03 11:07:45');
 COMMIT;
 
 -- ----------------------------
@@ -429,11 +467,11 @@ CREATE TABLE `menu` (
   `mpath` varchar(255) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `create_time` datetime DEFAULT '2025-04-03 12:28:21',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `update_time` datetime DEFAULT '2025-04-03 12:28:21',
   PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of menu
@@ -514,7 +552,7 @@ INSERT INTO `menu` VALUES (73, '任务导出', 7, '', NULL, NULL, 1, '0', 'F', '
 INSERT INTO `menu` VALUES (93, '缓存管理', 1, 'cache', 'monitor/cache/index', NULL, 1, '0', 'C', '0', '0', 'monitor:cache:list', 'redis', 2, '2.93.', '', 'admin', '2023-03-27 14:14:04', 'admin', '2023-03-27 15:06:32');
 INSERT INTO `menu` VALUES (96, '缓存查询', 1, '', NULL, NULL, 1, '0', 'F', '0', '0', 'monitor:cache:query', '#', 93, '2.93.96.', '', 'admin', '2023-03-27 16:08:06', 'admin', '2023-03-27 16:08:20');
 INSERT INTO `menu` VALUES (97, '缓存删除', 2, '', NULL, NULL, 1, '0', 'F', '0', '0', 'monitor:cache:remove', '#', 93, '2.93.97.', '', 'admin', '2023-03-27 16:09:19', 'admin', '2023-03-27 16:09:50');
-INSERT INTO `menu` VALUES (98, '基础数据', 1, 'basic', NULL, NULL, 1, '0', 'M', '0', '0', NULL, 'tab', 0, '', '', 'admin', '2025-01-02 01:49:54', 'admin', '2025-01-02 01:49:54');
+INSERT INTO `menu` VALUES (98, '基础数据', 2, 'basic', NULL, NULL, 1, '0', 'M', '0', '0', NULL, 'tab', 0, '', '', 'admin', '2025-01-02 01:49:54', 'admin', '2025-04-03 08:09:38');
 INSERT INTO `menu` VALUES (99, '国家管理', 1, 'country', 'basic/country/index', NULL, 1, '0', 'C', '0', '0', NULL, 'peoples', 98, '99.', '', 'admin', '2025-01-02 01:49:54', 'admin', '2025-01-02 01:49:54');
 INSERT INTO `menu` VALUES (100, '语言管理', 2, 'language', 'basic/language/index', NULL, 1, '0', 'C', '0', '0', NULL, 'nested', 98, '100.', '', 'admin', '2025-01-02 01:49:54', 'admin', '2025-01-02 01:49:54');
 INSERT INTO `menu` VALUES (101, '类型管理', 3, 'genre', 'basic/genre/index', NULL, 1, '0', 'C', '0', '0', NULL, 'row', 98, '101.', '', 'admin', '2025-01-02 01:49:54', 'admin', '2025-01-02 01:49:54');
@@ -522,6 +560,80 @@ INSERT INTO `menu` VALUES (102, '影人职务', 4, 'profession', 'basic/professi
 INSERT INTO `menu` VALUES (103, '家长引导', 5, 'level', 'basic/level/index', NULL, 1, '0', 'C', '0', '0', NULL, 'server', 98, '103.', '', 'admin', '2025-01-02 01:49:54', 'admin', '2025-01-02 01:49:54');
 INSERT INTO `menu` VALUES (104, '栏目管理', 1, 'column', 'basic/column/index', NULL, 1, '0', 'C', '0', '0', NULL, 'tree-table', 98, '104.', '', 'admin', '2025-02-14 02:41:05', 'admin', '2025-02-14 02:49:22');
 INSERT INTO `menu` VALUES (105, '横幅管理', 5, 'banner', 'basic/banner/index', NULL, 1, '0', 'C', '0', '0', NULL, 'druid', 98, '105.', '', 'admin', '2025-02-14 02:41:05', 'admin', '2025-02-14 02:41:05');
+INSERT INTO `menu` VALUES (106, '影视管理', 1, 'movie', NULL, NULL, 1, '0', 'M', '0', '0', NULL, 'redis-list', 0, '', '', 'admin', '2025-04-03 03:25:01', 'admin', '2025-04-03 03:25:01');
+INSERT INTO `menu` VALUES (107, '影人列表', 1, 'actor', 'movie/actor/list/index', NULL, 1, '0', 'C', '0', '0', NULL, 'list', 106, '107.', '', 'admin', '2025-04-03 03:25:01', 'admin', '2025-04-03 06:03:02');
+INSERT INTO `menu` VALUES (108, '视频列表', 2, 'video', 'movie/video/list/index', NULL, 1, '0', 'C', '0', '0', NULL, 'list', 106, '108.', '', 'admin', '2025-04-03 03:25:01', 'admin', '2025-04-03 06:03:12');
+INSERT INTO `menu` VALUES (109, '影视列表', 3, 'list', 'movie/list/index', NULL, 1, '0', 'C', '0', '0', NULL, 'list', 106, '109.', '', 'admin', '2025-04-03 06:22:02', 'admin', '2025-04-03 06:22:02');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for movie_basic_to_country
+-- ----------------------------
+DROP TABLE IF EXISTS `movie_basic_to_country`;
+CREATE TABLE `movie_basic_to_country` (
+  `movie_basics_id` int DEFAULT NULL,
+  `country_id` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of movie_basic_to_country
+-- ----------------------------
+BEGIN;
+INSERT INTO `movie_basic_to_country` VALUES (4, 1);
+INSERT INTO `movie_basic_to_country` VALUES (4, 2);
+INSERT INTO `movie_basic_to_country` VALUES (4, 7);
+INSERT INTO `movie_basic_to_country` VALUES (1, 1);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for movie_basics
+-- ----------------------------
+DROP TABLE IF EXISTS `movie_basics`;
+CREATE TABLE `movie_basics` (
+  `movie_basics_id` int NOT NULL AUTO_INCREMENT,
+  `status` char(1) DEFAULT '0',
+  `release_status` char(1) DEFAULT '0',
+  `release_date` date DEFAULT NULL,
+  `title` varchar(50) NOT NULL,
+  `poster` varchar(300) DEFAULT NULL,
+  `bg_color` varchar(100) DEFAULT NULL,
+  `title_en` varchar(100) DEFAULT NULL,
+  `title_original` varchar(100) DEFAULT NULL,
+  `akas` varchar(100) DEFAULT NULL,
+  `column_value` varchar(255) DEFAULT NULL,
+  `genres` varchar(100) DEFAULT NULL,
+  `year` int DEFAULT NULL,
+  `pub_date` datetime DEFAULT NULL,
+  `duration` varchar(100) DEFAULT NULL,
+  `durations` varchar(100) DEFAULT NULL,
+  `versions` varchar(100) DEFAULT NULL,
+  `egg_hunt` int DEFAULT NULL,
+  `color` char(1) DEFAULT NULL,
+  `season_count` int DEFAULT NULL,
+  `current_season` int DEFAULT NULL,
+  `episode_count` int DEFAULT NULL,
+  `current_episode` int DEFAULT NULL,
+  `the_end` char(1) DEFAULT NULL,
+  `languages` varchar(100) DEFAULT NULL,
+  `tags` varchar(100) DEFAULT NULL,
+  `summary` varchar(1000) DEFAULT NULL,
+  `is_pay` int NOT NULL DEFAULT '0',
+  `payment_amount` int NOT NULL DEFAULT '0',
+  `free_duration` int NOT NULL DEFAULT '1',
+  `remark` varchar(500) DEFAULT '',
+  `create_by` varchar(64) DEFAULT '',
+  `create_time` datetime DEFAULT '2025-04-03 12:28:21',
+  `update_by` varchar(64) DEFAULT '',
+  `update_time` datetime DEFAULT '2025-04-03 12:28:21',
+  PRIMARY KEY (`movie_basics_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of movie_basics
+-- ----------------------------
+BEGIN;
+INSERT INTO `movie_basics` VALUES (1, '0', '2', NULL, '大宋少年志2', 'http://localhost:3000/uploads/2025-04-03/3I4O3ob3p.png', NULL, NULL, NULL, NULL, 'tv', '国产剧', 2023, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 27, 2, '0', '国语', '剧情,古装', '<p>庆历年间，北宋为免除战事，维护各民族间的和平与稳定，借秘阁之名培训少年暗探。经过严密的选拔和审查，聪慧的元仲辛、美貌机敏的赵简、从不杀生的小景、绝不说谎的王宽、不爱交流的薛映、性格开朗的韦衙内六位少年组成了秘阁第七斋。在经历了一次次生死相关的任务后，曾经年轻懵懂的少年们逐渐成长，他们彼此团结，用自己的热血和忠诚为保卫和平献身消除大宋面临的灾难。遍体鳞伤的少年们，终于可以踏上归家之路，他们为国而战，百死无悔，同时他们也相信，未来的岁月里，会有更多少年，为了理想而战，不懂后退，世界总是被这样的少年点亮，那是名为希望的光芒。</p>', 1, 5, 1, '', '', '2025-04-03 12:28:21', '', '2025-04-03 13:01:57');
+INSERT INTO `movie_basics` VALUES (4, '0', '0', NULL, '121', 'http://localhost:3000/uploads/2025-04-03/DE47ChRy7.jpeg', NULL, NULL, NULL, NULL, 'movie', '喜剧片', 111, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '<p>11ee</p>', 0, 0, 1, '', '', '2025-04-03 12:28:21', '', '2025-04-03 13:01:04');
 COMMIT;
 
 -- ----------------------------
@@ -537,9 +649,9 @@ CREATE TABLE `movie_level` (
   `description` varchar(255) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `create_time` datetime DEFAULT '2025-04-03 12:28:21',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `update_time` datetime DEFAULT '2025-04-03 12:28:21',
   PRIMARY KEY (`movie_level_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -556,11 +668,11 @@ INSERT INTO `movie_level` VALUES (12, 9, 'G', NULL, '0', '本片在${country}的
 INSERT INTO `movie_level` VALUES (13, 9, 'PG-12', NULL, '0', '本片在${country}的评级为【${level}】，12岁以下的人要有家长陪同才可观看。', '', 'admin', '2023-03-02 14:42:04', 'admin', '2023-03-02 14:42:04');
 INSERT INTO `movie_level` VALUES (14, 9, 'R-15', NULL, '0', '本片在${country}的评级为【${level}】，15岁以下禁止入场。', '', 'admin', '2023-03-02 14:42:22', 'admin', '2023-03-02 14:42:22');
 INSERT INTO `movie_level` VALUES (15, 9, 'R-18', NULL, '0', '本片在${country}的评级为【${level}】，18岁以下禁止入场。', '', 'admin', '2023-03-02 14:42:43', 'admin', '2023-03-02 14:42:43');
-INSERT INTO `movie_level` VALUES (16, 12, 'I', NULL, '0', '本片在${country}的评级为【${level}】，适合任何年龄人士观看。', '', 'admin', '2023-03-02 14:44:23', 'admin', '2023-03-02 14:44:23');
-INSERT INTO `movie_level` VALUES (17, 12, 'Ⅱ', NULL, '0', '本片在${country}的评级为【${level}】，儿童不宜观看。', '', 'admin', '2023-03-02 14:44:46', 'admin', '2023-03-02 14:44:46');
-INSERT INTO `movie_level` VALUES (18, 12, 'Ⅲ', NULL, '0', '本片在${country}的评级为【${level}】，只准18岁或以上人士观看。', '', 'admin', '2023-03-02 14:45:21', 'admin', '2023-03-02 14:45:21');
-INSERT INTO `movie_level` VALUES (19, 12, 'ⅡA', NULL, '0', '本片在${country}的评级为【${level}】，儿童不宜。', '', 'admin', '2023-03-02 14:45:41', 'admin', '2023-03-02 14:45:41');
-INSERT INTO `movie_level` VALUES (20, 12, 'ⅡB', NULL, '0', '本片在${country}的评级为【${level}】，青少年及儿童不宜。', '', 'admin', '2023-03-02 14:45:57', 'admin', '2023-03-02 14:45:57');
+INSERT INTO `movie_level` VALUES (16, 1, 'I', NULL, '0', '本片在${country}的评级为【${level}】，适合任何年龄人士观看。', '', 'admin', '2023-03-02 14:44:23', 'admin', '2025-04-03 03:52:31');
+INSERT INTO `movie_level` VALUES (17, 1, 'Ⅱ', NULL, '0', '本片在${country}的评级为【${level}】，儿童不宜观看。', '', 'admin', '2023-03-02 14:44:46', 'admin', '2025-04-03 03:52:37');
+INSERT INTO `movie_level` VALUES (18, 1, 'Ⅲ', NULL, '0', '本片在${country}的评级为【${level}】，只准18岁或以上人士观看。', '', 'admin', '2023-03-02 14:45:21', 'admin', '2025-04-03 03:52:40');
+INSERT INTO `movie_level` VALUES (19, 1, 'ⅡA', NULL, '0', '本片在${country}的评级为【${level}】，儿童不宜。', '', 'admin', '2023-03-02 14:45:41', 'admin', '2025-04-03 03:52:44');
+INSERT INTO `movie_level` VALUES (20, 1, 'ⅡB', NULL, '0', '本片在${country}的评级为【${level}】，青少年及儿童不宜。', '', 'admin', '2023-03-02 14:45:57', 'admin', '2025-04-03 03:52:52');
 COMMIT;
 
 -- ----------------------------
@@ -575,9 +687,9 @@ CREATE TABLE `post` (
   `status` varchar(1) NOT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `create_time` datetime DEFAULT '2025-04-03 12:28:21',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `update_time` datetime DEFAULT '2025-04-03 12:28:21',
   PRIMARY KEY (`post_id`),
   UNIQUE KEY `post_post_code_unique` (`post_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -602,9 +714,9 @@ CREATE TABLE `profession` (
   `parent_id` int DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `create_time` datetime DEFAULT '2025-04-03 12:28:21',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `update_time` datetime DEFAULT '2025-04-03 12:28:21',
   PRIMARY KEY (`profession_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -641,9 +753,9 @@ CREATE TABLE `role` (
   `del_flag` char(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `create_time` datetime DEFAULT '2025-04-03 12:28:21',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `update_time` datetime DEFAULT '2025-04-03 12:28:21',
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -742,9 +854,9 @@ CREATE TABLE `sys_config` (
   `config_type` enum('Y','N') DEFAULT 'N',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `create_time` datetime DEFAULT '2025-04-03 12:28:21',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `update_time` datetime DEFAULT '2025-04-03 12:28:21',
   PRIMARY KEY (`sys_config_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -777,9 +889,9 @@ CREATE TABLE `user` (
   `dept_id` int DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `create_time` datetime DEFAULT '2025-04-03 12:28:21',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-02-14 02:41:05',
+  `update_time` datetime DEFAULT '2025-04-03 12:28:21',
   PRIMARY KEY (`user_id`),
   KEY `user_dept_id_dept_dept_id_fk` (`dept_id`),
   CONSTRAINT `user_dept_id_dept_dept_id_fk` FOREIGN KEY (`dept_id`) REFERENCES `dept` (`dept_id`)
@@ -832,6 +944,37 @@ CREATE TABLE `user_to_role` (
 BEGIN;
 INSERT INTO `user_to_role` VALUES (1, 1);
 INSERT INTO `user_to_role` VALUES (2, 2);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for video
+-- ----------------------------
+DROP TABLE IF EXISTS `video`;
+CREATE TABLE `video` (
+  `video_id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `poster` longtext NOT NULL,
+  `name` text,
+  `path` text,
+  `duration` int DEFAULT NULL,
+  `height` int DEFAULT NULL,
+  `width` int DEFAULT NULL,
+  `size` int DEFAULT NULL,
+  `remark` varchar(500) DEFAULT '',
+  `create_by` varchar(64) DEFAULT '',
+  `create_time` datetime DEFAULT '2025-04-03 12:28:21',
+  `update_by` varchar(64) DEFAULT '',
+  `update_time` datetime DEFAULT '2025-04-03 12:28:21',
+  PRIMARY KEY (`video_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of video
+-- ----------------------------
+BEGIN;
+INSERT INTO `video` VALUES (1, '超能一家人', 'http://localhost:3000/uploads/2025-04-03/vyDvWDGSc.mp4', 'http://localhost:3000/uploads/2025-04-03/r938IoHbp.jpeg', '1692668895164-668765805-403060223.mp4', '/Users/yinchunyu/my/project/chunyu-cms-v2/chunyu-cms-web/uploads/2025-04-03/vyDvWDGSc.mp4', 74, 486, 864, 18737380, '', '', '2025-04-03 06:22:02', '', '2025-04-03 07:57:18');
+INSERT INTO `video` VALUES (2, '灌篮高手', 'http://localhost:3000/uploads/2025-04-03/93iXAgPes.mp4', 'http://localhost:3000/uploads/2025-04-03/jJEy1UQ9N.jpeg', '1682085201153-202759664-403030638.mp4', '/Users/yinchunyu/my/project/chunyu-cms-v2/chunyu-cms-web/uploads/2025-04-03/93iXAgPes.mp4', 15, 486, 864, 3371942, '', '', '2025-04-03 06:22:02', '', '2025-04-03 06:22:02');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
