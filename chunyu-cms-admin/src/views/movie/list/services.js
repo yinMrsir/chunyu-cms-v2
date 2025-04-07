@@ -75,7 +75,7 @@ export function deletePhotosMovie({ id, remark }) {
 // 新增相关视频
 export function createMovieVideos(data) {
   return request({
-    url: "/movie/videos",
+    url: "/movie/movieVideo",
     method: "post",
     data,
   });
@@ -84,7 +84,7 @@ export function createMovieVideos(data) {
 // 查询相关视频
 export function getMovieVideosList(query) {
   return request({
-    url: "/movie/videos/list",
+    url: "/movie/movieVideo/list",
     method: "get",
     params: query,
   });
@@ -93,7 +93,7 @@ export function getMovieVideosList(query) {
 // 修改相关视频
 export function updateMovieVideos(data) {
   return request({
-    url: "/movie/videos",
+    url: "/movie/movieVideo",
     method: "put",
     data,
   });
@@ -102,7 +102,7 @@ export function updateMovieVideos(data) {
 // 删除相关视频
 export function deleteMovieVideos(id) {
   return request({
-    url: "/movie/videos/" + id,
+    url: "/movie/movieVideo/" + id,
     method: "delete",
   });
 }
@@ -145,7 +145,7 @@ export function deleteMoviePubDate(ids) {
 // 查询所有国家家长引导级别
 export function getCountryLevelAll() {
   return request({
-    url: "basic/country/levels",
+    url: "/basic/country/levels",
     method: "get",
   });
 }

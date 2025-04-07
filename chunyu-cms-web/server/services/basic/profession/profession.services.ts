@@ -4,13 +4,56 @@ import { queryParams } from '~/server/db/query.helper';
 
 export class ProfessionServices {
   /* 新增 */
-  async add(body: NewProfession) {
-    await db.insert(professionTable).values(body);
+  async add(profession: NewProfession) {
+    await db.transaction(async tx => {
+      const [insertProfession] = await tx.insert(professionTable).values(profession).$returningId();
+      // 查找父菜单的mpath
+      let mpath = '';
+      if (profession.parentId) {
+        const parent = await this.findById(profession.parentId);
+        if (parent) {
+          mpath = parent.mpath
+            ? `${parent.mpath}${insertProfession.professionId}.`
+            : `${String(insertProfession.professionId)}.`;
+        }
+      }
+      await tx
+        .update(professionTable)
+        .set({ mpath })
+        .where(eq(professionTable.professionId, insertProfession.professionId));
+    });
   }
 
   /* 更新 */
-  async update(body: Profession) {
-    await db.update(professionTable).set(body).where(eq(professionTable.professionId, body.professionId));
+  async update(profession: Profession) {
+    // 查找父菜单的mpath
+    let mpath = '';
+    if (profession.parentId) {
+      const parent = await this.findById(profession.parentId);
+      if (parent) {
+        if (parent.mpath?.split('.').includes(String(profession.professionId))) {
+          throw createError({ statusCode: 400, message: '不允许移动到自己的子级' });
+        }
+        mpath = parent.mpath ? `${parent.mpath}${profession.professionId}.` : `${String(profession.professionId)}.`;
+      }
+    }
+    profession.mpath = mpath;
+    await db
+      .update(professionTable)
+      .set(profession)
+      .where(eq(professionTable.professionId, Number(profession.professionId)));
+  }
+
+  /* 根据id查询 */
+  async findById(id: number) {
+    const data = await db
+      .select({
+        ...professionTable,
+        parentId: sql`IFNULL(${professionTable.parentId}, 0)`
+      } as any)
+      .from(professionTable)
+      .where(eq(professionTable.professionId, id));
+    return data[0];
   }
 
   /* 分页查询 */

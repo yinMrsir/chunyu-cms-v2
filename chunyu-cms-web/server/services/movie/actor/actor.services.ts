@@ -42,6 +42,22 @@ export class ActorServices {
     };
   }
 
+  async allList(params?: Partial<Actor & { keyword: string }>) {
+    const whereList = [];
+    if (params?.name || params?.keyword) {
+      whereList.push(like(actorTable.name, `%${params.name || params.keyword}%`));
+    }
+    const where = and(...whereList);
+
+    const rows = await db.query.actorTable.findMany({
+      extras: {
+        id: sql`${actorTable.actorId}`.as('id')
+      },
+      where
+    });
+    return { rows };
+  }
+
   /* 删除 */
   async delete(genreIds: string[]) {
     await db.delete(actorTable).where(

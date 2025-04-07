@@ -3,7 +3,7 @@
     ref="table"
     dialog-title="家长引导"
     :columns="columns"
-    :tableParams="formParams"
+    :table-params="formParams"
     :table-request-fn="getMovieLevelList"
     :create-fn="createFn"
     :update-fn="updateFn"
@@ -12,87 +12,98 @@
   />
 </template>
 
-<script setup name="Level">
-import { getMovieLevelList, getCountryLevelAll, createMovieLevel, updateMovieLevel, deleteMovieLevel } from '../services'
+<script setup>
+import {
+  getMovieLevelList,
+  getCountryLevelAll,
+  createMovieLevel,
+  updateMovieLevel,
+  deleteMovieLevel,
+} from "../services";
 
-const { proxy } = getCurrentInstance()
-const formParams = { movieId: +proxy.$route.query.id }
+const { proxy } = getCurrentInstance();
+const formParams = { movieId: +proxy.$route.query.id };
 
 function replaceField(arr) {
-  arr.forEach(value => {
+  arr.forEach((value) => {
     if (value.children && value.children.length > 0) {
-      replaceField(value.children)
+      replaceField(value.children);
     }
-    value.value = value.id
-    value.label = value.level || value.name
-  })
+    value.value = value.levelId;
+    value.label = value.level || value.name;
+  });
   return arr;
 }
 
 const columns = ref([
-  { title: '所属国家', field: 'countryName' },
+  { title: "所属国家", field: "level.country.name" },
   {
-    title: '引导等级',
-    field: 'level',
-    type: 'cascader',
+    title: "引导等级",
+    field: "level",
+    type: "cascader",
     options: [],
-    add: [ { required: true, message: '请选择引导等级' } ]
+    add: [{ required: true, message: "请选择引导等级" }],
+    render: ({ level }) => level.level,
   },
-  { title: '引导等级中文', field: 'levelZh' },
-  { title: '引导详情', field: 'descript', props: { width: '600' } },
+  { title: "引导等级中文", field: "level.levelZh", props: { width: "120px" } },
+  { title: "引导详情", field: "level.description", props: { width: "600" } },
   {
+    props: {
+      width: "160px",
+      fixed: "right",
+    },
     actions: [
       {
-        type: 'edit',
+        type: "edit",
         beforeCallback: (item) => {
           return {
             id: item.id,
-            level: [item.countryId, item.levelId]
-          }
-        }
+            level: [item.countryId, item.levelId],
+          };
+        },
       },
-      { type: 'delete' }
-    ]
-  }
-])
+      { type: "delete" },
+    ],
+  },
+]);
 
 onMounted(async () => {
-  const { data } = await getCountryLevelAll()
-  columns.value.find(value => value.field === 'level').options = replaceField(data)
-})
+  const { data } = await getCountryLevelAll();
+  columns.value.find((value) => value.field === "level").options =
+    replaceField(data);
+});
 
 function createFn(params) {
   return createMovieLevel({
     movieId: +proxy.$route.query.id,
-    levelId: +params.level[params.level.length - 1]
-  })
+    levelId: +params.level[params.level.length - 1],
+  });
 }
 
 function updateFn(params) {
   return updateMovieLevel({
     id: params.id,
     movieId: +proxy.$route.query.id,
-    levelId: +params.level[params.level.length - 1]
-  })
+    levelId: +params.level[params.level.length - 1],
+  });
 }
 
-const isMounted = ref(false)
+const isMounted = ref(false);
 
 onMounted(async () => {
-  isMounted.value = true
-  await proxy.$refs.table.getList()
-  isMounted.value = false
-})
+  isMounted.value = true;
+  await proxy.$refs.table.getList();
+  isMounted.value = false;
+});
 
 onActivated(() => {
   if (isMounted.value) {
-    return
+    return;
   }
   if (proxy.$route.query.id) {
     proxy.$nextTick(() => {
-      proxy.$refs.table.getList({ movieId: proxy.$route.query.id })
-    })
+      proxy.$refs.table.getList({ movieId: proxy.$route.query.id });
+    });
   }
-})
-
+});
 </script>

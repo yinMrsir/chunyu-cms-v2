@@ -68,8 +68,9 @@ const columns = ref([
           (value) => value.field === "videoId",
         );
         if (query) {
-          const { rows } = await getVideoList({ title: query });
-          currItem.options = rows.map((value) => ({
+          const { data } = await getVideoList({ title: query });
+          console.log(data);
+          currItem.options = data.rows.map((value) => ({
             label: value.title,
             value: value.id,
           }));

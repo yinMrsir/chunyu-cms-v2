@@ -7,17 +7,20 @@ export class MovieBasicsServices {
   /* 新增 */
   async add(body: NewMovieBasics & { countryIds: number[] }) {
     try {
+      let movieBasicsId: number;
       await db.transaction(async tx => {
         const [insetMovieBasics] = await tx.insert(movieBasicsTable).values(body).$returningId();
+        movieBasicsId = insetMovieBasics.movieBasicsId;
         if (body.countryIds.length) {
           await tx.insert(movieBasicToCountryTable).values(
             body.countryIds.map(countryId => ({
-              movieBasicsId: insetMovieBasics.movieBasicsId,
+              movieBasicsId,
               countryId
             }))
           );
         }
       });
+      return movieBasicsId;
     } catch (error: any) {
       throw createError({ statusCode: 400, message: error.message });
     }

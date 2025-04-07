@@ -3,8 +3,8 @@ import { relations } from 'drizzle-orm';
 import { columnsHelpers } from '../../columns.helpers';
 import { countryTable } from './country';
 
-export const movieLevelTable = mysqlTable('movie_level', {
-  movieLevelId: int('movie_level_id').autoincrement().primaryKey(),
+export const levelTable = mysqlTable('level', {
+  levelId: int('level_id').autoincrement().primaryKey(),
   // 所属国家ID
   countryId: int('country_id').notNull(),
   // 家长引导
@@ -18,14 +18,14 @@ export const movieLevelTable = mysqlTable('movie_level', {
   ...columnsHelpers
 });
 
-export const movieLevelTableRelations = relations(movieLevelTable, ({ one }) => {
+export const levelTableRelations = relations(levelTable, ({ one }) => {
   return {
     country: one(countryTable, {
-      fields: [movieLevelTable.countryId],
+      fields: [levelTable.countryId],
       references: [countryTable.countryId]
     })
   };
 });
 
-export type MovieLevel = typeof movieLevelTable.$inferSelect;
-export type NewMovieLevel = typeof movieLevelTable.$inferInsert;
+export type Level = typeof levelTable.$inferSelect;
+export type NewLevel = typeof levelTable.$inferInsert;

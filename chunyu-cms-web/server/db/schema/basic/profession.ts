@@ -8,11 +8,13 @@ export const professionTable = mysqlTable('profession', {
   // 英文名称
   nameEn: varchar('name_en', { length: 100 }),
   // 状态
-  status: char('status', { length: 1 }).default('0'),
+  status: char('status', { length: 1 }).default('0').notNull(),
   // 简介
   brief: varchar('brief', { length: 100 }),
   // 父级Id
   parentId: int('parent_id').default(0),
+  // 层级路径，逗号分隔
+  mpath: varchar('mpath', { length: 100 }),
   ...columnsHelpers
 });
 

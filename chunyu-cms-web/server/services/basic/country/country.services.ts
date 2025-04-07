@@ -1,6 +1,7 @@
 import { and, eq, inArray, like, sql } from 'drizzle-orm';
 import { Country, countryTable, NewCountry } from '~/server/db/schema/basic/country';
 import { queryParams } from '~/server/db/query.helper';
+import { Level, levelTable } from '~/server/db/schema/basic/level';
 
 export class CountryServices {
   /* 新增 */
@@ -39,6 +40,7 @@ export class CountryServices {
     };
   }
 
+  /* 全部列表 */
   async allList(params?: Partial<Country & { keyword: string }>) {
     const whereList = [];
     if (params?.name || params?.keyword) {
@@ -52,6 +54,29 @@ export class CountryServices {
       },
       where
     });
+  }
+
+  /* 获取国家级等级 */
+  async getCountryLevelAll() {
+    const rows = await db
+      .select()
+      .from(countryTable)
+      .leftJoin(levelTable, eq(countryTable.countryId, levelTable.countryId));
+
+    const results: Array<{ id: number; name: string; children: Level[] }> = [];
+    rows.forEach(row => {
+      const existingCountry = results.find(item => item.id === row.country.countryId);
+      if (existingCountry && row.level) {
+        existingCountry.children.push(row.level);
+      } else {
+        results.push({
+          id: row.country.countryId,
+          name: row.country.name,
+          children: row.level ? [row.level] : []
+        });
+      }
+    });
+    return results;
   }
 
   /* 删除 */

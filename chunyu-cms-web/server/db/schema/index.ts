@@ -16,13 +16,17 @@ import * as countrySchema from './basic/country';
 import * as languageSchema from './basic/language';
 import * as bannerSchema from './basic/banner';
 import * as genreSchema from './basic/genre';
-import * as movieLevelSchema from './basic/movieLevel';
+import * as levelSchema from './basic/level';
 import * as professionSchema from './basic/profession';
 import * as columnsSchema from './basic/columns';
 import * as actorSchema from './movie/actor';
 import * as videoSchema from './movie/video';
 import * as movieBasicsSchema from './movie/movieBasics';
 import * as movieBasicToCountrySchema from './movie/movieBasicToCountry';
+import * as pubDateSchema from './movie/pubDate';
+import * as movieLevelSchema from './movie/movieLevel';
+import * as castSchema from './movie/cast';
+import * as movieVideoSchema from './movie/movieVideo';
 
 export default {
   ...userSchema,
@@ -42,11 +46,15 @@ export default {
   ...languageSchema,
   ...bannerSchema,
   ...genreSchema,
-  ...movieLevelSchema,
+  ...levelSchema,
   ...professionSchema,
   ...columnsSchema,
   ...actorSchema,
   ...videoSchema,
   ...movieBasicsSchema,
-  ...movieBasicToCountrySchema
+  ...movieBasicToCountrySchema,
+  ...pubDateSchema,
+  ...movieLevelSchema,
+  ...castSchema,
+  ...movieVideoSchema
 };

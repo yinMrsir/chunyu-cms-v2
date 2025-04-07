@@ -349,13 +349,13 @@
   </div>
 </template>
 
-<script setup name="TablePro">
+<script setup>
 const baseUrl = import.meta.env.VITE_APP_BASE_API;
 const { proxy } = getCurrentInstance();
 const props = defineProps({
   columns: {
     type: Array,
-    default: [],
+    default: () => [],
   },
   tableRequestFn: {
     type: Function,
@@ -387,11 +387,11 @@ const props = defineProps({
   },
   tableParams: {
     type: Object,
-    default: {},
+    default: () => ({}),
   },
   formParams: {
     type: Object,
-    default: {},
+    default: () => ({}),
   },
   formDialogWidth: {
     type: String,

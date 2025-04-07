@@ -1,26 +1,26 @@
 import { eq, inArray, sql } from 'drizzle-orm';
-import { MovieLevel, movieLevelTable, NewMovieLevel } from '~/server/db/schema/basic/movieLevel';
+import { Level, levelTable, NewLevel } from '~/server/db/schema/basic/level';
 import { queryParams } from '~/server/db/query.helper';
 
 export class LevelServices {
   /* 新增 */
-  async add(body: NewMovieLevel) {
-    await db.insert(movieLevelTable).values(body);
+  async add(body: NewLevel) {
+    await db.insert(levelTable).values(body);
   }
 
   /* 更新 */
-  async update(body: MovieLevel) {
-    await db.update(movieLevelTable).set(body).where(eq(movieLevelTable.movieLevelId, body.movieLevelId));
+  async update(body: Level) {
+    await db.update(levelTable).set(body).where(eq(levelTable.levelId, body.levelId));
   }
 
   /* 分页查询 */
-  async pageList(params?: Partial<MovieLevel & { keyword: string } & queryParams>) {
+  async pageList(params?: Partial<Level & { keyword: string } & queryParams>) {
     const { pageNum = 1, limit = 10 } = params || {};
     const offset = (pageNum - 1) * limit;
 
-    const rowsQuery = db.query.movieLevelTable.findMany({
+    const rowsQuery = db.query.levelTable.findMany({
       extras: {
-        id: sql`${movieLevelTable.movieLevelId}`.as('id')
+        id: sql`${levelTable.levelId}`.as('id')
       },
       with: {
         country: true
@@ -28,7 +28,7 @@ export class LevelServices {
       offset,
       limit
     });
-    const totalQuery = db.$count(movieLevelTable);
+    const totalQuery = db.$count(levelTable);
     const [rows, total] = await Promise.all([rowsQuery, totalQuery]);
     return {
       rows,
@@ -38,9 +38,9 @@ export class LevelServices {
 
   /* 删除 */
   async delete(genreIds: string[]) {
-    await db.delete(movieLevelTable).where(
+    await db.delete(levelTable).where(
       inArray(
-        movieLevelTable.movieLevelId,
+        levelTable.levelId,
         genreIds.map(genreId => Number(genreId))
       )
     );
