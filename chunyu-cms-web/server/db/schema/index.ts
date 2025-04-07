@@ -27,6 +27,7 @@ import * as pubDateSchema from './movie/pubDate';
 import * as movieLevelSchema from './movie/movieLevel';
 import * as castSchema from './movie/cast';
 import * as movieVideoSchema from './movie/movieVideo';
+import * as moviePhotochema from './movie/moviePhoto';
 
 export default {
   ...userSchema,
@@ -56,5 +57,6 @@ export default {
   ...pubDateSchema,
   ...movieLevelSchema,
   ...castSchema,
-  ...movieVideoSchema
+  ...movieVideoSchema,
+  ...moviePhotochema
 };

@@ -22,10 +22,11 @@ import {
 } from "../services";
 import { getProfessionAll } from "@/views/basic/profession/services";
 
+const data = inject("data");
 const { proxy } = getCurrentInstance();
 const { sex_type } = proxy.useDict("sex_type");
 const params = ref({
-  movieId: +proxy.$route.query.id,
+  movieId: data.id,
 });
 
 const columns = ref([
@@ -106,7 +107,7 @@ function createMovieCastProfessionMethod(params) {
   return createMovieCast({
     ...params,
     professionId: +params.professionId[params.professionId.length - 1],
-    movieId: +proxy.$route.query.id,
+    movieId: data.id,
   });
 }
 
@@ -114,7 +115,7 @@ function updateMovieCastProfessionMethod(params) {
   return updateMovieCast({
     ...params,
     professionId: +params.professionId[params.professionId.length - 1],
-    movieId: +proxy.$route.query.id,
+    movieId: data.id,
   });
 }
 
@@ -130,9 +131,9 @@ onActivated(() => {
   if (isMounted.value) {
     return;
   }
-  if (proxy.$route.query.id) {
+  if (data.id) {
     proxy.$nextTick(() => {
-      proxy.$refs.table.getList({ movieId: proxy.$route.query.id });
+      proxy.$refs.table.getList({ movieId: data.id });
     });
   }
 });

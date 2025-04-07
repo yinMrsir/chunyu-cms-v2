@@ -21,8 +21,9 @@ import {
   deleteMovieLevel,
 } from "../services";
 
+const data = inject("data");
 const { proxy } = getCurrentInstance();
-const formParams = { movieId: +proxy.$route.query.id };
+const formParams = { movieId: data.id };
 
 function replaceField(arr) {
   arr.forEach((value) => {
@@ -75,7 +76,7 @@ onMounted(async () => {
 
 function createFn(params) {
   return createMovieLevel({
-    movieId: +proxy.$route.query.id,
+    movieId: data.id,
     levelId: +params.level[params.level.length - 1],
   });
 }
@@ -83,7 +84,7 @@ function createFn(params) {
 function updateFn(params) {
   return updateMovieLevel({
     id: params.id,
-    movieId: +proxy.$route.query.id,
+    movieId: data.id,
     levelId: +params.level[params.level.length - 1],
   });
 }
@@ -100,9 +101,9 @@ onActivated(() => {
   if (isMounted.value) {
     return;
   }
-  if (proxy.$route.query.id) {
+  if (data.id) {
     proxy.$nextTick(() => {
-      proxy.$refs.table.getList({ movieId: proxy.$route.query.id });
+      proxy.$refs.table.getList({ movieId: data.id });
     });
   }
 });

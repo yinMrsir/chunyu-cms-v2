@@ -23,6 +23,8 @@ import {
   deleteMovieVideos,
 } from "../services";
 import { getVideoList } from "@/views/movie/video/list/services";
+
+const data = inject("data");
 const { proxy } = getCurrentInstance();
 const { videos_type: videosType, sys_normal_disable: sysNormalDisable } =
   proxy.useDict("videos_type", "sys_normal_disable");
@@ -69,7 +71,6 @@ const columns = ref([
         );
         if (query) {
           const { data } = await getVideoList({ title: query });
-          console.log(data);
           currItem.options = data.rows.map((value) => ({
             label: value.title,
             value: value.id,
@@ -124,9 +125,9 @@ onActivated(() => {
   if (isMounted.value) {
     return;
   }
-  if (proxy.$route.query.id) {
+  if (data.id) {
     proxy.$nextTick(() => {
-      proxy.$refs.table.getList({ movieId: proxy.$route.query.id });
+      proxy.$refs.table.getList({ movieId: data.id });
     });
   }
 });

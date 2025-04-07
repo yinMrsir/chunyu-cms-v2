@@ -1,7 +1,7 @@
 import { int, mysqlTable, varchar } from 'drizzle-orm/mysql-core';
 import { relations } from 'drizzle-orm';
 import { columnsHelpers } from '../../columns.helpers';
-import { videoTable } from '~/server/db/schema/movie/video';
+import { videoTable } from './video';
 
 export const movieVideoTable = mysqlTable('movie_video', {
   movieVideoId: int('movie_video_id').autoincrement().primaryKey(), // 主键，自增

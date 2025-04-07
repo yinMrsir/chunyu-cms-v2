@@ -46,7 +46,7 @@ export function deleteMovie(id) {
 // 新增相册
 export function createPhotosMovie(data) {
   return request({
-    url: "/photos/movie",
+    url: "/movie/moviePhone",
     method: "post",
     data,
   });
@@ -55,7 +55,7 @@ export function createPhotosMovie(data) {
 // 查询相册
 export function photosMovieList(params) {
   return request({
-    url: "/photos/movie/list",
+    url: "/movie/moviePhone/list",
     method: "get",
     params,
   });
@@ -64,7 +64,7 @@ export function photosMovieList(params) {
 // 删除相册
 export function deletePhotosMovie({ id, remark }) {
   return request({
-    url: "/photos/movie/" + id,
+    url: "/movie/moviePhone/" + id,
     method: "delete",
     data: {
       remark,
