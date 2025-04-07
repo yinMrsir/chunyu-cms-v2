@@ -17,7 +17,10 @@ export class MoviePhotoServices {
   async pageList(params?: Partial<MoviePhoto & { keyword: string } & queryParams>) {
     const { pageNum = 1, limit = 10 } = params || {};
     const offset = (pageNum - 1) * limit;
-    const whereList: never[] = [];
+    const whereList = [];
+    if (params?.movieId) {
+      whereList.push(eq(moviePhotoTable.movieId, params.movieId));
+    }
     const where = and(...whereList);
 
     const rowsQuery = db.query.moviePhotoTable.findMany({

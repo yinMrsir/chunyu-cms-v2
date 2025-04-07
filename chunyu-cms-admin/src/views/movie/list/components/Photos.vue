@@ -231,6 +231,7 @@ async function handleUploadImg(formEl) {
       proxy.$modal.msgSuccess("上传成功");
       uploadImgDialogVisible.value = false;
       await getList();
+      proxy.resetForm("imgFormRef");
     }
   });
 }

@@ -111,7 +111,7 @@ const columns = ref([
   },
 ]);
 const tableParams = ref({
-  movieId: +proxy.$route.query.id,
+  movieId: data.id,
 });
 const isMounted = ref(false);
 
