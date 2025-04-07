@@ -83,7 +83,9 @@ export default defineNuxtConfig({
     // 上传文件保存路径
     uploadPath: '/uploads',
     // 上传图片访问host
-    imgHost: 'http://localhost:3000'
+    imgHost: 'http://localhost:3000',
+    // 是否演示环境
+    isDemoEnvironment: process.env.IS_DEMO_ENVIRONMENT === 'true'
   },
   compatibilityDate: '2024-11-04'
 });

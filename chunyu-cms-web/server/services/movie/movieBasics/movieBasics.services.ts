@@ -20,6 +20,7 @@ export class MovieBasicsServices {
           );
         }
       });
+      // @ts-ignore
       return movieBasicsId;
     } catch (error: any) {
       throw createError({ statusCode: 400, message: error.message });
