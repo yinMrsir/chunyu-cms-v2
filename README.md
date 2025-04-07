@@ -1,4 +1,4 @@
-# 注意: 开发中，当前仅能使用管理端系统模块功能。
+# 注意: 当前仅能使用管理端功能，用户端界面进行中。。。
 
 ## 项目简介
 淳渔是一款快速搭建影视类网站的系统，它用户端基于[nuxt3](https://nuxt.com/)和 [element-ui](https://element.eleme.cn/#/zh-CN) ,管理端基于 [vue3](https://cn.vuejs.org/) 和 [element-ui](https://element.eleme.cn/#/zh-CN) ，数据库采用 mysql ，缓存采用 redis。
