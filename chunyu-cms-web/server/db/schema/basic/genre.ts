@@ -1,5 +1,7 @@
 import { mysqlTable, int, varchar, char } from 'drizzle-orm/mysql-core';
+import { relations } from 'drizzle-orm';
 import { columnsHelpers } from '../../columns.helpers';
+import { columnsTable } from '~/server/db/schema/basic/columns';
 
 export const genreTable = mysqlTable('genre', {
   genreId: int('genre_id').autoincrement().primaryKey(),
@@ -16,3 +18,12 @@ export const genreTable = mysqlTable('genre', {
 
 export type Genre = typeof genreTable.$inferSelect;
 export type NewGenre = typeof genreTable.$inferInsert;
+
+export const genreTableRelations = relations(genreTable, ({ one }) => {
+  return {
+    column: one(columnsTable, {
+      fields: [genreTable.columnValue],
+      references: [columnsTable.value]
+    })
+  };
+});

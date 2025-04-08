@@ -45,7 +45,7 @@ export class ColumnsServices {
     };
   }
 
-  allList(params?: Partial<Columns & { keyword: string }>) {
+  allList(params?: Partial<Columns & { keyword: string }>, withParams = {}) {
     const whereList = [];
     if (params?.name || params?.keyword) {
       whereList.push(like(columnsTable.name, `%${params.name || params.keyword}%`));
@@ -62,6 +62,7 @@ export class ColumnsServices {
       extras: {
         id: sql`${columnsTable.columnId}`.as('id')
       },
+      with: withParams,
       where
     });
   }

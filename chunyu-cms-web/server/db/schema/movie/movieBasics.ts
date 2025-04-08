@@ -2,6 +2,8 @@ import { mysqlTable, varchar, datetime, int, char, date } from 'drizzle-orm/mysq
 import { relations } from 'drizzle-orm';
 import { columnsHelpers } from '../../columns.helpers';
 import { movieBasicToCountryTable } from './movieBasicToCountry';
+import { movieVideoTable } from '~/server/db/schema/movie/movieVideo';
+import { castTable } from '~/server/db/schema/movie/cast';
 
 // 定义 MovieBasic 表
 export const movieBasicsTable = mysqlTable('movie_basics', {
@@ -71,5 +73,7 @@ export type MovieBasics = typeof movieBasicsTable.$inferSelect;
 export type NewMovieBasics = typeof movieBasicsTable.$inferInsert;
 
 export const movieBasicsTableRelations = relations(movieBasicsTable, ({ many }) => ({
-  movieBasicToCountry: many(movieBasicToCountryTable)
+  movieBasicToCountry: many(movieBasicToCountryTable),
+  movieVideo: many(movieVideoTable),
+  casts: many(castTable)
 }));

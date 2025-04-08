@@ -5,14 +5,13 @@ const runtimeConfig = useRuntimeConfig();
 const noVerificationRouters = ['/api/admin/login', '/api/admin/logout', '/api/admin/captchaImage'];
 
 export default defineEventHandler(async event => {
-  if (!noVerificationRouters.includes(event.path) && event.path.includes('/api')) {
+  if (!noVerificationRouters.includes(event.path) && event.path.includes('/api/admin')) {
     const auth = useAuth(event);
     event.context.user = await auth.verification();
     event.context.validatePermission = auth.validatePermission;
   }
   // 演示环境
   if (runtimeConfig.isDemoEnvironment && isMethod(event, ['POST', 'PUT'])) {
-    console.log(1);
     throw createError({ statusCode: 403, message: '演示环境禁止修改数据！' });
   }
 });

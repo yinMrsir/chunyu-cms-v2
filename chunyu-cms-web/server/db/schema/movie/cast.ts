@@ -3,6 +3,7 @@ import { relations } from 'drizzle-orm';
 import { columnsHelpers } from '../../columns.helpers';
 import { professionTable } from '../basic/profession';
 import { actorTable } from './actor';
+import { movieBasicsTable } from '~/server/db/schema/movie/movieBasics';
 
 export const castTable = mysqlTable('cast', {
   // 主键，自增
@@ -30,6 +31,10 @@ export const castTableRelations = relations(castTable, ({ one }) => {
     profession: one(professionTable, {
       fields: [castTable.professionId],
       references: [professionTable.professionId]
+    }),
+    movieBasics: one(movieBasicsTable, {
+      fields: [castTable.movieId],
+      references: [movieBasicsTable.movieBasicsId]
     })
   };
 });

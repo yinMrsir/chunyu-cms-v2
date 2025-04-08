@@ -2,6 +2,8 @@ import { and, eq, inArray, like, sql } from 'drizzle-orm';
 import { MovieBasics, movieBasicsTable, NewMovieBasics } from '~/server/db/schema/movie/movieBasics';
 import { queryParams } from '~/server/db/query.helper';
 import { movieBasicToCountryTable } from '~/server/db/schema/movie/movieBasicToCountry';
+import { movieVideoTable } from '~/server/db/schema/movie/movieVideo';
+import { countryTable } from '~/server/db/schema/basic/country';
 
 export class MovieBasicsServices {
   /* 新增 */
@@ -69,16 +71,27 @@ export class MovieBasicsServices {
     if (params?.title || params?.keyword) {
       whereList.push(like(movieBasicsTable.title, `%${params.title || params.keyword}%`));
     }
+    if (params?.columnValue) {
+      whereList.push(eq(movieBasicsTable.columnValue, params.columnValue));
+    }
     const where = and(...whereList);
 
     const rowsQuery = db.query.movieBasicsTable.findMany({
       extras: {
-        id: sql`${movieBasicsTable.movieBasicsId}`.as('id')
+        id: sql`${movieBasicsTable.movieBasicsId}`.as('id'),
+        movieVideosCount: db
+          .$count(movieVideoTable, sql`movie_video.movie_id = ${movieBasicsTable.movieBasicsId}`)
+          .as('movieVideosCount')
       },
       with: {
         movieBasicToCountry: {
           with: {
             country: true
+          }
+        },
+        casts: {
+          with: {
+            actor: true
           }
         }
       },

@@ -2,6 +2,7 @@ import { int, mysqlTable, varchar } from 'drizzle-orm/mysql-core';
 import { relations } from 'drizzle-orm';
 import { columnsHelpers } from '../../columns.helpers';
 import { videoTable } from './video';
+import { movieBasicsTable } from '~/server/db/schema/movie/movieBasics';
 
 export const movieVideoTable = mysqlTable('movie_video', {
   movieVideoId: int('movie_video_id').autoincrement().primaryKey(), // 主键，自增
@@ -30,6 +31,10 @@ export const movieVideoRelations = relations(movieVideoTable, ({ one }) => {
     video: one(videoTable, {
       fields: [movieVideoTable.videoId],
       references: [videoTable.videoId]
+    }),
+    movieBasics: one(movieBasicsTable, {
+      fields: [movieVideoTable.movieId],
+      references: [movieBasicsTable.movieBasicsId]
     })
   };
 });

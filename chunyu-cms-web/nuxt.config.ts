@@ -7,7 +7,12 @@ export default defineNuxtConfig({
     // @ts-ignore
     inlineSSRStyles: false
   },
-  css: ['@unocss/reset/tailwind-compat.css', 'element-plus/dist/index.css', 'element-plus/theme-chalk/display.css'],
+  css: [
+    '@/assets/css/main.css',
+    '@unocss/reset/tailwind-compat.css',
+    'element-plus/dist/index.css',
+    'element-plus/theme-chalk/display.css'
+  ],
   modules: ['@element-plus/nuxt', '@unocss/nuxt'],
   vite: {
     css: {
