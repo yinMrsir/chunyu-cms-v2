@@ -10,16 +10,20 @@
       </div>
       <ul class="sidebar-menu-inner">
         <li class="active">
-          <nuxt-link to="/">
-            <i class="i-flat-color-icons-home w-24px h-24px inline-block"></i>
-            首页
-          </nuxt-link>
+          <el-tooltip :disabled="textVisible" effect="dark" content="首页" placement="right">
+            <nuxt-link to="/">
+              <i class="i-flat-color-icons-home w-24px h-24px inline-block"></i>
+              <span v-if="textVisible">首页</span>
+            </nuxt-link>
+          </el-tooltip>
         </li>
         <li v-for="item in navigation" :key="item.id">
-          <nuxt-link to="/">
-            <img :src="item.icon" alt="" class="h-24px" />
-            <span v-if="textVisible">{{ item.name }}</span>
-          </nuxt-link>
+          <el-tooltip :disabled="textVisible" effect="dark" :content="item.name" placement="right">
+            <nuxt-link to="/">
+              <img :src="item.icon" alt="" class="h-24px" />
+              <span v-if="textVisible">{{ item.name }}</span>
+            </nuxt-link>
+          </el-tooltip>
         </li>
       </ul>
       <div class="text-10px color-[rgba(255,255,255,0.6)] p-x-20px absolute bottom-10">
@@ -72,13 +76,13 @@
         <li class="active">
           <nuxt-link to="/">
             <i class="i-flat-color-icons-home w-24px h-24px inline-block"></i>
-            首页
+            <span>首页</span>
           </nuxt-link>
         </li>
         <li v-for="item in navigation" :key="item.id">
           <nuxt-link to="/">
             <img :src="item.icon" alt="" class="h-24px" />
-            <span v-if="textVisible">{{ item.name }}</span>
+            <span>{{ item.name }}</span>
           </nuxt-link>
         </li>
       </ul>
