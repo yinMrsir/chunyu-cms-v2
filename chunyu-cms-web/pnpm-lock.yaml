@@ -68,6 +68,9 @@ dependencies:
   svg-captcha:
     specifier: ^1.4.0
     version: 1.4.0
+  swiper:
+    specifier: ^11.2.6
+    version: 11.2.6
   systeminformation:
     specifier: ^5.23.13
     version: 5.23.13
@@ -9486,6 +9489,11 @@ packages:
       csso: 5.0.5
       picocolors: 1.1.1
     dev: true
+
+  /swiper@11.2.6:
+    resolution: {integrity: sha512-8aXpYKtjy3DjcbzZfz+/OX/GhcU5h+looA6PbAzHMZT6ESSycSp9nAjPCenczgJyslV+rUGse64LMGpWE3PX9Q==}
+    engines: {node: '>= 4.7.0'}
+    dev: false
 
   /synckit@0.9.2:
     resolution: {integrity: sha512-vrozgXDQwYO72vHjUb/HnFbQx1exDjoKzqx23aXEg2a9VIg2TSFZ8FmeZpTjUCFMYw7mpX4BE2SFu8wI7asYsw==}

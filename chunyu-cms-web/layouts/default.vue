@@ -150,11 +150,12 @@
         -webkit-backdrop-filter: blur(5px);
         backdrop-filter: blur(5px);
         width: 400px;
+        font-size: 14px;
       }
       .search-button {
         position: absolute;
         right: 15px;
-        top: 10px;
+        top: 8px;
         cursor: pointer;
       }
     }

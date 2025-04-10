@@ -5,7 +5,23 @@
       <div class="banner__right"></div>
       <div class="banner__top"></div>
       <div class="banner__bottom"></div>
-      <img :src="banner[0].img" class="h-40vh w-full object-cover md:h-50vh" alt="" />
+      <div>
+        <swiper
+          loop
+          :autoplay="{
+            pauseOnMouseEnter: true,
+            delay: 20000
+          }"
+          :modules="[Pagination, Autoplay]"
+          :pagination="{ clickable: true }"
+          :slides-per-view="1"
+          :space-between="50"
+        >
+          <swiper-slide v-for="item in banner" :key="item.id">
+            <img :src="item.img" class="h-40vh w-full object-cover md:h-50vh" alt="" />
+          </swiper-slide>
+        </swiper>
+      </div>
     </div>
     <section v-for="item in movie" :key="item.id" class="p-x-12px">
       <div class="flex justify-between items-center m-y-24px">
@@ -35,6 +51,11 @@
 </template>
 
 <script setup lang="ts">
+  import { Swiper, SwiperSlide } from 'swiper/vue';
+  import 'swiper/css';
+  import 'swiper/css/pagination';
+  import { Pagination, Autoplay } from 'swiper/modules';
+
   const [{ data: banner }, { data: movie }] = await Promise.all([
     useFetch('/api/web/basic/banner/list', {
       transform: banner => {
@@ -88,6 +109,8 @@
       position: absolute;
       left: 0;
       top: 0;
+      z-index: 2;
+      @apply hidden md:block;
     }
     &__right {
       background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #161823 100%);
@@ -96,6 +119,7 @@
       position: absolute;
       right: 0;
       top: 0;
+      z-index: 2;
     }
     &__top {
       background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, #161823 100%);
@@ -104,6 +128,7 @@
       position: absolute;
       left: 0;
       top: 0;
+      z-index: 2;
     }
     &__bottom {
       background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #161823 100%);
@@ -112,6 +137,7 @@
       position: absolute;
       left: 0;
       bottom: 0;
+      z-index: 2;
     }
   }
 </style>
