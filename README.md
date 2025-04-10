@@ -9,9 +9,9 @@
 
 - 源码地址: [GitHub](https://github.com/yinMrsir/chunyu-cms-v2) | [Gitee](https://gitee.com/chunyu-cms/chunyu-cms-v2)
 
-<img src="blob/main/1.png"/>
+<img src="https://gitee.com/chunyu-cms/chunyu-cms-v2/blob/main/1.png"/>
 
-<img src="blob/main/2.png" />
+<img src="https://gitee.com/chunyu-cms/chunyu-cms-v2/blob/main/2.png" />
 
 ## 为什么有V2版本？
 考虑到大部分使用者为个人独立开发，Nuxt3也可以开发服务端的功能，所有把之前的NestJS服务端移除了，改用到Nuxt实现。这样就可以不用启动两个Node服务了。
