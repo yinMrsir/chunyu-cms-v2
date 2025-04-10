@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@element-plus/nuxt": "^1.1.0",
+    "@iconify-json/flat-color-icons": "^1.2.1",
     "@nuxt/devtools": "latest",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@types/crypto-js": "^4.2.2",
@@ -24,6 +25,9 @@
     "@types/node-schedule": "^2.1.7",
     "@typescript-eslint/parser": "^8.13.0",
     "@unocss/nuxt": "^0.64.0",
+    "@unocss/preset-icons": "66.1.0-beta.10",
+    "@unocss/transformer-directives": "66.1.0-beta.10",
+    "@unocss/transformer-variant-group": "66.1.0-beta.10",
     "drizzle-kit": "^0.28.1",
     "eslint": "8.57.1",
     "eslint-config-prettier": "9.1.0",

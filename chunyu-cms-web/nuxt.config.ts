@@ -8,10 +8,10 @@ export default defineNuxtConfig({
     inlineSSRStyles: false
   },
   css: [
-    '@/assets/css/main.css',
     '@unocss/reset/tailwind-compat.css',
     'element-plus/dist/index.css',
-    'element-plus/theme-chalk/display.css'
+    'element-plus/theme-chalk/display.css',
+    '@/assets/css/style.css'
   ],
   modules: ['@element-plus/nuxt', '@unocss/nuxt'],
   vite: {

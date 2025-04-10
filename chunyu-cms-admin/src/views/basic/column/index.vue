@@ -1,14 +1,21 @@
 <template>
   <div class="app-container">
-    <table-pro
-      :columns="columns"
-      dialog-title="栏目"
-      :table-request-fn="getColumnList"
-      :create-fn="createColumn"
-      :update-fn="updateColumn"
-      :delete-fn="deleteColumn"
-      :form-params="{ type: '1' }"
-    />
+    <el-alert
+      title="图标样式地址：https://icones.js.org/collection/flat-color-icons"
+      type="success"
+    >
+    </el-alert>
+    <div class="mt10">
+      <table-pro
+        :columns="columns"
+        dialog-title="栏目"
+        :table-request-fn="getColumnList"
+        :create-fn="createColumn"
+        :update-fn="updateColumn"
+        :delete-fn="deleteColumn"
+        :form-params="{ type: '1' }"
+      />
+    </div>
   </div>
 </template>
 
@@ -43,6 +50,12 @@ const columns = ref([
     title: "目录/路径",
     field: "value",
     add: [{ required: true, message: "请输入目录/路径" }],
+  },
+  {
+    title: "图标",
+    field: "icon",
+    add: true,
+    type: "img",
   },
   { title: "排序", field: "order", type: "number", add: true },
   {

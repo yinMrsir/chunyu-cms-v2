@@ -1,213 +1,158 @@
 <template>
   <div>
-    <NuxtLoadingIndicator />
-    <header class="header">
-      <div class="container between">
-        <div class="header__left">
-          <nuxt-link to="/" class="logo">淳渔影视</nuxt-link>
-          <nav v-if="route.path.indexOf('/user') === -1" class="hidden-sm-and-down">
-            <ul>
-              <li :class="route.path === '/' ? 'active' : ''"><NuxtLink to="/">首页</NuxtLink></li>
-              <li v-for="item in navigation" :key="item.id" :class="route.params.column === item.value ? 'active' : ''">
-                <nuxt-link v-if="+item.type === 1" :to="`/column/${item.value}`">{{ item.name }}</nuxt-link>
-                <nuxt-link v-if="+item.type === 2" :to="item.value" target="_blank">{{ item.name }}</nuxt-link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-        <div v-if="route.path !== '/search'" class="header__right items-center">
-          <el-input
-            v-model="searchValue"
-            class="w-50 m-2 mr-20"
-            placeholder="请输入搜索的影视名"
-            :suffix-icon="ElIconSearch"
-            @keyup.enter="handleSearch"
-          />
-          <ClientOnly>
-            <template v-if="token">
-              <el-dropdown @command="handleCommand">
-                <el-button circle :icon="ElIconUserFilled" color="#155FAA"></el-button>
-                <template #dropdown>
-                  <el-dropdown-menu>
-                    <el-dropdown-item command="user">个人中心</el-dropdown-item>
-                    <el-dropdown-item divided command="logOut">退出</el-dropdown-item>
-                  </el-dropdown-menu>
-                </template>
-              </el-dropdown>
-            </template>
-            <template v-else>
-              <el-button circle :icon="ElIconUserFilled" @click="goLogin"></el-button>
-            </template>
-          </ClientOnly>
-        </div>
+    <div
+      class="fixed top-0 left-0 h-100vh transition-all duration-300 overflow-hidden z-999 lt-md:hidden"
+      :class="sidebarOpen ? 'w-220px' : 'w-64px'"
+    >
+      <div class="flex justify-center items-center gap-x-5px h-74px bg-#161823">
+        <img src="../assets/images/logo.png" alt="" class="h-34px border-rd-5px" />
+        <span v-if="textVisible" class="color-#fff text-24px font-bold">淳渔影视</span>
       </div>
-      <div v-if="route.path.indexOf('/user') === -1" class="mobile-nav hidden-sm-only hidden-sm-and-up">
-        <ul>
-          <li
-            v-for="(item, index) in navigation.data"
-            :key="index"
-            :class="route.params.column === item.value ? 'active' : ''"
-          >
-            <nuxt-link v-if="+item.type === 1" :to="`/column/${item.value}`">{{ item.name }}</nuxt-link>
-            <nuxt-link v-if="+item.type === 2" :to="item.value" target="_blank">{{ item.name }}</nuxt-link>
-          </li>
-        </ul>
+      <ul class="sidebar-menu-inner">
+        <li class="active">
+          <nuxt-link to="/">
+            <i class="i-flat-color-icons-home w-24px h-24px inline-block"></i>
+            首页
+          </nuxt-link>
+        </li>
+        <li v-for="item in navigation" :key="item.id">
+          <nuxt-link to="/">
+            <img :src="item.icon" alt="" class="h-24px" />
+            <span v-if="textVisible">{{ item.name }}</span>
+          </nuxt-link>
+        </li>
+      </ul>
+      <div class="text-10px color-[rgba(255,255,255,0.6)] p-x-20px absolute bottom-10">
+        本网站为淳渔CMS演示站，提供的电视剧和电影资源均系收集于各大视频网站
+        若本站收录的节目无意侵犯了贵司版权,请给542968439@qq.com留言,我们会及时逐步删除和规避程序自动搜索采集到的不提供分享的版权影视。
+        本站仅供测试和学习交流。请大家支持正版。
+
+        <p class="mt-15px">Copyright 2025 淳渔影视网 Inc. All Rights Reserved.</p>
       </div>
-    </header>
-    <div class="header__height__placeholder"></div>
-    <slot />
-    <div class="container default__text-muted">
-      本网站为淳渔CMS演示站，提供的电视剧和电影资源均系收集于各大视频网站<br />
-      若本站收录的节目无意侵犯了贵司版权,请给542968439@qq.com留言,我们会及时逐步删除和规避程序自动搜索采集到的不提供分享的版权影视。<br />
-      本站仅供测试和学习交流。请大家支持正版。
     </div>
-    <footer>Copyright {{ dayjs().format('YYYY') }} 淳渔影视网 Inc. All Rights Reserved.</footer>
-    <el-backtop />
+    <div class="main-content transition-all duration-300 lt-md:ml-0px" :class="sidebarOpen ? 'ml-220px' : 'ml-64px'">
+      <div class="flex items-center gap-10px h-74px pl-16px fixed z-10 lt-md:hidden">
+        <el-icon size="26" color="#888" class="cursor-pointer" @click="handleSetSideBar">
+          <ElIconFold v-if="sidebarOpen" />
+          <ElIconExpand v-else />
+        </el-icon>
+        <div class="search-input">
+          <input type="text" placeholder="请输入关键字" style="outline: 0" autocomplete="off" />
+          <div class="search-button">
+            <el-icon><ElIconSearch /></el-icon>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-between h-58px items-center p-x-20px md:hidden fixed w-full bg-#161823">
+        <div class="flex items-center gap-x-5px">
+          <img src="../assets/images/logo.png" alt="" class="h-28px border-rd-5px" />
+          <span class="color-#fff text-20px font-bold">淳渔影视</span>
+        </div>
+        <el-icon size="26" color="#888" class="cursor-pointer" @click="sidebarMobileOpen = true">
+          <ElIconFold v-if="sidebarMobileOpen" />
+          <ElIconExpand v-else />
+        </el-icon>
+      </div>
+      <div class="h-58px md:hidden"></div>
+      <slot />
+    </div>
+
+    <el-drawer
+      v-model="sidebarMobileOpen"
+      style="--el-bg-color: #161823"
+      direction="ltr"
+      size="220px"
+      :with-header="false"
+    >
+      <div class="flex justify-center items-center gap-x-5px h-74px bg-#161823">
+        <img src="../assets/images/logo.png" alt="" class="h-34px" />
+        <span v-if="textVisible" class="color-#fff text-24px font-bold">淳渔影视</span>
+      </div>
+      <ul class="sidebar-menu-inner">
+        <li class="active">
+          <nuxt-link to="/">
+            <i class="i-flat-color-icons-home w-24px h-24px inline-block"></i>
+            首页
+          </nuxt-link>
+        </li>
+        <li v-for="item in navigation" :key="item.id">
+          <nuxt-link to="/">
+            <img :src="item.icon" alt="" class="h-24px" />
+            <span v-if="textVisible">{{ item.name }}</span>
+          </nuxt-link>
+        </li>
+      </ul>
+      <div class="text-10px color-[rgba(255,255,255,0.6)] p-x-20px absolute bottom-10">
+        本网站为淳渔CMS演示站，提供的电视剧和电影资源均系收集于各大视频网站
+        若本站收录的节目无意侵犯了贵司版权,请给542968439@qq.com留言,我们会及时逐步删除和规避程序自动搜索采集到的不提供分享的版权影视。
+        本站仅供测试和学习交流。请大家支持正版。
+
+        <p class="mt-15px">Copyright 2025 淳渔影视网 Inc. All Rights Reserved.</p>
+      </div>
+    </el-drawer>
   </div>
 </template>
 
 <script setup lang="ts">
-  import dayjs from 'dayjs';
-  import { useLoginDialogVisible, useToken } from '~/composables/states';
-
-  const tokenCookie = useCookie<string | undefined>('token');
-  const token = useToken();
-  const route = useRoute();
-  const loginDialogVisible = useLoginDialogVisible();
-
-  const searchValue = ref('');
+  const sidebarOpen = ref(true);
+  const textVisible = ref(true);
+  const sidebarMobileOpen = ref(false);
 
   const { data: navigation } = await useFetch('/api/web/basic/columns/list');
-  function handleSearch() {
-    navigateTo('/search?keyword=' + searchValue.value);
-  }
 
-  function goLogin() {
-    loginDialogVisible.value = true;
-  }
-
-  function handleCommand(command: string) {
-    switch (command) {
-      case 'logOut':
-        logOut();
-        break;
-      default:
-        navigateTo('/user');
-        break;
-    }
-  }
-
-  function logOut() {
-    tokenCookie.value = undefined;
-    token.value = '';
-    if (route.path.includes('/user')) {
-      navigateTo('/');
+  function handleSetSideBar() {
+    sidebarOpen.value = !sidebarOpen.value;
+    if (!textVisible.value) {
+      setTimeout(() => {
+        textVisible.value = true;
+      }, 300);
+    } else {
+      textVisible.value = false;
     }
   }
 </script>
 
 <style lang="scss">
-  .header {
-    position: fixed;
-    top: 0;
-    z-index: 999;
-    width: 100%;
-    height: 55px;
-    background-color: var(--drak-blue);
-
-    &__left {
-      display: flex;
-      .logo {
-        display: flex;
-        width: 150px;
-        height: 55px;
-        line-height: 55px;
-        font-size: 24px;
-        color: #ff9900;
-        font-weight: bold;
-        background-position: 50% 50% !important;
-        background-size: cover !important;
-        overflow: hidden;
+  .sidebar-menu-inner {
+    li {
+      a {
+        @apply p-x-12px p-y-10px flex items-center gap-x-10px m-x-8px m-y-2px;
+        span {
+          @apply color-#fff;
+        }
+        &:hover {
+          background: #2d2f39;
+          border-radius: 5px;
+        }
       }
-      nav {
-        ul {
-          display: flex;
-          li {
-            a {
-              display: inline-block;
-              height: 55px;
-              line-height: 55px;
-              font-size: 15px;
-              padding: 0 20px;
-              color: #fff;
-            }
-            &.active {
-              a {
-                background-color: #155faa;
-                color: #fff;
-              }
-            }
-          }
+      &.active {
+        a {
+          background: #2d2f39;
+          border-radius: 5px;
         }
       }
     }
   }
-  .header__height__placeholder {
-    height: 55px;
-  }
-
-  footer {
-    padding: 40px 0;
-    text-align: center;
-  }
-
-  .default__text-muted {
-    padding: 20px 0 0;
-    color: #999999;
-    text-align: center;
-  }
-
-  @media only screen and (max-width: 991px) {
-    .header {
+  .main-content {
+    .search-input {
       position: relative;
-
-      .mobile-nav {
-        border-top: var(--light-gray) solid 1px;
-        background: var(--drak-blue);
-        position: absolute;
-        height: 46px;
-        bottom: -46px;
-        width: 100%;
-        overflow-x: auto;
-        overflow-y: hidden;
-        box-sizing: border-box;
-        padding-top: 8px;
-        z-index: 9;
-        &::-webkit-scrollbar {
-          display: none;
-        }
-        ul {
-          white-space: nowrap;
-          li {
-            display: inline-block;
-            position: relative;
-            &.active {
-              a {
-                color: #1583f3;
-              }
-            }
-            a {
-              display: inline-block;
-              padding: 5px 19px;
-              color: #ffffff;
-              font-size: 16px;
-            }
-          }
-        }
+      input {
+        color: #fff;
+        border: none;
+        background-color: rgba(0, 0, 0, 0.2) !important;
+        outline: none;
+        border-radius: 50px;
+        padding: 6px 20px;
+        -webkit-backdrop-filter: blur(5px);
+        backdrop-filter: blur(5px);
+        width: 400px;
       }
-    }
-    .header__height__placeholder {
-      height: 46px;
+      .search-button {
+        position: absolute;
+        right: 15px;
+        top: 10px;
+        cursor: pointer;
+      }
     }
   }
 </style>

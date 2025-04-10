@@ -1,6 +1,6 @@
 import { char, int, mysqlTable, varchar } from 'drizzle-orm/mysql-core';
 import { relations } from 'drizzle-orm';
-import { genreTable } from '~/server/db/schema/basic/genre';
+import { genreTable } from './genre';
 
 export const columnsTable = mysqlTable('columns', {
   columnId: int('column_id').autoincrement().primaryKey(),
@@ -10,6 +10,8 @@ export const columnsTable = mysqlTable('columns', {
   type: char('type', { length: 1 }).default('1'),
   // 目录名
   value: varchar('value', { length: 255 }),
+  // 图标
+  icon: varchar('icon', { length: 255 }),
   // 排序
   order: int('order').default(1),
   // 状态

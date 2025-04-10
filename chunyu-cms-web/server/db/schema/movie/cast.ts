@@ -3,7 +3,7 @@ import { relations } from 'drizzle-orm';
 import { columnsHelpers } from '../../columns.helpers';
 import { professionTable } from '../basic/profession';
 import { actorTable } from './actor';
-import { movieBasicsTable } from '~/server/db/schema/movie/movieBasics';
+import { movieBasicsTable } from './movieBasics';
 
 export const castTable = mysqlTable('cast', {
   // 主键，自增

@@ -2,8 +2,8 @@ import { mysqlTable, varchar, datetime, int, char, date } from 'drizzle-orm/mysq
 import { relations } from 'drizzle-orm';
 import { columnsHelpers } from '../../columns.helpers';
 import { movieBasicToCountryTable } from './movieBasicToCountry';
-import { movieVideoTable } from '~/server/db/schema/movie/movieVideo';
-import { castTable } from '~/server/db/schema/movie/cast';
+import { movieVideoTable } from './movieVideo';
+import { castTable } from './cast';
 
 // 定义 MovieBasic 表
 export const movieBasicsTable = mysqlTable('movie_basics', {

@@ -1,31 +1,40 @@
 <template>
-  <div class="container index">
+  <div>
     <div class="banner">
-      <el-carousel :interval="5000" arrow="always">
-        <el-carousel-item v-for="item in banner" :key="item.id">
-          <nuxt-link v-if="+item.urlType === 0" :to="item.url">
-            <el-image :src="item.img" style="width: 100%" fit="cover" />
-          </nuxt-link>
-          <a v-else :href="item.url">
-            <el-image :src="item.img" style="width: 100%" fit="cover" />
-          </a>
-        </el-carousel-item>
-      </el-carousel>
+      <div class="banner__left"></div>
+      <div class="banner__right"></div>
+      <div class="banner__top"></div>
+      <div class="banner__bottom"></div>
+      <img :src="banner[0].img" class="h-40vh w-full object-cover md:h-50vh" alt="" />
     </div>
-    <movie-box v-for="item in movie" :key="item.value" type="index" :category-item="item" />
-    <div class="friendly-link flex items-center mt-20">
-      <img src="../assets/images/icon_26.png" alt="友情链接" />
-      友情链接
-    </div>
-    <div class="friendly-link__content">
-      <a v-for="item in links?.data" :key="item.id" :href="item.url" target="_blank">{{ item.text }}</a>
-    </div>
+    <section v-for="item in movie" :key="item.id" class="p-x-12px">
+      <div class="flex justify-between items-center m-y-24px">
+        <a class="text-22px">{{ item.name }}</a>
+        <a href="#" class="color-#999 flex items-center">
+          更多 <el-icon><ElIconArrowRight /></el-icon>
+        </a>
+      </div>
+      <div class="video-list">
+        <ul>
+          <li v-for="v in item.rows" :key="v.id">
+            <nuxt-link to="/">
+              <img :src="v.poster" />
+              <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
+                <h3>{{ v.title }}</h3>
+                <p>
+                  <template v-for="actor in v.casts"> {{ actor.actor.name }}&nbsp; </template>
+                  <span v-if="!v.casts.length">-</span>
+                </p>
+              </div>
+            </nuxt-link>
+          </li>
+        </ul>
+      </div>
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
-  const links = { data: [] };
-
   const [{ data: banner }, { data: movie }] = await Promise.all([
     useFetch('/api/web/basic/banner/list', {
       transform: banner => {
@@ -43,94 +52,66 @@
 </script>
 
 <style lang="scss">
-  .index {
-    padding-top: 20px;
-
-    .banner {
-      .el-carousel__container {
-        height: 380px;
-      }
-
-      .el-image {
-        height: 380px;
-      }
-
-      @media (max-width: 768px) {
-        .el-carousel__container {
-          height: 200px;
+  .video-list {
+    ul {
+      @apply grid gap-15px grid-cols-3 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 md:gap-x-20px;
+      li {
+        background: #252632;
+        border-radius: 10px;
+        overflow: hidden;
+        @apply hover:scale-110 transition-all text-14px;
+        img {
+          width: 100%;
+          aspect-ratio: 4 / 5;
+          object-fit: cover;
+          overflow: hidden;
         }
-
-        .el-image {
-          height: 200px;
+        h3 {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          -o-text-overflow: ellipsis;
+          white-space: nowrap;
         }
-      }
-    }
-
-    .friendly-link {
-      border-bottom: #eee solid 1px;
-      padding: 10px 0;
-      font-size: 18px;
-      > img {
-        margin-right: 10px;
-      }
-      &__content {
-        padding: 20px 0;
-        a {
-          padding-right: 15px;
+        p {
+          color: rgba(255, 255, 255, 0.35);
+          @apply text-12px mt-5px;
         }
       }
     }
   }
-
-  .demonstration {
-    color: var(--el-text-color-secondary);
-  }
-
-  .col-pd {
-    li {
-      a {
-        font-size: 14px;
-        padding: 10px 0 10px;
-        border-bottom: dotted 1px #eeeeee;
-
-        .badge {
-          display: inline-block;
-          margin-right: 10px;
-          width: 18px;
-          height: 18px;
-          text-align: center;
-          line-height: 18px;
-          border-radius: 2px;
-          font-size: 12px;
-          background-color: #eee;
-          color: #333;
-        }
-
-        .text-muted {
-          color: #999;
-        }
-      }
-
-      &:nth-child(1) {
-        .badge {
-          background-color: #ff4a4a;
-          color: #fff;
-        }
-      }
-
-      &:nth-child(2) {
-        .badge {
-          background-color: #ff7701;
-          color: #fff;
-        }
-      }
-
-      &:nth-child(3) {
-        .badge {
-          background-color: #ffb400;
-          color: #fff;
-        }
-      }
+  .banner {
+    position: relative;
+    &__left {
+      background: linear-gradient(-90deg, rgba(255, 255, 255, 0) 0%, #161823 100%);
+      width: 250px;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    &__right {
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #161823 100%);
+      width: 250px;
+      height: 100%;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    &__top {
+      background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, #161823 100%);
+      width: 100%;
+      height: 100px;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    &__bottom {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #161823 100%);
+      width: 100%;
+      height: 100px;
+      position: absolute;
+      left: 0;
+      bottom: 0;
     }
   }
 </style>

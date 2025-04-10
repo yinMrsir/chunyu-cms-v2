@@ -1,7 +1,7 @@
 import { mysqlTable, int, varchar, char } from 'drizzle-orm/mysql-core';
 import { relations } from 'drizzle-orm';
 import { columnsHelpers } from '../../columns.helpers';
-import { columnsTable } from '~/server/db/schema/basic/columns';
+import { columnsTable } from './columns';
 
 export const genreTable = mysqlTable('genre', {
   genreId: int('genre_id').autoincrement().primaryKey(),
