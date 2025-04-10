@@ -26,7 +26,7 @@
           </el-tooltip>
         </li>
       </ul>
-      <div class="text-10px color-[rgba(255,255,255,0.6)] p-x-20px absolute bottom-10">
+      <div v-if="textVisible" class="text-10px color-[rgba(255,255,255,0.6)] p-x-20px absolute bottom-10">
         本网站为淳渔CMS演示站，提供的电视剧和电影资源均系收集于各大视频网站
         若本站收录的节目无意侵犯了贵司版权,请给542968439@qq.com留言,我们会及时逐步删除和规避程序自动搜索采集到的不提供分享的版权影视。
         本站仅供测试和学习交流。请大家支持正版。
@@ -36,7 +36,7 @@
     </div>
     <div class="main-content transition-all duration-300 lt-md:ml-0px" :class="sidebarOpen ? 'ml-220px' : 'ml-64px'">
       <div class="flex items-center gap-10px h-74px pl-16px fixed z-10 lt-md:hidden">
-        <el-icon size="26" color="#888" class="cursor-pointer" @click="handleSetSideBar">
+        <el-icon size="26" color="#f2f2f2" class="cursor-pointer" @click="handleSetSideBar">
           <ElIconFold v-if="sidebarOpen" />
           <ElIconExpand v-else />
         </el-icon>
@@ -47,12 +47,12 @@
           </div>
         </div>
       </div>
-      <div class="flex justify-between h-58px items-center p-x-20px md:hidden fixed w-full bg-#161823">
+      <div class="flex justify-between h-58px items-center p-x-20px md:hidden fixed w-full bg-#161823 z-10">
         <div class="flex items-center gap-x-5px">
           <img src="../assets/images/logo.png" alt="" class="h-28px border-rd-5px" />
           <span class="color-#fff text-20px font-bold">淳渔影视</span>
         </div>
-        <el-icon size="26" color="#888" class="cursor-pointer" @click="sidebarMobileOpen = true">
+        <el-icon size="26" color="#f2f2f2" class="cursor-pointer" @click="sidebarMobileOpen = true">
           <ElIconFold v-if="sidebarMobileOpen" />
           <ElIconExpand v-else />
         </el-icon>
@@ -70,7 +70,7 @@
     >
       <div class="flex justify-center items-center gap-x-5px h-74px bg-#161823">
         <img src="../assets/images/logo.png" alt="" class="h-34px" />
-        <span v-if="textVisible" class="color-#fff text-24px font-bold">淳渔影视</span>
+        <span class="color-#fff text-24px font-bold">淳渔影视</span>
       </div>
       <ul class="sidebar-menu-inner">
         <li class="active">
