@@ -38,13 +38,13 @@ DATABASE_PORT=3306
 DATABASE_DB=chunyu-cms-v2
 
 JWT_SECRET=chunyu-cms-v2
-; redis配置
+# redis配置
 REDIS_HOST=127.0.0.1
 REDIS_PORT=6379
 REDIS_USERNAME=
 REDIS_PASSWORD=
 REDIS_DB=0
-; 是否演示环境
+# 是否演示环境
 IS_DEMO_ENVIRONMENT=false
 ```
 
