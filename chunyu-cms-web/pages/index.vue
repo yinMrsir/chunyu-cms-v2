@@ -5,12 +5,16 @@
       <div class="banner__right"></div>
       <div class="banner__top"></div>
       <div class="banner__bottom"></div>
+      <div class="swiper-slide__play-btn">
+        <el-icon><ElIconCaretRight /></el-icon>
+        播放
+      </div>
       <div>
         <swiper
           loop
           :autoplay="{
             pauseOnMouseEnter: true,
-            delay: 20000
+            delay: 5000
           }"
           :modules="[Pagination, Autoplay]"
           :pagination="{ clickable: true }"
@@ -18,7 +22,7 @@
           :space-between="50"
         >
           <swiper-slide v-for="item in banner" :key="item.id">
-            <img :src="item.img" class="h-40vh w-full object-cover md:h-50vh" alt="" />
+            <img :src="item.img" class="h-40vh w-full object-cover md:h-70vh" alt="" />
           </swiper-slide>
         </swiper>
       </div>
@@ -26,9 +30,12 @@
     <section v-for="item in movie" :key="item.id" class="p-x-12px">
       <div class="flex justify-between items-center m-y-24px">
         <a class="text-22px">{{ item.name }}</a>
-        <a href="#" class="color-#999 flex items-center">
-          更多 <el-icon><ElIconArrowRight /></el-icon>
-        </a>
+        <div class="genre flex gap-x-20px">
+          <a v-for="gen in item.genre" :key="gen.id" href="#"> {{ gen.name }} </a>
+          <a href="#" class="color-#999 flex items-center">
+            更多 <el-icon><ElIconArrowRight /></el-icon>
+          </a>
+        </div>
       </div>
       <div class="video-list">
         <ul>
@@ -75,7 +82,7 @@
 <style lang="scss">
   .video-list {
     ul {
-      @apply grid gap-15px grid-cols-3 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 md:gap-x-20px;
+      @apply grid gap-15px grid-cols-3 md:grid-cols-4 lg:grid-cols-6 md:gap-x-20px;
       li {
         background: #252632;
         border-radius: 10px;
@@ -100,6 +107,25 @@
       }
     }
   }
+  .genre {
+    a {
+      @apply text-14px relative color-#999 hover:color-white;
+    }
+    a:before {
+      background: #2d2f3b;
+      content: '';
+      display: block;
+      height: 10px;
+      position: absolute;
+      right: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+    }
+    a:last-child:before {
+      width: 0;
+    }
+  }
   .banner {
     position: relative;
     &__left {
@@ -120,6 +146,7 @@
       right: 0;
       top: 0;
       z-index: 2;
+      @apply hidden md:block;
     }
     &__top {
       background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, #161823 100%);
@@ -138,6 +165,21 @@
       left: 0;
       bottom: 0;
       z-index: 2;
+    }
+    .swiper-slide__play-btn {
+      color: #fff;
+      border: none;
+      background-color: rgba(255, 255, 255, 0.1);
+      outline: none;
+      border-radius: 50px;
+      padding: 6px 20px;
+      -webkit-backdrop-filter: blur(5px);
+      backdrop-filter: blur(5px);
+      @apply flex items-center justify-center gap-x-6px cursor-pointer z-3 absolute left-50px bottom-50px text-18px;
+      &:hover {
+        background: #ffffff;
+        color: #161823;
+      }
     }
   }
 </style>
