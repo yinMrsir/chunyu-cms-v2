@@ -14,12 +14,15 @@ export class GenreServices {
   }
 
   /* 分页查询 */
-  async pageList(params?: Partial<Genre & { keyword: string } & queryParams>) {
+  async pageList(params?: Partial<Genre & { keyword: string } & queryParams>, withParams = {}) {
     const { pageNum = 1, limit = 10 } = params || {};
     const offset = (pageNum - 1) * limit;
     const whereList = [];
     if (params?.name || params?.keyword) {
       whereList.push(like(genreTable.name, `%${params.name || params.keyword}%`));
+    }
+    if (params?.columnValue) {
+      whereList.push(eq(genreTable.columnValue, params.columnValue));
     }
     const where = and(...whereList);
 
@@ -27,6 +30,7 @@ export class GenreServices {
       extras: {
         id: sql`${genreTable.genreId}`.as('id')
       },
+      with: withParams,
       where,
       offset,
       limit

@@ -92,23 +92,24 @@
 
         <!-- 与分类联动 -->
         <el-form-item label="已选类型：">
-          <el-checkbox-group v-model="movie.genres">
-            <el-checkbox
-              v-for="genre in movie.genres"
-              :key="genre"
-              :label="genre"
-            >
-              {{ genre }}
-            </el-checkbox>
+          <el-checkbox-group v-model="movie.genreIds">
+            <template v-for="genre in genres" :key="genre.id">
+              <el-checkbox
+                v-if="movie.genreIds?.includes(genre.id)"
+                :label="genre.id"
+              >
+                {{ genre.name }}
+              </el-checkbox>
+            </template>
           </el-checkbox-group>
         </el-form-item>
 
         <el-form-item label="所属类型：">
-          <el-checkbox-group v-model="movie.genres" v-loading="genresLoading">
+          <el-checkbox-group v-model="movie.genreIds" v-loading="genresLoading">
             <el-checkbox
               v-for="genre in genres"
               :key="genre.id"
-              :label="genre.name"
+              :label="genre.id"
             >
               {{ genre.name }}
             </el-checkbox>
@@ -271,7 +272,7 @@ const movie = ref({
   languages: [],
   akas: [],
   tags: [],
-  genres: [],
+  genreIds: [],
   versions: [],
   isPay: 0,
   paymentAmount: 0,
@@ -350,7 +351,7 @@ async function getMovieData() {
   const { data } = await getMovie(id.value);
   movie.value = {
     ...data,
-    genres: data.genres?.split(",") || [],
+    genreIds: data.genres?.map((genre) => genre.genreId),
     versions: data.versions?.split(",") || [],
     languages: data.languages?.split(",") || [],
     countryIds: data.movieBasicToCountry?.map((value) => value.countryId) || [],
@@ -398,7 +399,7 @@ async function getGenresSimple() {
 
 /** 分类改变时，请求类型列表 */
 function columnValueChangeHandle() {
-  movie.value.genres = [];
+  movie.value.genreIds = [];
   getGenresSimple();
 }
 

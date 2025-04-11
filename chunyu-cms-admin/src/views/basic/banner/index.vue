@@ -41,6 +41,7 @@ const columns = ref([
       { value: "1", label: "站外" },
     ],
   },
+  { title: "视频地址", field: "videoUrl", add: true, hidden: true },
   { title: "链接", field: "url", add: true, hidden: true },
   {
     title: "备注",

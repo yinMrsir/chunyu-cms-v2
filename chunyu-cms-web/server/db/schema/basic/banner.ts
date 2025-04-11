@@ -7,6 +7,8 @@ export const bannerTable = mysqlTable('banner', {
   img: varchar('img', { length: 255 }),
   // 标题
   title: varchar('title', { length: 255 }),
+  // 视频地址
+  videoUrl: varchar('video_url', { length: 255 }),
   // 链接
   url: varchar('url', { length: 255 }),
   // 链接类型 0: 站内 1: 站外

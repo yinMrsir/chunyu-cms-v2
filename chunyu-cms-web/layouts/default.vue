@@ -9,7 +9,7 @@
         <span v-if="textVisible" class="color-#fff text-24px font-bold">淳渔影视</span>
       </div>
       <ul class="sidebar-menu-inner">
-        <li class="active">
+        <li :class="route.path === '/' ? 'active' : ''">
           <el-tooltip :disabled="textVisible" effect="dark" content="首页" placement="right">
             <nuxt-link to="/">
               <i class="i-flat-color-icons-home w-24px h-24px inline-block"></i>
@@ -17,7 +17,7 @@
             </nuxt-link>
           </el-tooltip>
         </li>
-        <li v-for="item in navigation" :key="item.id">
+        <li v-for="item in navigation" :key="item.id" :class="route.params.columnValue === item.value ? 'active' : ''">
           <el-tooltip :disabled="textVisible" effect="dark" :content="item.name" placement="right">
             <nuxt-link
               :to="+item.type === 1 ? `/column/${item.value}` : item.value"
@@ -76,13 +76,13 @@
         <span class="color-#fff text-24px font-bold">淳渔影视</span>
       </div>
       <ul class="sidebar-menu-inner">
-        <li class="active">
+        <li :class="route.path === '/' ? 'active' : ''">
           <nuxt-link to="/">
             <i class="i-flat-color-icons-home w-24px h-24px inline-block"></i>
             <span>首页</span>
           </nuxt-link>
         </li>
-        <li v-for="item in navigation" :key="item.id">
+        <li v-for="item in navigation" :key="item.id" :class="route.params.columnValue === item.value ? 'active' : ''">
           <nuxt-link
             :to="+item.type === 1 ? `/column/${item.value}` : item.value"
             :target="+item.type === 1 ? '_self' : '_blank'"
@@ -104,6 +104,8 @@
 </template>
 
 <script setup lang="ts">
+  const route = useRoute();
+
   const sidebarOpen = ref(true);
   const textVisible = ref(true);
   const sidebarMobileOpen = ref(false);

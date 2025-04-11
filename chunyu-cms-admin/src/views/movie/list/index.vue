@@ -152,11 +152,11 @@
           />
         </template>
       </el-table-column>
-      <el-table-column
-        prop="genres"
-        label="类型"
-        min-width="160px"
-      ></el-table-column>
+      <el-table-column prop="genres" label="类型" min-width="160px">
+        <template #default="scope">
+          {{ scope.row.genres?.map((value) => value.genre.name).join(",") }}
+        </template>
+      </el-table-column>
       <el-table-column prop="address" label="国家/地区" min-width="160px">
         <template #default="scope">
           {{

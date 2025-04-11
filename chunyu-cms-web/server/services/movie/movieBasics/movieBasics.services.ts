@@ -1,13 +1,13 @@
-import { and, eq, inArray, like, sql } from 'drizzle-orm';
+import { and, desc, eq, inArray, like, sql } from 'drizzle-orm';
 import { MovieBasics, movieBasicsTable, NewMovieBasics } from '~/server/db/schema/movie/movieBasics';
 import { queryParams } from '~/server/db/query.helper';
 import { movieBasicToCountryTable } from '~/server/db/schema/movie/movieBasicToCountry';
 import { movieVideoTable } from '~/server/db/schema/movie/movieVideo';
-import { countryTable } from '~/server/db/schema/basic/country';
+import { movieBasicToGenreTable } from '~/server/db/schema/movie/movieBasicToGenre';
 
 export class MovieBasicsServices {
   /* 新增 */
-  async add(body: NewMovieBasics & { countryIds: number[] }) {
+  async add(body: NewMovieBasics & { countryIds: number[] } & { genreIds: number[] }) {
     try {
       let movieBasicsId: number;
       await db.transaction(async tx => {
@@ -21,6 +21,14 @@ export class MovieBasicsServices {
             }))
           );
         }
+        if (body.genreIds.length) {
+          await tx.insert(movieBasicToGenreTable).values(
+            body.genreIds.map(genreId => ({
+              movieBasicsId,
+              genreId
+            }))
+          );
+        }
       });
       // @ts-ignore
       return movieBasicsId;
@@ -30,7 +38,7 @@ export class MovieBasicsServices {
   }
 
   /* 更新 */
-  async update(body: MovieBasics & { countryIds: number[] }) {
+  async update(body: MovieBasics & { countryIds: number[] } & { genreIds: number[] }) {
     try {
       await db.transaction(async tx => {
         await tx.update(movieBasicsTable).set(body).where(eq(movieBasicsTable.movieBasicsId, body.movieBasicsId));
@@ -40,6 +48,15 @@ export class MovieBasicsServices {
             body.countryIds.map(countryId => ({
               movieBasicsId: body.movieBasicsId,
               countryId
+            }))
+          );
+        }
+        await tx.delete(movieBasicToGenreTable).where(eq(movieBasicToGenreTable.movieBasicsId, body.movieBasicsId));
+        if (body.genreIds.length) {
+          await tx.insert(movieBasicToGenreTable).values(
+            body.genreIds.map(genreId => ({
+              movieBasicsId: body.movieBasicsId,
+              genreId
             }))
           );
         }
@@ -57,6 +74,16 @@ export class MovieBasicsServices {
         movieBasicToCountry: {
           with: {
             country: true
+          }
+        },
+        genres: {
+          with: {
+            genre: {
+              columns: {
+                name: true,
+                genreId: true
+              }
+            }
           }
         }
       }
@@ -93,11 +120,22 @@ export class MovieBasicsServices {
           with: {
             actor: true
           }
+        },
+        genres: {
+          with: {
+            genre: {
+              columns: {
+                name: true,
+                genreId: true
+              }
+            }
+          }
         }
       },
       where,
       offset,
-      limit
+      limit: Number(limit),
+      orderBy: [desc(movieBasicsTable.movieBasicsId)]
     });
     const totalQuery = db.$count(movieBasicsTable, where);
     const [rows, total] = await Promise.all([rowsQuery, totalQuery]);

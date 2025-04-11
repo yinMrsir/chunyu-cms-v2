@@ -14,7 +14,7 @@
           loop
           :autoplay="{
             pauseOnMouseEnter: true,
-            delay: 5000
+            delay: 15000
           }"
           :modules="[Pagination, Autoplay]"
           :pagination="{ clickable: true }"
@@ -22,7 +22,14 @@
           :space-between="50"
         >
           <swiper-slide v-for="item in banner" :key="item.id">
-            <img :src="item.img" class="h-40vh w-full object-cover md:h-70vh" alt="" />
+            <video
+              muted
+              autoplay
+              :poster="item.img"
+              :src="item.videoUrl"
+              class="h-40vh w-full object-cover md:h-70vh"
+              alt=""
+            />
           </swiper-slide>
         </swiper>
       </div>
@@ -71,7 +78,8 @@
           url: item.url,
           urlType: item.urlType,
           id: item.id,
-          title: item.title
+          title: item.title,
+          videoUrl: item.videoUrl
         }));
       }
     }),

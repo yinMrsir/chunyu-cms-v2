@@ -1,6 +1,7 @@
 import { mysqlTable, varchar, datetime, int, char, date } from 'drizzle-orm/mysql-core';
 import { relations } from 'drizzle-orm';
 import { columnsHelpers } from '../../columns.helpers';
+import { movieBasicToGenreTable } from '../movie/movieBasicToGenre';
 import { movieBasicToCountryTable } from './movieBasicToCountry';
 import { movieVideoTable } from './movieVideo';
 import { castTable } from './cast';
@@ -28,8 +29,6 @@ export const movieBasicsTable = mysqlTable('movie_basics', {
   akas: varchar('akas', { length: 100 }),
   // 影视分类
   columnValue: varchar('column_value', { length: 255 }),
-  // 所属类型
-  genres: varchar('genres', { length: 100 }),
   // 年代
   year: int('year'),
   // 首映时间
@@ -75,5 +74,6 @@ export type NewMovieBasics = typeof movieBasicsTable.$inferInsert;
 export const movieBasicsTableRelations = relations(movieBasicsTable, ({ many }) => ({
   movieBasicToCountry: many(movieBasicToCountryTable),
   movieVideo: many(movieVideoTable),
-  casts: many(castTable)
+  casts: many(castTable),
+  genres: many(movieBasicToGenreTable)
 }));
