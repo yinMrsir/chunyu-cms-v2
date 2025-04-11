@@ -6,7 +6,8 @@
 当前版本使用[DrizzleOrm](https://orm.drizzle.team/)替换了typeOrm，我想你会更容易上手操作。但请注意不支持mysql5.x，建议使用mysql8.x。
 
 ## 在线体验
-
+- [用户端演示地址](http://cms.yinchunyu.com)
+- [管理端演示地址](http://cms.yinchunyu.com/admin)
 - 源码地址: [GitHub](https://github.com/yinMrsir/chunyu-cms-v2) | [Gitee](https://gitee.com/chunyu-cms/chunyu-cms-v2)
 
 <img src="https://gitee.com/chunyu-cms/chunyu-cms-v2/raw/main/1.png"/>
