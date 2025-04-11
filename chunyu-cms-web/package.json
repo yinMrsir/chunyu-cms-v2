@@ -3,6 +3,7 @@
   "private": false,
   "scripts": {
     "build": "nuxt build",
+    "build:pro": "nuxt build  --dotenv .env.pro",
     "dev": "nuxt dev --host 0.0.0.0",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",

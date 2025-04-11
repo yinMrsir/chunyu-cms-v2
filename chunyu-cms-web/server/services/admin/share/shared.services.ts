@@ -5,7 +5,7 @@
 import * as fs from 'fs';
 import CryptoJS from 'crypto-js';
 import { customAlphabet, nanoid } from 'nanoid';
-import * as iconv from 'iconv-lite';
+import iconv from 'iconv-lite';
 
 export class SharedServices {
   /**

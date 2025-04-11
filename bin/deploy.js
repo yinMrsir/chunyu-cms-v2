@@ -42,7 +42,7 @@ const checkAndInstallPM2 = () => {
 const mainProcess = () => {
   const webDir = path.join(process.cwd(), "chunyu-cms-web");
   const adminDir = path.join(process.cwd(), "chunyu-cms-admin");
-  const targetDir = path.join(webDir, "public/admin");
+  const targetDir = path.join(webDir, "admin");
 
   // 先确保目标目录存在，如果不存在则创建它
   if (!fs.existsSync(targetDir)) {

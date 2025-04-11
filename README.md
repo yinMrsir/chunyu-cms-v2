@@ -91,7 +91,26 @@ node bin/deploy.js
 管理端：http://localhost:3000/admin/
 用户名：admin，密码：admin123
 
-此方式会把管理端代码拷贝到`chunyu-cms-web/public/admin`目录中，所以不需要再部署管理端。但此方式路由使用的是hash模式。
+此方式会把管理端代码拷贝到`chunyu-cms-web/admin`目录中，但此方式路由使用的是hash模式。
+
+⚠️注意：你仍需要通过nginx设置代理到子目录, nginx如下配置：
+
+```nginx configuration
+server {
+    listen 80;
+    server_name your.domain.com;
+    
+    location / {
+        proxy_pass http://127.0.0.1:3000/;
+    }
+    location /uploads {
+        alias /path/to/chunyu-cms-v2/chunyu-cms-web/uploads;
+    }
+    location /admin {
+        alias /path/to/chunyu-cms-v2/chunyu-cms-web/admin;
+    }
+}
+```
 
 ### 方式二：自行部署
 
@@ -119,5 +138,32 @@ pnpm build
 ```shell
 pm2 start pm2.config.cjs
 ```
+
+nginx配置如下：
+```nginx configuration
+server {
+    listen 80;
+    server_name your.domain.com;
+    
+    location / {
+        proxy_pass http://127.0.0.1:3000/;
+    }
+    location /uploads {
+        alias /path/to/chunyu-cms-v2/chunyu-cms-web/uploads;
+    }
+}
+
+server {
+    listen 80;
+    server_name your.domain.com;
+    
+    location / {
+        root  /path/to/chunyu-cms-v2/chunyu-cms-admin/dist;
+        index index.html;
+        try_files $uri $uri/ /index.html;
+    }
+}
+```
+nginx更详细配置可[查看](nginx.conf)
 
 Nuxt项目部署文档：https://nuxt.com/docs/getting-started/deployment

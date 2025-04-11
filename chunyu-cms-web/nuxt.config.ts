@@ -61,16 +61,19 @@ export default defineNuxtConfig({
       }
     },
     // 注意生产环境需要配置nginx代理，详见nginx.conf
-    publicAssets: [
-      {
-        dir: path.resolve(__dirname, 'uploads'),
-        baseURL: '/uploads'
-      },
-      {
-        dir: path.resolve(__dirname, 'admin'),
-        baseURL: '/admin'
-      }
-    ]
+    publicAssets:
+      process.env.NODE_ENV === 'development'
+        ? [
+            {
+              dir: path.resolve(__dirname, 'uploads'),
+              baseURL: '/uploads'
+            },
+            {
+              dir: path.resolve(__dirname, 'admin'),
+              baseURL: '/admin'
+            }
+          ]
+        : []
   },
   runtimeConfig: {
     // mysql连接配置
