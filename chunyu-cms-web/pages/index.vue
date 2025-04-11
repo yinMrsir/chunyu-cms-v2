@@ -31,7 +31,7 @@
       <div class="flex justify-between items-center m-y-24px">
         <a class="text-22px">{{ item.name }}</a>
         <div class="genre flex gap-x-20px">
-          <a v-for="gen in item.genre" :key="gen.id" href="#"> {{ gen.name }} </a>
+          <a v-for="gen in item.genre" :key="gen.id" href="#" class="hidden lg:inline-block"> {{ gen.name }} </a>
           <a href="#" class="color-#999 flex items-center">
             更多 <el-icon><ElIconArrowRight /></el-icon>
           </a>
@@ -175,7 +175,7 @@
       padding: 6px 20px;
       -webkit-backdrop-filter: blur(5px);
       backdrop-filter: blur(5px);
-      @apply flex items-center justify-center gap-x-6px cursor-pointer z-3 absolute left-50px bottom-50px text-18px;
+      @apply flex items-center justify-center gap-x-6px cursor-pointer z-3 absolute left-20px bottom-50px text-18px lg:left-50px;
       &:hover {
         background: #ffffff;
         color: #161823;
