@@ -19,7 +19,10 @@
         </li>
         <li v-for="item in navigation" :key="item.id">
           <el-tooltip :disabled="textVisible" effect="dark" :content="item.name" placement="right">
-            <nuxt-link to="/">
+            <nuxt-link
+              :to="+item.type === 1 ? `/column/${item.value}` : item.value"
+              :target="+item.type === 1 ? '_self' : '_blank'"
+            >
               <img :src="item.icon" alt="" class="h-24px" />
               <span v-if="textVisible">{{ item.name }}</span>
             </nuxt-link>
@@ -80,7 +83,10 @@
           </nuxt-link>
         </li>
         <li v-for="item in navigation" :key="item.id">
-          <nuxt-link to="/">
+          <nuxt-link
+            :to="+item.type === 1 ? `/column/${item.value}` : item.value"
+            :target="+item.type === 1 ? '_self' : '_blank'"
+          >
             <img :src="item.icon" alt="" class="h-24px" />
             <span>{{ item.name }}</span>
           </nuxt-link>
