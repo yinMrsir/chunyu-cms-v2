@@ -12,23 +12,27 @@
     </p>
     <p>
       <el-button
-          icon="Connection"
-          plain
-          @click="goTarget('https://www.douyin.com/user/MS4wLjABAAAAUKMCVZGbQl7etrdd36GBIG6OGxClOwoHci_-PIlxNvE')"
+        icon="Connection"
+        plain
+        @click="
+          goTarget(
+            'https://www.douyin.com/user/MS4wLjABAAAAUKMCVZGbQl7etrdd36GBIG6OGxClOwoHci_-PIlxNvE',
+          )
+        "
       >
         抖音
       </el-button>
       <el-button
-          icon="ChatRound"
-          plain
-          @click="goTarget('https://space.bilibili.com/397874328')"
+        icon="ChatRound"
+        plain
+        @click="goTarget('https://space.bilibili.com/397874328')"
       >
         bilibili
       </el-button>
       <el-button
         icon="Star"
         plain
-        @click="goTarget('https://github.com/yinMrsir/chunyu-cms')"
+        @click="goTarget('https://github.com/yinMrsir/chunyu-cms-v2')"
       >
         GitHub
       </el-button>
@@ -36,13 +40,21 @@
         type="primary"
         icon="Cloudy"
         plain
-        @click="goTarget('https://gitee.com/chunyu-cms/chunyu-cms')"
+        @click="goTarget('https://gitee.com/chunyu-cms/chunyu-cms-v2')"
       >
         码云
       </el-button>
     </p>
   </div>
 </template>
+
+<script setup>
+const version = ref("0.0.1");
+
+function goTarget(url) {
+  window.open(url, "__blank");
+}
+</script>
 
 <style lang="scss" scoped>
 .welcome {
@@ -58,13 +70,3 @@
   }
 }
 </style>
-
-
-<script setup>
-const version = ref('0.0.1')
-
-function goTarget(url) {
-  window.open(url, '__blank')
-}
-</script>
-
