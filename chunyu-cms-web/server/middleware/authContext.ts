@@ -14,7 +14,8 @@ export default defineEventHandler(async event => {
   if (
     runtimeConfig.isDemoEnvironment &&
     isMethod(event, ['POST', 'PUT']) &&
-    !noVerificationRouters.includes(event.path)
+    !noVerificationRouters.includes(event.path) &&
+    event.context.user?.userId !== -1
   ) {
     throw createError({ statusCode: 403, message: '演示环境禁止修改数据！' });
   }
