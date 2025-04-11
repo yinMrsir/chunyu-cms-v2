@@ -46,6 +46,8 @@ REDIS_PASSWORD=
 REDIS_DB=0
 # 是否演示环境
 IS_DEMO_ENVIRONMENT=false
+# 图片域名
+IMG_HOST=http://localhost:3000
 ```
 
 **注意：** `mysql`和`redis`的端口号，用户名，密码，数据库名称，jwt加密密钥，请自行修改。
