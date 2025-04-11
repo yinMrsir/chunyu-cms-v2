@@ -11,7 +11,11 @@ export default defineEventHandler(async event => {
     event.context.validatePermission = auth.validatePermission;
   }
   // 演示环境
-  if (runtimeConfig.isDemoEnvironment && isMethod(event, ['POST', 'PUT'])) {
+  if (
+    runtimeConfig.isDemoEnvironment &&
+    isMethod(event, ['POST', 'PUT']) &&
+    !noVerificationRouters.includes(event.path)
+  ) {
     throw createError({ statusCode: 403, message: '演示环境禁止修改数据！' });
   }
 });
