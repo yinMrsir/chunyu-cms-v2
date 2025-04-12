@@ -1,17 +1,17 @@
 /*
  Navicat MySQL Data Transfer
 
- Source Server         : localhost
+ Source Server         : 47.119.191.19
  Source Server Type    : MySQL
- Source Server Version : 80029
- Source Host           : localhost:3306
+ Source Server Version : 80027
+ Source Host           : 47.119.191.19:3306
  Source Schema         : chunyu-cms-v2
 
  Target Server Type    : MySQL
- Target Server Version : 80029
+ Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 11/04/2025 15:33:10
+ Date: 12/04/2025 10:59:24
 */
 
 SET NAMES utf8mb4;
@@ -36,19 +36,25 @@ CREATE TABLE `actor` (
   `brief` text,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `create_time` datetime DEFAULT '2025-04-11 15:17:53',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `update_time` datetime DEFAULT '2025-04-11 15:17:53',
   PRIMARY KEY (`actor_id`),
   UNIQUE KEY `actor_id` (`actor_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of actor
 -- ----------------------------
 BEGIN;
-INSERT INTO `actor` VALUES (1, 'http://localhost:3000/uploads/2025-04-03/pDRmWJag7.jpeg', '申奥', '', '', '', '1', NULL, NULL, 1, '', NULL, '', '', '2025-04-03 03:25:01', '', '2025-04-03 05:56:50');
-INSERT INTO `actor` VALUES (2, 'http://localhost:3000/uploads/2025-04-03/BqDkpQUEo.jpeg', '王一博', 'Yibo Wang', '白牡丹,小王子', '', '1', '1997-08-05', NULL, 1, '', NULL, '', '', '2025-04-03 03:25:01', '', '2025-04-03 03:25:01');
+INSERT INTO `actor` VALUES (1, 'https://cms.yinchunyu.com/uploads/2025-04-03/pDRmWJag7.jpeg', '申奥', '', '', '', '1', NULL, NULL, 1, '', NULL, '', '', '2025-04-03 03:25:01', '', '2025-04-03 05:56:50');
+INSERT INTO `actor` VALUES (2, 'https://cms.yinchunyu.com/uploads/2025-04-03/BqDkpQUEo.jpeg', '王一博', 'Yibo Wang', '白牡丹,小王子', '', '1', '1997-08-05', NULL, 1, '', NULL, '', '', '2025-04-03 03:25:01', '', '2025-04-03 03:25:01');
+INSERT INTO `actor` VALUES (3, 'https://cms.yinchunyu.com/uploads/2025-04-12/9vd7IAoGi.jpeg', '达里奥·格兰迪内蒂', 'Darío Grandinetti', '', '', '1', '1959-03-05', NULL, NULL, '', 'DaríoGrandinetti是阿根廷获得艾美奖的演员。他以其在电视，戏剧和电影中的众多角色而闻名，在那里他参演了由Alejandro Doria，Pedro Almodovar和DamiánSzifron等知名导演的电影。', '', '', '2025-04-11 15:17:53', '', '2025-04-12 02:11:56');
+INSERT INTO `actor` VALUES (4, 'https://cms.yinchunyu.com/uploads/2025-04-12/5djVyKz83.jpeg', '井土纪州', '', '', '', '1', NULL, NULL, 9, '', '井土 紀州（いづち きしゅう、1968年4月25日 - ）は三重県出身の映画監督・脚本家。\n\n法政大学在学中に松阪高校時代からの仲間である吉岡文平と『第一アパート』を製作、東京学生映画祭において崔洋一に絶賛され、特別賞を受賞。8mmで撮影された『百年の絶唱』はレイトロードショー公開され、僅か8日間の上映にもかかわらず、およそ1,000人もの観客を動員した。その後、吉岡文平らと共に映画製作集団「スピリチュアル・ムービーズ」を立ち上げ、『百年の絶唱』、『レフト・アローン』などを監督。また、脚本家としても瀬々敬久監督作品などピンク映画において多数の脚本を書いている。', '', '', '2025-04-11 15:17:53', '', '2025-04-11 15:17:53');
+INSERT INTO `actor` VALUES (5, 'https://cms.yinchunyu.com/uploads/2025-04-12/vrcxUsYus.jpeg', '大西信满', '', '', '', '1', NULL, NULL, 9, '日本神奈川县', NULL, '', '', '2025-04-11 15:17:53', '', '2025-04-11 15:17:53');
+INSERT INTO `actor` VALUES (6, 'https://cms.yinchunyu.com/uploads/2025-04-12/a8IPvgEHK.jpeg', '赵又廷', 'Mark Chao', '', '', '1', '1984-09-25', NULL, 1, '中国,台湾,台北', '赵又廷，华语影视男演员，2007年毕业于加拿大维多利亚大学经济专业。2009年出演第一部电视剧作品《痞子英雄》获得第44届台湾金钟奖最佳男主角，并入围第16届上海电视节白玉兰奖最佳男演员奖。2010年主演个人首部大银幕作品《艋舺》获得第五届亚洲电影大奖最佳新演员奖。2012年主演陈凯歌执导电影《搜索》获得第十五届中国电影华表奖优秀境外华裔男演员奖。2017年出演《三生三世十里桃花》夜华一角获得极高关注度。', '', '', '2025-04-11 15:17:53', '', '2025-04-11 15:17:53');
+INSERT INTO `actor` VALUES (7, 'https://cms.yinchunyu.com/uploads/2025-04-12/ofKFcmT2j.jpeg', '宋佳', 'Jia Song', '', '', '2', '1980-11-13', NULL, 1, '中国,黑龙江,哈尔滨', '宋佳，1980年11月13日出生于黑龙江省哈尔滨市南岗区，中国内地影视女演员、歌手，国家话剧院演员，毕业于上海戏剧学院表演系。\n\n2001年，因参演现代剧《其实不想走》而出道。2006年，因出演电影《好奇害死猫》开始崭露头角。2007年，主演电视剧《闯关东》。2010年4月，主演的都市情感剧《大女当嫁》播出。2012年，凭借电视剧《悬崖》获第18届上海电视节白玉兰奖最佳电视剧女演员奖及第九届中国金鹰电视艺术节最佳艺术表演女演员奖。2013年，凭借电影《萧红》获第29届中国电影金鸡奖最佳女主角、第9届中美电影节金天使奖最佳女演员、第1届温哥华华语电影节红枫叶奖最佳女主角。2015年，担任第21届上海电视节白玉兰奖电视剧单元评委。2016年9月7日，凭借电影《师父》获得第20届华鼎奖中国最佳女主角奖。2018年6月，担任第21届上海国际电影节“亚洲新人奖”国际影片评选委员会评委；11月，宋佳主演的电影《诗人》入围第31届东京国际电影节主竞赛单元；12月，当选中国电影家协会第十届理事会理事。2019年12月16日，获得粤港澳大湾区电影行业大会暨电影之夜年度女主角；12月19日，获MAHB时尚先生盛典“年度电影演员”年度电影演员。2020年5月25日，主演的电视剧《小舍得》开机。2024年9月10日，主演的电视剧《山花烂漫时》在中央电视台播出；11月22日，主演的电影《好东西》上映。', '', '', '2025-04-11 15:17:53', '', '2025-04-12 02:31:59');
+INSERT INTO `actor` VALUES (8, 'https://cms.yinchunyu.com/uploads/2025-04-12/DAjUnXNUf.jpeg', '刘德华', 'Andy Lau', '刘福荣(幼时学名),华仔(昵称)', 'Lau Tak Wah,Wah Jai (昵称)', '1', '1961-09-27', NULL, 1, '中国香港,新界', '刘德华，著名演员和歌手。1990年代被封为香港“四大天王”之一，亦是大中华地区极具代表性的艺人之一。 刘德华是个多线发展的艺人：作为歌手，他是吉尼斯世界纪录大全中，获奖最多的香港歌手；电影方面他曾三度夺得香港电影金像奖最佳男主角、以及获得两座台湾金马奖影帝，截止2010年参与出演的电影已经超过140部。\n\n刘德华现在是映艺集团的老板，作为投资人参与制作了多部华语电影。\n\n1999年，刘德华获得“香港十大杰出青年”的荣誉，2000年11月则顺利荣登“世界十大杰出青年”，成为获此殊荣的少数几位香港艺人。2006年7月7日，由于他“是香港最受尊重和喜爱的演艺名人之一，对香港电影及音乐贡献良多。其严谨专业的工作态度，足以成为年轻人的典范”和“以表彰他在表演艺术方面的成就”的原因而被香港演艺学院授予荣誉院士称号，成为获此荣誉的少数几位香港演员之一。\n\n刘德华笃信佛教，法号慧果，热心公益，时常参与慈善活动。2008年，刘德华获香港特别行政区政府委任为太平绅士。2010年4月23日，刘德华获任中国残疾人福利基金会理事并担任副理事长。\n\n2010年5月2日，刘德华获颁第十二届世界杰出华人奖同时获颁授加拿大纽奔驰域蓝仕桥大学荣誉博士学位。', '', '', '2025-04-11 15:17:53', '', '2025-04-11 15:17:53');
 COMMIT;
 
 -- ----------------------------
@@ -63,9 +69,10 @@ CREATE TABLE `banner` (
   `url_type` char(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `create_time` datetime DEFAULT '2025-04-11 15:17:53',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `update_time` datetime DEFAULT '2025-04-11 15:17:53',
+  `video_url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`banner_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -73,8 +80,8 @@ CREATE TABLE `banner` (
 -- Records of banner
 -- ----------------------------
 BEGIN;
-INSERT INTO `banner` VALUES (2, 'http://localhost:3000/uploads/2025-04-10/IVRrcMX9x.jpeg', '灌篮高手', NULL, '0', '', '', '2025-04-07 14:14:38', '', '2025-04-10 05:36:41');
-INSERT INTO `banner` VALUES (3, 'http://localhost:3000/uploads/2025-04-10/yt6JjKEmc.jpeg', '测的负担', NULL, '0', '', '', '2025-04-09 07:49:12', '', '2025-04-09 07:49:12');
+INSERT INTO `banner` VALUES (2, 'https://cms.yinchunyu.com//uploads/2025-04-10/IVRrcMX9x.jpeg', '灌篮高手', NULL, '0', '', '', '2025-04-07 14:14:38', '', '2025-04-11 15:39:39', 'https://cms.yinchunyu.com/uploads/2025-04-03/vyDvWDGSc.mp4');
+INSERT INTO `banner` VALUES (3, 'https://cms.yinchunyu.com//uploads/2025-04-10/yt6JjKEmc.jpeg', '测的负担', 'https://cms.yinchunyu.com/uploads/2025-04-03/93iXAgPes.mp4', '0', '', '', '2025-04-09 07:49:12', '', '2025-04-11 15:39:49', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -89,17 +96,25 @@ CREATE TABLE `cast` (
   `role` varchar(255) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `create_time` datetime DEFAULT '2025-04-11 15:17:53',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `update_time` datetime DEFAULT '2025-04-11 15:17:53',
   PRIMARY KEY (`cast_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of cast
 -- ----------------------------
 BEGIN;
 INSERT INTO `cast` VALUES (4, 17, 2, 2, '11', '', '', '2025-04-07 14:14:38', '', '2025-04-07 14:14:38');
+INSERT INTO `cast` VALUES (5, 27, 2, 21, NULL, '', '', '2025-04-11 15:17:53', '', '2025-04-11 15:17:53');
+INSERT INTO `cast` VALUES (6, 27, 1, 2, NULL, '', '', '2025-04-11 15:17:53', '', '2025-04-11 15:17:53');
+INSERT INTO `cast` VALUES (7, 28, 3, 21, NULL, '', '', '2025-04-11 15:17:53', '', '2025-04-11 15:17:53');
+INSERT INTO `cast` VALUES (8, 29, 4, 2, NULL, '', '', '2025-04-11 15:17:53', '', '2025-04-11 15:17:53');
+INSERT INTO `cast` VALUES (9, 29, 5, 21, NULL, '', '', '2025-04-11 15:17:53', '', '2025-04-11 15:17:53');
+INSERT INTO `cast` VALUES (10, 30, 7, 21, '王铁梅', '', '', '2025-04-11 15:17:53', '', '2025-04-11 15:17:53');
+INSERT INTO `cast` VALUES (11, 30, 6, 21, '前夫', '', '', '2025-04-11 15:17:53', '', '2025-04-11 15:17:53');
+INSERT INTO `cast` VALUES (12, 31, 8, 21, '范伟立', '', '', '2025-04-11 15:17:53', '', '2025-04-11 15:17:53');
 COMMIT;
 
 -- ----------------------------
@@ -121,11 +136,11 @@ CREATE TABLE `columns` (
 -- Records of columns
 -- ----------------------------
 BEGIN;
-INSERT INTO `columns` VALUES (1, '电影', '1', 'movie', 1, '0', 'http://localhost:3000/uploads/2025-04-09/7wI91upL0.png');
-INSERT INTO `columns` VALUES (2, '电视剧', '1', 'tv', 2, '0', 'http://localhost:3000/uploads/2025-04-09/aJc1XDnS4.png');
-INSERT INTO `columns` VALUES (3, '动漫', '1', 'cartoon', 3, '0', 'http://localhost:3000/uploads/2025-04-09/fdc2Kt7E1.png');
-INSERT INTO `columns` VALUES (4, '综艺', '1', 'variety', 4, '0', 'http://localhost:3000/uploads/2025-04-09/XhFCfx1NG.png');
-INSERT INTO `columns` VALUES (5, '源码下载', '2', 'https://github.com/yinMrsir/chunyu-cms', 5, '0', 'http://localhost:3000/uploads/2025-04-09/PYgWdFEAA.png');
+INSERT INTO `columns` VALUES (1, '电影', '1', 'movie', 1, '0', 'https://cms.yinchunyu.com/uploads/2025-04-09/7wI91upL0.png');
+INSERT INTO `columns` VALUES (2, '电视剧', '1', 'tv', 2, '0', 'https://cms.yinchunyu.com/uploads/2025-04-09/aJc1XDnS4.png');
+INSERT INTO `columns` VALUES (3, '动漫', '1', 'cartoon', 3, '0', 'https://cms.yinchunyu.com/uploads/2025-04-09/fdc2Kt7E1.png');
+INSERT INTO `columns` VALUES (4, '综艺', '1', 'variety', 4, '0', 'https://cms.yinchunyu.com/uploads/2025-04-09/XhFCfx1NG.png');
+INSERT INTO `columns` VALUES (5, '源码下载', '2', 'https://gitee.com/chunyu-cms/chunyu-cms-v2', 5, '0', 'https://cms.yinchunyu.com/uploads/2025-04-09/PYgWdFEAA.png');
 COMMIT;
 
 -- ----------------------------
@@ -148,9 +163,9 @@ CREATE TABLE `country` (
   `brief` text DEFAULT (_utf8mb4''),
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `create_time` datetime DEFAULT '2025-04-11 15:17:53',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `update_time` datetime DEFAULT '2025-04-11 15:17:53',
   `end_date` date DEFAULT NULL,
   PRIMARY KEY (`country_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -159,8 +174,8 @@ CREATE TABLE `country` (
 -- Records of country
 -- ----------------------------
 BEGIN;
-INSERT INTO `country` VALUES (1, '中国', '', '0', '中华人民共和国', '亚洲', 'china', 'the People\'s Republic of China', '', NULL, NULL, 'http://localhost:3000/uploads/2025-01-03/nGKCeZYRd.jpeg', '', '', '', '2025-01-03 06:51:20', '', '2025-02-13 08:49:16', NULL);
-INSERT INTO `country` VALUES (2, '美国', 'USA', '0', '美利坚合众国', '北美洲', '', 'The United States of America', '', NULL, NULL, 'http://localhost:3000/uploads/2025-01-03/bvBagglbR.jpeg', '', '', '', '2025-01-03 06:51:20', '', '2025-01-03 06:54:40', NULL);
+INSERT INTO `country` VALUES (1, '中国', '', '0', '中华人民共和国', '亚洲', 'china', 'the People\'s Republic of China', '', NULL, NULL, 'https://cms.yinchunyu.com/uploads/2025-01-03/nGKCeZYRd.jpeg', '', '', '', '2025-01-03 06:51:20', '', '2025-02-13 08:49:16', NULL);
+INSERT INTO `country` VALUES (2, '美国', 'USA', '0', '美利坚合众国', '北美洲', '', 'The United States of America', '', NULL, NULL, 'https://cms.yinchunyu.com/uploads/2025-01-03/bvBagglbR.jpeg', '', '', '', '2025-01-03 06:51:20', '', '2025-01-03 06:54:40', NULL);
 INSERT INTO `country` VALUES (7, '英国', 'GBR', '0', '大不列颠及北爱尔兰联合王国', '欧洲', '', 'United Kingdom of Great Britain and Northern Ireland', '', NULL, NULL, NULL, '', '', '', '2025-02-14 02:41:05', '', '2025-02-14 02:41:05', NULL);
 INSERT INTO `country` VALUES (8, '韩国', '', '0', '大韩民国', '亚洲', '', 'Republic of Korea', '대한민국', NULL, NULL, NULL, '', '', '', '2025-02-14 02:41:05', '', '2025-02-14 02:41:05', NULL);
 INSERT INTO `country` VALUES (9, '日本', '', '0', '日本国', '亚洲', 'Japan', 'Japan', 'にほんこく', NULL, NULL, NULL, '', '', '', '2025-02-14 02:41:05', '', '2025-02-14 02:41:05', NULL);
@@ -183,9 +198,9 @@ CREATE TABLE `dept` (
   `mpath` varchar(255) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `create_time` datetime DEFAULT '2025-04-11 15:17:53',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `update_time` datetime DEFAULT '2025-04-11 15:17:53',
   PRIMARY KEY (`dept_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -212,9 +227,9 @@ CREATE TABLE `dict_data` (
   `dict_type_id` int DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `create_time` datetime DEFAULT '2025-04-11 15:17:53',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `update_time` datetime DEFAULT '2025-04-11 15:17:53',
   PRIMARY KEY (`dict_data_id`),
   KEY `dict_data_dict_type_id_dict_type_dict_id_fk` (`dict_type_id`),
   CONSTRAINT `dict_data_dict_type_id_dict_type_dict_id_fk` FOREIGN KEY (`dict_type_id`) REFERENCES `dict_type` (`dict_id`)
@@ -281,9 +296,9 @@ CREATE TABLE `dict_type` (
   `status` char(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `create_time` datetime DEFAULT '2025-04-11 15:17:53',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `update_time` datetime DEFAULT '2025-04-11 15:17:53',
   PRIMARY KEY (`dict_id`),
   UNIQUE KEY `dict_type_dict_type_unique` (`dict_type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -321,9 +336,9 @@ CREATE TABLE `genre` (
   `status` char(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `create_time` datetime DEFAULT '2025-04-11 15:17:53',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `update_time` datetime DEFAULT '2025-04-11 15:17:53',
   PRIMARY KEY (`genre_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -373,9 +388,9 @@ CREATE TABLE `job` (
   `status` varchar(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `create_time` datetime DEFAULT '2025-04-11 15:17:53',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `update_time` datetime DEFAULT '2025-04-11 15:17:53',
   PRIMARY KEY (`job_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -419,20 +434,22 @@ CREATE TABLE `language` (
   `brief` varchar(500) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `create_time` datetime DEFAULT '2025-04-11 15:17:53',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `update_time` datetime DEFAULT '2025-04-11 15:17:53',
   PRIMARY KEY (`language_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of language
 -- ----------------------------
 BEGIN;
-INSERT INTO `language` VALUES (1, '国语', NULL, 1, NULL, NULL, NULL, NULL, NULL, '', '', '2025-01-03 07:32:38', '', '2025-01-03 08:34:34');
+INSERT INTO `language` VALUES (1, '汉语普通话', NULL, 1, NULL, NULL, NULL, NULL, NULL, '', '', '2025-01-03 07:32:38', '', '2025-04-12 02:44:55');
 INSERT INTO `language` VALUES (3, '粤语', NULL, 1, NULL, NULL, NULL, NULL, NULL, '', '', '2025-01-03 07:32:38', '', '2025-02-13 08:50:33');
 INSERT INTO `language` VALUES (5, '英语', NULL, 7, NULL, NULL, NULL, NULL, NULL, '', '', '2025-02-14 02:41:05', '', '2025-02-14 02:41:05');
 INSERT INTO `language` VALUES (6, '韩语', NULL, 8, NULL, NULL, NULL, NULL, NULL, '', '', '2025-02-14 02:41:05', '', '2025-02-14 02:41:05');
+INSERT INTO `language` VALUES (7, '日语', NULL, 9, NULL, NULL, NULL, NULL, NULL, '', '', '2025-04-11 15:17:53', '', '2025-04-11 15:17:53');
+INSERT INTO `language` VALUES (8, '粤语', NULL, 1, NULL, NULL, NULL, NULL, NULL, '', '', '2025-04-11 15:17:53', '', '2025-04-11 15:17:53');
 COMMIT;
 
 -- ----------------------------
@@ -448,9 +465,9 @@ CREATE TABLE `level` (
   `description` varchar(255) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `create_time` datetime DEFAULT '2025-04-11 15:17:53',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `update_time` datetime DEFAULT '2025-04-11 15:17:53',
   PRIMARY KEY (`level_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -489,52 +506,31 @@ CREATE TABLE `login_info` (
   `msg` text NOT NULL DEFAULT (_utf8mb4''),
   `login_time` datetime NOT NULL,
   PRIMARY KEY (`info_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of login_info
 -- ----------------------------
 BEGIN;
-INSERT INTO `login_info` VALUES (1, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-14 09:20:39');
-INSERT INTO `login_info` VALUES (2, 'test', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-14 14:09:49');
-INSERT INTO `login_info` VALUES (3, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-16 01:36:30');
-INSERT INTO `login_info` VALUES (4, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-16 09:23:29');
-INSERT INTO `login_info` VALUES (5, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-16 09:37:08');
-INSERT INTO `login_info` VALUES (6, 'admin', '', '未知', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-16 10:55:47');
-INSERT INTO `login_info` VALUES (7, 'admin', '', '未知', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-16 11:28:42');
-INSERT INTO `login_info` VALUES (8, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-16 11:54:32');
-INSERT INTO `login_info` VALUES (9, 'admin', '', '未知', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-16 11:57:32');
-INSERT INTO `login_info` VALUES (10, 'admin', '', '未知', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-16 11:59:56');
-INSERT INTO `login_info` VALUES (11, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-19 14:27:16');
-INSERT INTO `login_info` VALUES (12, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-19 14:52:50');
-INSERT INTO `login_info` VALUES (13, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2024-12-21 15:24:23');
-INSERT INTO `login_info` VALUES (14, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2025-01-02 01:39:13');
-INSERT INTO `login_info` VALUES (15, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2025-01-02 09:02:29');
-INSERT INTO `login_info` VALUES (16, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2025-01-02 09:03:54');
-INSERT INTO `login_info` VALUES (17, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2025-01-02 09:04:54');
-INSERT INTO `login_info` VALUES (18, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2025-01-02 09:06:22');
-INSERT INTO `login_info` VALUES (19, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2025-01-03 09:16:41');
-INSERT INTO `login_info` VALUES (20, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2025-01-03 09:26:54');
-INSERT INTO `login_info` VALUES (21, 'admin', '127.0.0.1', '内网IP', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2025-01-03 09:27:41');
-INSERT INTO `login_info` VALUES (22, 'admin', '', '未知', 'Chrome131', 'macOS10.15.7', '1', '密码错误', '2025-01-07 02:00:30');
-INSERT INTO `login_info` VALUES (23, 'admin', '', '未知', 'Chrome131', 'macOS10.15.7', '0', '登录成功', '2025-01-07 02:00:42');
-INSERT INTO `login_info` VALUES (24, 'admin', '127.0.0.1', '内网IP', 'Chrome132', 'macOS10.15.7', '1', '密码错误', '2025-02-13 03:07:28');
-INSERT INTO `login_info` VALUES (25, 'admin', '127.0.0.1', '内网IP', 'Chrome132', 'macOS10.15.7', '1', '密码错误', '2025-02-13 03:07:31');
-INSERT INTO `login_info` VALUES (26, 'admin', '127.0.0.1', '内网IP', 'Chrome132', 'macOS10.15.7', '1', '验证码错误', '2025-02-13 03:07:43');
-INSERT INTO `login_info` VALUES (27, 'admin', '127.0.0.1', '内网IP', 'Chrome132', 'macOS10.15.7', '0', '登录成功', '2025-02-13 03:08:14');
-INSERT INTO `login_info` VALUES (28, 'admin', '', '未知', 'Chrome132', 'macOS10.15.7', '0', '登录成功', '2025-02-19 07:29:41');
-INSERT INTO `login_info` VALUES (29, 'admin', '127.0.0.1', '内网IP', 'Chrome133', 'macOS10.15.7', '1', '密码错误', '2025-03-14 06:33:19');
-INSERT INTO `login_info` VALUES (30, 'admin', '127.0.0.1', '内网IP', 'Chrome133', 'macOS10.15.7', '0', '登录成功', '2025-03-14 06:33:28');
-INSERT INTO `login_info` VALUES (31, 'admin', '127.0.0.1', '内网IP', 'Chrome134', 'macOS10.15.7', '1', '密码错误', '2025-04-02 06:04:25');
-INSERT INTO `login_info` VALUES (32, 'admin', '127.0.0.1', '内网IP', 'Chrome134', 'macOS10.15.7', '1', '验证码错误', '2025-04-02 06:05:42');
-INSERT INTO `login_info` VALUES (33, 'admin', '127.0.0.1', '内网IP', 'Chrome134', 'macOS10.15.7', '0', '登录成功', '2025-04-02 06:06:08');
-INSERT INTO `login_info` VALUES (34, 'admin', '127.0.0.1', '内网IP', 'Chrome134', 'macOS10.15.7', '0', '登录成功', '2025-04-03 06:19:34');
-INSERT INTO `login_info` VALUES (35, 'admin', '127.0.0.1', '内网IP', 'Chrome134', 'macOS10.15.7', '0', '登录成功', '2025-04-03 11:07:45');
-INSERT INTO `login_info` VALUES (36, 'admin', '127.0.0.1', '内网IP', 'Chrome134', 'macOS10.15.7', '0', '登录成功', '2025-04-07 02:08:25');
-INSERT INTO `login_info` VALUES (37, 'admin', '127.0.0.1', '内网IP', 'Chrome134', 'macOS10.15.7', '0', '登录成功', '2025-04-08 03:46:59');
-INSERT INTO `login_info` VALUES (38, 'admin', '127.0.0.1', '内网IP', 'Chrome134', 'macOS10.15.7', '1', '验证码错误', '2025-04-09 07:11:19');
-INSERT INTO `login_info` VALUES (39, 'admin', '127.0.0.1', '内网IP', 'Chrome134', 'macOS10.15.7', '0', '登录成功', '2025-04-09 07:11:26');
-INSERT INTO `login_info` VALUES (40, 'admin', '127.0.0.1', '内网IP', 'Chrome134', 'macOS10.15.7', '0', '登录成功', '2025-04-10 07:13:08');
+INSERT INTO `login_info` VALUES (53, 'admin', '104.168.83.13', '未知', 'Chrome136', 'macOS10.15.7', '0', '登录成功', '2025-04-11 09:19:47');
+INSERT INTO `login_info` VALUES (54, 'admin', '119.39.23.70', '未知', 'Chrome134', 'macOS10.15.7', '0', '登录成功', '2025-04-11 09:21:14');
+INSERT INTO `login_info` VALUES (55, 'admin', '119.39.23.70', '湖南省 长沙市', 'Chrome134', 'macOS10.15.7', '0', '登录成功', '2025-04-11 09:31:05');
+INSERT INTO `login_info` VALUES (56, 'admin', '120.227.33.125', '湖南省 长沙市', 'Chrome134', 'macOS10.15.7', '0', '登录成功', '2025-04-11 12:12:44');
+INSERT INTO `login_info` VALUES (57, 'admin', '120.36.110.183', '福建省 福州市', 'Chrome128', 'Windows10', '0', '登录成功', '2025-04-11 14:05:22');
+INSERT INTO `login_info` VALUES (58, 'admin', '120.227.33.125', '湖南省 长沙市', 'Chrome134', 'macOS10.15.7', '0', '登录成功', '2025-04-11 14:12:40');
+INSERT INTO `login_info` VALUES (59, 'admin', '40.160.230.146', ' ', 'Edge135', 'Windows10', '0', '登录成功', '2025-04-11 14:26:11');
+INSERT INTO `login_info` VALUES (60, 'admin', '183.192.61.170', '上海市 上海市', 'Quark7', 'Android15', '0', '登录成功', '2025-04-11 14:34:24');
+INSERT INTO `login_info` VALUES (61, 'laoying', '120.227.33.125', '湖南省 长沙市', 'Chrome134', 'macOS10.15.7', '0', '登录成功', '2025-04-11 15:35:48');
+INSERT INTO `login_info` VALUES (62, 'admin', '120.227.33.125', '湖南省 长沙市', 'Chrome134', 'macOS10.15.7', '0', '登录成功', '2025-04-11 15:36:08');
+INSERT INTO `login_info` VALUES (63, 'laoying', '120.227.33.125', '湖南省 长沙市', 'Chrome134', 'macOS10.15.7', '1', '验证码错误', '2025-04-11 15:38:01');
+INSERT INTO `login_info` VALUES (64, 'laoying', '120.227.33.125', '湖南省 长沙市', 'Chrome134', 'macOS10.15.7', '0', '登录成功', '2025-04-11 15:38:04');
+INSERT INTO `login_info` VALUES (65, 'admin', '120.227.33.125', '湖南省 长沙市', 'Chrome134', 'macOS10.15.7', '0', '登录成功', '2025-04-11 15:44:47');
+INSERT INTO `login_info` VALUES (66, 'laoying', '120.227.33.125', '湖南省 长沙市', 'Chrome134', 'macOS10.15.7', '0', '登录成功', '2025-04-11 15:45:10');
+INSERT INTO `login_info` VALUES (67, 'admin', '183.218.163.107', '江西省 南昌市', 'Chrome129', 'Windows10', '1', '验证码错误', '2025-04-11 16:37:11');
+INSERT INTO `login_info` VALUES (68, 'admin', '183.218.163.107', '江西省 南昌市', 'Chrome129', 'Windows10', '1', '验证码错误', '2025-04-11 16:37:13');
+INSERT INTO `login_info` VALUES (69, 'admin', '183.218.163.107', '江西省 南昌市', 'Chrome129', 'Windows10', '0', '登录成功', '2025-04-11 16:37:16');
+INSERT INTO `login_info` VALUES (70, 'admin', '103.251.98.212', '广西 南宁市', 'Mobile Safari16', 'iOS16.7.10', '0', '登录成功', '2025-04-11 17:18:06');
+INSERT INTO `login_info` VALUES (71, 'laoying', '120.227.33.125', '湖南省 长沙市', 'Chrome135', 'macOS10.15.7', '0', '登录成功', '2025-04-12 02:02:33');
 COMMIT;
 
 -- ----------------------------
@@ -559,9 +555,9 @@ CREATE TABLE `menu` (
   `mpath` varchar(255) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `create_time` datetime DEFAULT '2025-04-11 15:17:53',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `update_time` datetime DEFAULT '2025-04-11 15:17:53',
   PRIMARY KEY (`menu_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -676,6 +672,44 @@ INSERT INTO `movie_basic_to_country` VALUES (11, 1);
 INSERT INTO `movie_basic_to_country` VALUES (4, 1);
 INSERT INTO `movie_basic_to_country` VALUES (4, 2);
 INSERT INTO `movie_basic_to_country` VALUES (4, 7);
+INSERT INTO `movie_basic_to_country` VALUES (29, 9);
+INSERT INTO `movie_basic_to_country` VALUES (31, 1);
+INSERT INTO `movie_basic_to_country` VALUES (30, 1);
+INSERT INTO `movie_basic_to_country` VALUES (27, 1);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for movie_basic_to_genre
+-- ----------------------------
+DROP TABLE IF EXISTS `movie_basic_to_genre`;
+CREATE TABLE `movie_basic_to_genre` (
+  `movie_basics_id` int DEFAULT NULL,
+  `genre_id` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of movie_basic_to_genre
+-- ----------------------------
+BEGIN;
+INSERT INTO `movie_basic_to_genre` VALUES (21, 3);
+INSERT INTO `movie_basic_to_genre` VALUES (21, 10);
+INSERT INTO `movie_basic_to_genre` VALUES (22, 3);
+INSERT INTO `movie_basic_to_genre` VALUES (22, 10);
+INSERT INTO `movie_basic_to_genre` VALUES (24, 22);
+INSERT INTO `movie_basic_to_genre` VALUES (23, 26);
+INSERT INTO `movie_basic_to_genre` VALUES (26, 14);
+INSERT INTO `movie_basic_to_genre` VALUES (25, 14);
+INSERT INTO `movie_basic_to_genre` VALUES (1, 14);
+INSERT INTO `movie_basic_to_genre` VALUES (28, 10);
+INSERT INTO `movie_basic_to_genre` VALUES (28, 3);
+INSERT INTO `movie_basic_to_genre` VALUES (28, 11);
+INSERT INTO `movie_basic_to_genre` VALUES (29, 10);
+INSERT INTO `movie_basic_to_genre` VALUES (31, 10);
+INSERT INTO `movie_basic_to_genre` VALUES (31, 6);
+INSERT INTO `movie_basic_to_genre` VALUES (30, 7);
+INSERT INTO `movie_basic_to_genre` VALUES (30, 10);
+INSERT INTO `movie_basic_to_genre` VALUES (27, 3);
+INSERT INTO `movie_basic_to_genre` VALUES (27, 6);
 COMMIT;
 
 -- ----------------------------
@@ -694,7 +728,6 @@ CREATE TABLE `movie_basics` (
   `title_original` varchar(100) DEFAULT NULL,
   `akas` varchar(100) DEFAULT NULL,
   `column_value` varchar(255) DEFAULT NULL,
-  `genres` varchar(100) DEFAULT NULL,
   `year` int DEFAULT NULL,
   `pub_date` datetime DEFAULT NULL,
   `duration` varchar(100) DEFAULT NULL,
@@ -715,28 +748,33 @@ CREATE TABLE `movie_basics` (
   `free_duration` int NOT NULL DEFAULT '1',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `create_time` datetime DEFAULT '2025-04-11 15:17:53',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `update_time` datetime DEFAULT '2025-04-11 15:17:53',
   PRIMARY KEY (`movie_basics_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of movie_basics
 -- ----------------------------
 BEGIN;
-INSERT INTO `movie_basics` VALUES (1, '0', '2', NULL, '大宋少年志2', 'http://localhost:3000/uploads/2025-04-03/3I4O3ob3p.png', NULL, NULL, NULL, NULL, 'tv', '国产剧', 2022, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 27, 2, '0', '国语', '剧情,古装', '<p>庆历年间，北宋为免除战事，维护各民族间的和平与稳定，借秘阁之名培训少年暗探。经过严密的选拔和审查，聪慧的元仲辛、美貌机敏的赵简、从不杀生的小景、绝不说谎的王宽、不爱交流的薛映、性格开朗的韦衙内六位少年组成了秘阁第七斋。在经历了一次次生死相关的任务后，曾经年轻懵懂的少年们逐渐成长，他们彼此团结，用自己的热血和忠诚为保卫和平献身消除大宋面临的灾难。遍体鳞伤的少年们，终于可以踏上归家之路，他们为国而战，百死无悔，同时他们也相信，未来的岁月里，会有更多少年，为了理想而战，不懂后退，世界总是被这样的少年点亮，那是名为希望的光芒。</p>', 1, 5, 1, '', '', '2025-04-03 12:28:21', '', '2025-04-07 02:09:03');
-INSERT INTO `movie_basics` VALUES (4, '0', '0', NULL, '黑金风暴', 'http://localhost:3000/uploads/2025-04-10/4439CRCAd.jpeg', NULL, NULL, NULL, NULL, 'movie', '喜剧片', 111, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '<p>11ee</p>', 0, 0, 1, '', '', '2025-04-03 12:28:21', '', '2025-04-10 03:53:24');
-INSERT INTO `movie_basics` VALUES (17, '0', '0', NULL, '成长加衣', 'http://localhost:3000/uploads/2025-04-10/rzI0Dlgig.jpeg', NULL, NULL, NULL, NULL, 'movie', '喜剧片', 111, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'admin', '2025-04-07 14:35:21', 'admin', '2025-04-10 03:53:50');
-INSERT INTO `movie_basics` VALUES (18, '0', '0', NULL, '做自己的光', 'http://localhost:3000/uploads/2025-04-10/2btsOyi8Y.jpeg', NULL, NULL, NULL, NULL, 'movie', '喜剧片', 2024, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, 0, 0, 1, '', 'admin', '2025-04-10 03:55:25', 'admin', '2025-04-10 03:55:25');
-INSERT INTO `movie_basics` VALUES (19, '0', '0', NULL, '吃饭跑步和恋爱', 'http://localhost:3000/uploads/2025-04-10/naI8Ew8k1.jpeg', NULL, NULL, NULL, NULL, 'movie', '喜剧片', 112, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'admin', '2025-04-10 03:55:53', 'admin', '2025-04-10 03:55:53');
-INSERT INTO `movie_basics` VALUES (20, '0', '0', NULL, '我经过风暴', 'http://localhost:3000/uploads/2025-04-10/SVxennMHP.jpeg', NULL, NULL, NULL, NULL, 'movie', '剧情片,犯罪片,伦理片', 2023, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'admin', '2025-04-10 07:14:55', 'admin', '2025-04-10 07:14:55');
-INSERT INTO `movie_basics` VALUES (21, '0', '0', NULL, '你好，李焕英', 'http://localhost:3000/uploads/2025-04-10/BUzq44Gju.jpeg', NULL, NULL, NULL, NULL, 'movie', '喜剧片', 2021, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'admin', '2025-04-10 07:15:39', 'admin', '2025-04-10 07:15:39');
-INSERT INTO `movie_basics` VALUES (22, '0', '0', NULL, '一出好戏', 'http://localhost:3000/uploads/2025-04-10/pgKFM0hd8.jpeg', NULL, NULL, NULL, NULL, 'movie', '喜剧片', 2022, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'admin', '2025-04-10 07:16:07', 'admin', '2025-04-10 07:16:07');
-INSERT INTO `movie_basics` VALUES (23, '0', '0', NULL, '真话真话', 'http://localhost:3000/uploads/2025-04-10/5uIPJtoL4.jpeg', NULL, NULL, NULL, NULL, 'variety', '大陆综艺', 2025, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'admin', '2025-04-10 14:52:07', 'admin', '2025-04-10 14:52:07');
-INSERT INTO `movie_basics` VALUES (24, '0', '0', NULL, '超级飞侠', 'http://localhost:3000/uploads/2025-04-10/WA0HYlxga.jpeg', NULL, NULL, NULL, NULL, 'cartoon', '国产动漫', 2022, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'admin', '2025-04-10 14:52:34', 'admin', '2025-04-10 14:52:34');
-INSERT INTO `movie_basics` VALUES (25, '0', '0', NULL, '黑狐', 'http://localhost:3000/uploads/2025-04-10/KSR3F9usM.jpeg', NULL, NULL, NULL, NULL, 'tv', '国产剧', 2022, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'admin', '2025-04-10 14:52:53', 'admin', '2025-04-10 14:52:53');
-INSERT INTO `movie_basics` VALUES (26, '0', '0', NULL, '情满四合院', 'http://localhost:3000/uploads/2025-04-10/S4MER8U8r.png', NULL, NULL, NULL, NULL, 'tv', '国产剧', 2022, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'admin', '2025-04-10 14:53:25', 'admin', '2025-04-10 14:53:25');
+INSERT INTO `movie_basics` VALUES (1, '0', '2', NULL, '大宋少年志2', 'https://cms.yinchunyu.com/uploads/2025-04-03/3I4O3ob3p.png', NULL, NULL, NULL, NULL, 'tv', 2022, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 27, 2, '0', '国语', '剧情,古装', '<p>庆历年间，北宋为免除战事，维护各民族间的和平与稳定，借秘阁之名培训少年暗探。经过严密的选拔和审查，聪慧的元仲辛、美貌机敏的赵简、从不杀生的小景、绝不说谎的王宽、不爱交流的薛映、性格开朗的韦衙内六位少年组成了秘阁第七斋。在经历了一次次生死相关的任务后，曾经年轻懵懂的少年们逐渐成长，他们彼此团结，用自己的热血和忠诚为保卫和平献身消除大宋面临的灾难。遍体鳞伤的少年们，终于可以踏上归家之路，他们为国而战，百死无悔，同时他们也相信，未来的岁月里，会有更多少年，为了理想而战，不懂后退，世界总是被这样的少年点亮，那是名为希望的光芒。</p>', 1, 5, 1, '', '', '2025-04-03 12:28:21', '', '2025-04-07 02:09:03');
+INSERT INTO `movie_basics` VALUES (4, '0', '0', NULL, '黑金风暴', 'https://cms.yinchunyu.com/uploads/2025-04-10/4439CRCAd.jpeg', NULL, NULL, NULL, NULL, 'movie', 111, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '<p>11ee</p>', 0, 0, 1, '', '', '2025-04-03 12:28:21', '', '2025-04-10 03:53:24');
+INSERT INTO `movie_basics` VALUES (17, '0', '0', NULL, '成长加衣', 'https://cms.yinchunyu.com/uploads/2025-04-10/rzI0Dlgig.jpeg', NULL, NULL, NULL, NULL, 'movie', 111, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'admin', '2025-04-07 14:35:21', 'admin', '2025-04-10 03:53:50');
+INSERT INTO `movie_basics` VALUES (18, '0', '0', NULL, '做自己的光', 'https://cms.yinchunyu.com/uploads/2025-04-10/2btsOyi8Y.jpeg', NULL, NULL, NULL, NULL, 'movie', 2024, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, 0, 0, 1, '', 'admin', '2025-04-10 03:55:25', 'admin', '2025-04-10 03:55:25');
+INSERT INTO `movie_basics` VALUES (19, '0', '0', NULL, '吃饭跑步和恋爱', 'https://cms.yinchunyu.com/uploads/2025-04-10/naI8Ew8k1.jpeg', NULL, NULL, NULL, NULL, 'movie', 112, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'admin', '2025-04-10 03:55:53', 'admin', '2025-04-10 03:55:53');
+INSERT INTO `movie_basics` VALUES (20, '0', '0', NULL, '我经过风暴', 'https://cms.yinchunyu.com/uploads/2025-04-10/SVxennMHP.jpeg', NULL, NULL, NULL, NULL, 'movie', 2023, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'admin', '2025-04-10 07:14:55', 'admin', '2025-04-10 07:14:55');
+INSERT INTO `movie_basics` VALUES (21, '0', '0', NULL, '你好，李焕英', 'https://cms.yinchunyu.com/uploads/2025-04-10/BUzq44Gju.jpeg', NULL, NULL, NULL, NULL, 'movie', 2021, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'admin', '2025-04-10 07:15:39', 'admin', '2025-04-10 07:15:39');
+INSERT INTO `movie_basics` VALUES (22, '0', '0', NULL, '一出好戏', 'https://cms.yinchunyu.com/uploads/2025-04-10/pgKFM0hd8.jpeg', NULL, NULL, NULL, NULL, 'movie', 2022, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'admin', '2025-04-10 07:16:07', 'admin', '2025-04-10 07:16:07');
+INSERT INTO `movie_basics` VALUES (23, '0', '0', NULL, '真话真话', 'https://cms.yinchunyu.com/uploads/2025-04-10/5uIPJtoL4.jpeg', NULL, NULL, NULL, NULL, 'variety', 2025, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'admin', '2025-04-10 14:52:07', 'admin', '2025-04-10 14:52:07');
+INSERT INTO `movie_basics` VALUES (24, '0', '0', NULL, '超级飞侠', 'https://cms.yinchunyu.com/uploads/2025-04-10/WA0HYlxga.jpeg', NULL, NULL, NULL, NULL, 'cartoon', 2022, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'admin', '2025-04-10 14:52:34', 'admin', '2025-04-10 14:52:34');
+INSERT INTO `movie_basics` VALUES (25, '0', '0', NULL, '黑狐', 'https://cms.yinchunyu.com/uploads/2025-04-10/KSR3F9usM.jpeg', NULL, NULL, NULL, NULL, 'tv', 2022, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'admin', '2025-04-10 14:52:53', 'admin', '2025-04-10 14:52:53');
+INSERT INTO `movie_basics` VALUES (26, '0', '0', NULL, '情满四合院', 'https://cms.yinchunyu.com/uploads/2025-04-10/S4MER8U8r.png', NULL, NULL, NULL, NULL, 'tv', 2022, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'admin', '2025-04-10 14:53:25', 'admin', '2025-04-10 14:53:25');
+INSERT INTO `movie_basics` VALUES (27, '0', '0', NULL, '智取威虎山', 'https://cms.yinchunyu.com/uploads/2025-04-11/9mSkKlnaa.jpeg', NULL, NULL, NULL, NULL, 'movie', 2022, NULL, NULL, NULL, '2D', NULL, '0', NULL, NULL, NULL, NULL, '1', '汉语普通话', '战争', NULL, 0, 0, 1, '', 'admin', '2025-04-11 14:28:12', 'admin', '2025-04-12 02:47:00');
+INSERT INTO `movie_basics` VALUES (28, '0', '0', NULL, '荒蛮故事', 'https://cms.yinchunyu.com/uploads/2025-04-12/nObbrReLB.jpeg', NULL, NULL, NULL, NULL, 'movie', 2014, NULL, NULL, NULL, '2D', NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'laoying', '2025-04-12 02:10:01', 'laoying', '2025-04-12 02:10:01');
+INSERT INTO `movie_basics` VALUES (29, '0', '2', '2024-11-29', '痴人之爱', 'https://cms.yinchunyu.com/uploads/2025-04-12/aRRL0SYlm.jpeg', NULL, NULL, '痴人の愛', NULL, 'movie', 2024, NULL, '106', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, '1', '日语', NULL, '<p>本作的主人公是河合譲治，他是一名曾在剧本比赛中获奖但至今未能正式出道的剧作家。故事从他在一家萧条的酒吧遇到一位自称为直美的女性开始展开。某天，譲治代替剧本课程的讲师，接下了改编自谷崎润一郎的《痴人之爱》的电影剧本创作任务。在创作过程中，譲治苦于写作瓶颈，与直美再次相遇并在关系逐渐加深中，经历了一段既甜蜜又苦涩且疯狂的时光。</p>', 0, 0, 1, '', 'laoying', '2025-04-12 02:20:18', 'laoying', '2025-04-12 02:21:43');
+INSERT INTO `movie_basics` VALUES (30, '0', '0', NULL, '好东西', 'https://cms.yinchunyu.com/uploads/2025-04-12/ryWdsk8AM.jpeg', NULL, NULL, NULL, '爱情神话平行篇：好东西,爱情神话·平行篇,爱情神话2,Herstory,Her Story', 'movie', 2024, NULL, '123', NULL, '2D', NULL, '0', NULL, NULL, NULL, NULL, NULL, '汉语普通话', NULL, '<p>　　爱逞强的单亲妈妈王铁梅（宋佳 饰）带小孩王茉莉（曾慕梅 饰）搬到新家，结识了所谓清醒恋爱脑的邻居小叶（钟楚曦 饰）。两位性格迥异的女性，一个坚强，一个柔软，一个擅长给人当妈，一个擅长随时撒谎。面对旧创伤和新挑战，她们彼此温暖互相慰藉。<br>　　而围绕王铁梅的两个男人，前夫（赵又廷 饰）不时&ldquo;添乱&rdquo;，女儿的鼓手老师（章宇 饰）似乎充满新的可能。作为已经觉醒的女人们和学习过性别议题的男人们，会遇到什么新问题？会如何看待自己和世界？</p>', 0, 0, 1, '', 'laoying', '2025-04-12 02:30:15', 'laoying', '2025-04-12 02:46:41');
+INSERT INTO `movie_basics` VALUES (31, '0', '0', NULL, '焚城', 'https://cms.yinchunyu.com/uploads/2025-04-12/txhRHXQzz.jpeg', NULL, NULL, NULL, NULL, 'movie', 2025, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '汉语普通话,粤语', NULL, NULL, 0, 0, 1, '', 'laoying', '2025-04-12 02:44:02', 'laoying', '2025-04-12 02:45:37');
 COMMIT;
 
 -- ----------------------------
@@ -773,9 +811,9 @@ CREATE TABLE `movie_photo` (
   `del_flag` varchar(1) NOT NULL DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `create_time` datetime DEFAULT '2025-04-11 15:17:53',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `update_time` datetime DEFAULT '2025-04-11 15:17:53',
   PRIMARY KEY (`movie_photo_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -803,9 +841,9 @@ CREATE TABLE `movie_video` (
   `status` varchar(255) NOT NULL DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `create_time` datetime DEFAULT '2025-04-11 15:17:53',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `update_time` datetime DEFAULT '2025-04-11 15:17:53',
   PRIMARY KEY (`movie_video_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -829,9 +867,9 @@ CREATE TABLE `post` (
   `status` varchar(1) NOT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `create_time` datetime DEFAULT '2025-04-11 15:17:53',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `update_time` datetime DEFAULT '2025-04-11 15:17:53',
   PRIMARY KEY (`post_id`),
   UNIQUE KEY `post_post_code_unique` (`post_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -856,9 +894,9 @@ CREATE TABLE `profession` (
   `parent_id` int DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `create_time` datetime DEFAULT '2025-04-11 15:17:53',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `update_time` datetime DEFAULT '2025-04-11 15:17:53',
   `mpath` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`profession_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -892,17 +930,18 @@ CREATE TABLE `pub_date` (
   `movie_id` int NOT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `create_time` datetime DEFAULT '2025-04-11 15:17:53',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `update_time` datetime DEFAULT '2025-04-11 15:17:53',
   PRIMARY KEY (`pub_date_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of pub_date
 -- ----------------------------
 BEGIN;
 INSERT INTO `pub_date` VALUES (3, '2025-04-07', 1, '1', 17, '', '', '2025-04-07 14:14:38', '', '2025-04-07 14:14:38');
+INSERT INTO `pub_date` VALUES (4, '2024-11-22', 1, '1', 30, '', '', '2025-04-11 15:17:53', '', '2025-04-11 15:17:53');
 COMMIT;
 
 -- ----------------------------
@@ -921,9 +960,9 @@ CREATE TABLE `role` (
   `del_flag` char(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `create_time` datetime DEFAULT '2025-04-11 15:17:53',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `update_time` datetime DEFAULT '2025-04-11 15:17:53',
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -1022,9 +1061,9 @@ CREATE TABLE `sys_config` (
   `config_type` enum('Y','N') DEFAULT 'N',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `create_time` datetime DEFAULT '2025-04-11 15:17:53',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `update_time` datetime DEFAULT '2025-04-11 15:17:53',
   PRIMARY KEY (`sys_config_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -1057,9 +1096,9 @@ CREATE TABLE `user` (
   `dept_id` int DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `create_time` datetime DEFAULT '2025-04-11 15:17:53',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `update_time` datetime DEFAULT '2025-04-11 15:17:53',
   PRIMARY KEY (`user_id`),
   KEY `user_dept_id_dept_dept_id_fk` (`dept_id`),
   CONSTRAINT `user_dept_id_dept_dept_id_fk` FOREIGN KEY (`dept_id`) REFERENCES `dept` (`dept_id`)
@@ -1069,6 +1108,7 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 BEGIN;
+INSERT INTO `user` VALUES (-1, 'laoying', 'laoying', '00', '5428@qq.com', '15677777777', '0', '/uploads/DRYdnUydl.png', '205cef87ef43f79760db6b3bcd2c0984', 'Y2uPc7hyq8Vi5qBc879Ut', '0', '0', '', NULL, 1, '', '', NULL, '', '2024-12-14 09:14:45');
 INSERT INTO `user` VALUES (1, 'admin', 'admin', '00', '5428@qq.com', '15677777777', '0', '/uploads/DRYdnUydl.png', '9c68fb331431f8dcfb7defef22b0c527', 'Y2uPc7hyq8Vi5qBc879Ut', '0', '0', '', NULL, 1, '', '', NULL, '', '2024-12-14 09:14:45');
 INSERT INTO `user` VALUES (2, 'test', 'test', '00', NULL, NULL, '0', '', '728c992f87ae532307c688d1e212394f', 'BBIs09BXeYNzzzILTqPXQ', '0', '0', '', NULL, 1, '', 'admin', '2024-12-14 09:20:20', 'admin', '2024-12-14 09:20:20');
 COMMIT;
@@ -1112,6 +1152,7 @@ CREATE TABLE `user_to_role` (
 BEGIN;
 INSERT INTO `user_to_role` VALUES (1, 1);
 INSERT INTO `user_to_role` VALUES (2, 2);
+INSERT INTO `user_to_role` VALUES (-1, 1);
 COMMIT;
 
 -- ----------------------------
@@ -1131,9 +1172,9 @@ CREATE TABLE `video` (
   `size` int DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `create_time` datetime DEFAULT '2025-04-11 15:17:53',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-09 07:49:12',
+  `update_time` datetime DEFAULT '2025-04-11 15:17:53',
   PRIMARY KEY (`video_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -1141,8 +1182,8 @@ CREATE TABLE `video` (
 -- Records of video
 -- ----------------------------
 BEGIN;
-INSERT INTO `video` VALUES (1, '超能一家人', 'http://localhost:3000/uploads/2025-04-03/vyDvWDGSc.mp4', 'http://localhost:3000/uploads/2025-04-03/r938IoHbp.jpeg', '1692668895164-668765805-403060223.mp4', '/Users/yinchunyu/my/project/chunyu-cms-v2/chunyu-cms-web/uploads/2025-04-03/vyDvWDGSc.mp4', 74, 486, 864, 18737380, '', '', '2025-04-03 06:22:02', '', '2025-04-07 15:03:03');
-INSERT INTO `video` VALUES (2, '灌篮高手', 'http://localhost:3000/uploads/2025-04-03/93iXAgPes.mp4', 'http://localhost:3000/uploads/2025-04-03/jJEy1UQ9N.jpeg', '1682085201153-202759664-403030638.mp4', '/Users/yinchunyu/my/project/chunyu-cms-v2/chunyu-cms-web/uploads/2025-04-03/93iXAgPes.mp4', 15, 486, 864, 3371942, '', '', '2025-04-03 06:22:02', '', '2025-04-03 06:22:02');
+INSERT INTO `video` VALUES (1, '超能一家人', 'https://cms.yinchunyu.com/uploads/2025-04-03/vyDvWDGSc.mp4', 'https://cms.yinchunyu.com/uploads/2025-04-03/r938IoHbp.jpeg', '1692668895164-668765805-403060223.mp4', '/Users/yinchunyu/my/project/chunyu-cms-v2/chunyu-cms-web/uploads/2025-04-03/vyDvWDGSc.mp4', 74, 486, 864, 18737380, '', '', '2025-04-03 06:22:02', '', '2025-04-07 15:03:03');
+INSERT INTO `video` VALUES (2, '灌篮高手', 'https://cms.yinchunyu.com/uploads/2025-04-03/93iXAgPes.mp4', 'https://cms.yinchunyu.com/uploads/2025-04-03/jJEy1UQ9N.jpeg', '1682085201153-202759664-403030638.mp4', '/Users/yinchunyu/my/project/chunyu-cms-v2/chunyu-cms-web/uploads/2025-04-03/93iXAgPes.mp4', 15, 486, 864, 3371942, '', '', '2025-04-03 06:22:02', '', '2025-04-03 06:22:02');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
