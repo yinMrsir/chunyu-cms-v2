@@ -1,4 +1,5 @@
 import { GenreServices } from '~/server/services/basic/genre/genre.services';
+import { MovieBasicToGenre } from '~/server/db/schema/movie/movieBasicToGenre';
 
 const genreServices = new GenreServices();
 
@@ -10,6 +11,8 @@ export default defineEventHandler(async event => {
     },
     {
       movies: {
+        limit: 12,
+        orderBy: (movies: MovieBasicToGenre, { desc }: any) => [desc(movies.movieBasicsId)],
         with: {
           movieBasics: {
             columns: {
