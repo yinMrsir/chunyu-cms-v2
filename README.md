@@ -10,9 +10,9 @@
 - [管理端演示地址](http://cms.yinchunyu.com/admin)
 - 源码地址: [GitHub](https://github.com/yinMrsir/chunyu-cms-v2) | [Gitee](https://gitee.com/chunyu-cms/chunyu-cms-v2)
 
-<img src="https://gitee.com/chunyu-cms/chunyu-cms-v2/raw/main/1.png"/>
+<img src="https://raw.githubusercontent.com/yinMrsir/chunyu-cms-v2/refs/heads/main/1.png"/>
 
-<img src="https://gitee.com/chunyu-cms/chunyu-cms-v2/raw/main/2.png" />
+<img src="https://raw.githubusercontent.com/yinMrsir/chunyu-cms-v2/refs/heads/main/2.png" />
 
 ## 为什么有V2版本？
 考虑到大部分使用者为个人独立开发，Nuxt3也可以开发服务端的功能，所有把之前的NestJS服务端移除了，改用到Nuxt实现。这样就可以不用启动两个Node服务了。
@@ -67,6 +67,7 @@ cd chunyu-cms-web
 pnpm install
 pnpm dev
 ```
+启动成功后，请访问：http://localhost:3000
 
 ### 管理端启动
 
