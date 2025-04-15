@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-0 md:pt-65px">
+  <div class="pt-0 md:pt-65px" style="--el-text-color-primary: #fff !important">
     <div class="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-x-20px relative">
       <div id="mse"></div>
       <div class="p-10px">

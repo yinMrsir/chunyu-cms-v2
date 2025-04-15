@@ -1,13 +1,16 @@
 import { ColumnsServices } from '~/server/services/basic/columns/columns.services';
+import { MovieBasics } from '~/server/db/schema/movie/movieBasics';
 
 const columnsServices = new ColumnsServices();
 
 export default defineEventHandler(async () => {
-  const queryData = await columnsServices.allList(
+  return await columnsServices.allList(
     { type: '1', status: '0' },
     {
       genre: true,
       movies: {
+        limit: 12,
+        orderBy: (movies: MovieBasics, { desc }: any) => [desc(movies.movieBasicsId)],
         with: {
           casts: {
             with: {
@@ -18,5 +21,4 @@ export default defineEventHandler(async () => {
       }
     }
   );
-  return queryData;
 });

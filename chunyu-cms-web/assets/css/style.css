@@ -8,6 +8,5 @@ body {
 :root {
   --el-font-size-base: 16px !important;
   --el-color-primary: #fff !important;
-  --el-text-color-primary: #fff !important;
   --el-border-color-light: #242448 !important;
 }
