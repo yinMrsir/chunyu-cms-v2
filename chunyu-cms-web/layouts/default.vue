@@ -4,10 +4,10 @@
       class="fixed top-0 left-0 h-100vh transition-all duration-300 overflow-hidden z-999 lt-md:hidden"
       :class="sidebarOpen ? 'w-220px' : 'w-64px'"
     >
-      <div class="flex justify-center items-center gap-x-5px h-74px bg-#161823">
+      <nuxt-link to="/" class="flex justify-center items-center gap-x-5px h-74px bg-#161823">
         <img src="../assets/images/logo.png" alt="" class="h-34px border-rd-5px" />
         <span v-if="textVisible" class="color-#fff text-24px font-bold">淳渔影视</span>
-      </div>
+      </nuxt-link>
       <ul class="sidebar-menu-inner">
         <li :class="route.path === '/' ? 'active' : ''">
           <el-tooltip :disabled="textVisible" effect="dark" content="首页" placement="right">
@@ -51,10 +51,10 @@
         </div>
       </div>
       <div class="flex justify-between h-58px items-center p-x-20px md:hidden fixed w-full bg-#161823 z-10">
-        <div class="flex items-center gap-x-5px">
+        <nuxt-link to="/" class="flex items-center gap-x-5px">
           <img src="../assets/images/logo.png" alt="" class="h-28px border-rd-5px" />
           <span class="color-#fff text-20px font-bold">淳渔影视</span>
-        </div>
+        </nuxt-link>
         <el-icon size="26" color="#f2f2f2" class="cursor-pointer" @click="sidebarMobileOpen = true">
           <ElIconFold v-if="sidebarMobileOpen" />
           <ElIconExpand v-else />
@@ -104,11 +104,20 @@
 </template>
 
 <script setup lang="ts">
+  import { useSidebarOpen, useTextVisible } from '~/composables/states';
+
   const route = useRoute();
 
-  const sidebarOpen = ref(true);
-  const textVisible = ref(true);
+  const sidebarOpen = useSidebarOpen();
+  const textVisible = useTextVisible();
   const sidebarMobileOpen = ref(false);
+
+  watch(
+    () => route.path,
+    () => {
+      sidebarMobileOpen.value = false;
+    }
+  );
 
   const { data: navigation } = await useFetch('/api/web/basic/columns/list');
 

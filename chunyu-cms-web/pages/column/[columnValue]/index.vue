@@ -1,6 +1,6 @@
 <template>
-  <div class="pt-0 md:pt-55px">
-    <section v-for="item in data" :key="item.id" class="p-x-12px">
+  <div class="pt-0 md:pt-65px">
+    <section v-for="item in genres" :key="item.id" class="p-x-12px">
       <div class="flex justify-between items-center m-y-24px">
         <a class="text-22px">{{ item.name }}</a>
         <div class="genre flex gap-x-20px">
@@ -31,5 +31,5 @@
 
 <script setup lang="ts">
   const route = useRoute();
-  const { data } = await useFetch(`/api/web/column/${route.params.columnValue}`);
+  const { data: genres } = await useFetch(`/api/web/column/${route.params.columnValue}`);
 </script>

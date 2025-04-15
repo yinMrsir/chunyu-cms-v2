@@ -34,7 +34,7 @@
         </swiper>
       </div>
     </div>
-    <section v-for="item in movie" :key="item.id" class="p-x-12px">
+    <section v-for="item in columns" :key="item.id" class="p-x-12px">
       <div class="flex justify-between items-center m-y-24px">
         <a class="text-22px">{{ item.name }}</a>
         <div class="genre flex gap-x-20px">
@@ -46,8 +46,8 @@
       </div>
       <div class="video-list">
         <ul>
-          <li v-for="v in item.rows" :key="v.id">
-            <nuxt-link to="/">
+          <li v-for="v in item.movies" :key="v.movieBasicsId">
+            <nuxt-link :to="`/column/${v.columnValue}/video/${v.movieBasicsId}`">
               <img :src="v.poster" />
               <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
                 <h3>{{ v.title }}</h3>
@@ -70,7 +70,7 @@
   import 'swiper/css/pagination';
   import { Pagination, Autoplay } from 'swiper/modules';
 
-  const [{ data: banner }, { data: movie }] = await Promise.all([
+  const [{ data: banner }, { data: columns }] = await Promise.all([
     useFetch('/api/web/basic/banner/list', {
       transform: banner => {
         return banner.map(item => ({

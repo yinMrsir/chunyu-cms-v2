@@ -5,6 +5,7 @@ import { movieBasicToGenreTable } from '../movie/movieBasicToGenre';
 import { movieBasicToCountryTable } from './movieBasicToCountry';
 import { movieVideoTable } from './movieVideo';
 import { castTable } from './cast';
+import { columnsTable } from '~/server/db/schema/basic/columns';
 
 // 定义 MovieBasic 表
 export const movieBasicsTable = mysqlTable('movie_basics', {
@@ -71,9 +72,13 @@ export const movieBasicsTable = mysqlTable('movie_basics', {
 export type MovieBasics = typeof movieBasicsTable.$inferSelect;
 export type NewMovieBasics = typeof movieBasicsTable.$inferInsert;
 
-export const movieBasicsTableRelations = relations(movieBasicsTable, ({ many }) => ({
+export const movieBasicsTableRelations = relations(movieBasicsTable, ({ many, one }) => ({
   movieBasicToCountry: many(movieBasicToCountryTable),
   movieVideo: many(movieVideoTable),
   casts: many(castTable),
-  genres: many(movieBasicToGenreTable)
+  genres: many(movieBasicToGenreTable),
+  column: one(columnsTable, {
+    fields: [movieBasicsTable.columnValue],
+    references: [columnsTable.value]
+  })
 }));

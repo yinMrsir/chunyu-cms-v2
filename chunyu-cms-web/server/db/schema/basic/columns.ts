@@ -1,6 +1,7 @@
 import { char, int, mysqlTable, varchar } from 'drizzle-orm/mysql-core';
 import { relations } from 'drizzle-orm';
 import { genreTable } from './genre';
+import { movieBasicsTable } from '~/server/db/schema/movie/movieBasics';
 
 export const columnsTable = mysqlTable('columns', {
   columnId: int('column_id').autoincrement().primaryKey(),
@@ -23,6 +24,7 @@ export type NewColumns = typeof columnsTable.$inferInsert;
 
 export const columnsRelation = relations(columnsTable, ({ many }) => {
   return {
-    genre: many(genreTable)
+    genre: many(genreTable),
+    movies: many(movieBasicsTable)
   };
 });

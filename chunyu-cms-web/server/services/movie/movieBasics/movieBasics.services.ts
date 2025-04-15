@@ -85,6 +85,11 @@ export class MovieBasicsServices {
               }
             }
           }
+        },
+        movieVideo: {
+          with: {
+            video: true
+          }
         }
       }
     });
