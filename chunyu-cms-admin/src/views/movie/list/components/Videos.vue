@@ -102,7 +102,9 @@ const columns = ref([
           const currItem = columns.value.find(
             (value) => value.field === "videoId",
           );
-          currItem.options = [{ label: row.video.title, value: row.video.id }];
+          currItem.options = [
+            { label: row.video.title, value: row.video.videoId },
+          ];
           return row;
         },
       },
