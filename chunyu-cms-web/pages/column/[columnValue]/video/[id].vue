@@ -175,5 +175,17 @@
         color: #fff;
       }
     }
+    .el-tabs__nav-scroll {
+      padding-left: 10px;
+    }
+    .el-tabs__active-bar {
+      background: #00f48e;
+      box-shadow: 0 0 14px 1px #00f48e;
+      box-sizing: border-box;
+      height: 4px;
+      width: 20px !important;
+      left: 5px !important;
+      border-radius: 2px;
+    }
   }
 </style>

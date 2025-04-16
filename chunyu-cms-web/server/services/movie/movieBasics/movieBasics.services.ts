@@ -1,4 +1,4 @@
-import { and, desc, eq, inArray, like, sql } from 'drizzle-orm';
+import { and, between, desc, eq, inArray, like, sql } from 'drizzle-orm';
 import { MovieBasics, movieBasicsTable, NewMovieBasics } from '~/server/db/schema/movie/movieBasics';
 import { queryParams } from '~/server/db/query.helper';
 import { movieBasicToCountryTable } from '~/server/db/schema/movie/movieBasicToCountry';
@@ -105,6 +105,8 @@ export class MovieBasicsServices {
         countryId: number;
         language: string;
         orderBy: string;
+        'date[0]': string;
+        'date[1]': string;
       } & queryParams
     >
   ) {
@@ -146,6 +148,15 @@ export class MovieBasicsServices {
     }
     if (params?.language) {
       whereList.push(like(movieBasicsTable.languages, `%${params.language}%`));
+    }
+    if (params?.['date[0]'] && params?.['date[1]']) {
+      whereList.push(
+        between(
+          movieBasicsTable.createTime,
+          new Date(params['date[0]'] + ' 00:00:00'),
+          new Date(params['date[1]'] + ' 23:59:59')
+        )
+      );
     }
     const where = and(...whereList);
 

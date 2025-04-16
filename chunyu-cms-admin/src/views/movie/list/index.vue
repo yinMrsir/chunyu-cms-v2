@@ -94,7 +94,7 @@
           <el-option label="付费" value="1"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="更新日期" prop="date">
+      <el-form-item label="创建日期" prop="date">
         <el-date-picker
           v-model="queryParams.date"
           type="daterange"

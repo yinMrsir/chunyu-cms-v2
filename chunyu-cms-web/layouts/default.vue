@@ -4,9 +4,9 @@
       class="fixed top-0 left-0 h-100vh transition-all duration-300 overflow-hidden z-999 lt-md:hidden"
       :class="sidebarOpen ? 'w-220px' : 'w-64px'"
     >
-      <nuxt-link to="/" class="flex justify-center items-center gap-x-5px h-74px bg-#161823">
+      <nuxt-link to="/" class="flex justify-center items-center gap-x-5px h-74px bg-#111214">
         <img src="../assets/images/logo.png" alt="" class="h-34px border-rd-5px" />
-        <span v-if="textVisible" class="color-#fff text-24px font-bold">淳渔影视</span>
+        <span v-if="textVisible" class="color-#fff text-24px font-bold logo-text">淳渔影视</span>
       </nuxt-link>
       <ul class="sidebar-menu-inner">
         <li :class="route.path === '/' ? 'active' : ''">
@@ -50,10 +50,10 @@
           </div>
         </div>
       </div>
-      <div class="flex justify-between h-58px items-center p-x-20px md:hidden fixed w-full bg-#161823 z-10">
+      <div class="flex justify-between h-58px items-center p-x-20px md:hidden fixed w-full bg-#111214 z-10">
         <nuxt-link to="/" class="flex items-center gap-x-5px">
           <img src="../assets/images/logo.png" alt="" class="h-28px border-rd-5px" />
-          <span class="color-#fff text-20px font-bold">淳渔影视</span>
+          <span class="color-#fff text-20px font-bold logo-text">淳渔影视</span>
         </nuxt-link>
         <el-icon size="26" color="#f2f2f2" class="cursor-pointer" @click="sidebarMobileOpen = true">
           <ElIconFold v-if="sidebarMobileOpen" />
@@ -66,14 +66,14 @@
 
     <el-drawer
       v-model="sidebarMobileOpen"
-      style="--el-bg-color: #161823"
+      style="--el-bg-color: #111214"
       direction="ltr"
       size="220px"
       :with-header="false"
     >
-      <div class="flex justify-center items-center gap-x-5px h-74px bg-#161823">
+      <div class="flex justify-center items-center gap-x-5px h-74px bg-#111214">
         <img src="../assets/images/logo.png" alt="" class="h-34px" />
-        <span class="color-#fff text-24px font-bold">淳渔影视</span>
+        <span class="color-#fff text-24px font-bold logo-text">淳渔影视</span>
       </div>
       <ul class="sidebar-menu-inner">
         <li :class="route.path === '/' ? 'active' : ''">
@@ -150,6 +150,18 @@
         a {
           background: #2d2f39;
           border-radius: 5px;
+          position: relative;
+          &::before {
+            position: absolute;
+            content: '';
+            background: #00f48e;
+            box-shadow: 4px 0 14px 1px #00f48e;
+            box-sizing: border-box;
+            height: 20px;
+            width: 4px;
+            border-radius: 2px;
+            left: 0;
+          }
         }
       }
     }
@@ -168,6 +180,9 @@
         backdrop-filter: blur(5px);
         width: 400px;
         font-size: 14px;
+        box-shadow: 0 5px 35px rgba(0, 0, 0, 0.2);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       }
       .search-button {
         position: absolute;
@@ -176,5 +191,11 @@
         cursor: pointer;
       }
     }
+  }
+  .logo-text {
+    color: #ffffff;
+    background: linear-gradient(224deg, #fff, #d6ffea);
+    -webkit-background-clip: text; /*将设置的背景颜色限制在文字中*/
+    -webkit-text-fill-color: transparent; /*给文字设置成透明*/
   }
 </style>

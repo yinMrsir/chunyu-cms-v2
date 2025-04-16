@@ -5,10 +5,10 @@
       <div class="banner__right"></div>
       <div class="banner__top"></div>
       <div class="banner__bottom"></div>
-      <div class="swiper-slide__play-btn">
+      <nuxt-link :to="btnLink" class="swiper-slide__play-btn">
         <el-icon><ElIconCaretRight /></el-icon>
         播放
-      </div>
+      </nuxt-link>
       <div>
         <swiper
           loop
@@ -20,6 +20,7 @@
           :pagination="{ clickable: true }"
           :slides-per-view="1"
           :space-between="50"
+          @slide-change="onSlideChange"
         >
           <swiper-slide v-for="item in banner" :key="item.id">
             <video
@@ -77,6 +78,7 @@
   import 'swiper/css/pagination';
   import { Pagination, Autoplay } from 'swiper/modules';
 
+  const currIndex = ref(0);
   const [{ data: banner }, { data: columns }] = await Promise.all([
     useFetch('/api/web/basic/banner/list', {
       transform: banner => {
@@ -92,6 +94,14 @@
     }),
     useFetch('/api/web')
   ]);
+
+  const onSlideChange = (swiper: any) => {
+    currIndex.value = swiper.activeIndex;
+  };
+
+  const btnLink = computed(() => {
+    return banner.value?.[currIndex.value].url;
+  });
 </script>
 
 <style lang="scss">
@@ -144,7 +154,7 @@
   .banner {
     position: relative;
     &__left {
-      background: linear-gradient(-90deg, rgba(255, 255, 255, 0) 0%, #161823 100%);
+      background: linear-gradient(-90deg, rgba(255, 255, 255, 0) 0%, #111214 100%);
       width: 250px;
       height: 100%;
       position: absolute;
@@ -154,7 +164,7 @@
       @apply hidden md:block;
     }
     &__right {
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #161823 100%);
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #111214 100%);
       width: 250px;
       height: 100%;
       position: absolute;
@@ -164,7 +174,7 @@
       @apply hidden md:block;
     }
     &__top {
-      background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, #161823 100%);
+      background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, #111214 100%);
       width: 100%;
       height: 100px;
       position: absolute;
@@ -173,7 +183,7 @@
       z-index: 2;
     }
     &__bottom {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #161823 100%);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #111214 100%);
       width: 100%;
       height: 100px;
       position: absolute;
@@ -193,7 +203,7 @@
       @apply flex items-center justify-center gap-x-6px cursor-pointer z-3 absolute left-20px bottom-50px text-18px lg:left-50px;
       &:hover {
         background: #ffffff;
-        color: #161823;
+        color: #111214;
       }
     }
   }
