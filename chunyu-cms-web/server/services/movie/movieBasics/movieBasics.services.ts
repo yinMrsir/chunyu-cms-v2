@@ -67,36 +67,47 @@ export class MovieBasicsServices {
   }
 
   /* 根据id查询 */
-  async findById(movieBasicsId: number) {
-    return await db.query.movieBasicsTable.findFirst({
-      where: eq(movieBasicsTable.movieBasicsId, movieBasicsId),
-      with: {
-        movieBasicToCountry: {
-          with: {
-            country: true
-          }
-        },
-        genres: {
-          with: {
-            genre: {
-              columns: {
-                name: true,
-                genreId: true
-              }
+  async findById(movieBasicsId: number, withParams?: any) {
+    const withData = withParams || {
+      movieBasicToCountry: {
+        with: {
+          country: true
+        }
+      },
+      genres: {
+        with: {
+          genre: {
+            columns: {
+              name: true,
+              genreId: true
             }
           }
-        },
-        movieVideo: {
-          with: {
-            video: true
-          }
+        }
+      },
+      movieVideo: {
+        with: {
+          video: true
         }
       }
+    };
+    return await db.query.movieBasicsTable.findFirst({
+      where: eq(movieBasicsTable.movieBasicsId, movieBasicsId),
+      with: withData
     });
   }
 
   /* 分页查询 */
-  async pageList(params?: Partial<MovieBasics & { keyword: string } & queryParams>) {
+  async pageList(
+    params?: Partial<
+      MovieBasics & {
+        keyword: string;
+        genreId: number;
+        countryId: number;
+        language: string;
+        orderBy: string;
+      } & queryParams
+    >
+  ) {
     const { pageNum = 1, limit = 10 } = params || {};
     const offset = (pageNum - 1) * limit;
     const whereList = [];
@@ -105,6 +116,36 @@ export class MovieBasicsServices {
     }
     if (params?.columnValue) {
       whereList.push(eq(movieBasicsTable.columnValue, params.columnValue));
+    }
+    if (params?.genreId) {
+      whereList.push(
+        inArray(
+          movieBasicsTable.movieBasicsId,
+          (
+            await db.query.movieBasicToGenreTable.findMany({
+              where: eq(movieBasicToGenreTable.genreId, Number(params.genreId))
+            })
+          ).map((item: any) => item.movieBasicsId)
+        )
+      );
+    }
+    if (params?.countryId) {
+      whereList.push(
+        inArray(
+          movieBasicsTable.movieBasicsId,
+          (
+            await db.query.movieBasicToCountryTable.findMany({
+              where: eq(movieBasicToCountryTable.countryId, Number(params.countryId))
+            })
+          ).map((item: any) => item.movieBasicsId)
+        )
+      );
+    }
+    if (params?.year) {
+      whereList.push(eq(movieBasicsTable.year, Number(params.year)));
+    }
+    if (params?.language) {
+      whereList.push(like(movieBasicsTable.languages, `%${params.language}%`));
     }
     const where = and(...whereList);
 
@@ -140,7 +181,7 @@ export class MovieBasicsServices {
       where,
       offset,
       limit: Number(limit),
-      orderBy: [desc(movieBasicsTable.movieBasicsId)]
+      orderBy: [desc(movieBasicsTable[params?.orderBy || 'movieBasicsId'])]
     });
     const totalQuery = db.$count(movieBasicsTable, where);
     const [rows, total] = await Promise.all([rowsQuery, totalQuery]);

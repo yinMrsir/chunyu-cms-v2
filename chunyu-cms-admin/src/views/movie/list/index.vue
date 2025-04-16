@@ -30,7 +30,7 @@
       </el-form-item>
       <el-form-item label="类型" prop="genres">
         <el-select
-          v-model="queryParams.genres"
+          v-model="queryParams.genreId"
           placeholder="请选择类型"
           clearable
         >
@@ -38,14 +38,14 @@
             v-for="item in genresList"
             :key="item.id"
             :label="item.name"
-            :value="item.name"
+            :value="item.id"
           >
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="国家" prop="country">
         <el-select
-          v-model="queryParams.country"
+          v-model="queryParams.countryId"
           placeholder="请选择类型"
           clearable
         >

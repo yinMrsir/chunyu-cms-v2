@@ -38,10 +38,17 @@
       <div class="flex justify-between items-center m-y-24px">
         <a class="text-22px">{{ item.name }}</a>
         <div class="genre flex gap-x-20px">
-          <a v-for="gen in item.genre" :key="gen.id" href="#" class="hidden lg:inline-block"> {{ gen.name }} </a>
-          <a href="#" class="color-#999 flex items-center">
+          <nuxt-link
+            v-for="gen in item.genre"
+            :key="gen.id"
+            :to="`/column/${item.value}/show?gid=${gen.genreId}`"
+            class="hidden lg:inline-block"
+          >
+            {{ gen.name }}
+          </nuxt-link>
+          <nuxt-link :to="`/column/${item.value}`" class="color-#999 flex items-center">
             更多 <el-icon><ElIconArrowRight /></el-icon>
-          </a>
+          </nuxt-link>
         </div>
       </div>
       <div class="video-list">

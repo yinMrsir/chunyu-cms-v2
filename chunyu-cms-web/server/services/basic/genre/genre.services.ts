@@ -51,6 +51,9 @@ export class GenreServices {
     if (params?.columnValue) {
       whereList.push(eq(genreTable.columnValue, params.columnValue));
     }
+    if (params?.status) {
+      whereList.push(eq(genreTable.status, params.status));
+    }
     const where = and(...whereList);
 
     return await db.query.genreTable.findMany({

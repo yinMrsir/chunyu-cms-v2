@@ -4,15 +4,18 @@
       <div class="flex justify-between items-center m-y-24px">
         <a class="text-22px">{{ item.name }}</a>
         <div class="genre flex gap-x-20px">
-          <a :href="item.id" class="color-#999 flex items-center">
+          <nuxt-link
+            :to="`/column/${route.params.columnValue}/show?gid=${item.id}`"
+            class="color-#999 flex items-center"
+          >
             更多 <el-icon><ElIconArrowRight /></el-icon>
-          </a>
+          </nuxt-link>
         </div>
       </div>
       <div class="video-list">
         <ul>
           <li v-for="v in item.movies" :key="v.movieBasicsId">
-            <nuxt-link to="/">
+            <nuxt-link :to="`/column/${v.columnValue}/video/${v.movieBasicsId}`">
               <img :src="v.movieBasics?.poster" />
               <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
                 <h3>{{ v.movieBasics?.title }}</h3>

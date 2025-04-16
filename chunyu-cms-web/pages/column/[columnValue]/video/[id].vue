@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-0 md:pt-65px" style="--el-text-color-primary: #fff !important">
+  <div class="pt-0 md:pt-65px video-detail">
     <div class="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-x-20px relative">
       <div id="mse"></div>
       <div class="p-10px">
@@ -31,12 +31,23 @@
                 <div class="text-14px color-#dedede" v-html="detail.summary"></div>
               </div>
               <div v-if="detail.movieVideo.length">
-                <h2 class="m-y-15px">正片选集</h2>
+                <h2 class="m-y-15px">相关视频</h2>
                 <div class="movie-video-list">
                   <ul>
-                    <li v-for="item in detail.movieVideo" :key="item.movieVideoId">
-                      <nuxt-link :to="`/column/tv/video/${item.movieVideoId}`" class="flex gap-x-10px">
-                        <el-image class="w-130px" :src="item.cover || item.video.poster"></el-image>
+                    <li v-for="(item, index) in detail.movieVideo" :key="item.movieVideoId">
+                      <nuxt-link
+                        :to="`/column/${detail.columnValue}/video/${detail.movieBasicsId}?mvid=${item.movieVideoId}`"
+                        class="flex gap-x-10px"
+                      >
+                        <div class="relative w-130px">
+                          <el-image class="w-130px" :src="item.cover || item.video.poster"></el-image>
+                          <div
+                            v-if="vIndex === index"
+                            class="absolute w-full h-full bg-[rgba(0,0,0,0.4)] z-1 color-white left-0 top-0 flex items-center pl-40px"
+                          >
+                            正在播放
+                          </div>
+                        </div>
                         <div class="flex flex-col justify-between">
                           <h3>{{ item.title }}</h3>
                           <p class="text-12px color-#999">{{ dayjs(item.createTime).format('YYYY-MM-DD') }}</p>
@@ -64,17 +75,25 @@
   import PayTip from '~/plugins/xgplayer/payTip';
   import { useSidebarOpen, useTextVisible } from '~/composables/states';
 
+  definePageMeta({
+    key: route => route.fullPath
+  });
+
   const sidebarOpen = useSidebarOpen();
   const textVisible = useTextVisible();
   const route = useRoute();
 
   const tabStatus = ref('video');
+  const vIndex = ref(0);
   // 视频支付提示插件
   let payTipInstance: PayTip | null = null;
   // 视频组件
   let player: PresetPlayer | null = null;
 
   const { data: detail } = await useFetch(`/api/web/movie/${route.params.id}`);
+  if (route.query.mvid) {
+    vIndex.value = detail.value?.movieVideo.findIndex(item => item.movieVideoId === Number(route.query.mvid)) || 0;
+  }
 
   onMounted(async () => {
     sidebarOpen.value = false;
@@ -93,7 +112,7 @@
       },
       autoplay: true,
       volume: 0.3,
-      url: detail.value?.movieVideo?.[0]?.video?.url,
+      url: detail.value?.movieVideo?.[vIndex.value]?.video?.url,
       playsinline: true,
       height: '100%',
       width: '100%',
@@ -126,7 +145,7 @@
   });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   #mse {
     @apply w-full !h-300px bg-#000;
 
@@ -147,6 +166,14 @@
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     @media (min-width: 1024px) {
       grid-template-columns: repeat(1, 1fr);
+    }
+  }
+  .video-detail {
+    .el-tabs__item {
+      color: #999;
+      &.is-active {
+        color: #fff;
+      }
     }
   }
 </style>

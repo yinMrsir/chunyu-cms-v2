@@ -3,6 +3,5 @@ import { ColumnsServices } from '~/server/services/basic/columns/columns.service
 const columnsServices = new ColumnsServices();
 
 export default defineEventHandler(async () => {
-  const data = await columnsServices.allList({ status: '0' });
-  return data;
+  return await columnsServices.allList({ status: '0' });
 });
