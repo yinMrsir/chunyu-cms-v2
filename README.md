@@ -170,4 +170,4 @@ Nuxt项目部署文档：https://nuxt.com/docs/getting-started/deployment
 
 ## 有任何疑问可添加微信
 
-<img height="120" src="https://raw.githubusercontent.com/yinMrsir/chunyu-cms-v2/refs/heads/main/wx.png"/>
+<img src="https://raw.githubusercontent.com/yinMrsir/chunyu-cms-v2/refs/heads/main/wx.png"/>
