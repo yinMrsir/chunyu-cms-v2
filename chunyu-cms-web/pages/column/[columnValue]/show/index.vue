@@ -47,10 +47,10 @@
           </li>
         </ul>
       </el-form-item>
-      <el-tabs v-model="orderBy" @tab-change="movieRefresh">
+      <el-tabs v-model="orderBy" @tab-change="handleTabChange">
         <el-tab-pane label="按时间" name="createTime" :disabled="pending"></el-tab-pane>
-        <!--        <el-tab-pane label="按人气" name="pv" :disabled="pending"></el-tab-pane>-->
-        <!--        <el-tab-pane label="按评分" name="rate" :disabled="pending"></el-tab-pane>-->
+        <el-tab-pane label="按人气" name="pv" :disabled="pending"></el-tab-pane>
+        <el-tab-pane label="按评分" name="rate" :disabled="pending"></el-tab-pane>
       </el-tabs>
       <div class="video-list">
         <ul>
@@ -68,11 +68,19 @@
           </li>
         </ul>
       </div>
+      <div v-if="isShowLoading" ref="pageBottomRef" v-loading="true" class="h-60px"></div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  if (process.client) {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+
   definePageMeta({
     key: route => route.fullPath
   });
@@ -86,12 +94,16 @@
   for (let i = 0; i <= 15; i++) {
     years.value.push(y - i);
   }
+  const pageBottomRef = useTemplateRef('pageBottomRef');
+  const isShowLoading = ref(true);
+  let trigger: ScrollTrigger;
 
+  const movies = ref<any[]>([]);
   const [
     { data: genres },
     { data: countries },
     { data: languages },
-    { data: movies, status: movieStatus, refresh: movieRefresh }
+    { data: movieDataList, status: movieStatus, refresh: movieRefresh }
   ] = await Promise.all([
     useFetch(`/api/web/basic/genre/all`, {
       query: {
@@ -129,13 +141,52 @@
           language: query.l,
           year: query.y,
           pageNum: currentPage.value,
-          limit: 30,
+          limit: 12,
           orderBy: orderBy.value
         }
       });
     })
   ]);
   const pending = computed(() => movieStatus.value === 'pending');
+  movies.value = movies.value.concat(movieDataList.value);
+
+  onMounted(() => {
+    trigger = ScrollTrigger.create({
+      trigger: pageBottomRef.value as HTMLDivElement,
+      start: 'top bottom',
+      onEnter: async () => {
+        // 临时禁用触发器，防止重复触发
+        trigger.disable();
+        currentPage.value++;
+        await movieRefresh();
+        if (movieDataList.value?.length) {
+          setTimeout(() => {
+            trigger.enable();
+          });
+        } else {
+          isShowLoading.value = false;
+          trigger.kill();
+        }
+        movies.value = movies.value.concat(movieDataList.value);
+      },
+      markers: process.dev // 开发环境下显示标记
+    });
+  });
+
+  onUnmounted(() => {
+    trigger.kill();
+  });
+
+  async function handleTabChange() {
+    isShowLoading.value = true;
+    movies.value = [];
+    currentPage.value = 1;
+    await movieRefresh();
+    if (!movieDataList.value?.length) {
+      isShowLoading.value = false;
+    }
+    movies.value = movies.value.concat(movieDataList.value);
+  }
 </script>
 
 <style lang="scss">

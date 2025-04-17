@@ -9,4 +9,5 @@ body {
   --el-font-size-base: 16px !important;
   --el-color-primary: #fff !important;
   --el-border-color-light: #fafafa14 !important;
+  --el-mask-color: rgba(17,17,20,0.8) !important;
 }

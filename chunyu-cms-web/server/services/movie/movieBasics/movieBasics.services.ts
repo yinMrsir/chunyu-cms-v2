@@ -192,7 +192,8 @@ export class MovieBasicsServices {
       where,
       offset,
       limit: Number(limit),
-      orderBy: [desc(movieBasicsTable[params?.orderBy || 'movieBasicsId'])]
+      orderBy:
+        params?.orderBy === 'createTime' ? [desc(movieBasicsTable.createTime)] : [desc(movieBasicsTable.movieBasicsId)]
     });
     const totalQuery = db.$count(movieBasicsTable, where);
     const [rows, total] = await Promise.all([rowsQuery, totalQuery]);

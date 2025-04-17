@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-0 md:pt-65px">
+  <div class="pt-0 md:pt-45px">
     <section v-for="item in genres" :key="item.id" class="p-x-12px">
       <div class="flex justify-between items-center m-y-24px">
         <a class="text-22px">{{ item.name }}</a>

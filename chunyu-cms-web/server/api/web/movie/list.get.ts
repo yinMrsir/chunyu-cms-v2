@@ -4,6 +4,8 @@ const movieBasicsServices = new MovieBasicsServices();
 
 export default defineEventHandler(async event => {
   const query = getQuery(event);
-  const data = await movieBasicsServices.pageList(query);
-  return data.rows;
+  if (!query.orderBy || query.orderBy === 'createTime') {
+    return (await movieBasicsServices.pageList(query)).rows;
+  }
+  return [];
 });

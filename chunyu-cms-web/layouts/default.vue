@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="main-content transition-all duration-300 lt-md:ml-0px" :class="sidebarOpen ? 'ml-220px' : 'ml-64px'">
-      <div class="flex items-center gap-10px h-74px pl-16px fixed z-10 lt-md:hidden">
+      <div class="flex w-full bg-[rgba(17,17,20,0.8)] items-center gap-10px h-54px pl-16px fixed z-10 lt-md:hidden">
         <el-icon size="26" color="#f2f2f2" class="cursor-pointer" @click="handleSetSideBar">
           <ElIconFold v-if="sidebarOpen" />
           <ElIconExpand v-else />
