@@ -44,16 +44,36 @@
           <ElIconExpand v-else />
         </el-icon>
         <div class="search-input">
-          <input type="text" placeholder="请输入关键字" style="outline: 0" autocomplete="off" />
-          <div class="search-button">
+          <input
+            v-model="keyword"
+            type="text"
+            placeholder="请输入关键字"
+            style="outline: 0"
+            autocomplete="off"
+            @keyup.enter="router.push(`/search?keyword=${keyword}`)"
+          />
+          <nuxt-link :to="`/search?keyword=${keyword}`" class="search-button">
             <el-icon><ElIconSearch /></el-icon>
-          </div>
+          </nuxt-link>
         </div>
       </div>
       <div class="flex justify-between h-58px items-center p-x-20px md:hidden fixed w-full bg-#111214 z-10">
         <nuxt-link to="/" class="flex items-center gap-x-5px">
           <img src="../assets/images/logo.png" alt="" class="h-28px border-rd-5px" />
           <span class="color-#fff text-20px font-bold logo-text">淳渔影视</span>
+        </nuxt-link>
+        <nuxt-link :to="`/search?keyword=${keyword}`" class="search-button">
+          <input
+            v-model="keyword"
+            type="text"
+            placeholder="请输入关键字"
+            style="outline: 0; width: 160px"
+            autocomplete="off"
+            @keyup.enter="router.push(`/search?keyword=${keyword}`)"
+          />
+          <div class="search-button">
+            <el-icon><ElIconSearch /></el-icon>
+          </div>
         </nuxt-link>
         <el-icon size="26" color="#f2f2f2" class="cursor-pointer" @click="sidebarMobileOpen = true">
           <ElIconFold v-if="sidebarMobileOpen" />
@@ -107,10 +127,12 @@
   import { useSidebarOpen, useTextVisible } from '~/composables/states';
 
   const route = useRoute();
+  const router = useRouter();
 
   const sidebarOpen = useSidebarOpen();
   const textVisible = useTextVisible();
   const sidebarMobileOpen = ref(false);
+  const keyword = ref('');
 
   watch(
     () => route.path,

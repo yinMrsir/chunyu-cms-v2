@@ -212,7 +212,7 @@
     }
     .show__type-filter {
       li {
-        @apply inline-block mr-10px h-28px p-x-12px relative color-#999 line-height-27px text-14px;
+        @apply inline-block mr-6px h-28px p-x-12px relative color-#999 line-height-27px text-14px;
         &.active {
           background: #00c4521a;
           border: 1px solid #00c45229;

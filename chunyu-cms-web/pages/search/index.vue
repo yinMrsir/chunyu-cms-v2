@@ -1,0 +1,144 @@
+<template>
+  <div class="pt-0 md:pt-65px show-search">
+    <div class="p-x-10px">
+      <el-tabs v-model="orderBy">
+        <el-tab-pane label="搜索结果" name="createTime"></el-tab-pane>
+      </el-tabs>
+      <div class="video-list">
+        <ul>
+          <li v-for="v in movies" :key="v.movieBasicsId">
+            <nuxt-link :to="`/column/${v.columnValue}/video/${v.movieBasicsId}`">
+              <img :src="v.poster" />
+              <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
+                <h3>{{ v.title }}</h3>
+                <p>
+                  <template v-for="actor in v.casts"> {{ actor.actor.name }}&nbsp; </template>
+                  <span v-if="!v.casts.length">-</span>
+                </p>
+              </div>
+            </nuxt-link>
+          </li>
+        </ul>
+      </div>
+      <div v-if="isShowLoading" ref="pageBottomRef" v-loading="true" class="h-60px"></div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  if (process.client) {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+
+  definePageMeta({
+    key: route => route.fullPath
+  });
+
+  const route = useRoute();
+  const { query, params } = route;
+  const currentPage = ref<number>((route.query.page && +route.query.page) || 1);
+  const orderBy = ref<string>((query.orderBy as string) || 'createTime');
+  const pageBottomRef = useTemplateRef('pageBottomRef');
+  const isShowLoading = ref(true);
+  let trigger: ScrollTrigger;
+
+  const movies = ref<any[]>([]);
+  const [{ data: movieDataList, refresh: movieRefresh }] = await Promise.all([
+    useAsyncData(() => {
+      return $fetch('/api/web/movie/list', {
+        query: {
+          keyword: query.keyword,
+          pageNum: currentPage.value,
+          limit: 12,
+          orderBy: orderBy.value
+        }
+      });
+    })
+  ]);
+  movies.value = movies.value.concat(movieDataList.value);
+
+  onMounted(() => {
+    trigger = ScrollTrigger.create({
+      trigger: pageBottomRef.value as HTMLDivElement,
+      start: 'top bottom',
+      onEnter: async () => {
+        // 临时禁用触发器，防止重复触发
+        trigger.disable();
+        currentPage.value++;
+        await movieRefresh();
+        if (movieDataList.value?.length) {
+          setTimeout(() => {
+            trigger.enable();
+          });
+        } else {
+          isShowLoading.value = false;
+          trigger.kill();
+        }
+        movies.value = movies.value.concat(movieDataList.value);
+      },
+      markers: process.dev // 开发环境下显示标记
+    });
+  });
+
+  onUnmounted(() => {
+    trigger.kill();
+  });
+</script>
+
+<style lang="scss">
+  .show-search {
+    .el-form-item__label {
+      @apply text-#999 text-14px;
+    }
+    .el-tabs__item {
+      @apply text-14px color-#999;
+      &.is-active {
+        color: #fff;
+      }
+    }
+    .el-tabs__nav-scroll {
+      padding-left: 10px;
+    }
+    .el-tabs__active-bar {
+      background: #00f48e;
+      box-shadow: 0 0 14px 1px #00f48e;
+      box-sizing: border-box;
+      height: 4px;
+      border-radius: 2px;
+    }
+    .show__type-filter {
+      li {
+        @apply inline-block mr-6px h-28px p-x-12px relative color-#999 line-height-27px text-14px;
+        &.active {
+          background: #00c4521a;
+          border: 1px solid #00c45229;
+          border-radius: 14px;
+          a {
+            color: #00d157;
+          }
+          &::before {
+            background-image: linear-gradient(90deg, #0000 0, #00ff194d 50%, #0000);
+            content: '';
+            height: 1px;
+            left: calc(50% - 18px);
+            position: absolute;
+            top: -1px;
+            width: 36px;
+          }
+          &::after {
+            background-image: linear-gradient(90deg, #0000 0, #00ff194d 50%, #0000);
+            bottom: -1px;
+            content: '';
+            height: 1px;
+            left: calc(50% - 18px);
+            position: absolute;
+            width: 36px;
+          }
+        }
+      }
+    }
+  }
+</style>
