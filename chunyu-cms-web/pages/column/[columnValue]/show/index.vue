@@ -154,6 +154,14 @@
   }
 
   onMounted(() => {
+    createTrigger();
+  });
+
+  onUnmounted(() => {
+    trigger.kill();
+  });
+
+  function createTrigger() {
     trigger = ScrollTrigger.create({
       trigger: pageBottomRef.value as HTMLDivElement,
       start: 'top bottom',
@@ -174,14 +182,9 @@
             trigger.enable();
           });
         }
-      },
-      markers: process.dev // 开发环境下显示标记
+      }
     });
-  });
-
-  onUnmounted(() => {
-    trigger.kill();
-  });
+  }
 
   async function handleTabChange() {
     isShowLoading.value = true;
@@ -192,6 +195,7 @@
     if (movies.value.length >= movieData.value?.total) {
       isShowLoading.value = false;
     }
+    createTrigger();
   }
 </script>
 

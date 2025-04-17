@@ -2,6 +2,9 @@ import { LanguageServices } from '~/server/services/basic/language/language.serv
 
 const languageServices = new LanguageServices();
 
-export default defineEventHandler(async () => {
-  return await languageServices.allList();
-});
+export default defineCachedEventHandler(
+  async () => {
+    return await languageServices.allList();
+  },
+  { maxAge: 60 * 30 }
+);

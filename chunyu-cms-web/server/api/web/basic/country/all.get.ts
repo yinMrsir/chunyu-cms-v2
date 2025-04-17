@@ -2,6 +2,9 @@ import { CountryServices } from '~/server/services/basic/country/country.service
 
 const countryServices = new CountryServices();
 
-export default defineEventHandler(async () => {
-  return await countryServices.allList();
-});
+export default defineCachedEventHandler(
+  async () => {
+    return await countryServices.allList();
+  },
+  { maxAge: 60 * 30 }
+);
