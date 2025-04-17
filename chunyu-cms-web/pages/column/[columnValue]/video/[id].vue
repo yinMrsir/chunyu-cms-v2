@@ -1,5 +1,10 @@
 <template>
   <div class="pt-0 md:pt-65px video-detail">
+    <Head>
+      <Title>{{ $titleRender(`${detail.title}_${detail.title}在线观看`) }}</Title>
+      <Meta name="description" :content="detail.summary" />
+    </Head>
+
     <div class="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-x-20px relative">
       <div id="mse"></div>
       <div class="p-10px">

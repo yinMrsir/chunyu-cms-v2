@@ -76,6 +76,9 @@ export default defineNuxtConfig({
         : []
   },
   runtimeConfig: {
+    public: {
+      globalTitle: '淳渔影视'
+    },
     // mysql连接配置
     mysql: {
       host: process.env.DATABASE_HOST || 'localhost',

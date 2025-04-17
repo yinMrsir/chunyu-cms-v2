@@ -1,5 +1,10 @@
 <template>
   <div class="pt-0 md:pt-65px show-page">
+    <Head>
+      <Title>{{ $titleRender(`${title}_${columnInfo?.name}`) }}</Title>
+      <Meta name="description" :content="`最新最全的${title}${columnInfo?.name}尽在淳渔影视。`" />
+    </Head>
+
     <div class="p-x-10px">
       <el-form>
         <el-form-item label="按类型">
@@ -103,7 +108,8 @@
     { data: genres },
     { data: countries },
     { data: languages },
-    { data: movieData, status: movieStatus, refresh: movieRefresh }
+    { data: movieData, status: movieStatus, refresh: movieRefresh },
+    { data: columnInfo }
   ] = await Promise.all([
     useFetch(`/api/web/basic/genre/all`, {
       query: {
@@ -145,6 +151,9 @@
           orderBy: orderBy.value
         }
       });
+    }),
+    useFetch(`/api/web/column/${route.params.columnValue}`, {
+      pick: ['name']
     })
   ]);
   const pending = computed(() => movieStatus.value === 'pending');
@@ -152,6 +161,20 @@
   if (movies.value.length >= movieData.value?.total) {
     isShowLoading.value = false;
   }
+
+  const title = computed(() => {
+    let html = '';
+    if (query.y) {
+      html += query.y;
+      html += '年';
+    }
+    if (query.gid) {
+      html += '最新最全的';
+      html += genres.value?.find(item => item.id === Number(query.gid))?.name;
+      html += '在线观看';
+    }
+    return html;
+  });
 
   onMounted(() => {
     createTrigger();

@@ -1,5 +1,10 @@
 <template>
   <div class="pt-0 md:pt-45px">
+    <Head>
+      <Title>{{ $titleRender(`最新${columnInfo?.name}在线观看`) }}</Title>
+      <Meta name="description" :content="`最新最全的${columnInfo?.name}在线观看尽在淳渔影视。`" />
+    </Head>
+
     <section v-for="item in genres" :key="item.id" class="p-x-12px">
       <div class="flex justify-between items-center m-y-24px">
         <a class="text-22px">{{ item.name }}</a>
@@ -15,7 +20,7 @@
       <div class="video-list">
         <ul>
           <li v-for="v in item.movies" :key="v.movieBasicsId">
-            <nuxt-link :to="`/column/${v.columnValue}/video/${v.movieBasicsId}`">
+            <nuxt-link :to="`/column/${item.columnValue}/video/${v.movieBasicsId}`">
               <img :src="v.movieBasics?.poster" />
               <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
                 <h3>{{ v.movieBasics?.title }}</h3>
@@ -34,5 +39,10 @@
 
 <script setup lang="ts">
   const route = useRoute();
-  const { data: genres } = await useFetch(`/api/web/column/${route.params.columnValue}`);
+  const [{ data: genres }, { data: columnInfo }] = await Promise.all([
+    useFetch(`/api/web/column/genre/${route.params.columnValue}`),
+    useFetch(`/api/web/column/${route.params.columnValue}`, {
+      pick: ['name']
+    })
+  ]);
 </script>

@@ -1,47 +1,11 @@
-import { GenreServices } from '~/server/services/basic/genre/genre.services';
-import { MovieBasicToGenre } from '~/server/db/schema/movie/movieBasicToGenre';
+import { ColumnsServices } from '~/server/services/basic/columns/columns.services';
 
-const genreServices = new GenreServices();
+const columnsServices = new ColumnsServices();
 
-export default defineCachedEventHandler(
-  async event => {
-    const columnValue = getRouterParam(event, 'columnValue');
-    const data = await genreServices.pageList(
-      {
-        columnValue
-      },
-      {
-        movies: {
-          limit: 12,
-          orderBy: (movies: MovieBasicToGenre, { desc }: any) => [desc(movies.movieBasicsId)],
-          with: {
-            movieBasics: {
-              columns: {
-                movieBasicsId: true,
-                title: true,
-                poster: true
-              },
-              with: {
-                casts: {
-                  columns: {},
-                  with: {
-                    actor: {
-                      columns: {
-                        actorId: true,
-                        name: true
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    );
-    return data.rows;
-  },
-  {
-    maxAge: 60 * 30
+export default defineEventHandler(async event => {
+  const columnValue = getRouterParam(event, 'columnValue');
+  if (!columnValue) {
+    throw createError(`error`);
   }
-);
+  return await columnsServices.findByColumnValue(columnValue);
+});

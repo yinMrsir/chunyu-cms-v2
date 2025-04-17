@@ -76,4 +76,11 @@ export class ColumnsServices {
       )
     );
   }
+
+  /* 根据value查询 */
+  async findByColumnValue(columnValue: string) {
+    return await db.query.columnsTable.findFirst({
+      where: eq(columnsTable.value, columnValue)
+    });
+  }
 }
