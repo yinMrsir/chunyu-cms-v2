@@ -62,7 +62,7 @@
           <img src="../assets/images/logo.png" alt="" class="h-28px border-rd-5px" />
           <span class="color-#fff text-20px font-bold logo-text">淳渔影视</span>
         </nuxt-link>
-        <nuxt-link :to="`/search?keyword=${keyword}`" class="search-button">
+        <div class="search-input">
           <input
             v-model="keyword"
             type="text"
@@ -71,10 +71,10 @@
             autocomplete="off"
             @keyup.enter="router.push(`/search?keyword=${keyword}`)"
           />
-          <div class="search-button">
+          <nuxt-link :to="`/search?keyword=${keyword}`" class="search-button">
             <el-icon><ElIconSearch /></el-icon>
-          </div>
-        </nuxt-link>
+          </nuxt-link>
+        </div>
         <el-icon size="26" color="#f2f2f2" class="cursor-pointer" @click="sidebarMobileOpen = true">
           <ElIconFold v-if="sidebarMobileOpen" />
           <ElIconExpand v-else />

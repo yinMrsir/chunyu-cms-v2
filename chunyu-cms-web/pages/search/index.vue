@@ -46,7 +46,7 @@
   let trigger: ScrollTrigger;
 
   const movies = ref<any[]>([]);
-  const [{ data: movieDataList, refresh: movieRefresh }] = await Promise.all([
+  const [{ data: movieData, refresh: movieRefresh }] = await Promise.all([
     useAsyncData(() => {
       return $fetch('/api/web/movie/list', {
         query: {
@@ -58,7 +58,10 @@
       });
     })
   ]);
-  movies.value = movies.value.concat(movieDataList.value);
+  movies.value = movies.value.concat(movieData.value?.rows);
+  if (movies.value.length >= movieData.value?.total) {
+    isShowLoading.value = false;
+  }
 
   onMounted(() => {
     trigger = ScrollTrigger.create({
@@ -69,15 +72,15 @@
         trigger.disable();
         currentPage.value++;
         await movieRefresh();
-        if (movieDataList.value?.length) {
+        movies.value = movies.value.concat(movieData.value.rows);
+        if (movies.value.length >= movieData.value?.total) {
+          isShowLoading.value = false;
+          trigger.kill();
+        } else {
           setTimeout(() => {
             trigger.enable();
           });
-        } else {
-          isShowLoading.value = false;
-          trigger.kill();
         }
-        movies.value = movies.value.concat(movieDataList.value);
       },
       markers: process.dev // 开发环境下显示标记
     });

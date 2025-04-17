@@ -2,10 +2,11 @@ import { mysqlTable, varchar, datetime, int, char, date } from 'drizzle-orm/mysq
 import { relations } from 'drizzle-orm';
 import { columnsHelpers } from '../../columns.helpers';
 import { movieBasicToGenreTable } from '../movie/movieBasicToGenre';
+import { columnsTable } from '../basic/columns';
 import { movieBasicToCountryTable } from './movieBasicToCountry';
 import { movieVideoTable } from './movieVideo';
 import { castTable } from './cast';
-import { columnsTable } from '~/server/db/schema/basic/columns';
+import { moviePvTable } from './moviePv';
 
 // 定义 MovieBasic 表
 export const movieBasicsTable = mysqlTable('movie_basics', {
@@ -80,5 +81,9 @@ export const movieBasicsTableRelations = relations(movieBasicsTable, ({ many, on
   column: one(columnsTable, {
     fields: [movieBasicsTable.columnValue],
     references: [columnsTable.value]
+  }),
+  pv: one(moviePvTable, {
+    fields: [movieBasicsTable.movieBasicsId],
+    references: [moviePvTable.movieBasicsId]
   })
 }));

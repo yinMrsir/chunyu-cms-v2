@@ -50,7 +50,7 @@
       <el-tabs v-model="orderBy" @tab-change="handleTabChange">
         <el-tab-pane label="按时间" name="createTime" :disabled="pending"></el-tab-pane>
         <el-tab-pane label="按人气" name="pv" :disabled="pending"></el-tab-pane>
-        <el-tab-pane label="按评分" name="rate" :disabled="pending"></el-tab-pane>
+        <!--        <el-tab-pane label="按评分" name="rate" :disabled="pending"></el-tab-pane>-->
       </el-tabs>
       <div class="video-list">
         <ul>
@@ -103,7 +103,7 @@
     { data: genres },
     { data: countries },
     { data: languages },
-    { data: movieDataList, status: movieStatus, refresh: movieRefresh }
+    { data: movieData, status: movieStatus, refresh: movieRefresh }
   ] = await Promise.all([
     useFetch(`/api/web/basic/genre/all`, {
       query: {
@@ -148,26 +148,32 @@
     })
   ]);
   const pending = computed(() => movieStatus.value === 'pending');
-  movies.value = movies.value.concat(movieDataList.value);
+  movies.value = movies.value.concat(movieData.value?.rows);
+  if (movies.value.length >= movieData.value?.total) {
+    isShowLoading.value = false;
+  }
 
   onMounted(() => {
     trigger = ScrollTrigger.create({
       trigger: pageBottomRef.value as HTMLDivElement,
       start: 'top bottom',
       onEnter: async () => {
+        if (!isShowLoading.value) {
+          return;
+        }
         // 临时禁用触发器，防止重复触发
         trigger.disable();
         currentPage.value++;
         await movieRefresh();
-        if (movieDataList.value?.length) {
+        movies.value = movies.value.concat(movieData.value.rows);
+        if (movies.value.length >= movieData.value?.total) {
+          isShowLoading.value = false;
+          trigger.kill();
+        } else {
           setTimeout(() => {
             trigger.enable();
           });
-        } else {
-          isShowLoading.value = false;
-          trigger.kill();
         }
-        movies.value = movies.value.concat(movieDataList.value);
       },
       markers: process.dev // 开发环境下显示标记
     });
@@ -182,10 +188,10 @@
     movies.value = [];
     currentPage.value = 1;
     await movieRefresh();
-    if (!movieDataList.value?.length) {
+    movies.value = movies.value.concat(movieData.value.rows);
+    if (movies.value.length >= movieData.value?.total) {
       isShowLoading.value = false;
     }
-    movies.value = movies.value.concat(movieDataList.value);
   }
 </script>
 

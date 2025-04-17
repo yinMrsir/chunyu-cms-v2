@@ -29,6 +29,7 @@ import * as castSchema from './movie/cast';
 import * as movieVideoSchema from './movie/movieVideo';
 import * as moviePhotoSchema from './movie/moviePhoto';
 import * as movieBasicToGenreSchema from './movie/movieBasicToGenre';
+import * as moviePvSchema from './movie/moviePv';
 
 export default {
   ...userSchema,
@@ -60,5 +61,6 @@ export default {
   ...castSchema,
   ...movieVideoSchema,
   ...moviePhotoSchema,
-  ...movieBasicToGenreSchema
+  ...movieBasicToGenreSchema,
+  ...moviePvSchema
 };

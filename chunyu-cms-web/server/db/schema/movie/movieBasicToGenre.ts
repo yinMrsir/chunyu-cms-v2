@@ -3,6 +3,7 @@ import { relations } from 'drizzle-orm';
 import { genreTable } from '../basic/genre';
 import { movieBasicsTable } from './movieBasics';
 
+// @ts-ignore
 export const movieBasicToGenreTable = mysqlTable(
   'movie_basic_to_genre',
   {

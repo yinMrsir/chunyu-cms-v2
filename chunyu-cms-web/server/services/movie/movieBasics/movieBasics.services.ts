@@ -187,7 +187,8 @@ export class MovieBasicsServices {
               }
             }
           }
-        }
+        },
+        pv: true
       },
       where,
       offset,

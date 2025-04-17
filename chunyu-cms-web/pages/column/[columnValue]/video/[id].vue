@@ -90,7 +90,15 @@
   // 视频组件
   let player: PresetPlayer | null = null;
 
-  const { data: detail } = await useFetch(`/api/web/movie/${route.params.id}`);
+  const [{ data: detail }] = await Promise.all([
+    useFetch(`/api/web/movie/${route.params.id}`),
+    useFetch(`/api/web/movie/pv`, {
+      method: 'POST',
+      body: {
+        movieBasicsId: route.params.id
+      }
+    })
+  ]);
   if (route.query.mvid) {
     vIndex.value = detail.value?.movieVideo.findIndex(item => item.movieVideoId === Number(route.query.mvid)) || 0;
   }
@@ -123,16 +131,22 @@
             duration: 15000,
             id: '1',
             start: 3000,
-            txt: '好看，精彩！！！',
+            txt: '好看，精彩！！！'
             // 弹幕自定义样式
-            style: {
-              color: '#ff9500',
-              fontSize: '20px',
-              border: 'solid 1px #ff9500',
-              borderRadius: '50px',
-              padding: '5px 11px',
-              backgroundColor: 'rgba(255, 255, 255, 0.1)'
-            }
+            // style: {
+            //   color: '#fff',
+            //   fontSize: '12px',
+            //   border: 'solid 1px #fff',
+            //   borderRadius: '50px',
+            //   padding: '5px 10px',
+            //   backgroundColor: 'rgba(255, 255, 255, 0.1)'
+            // }
+          },
+          {
+            duration: 15000,
+            id: '2',
+            start: 2000,
+            txt: '终于可以看了。'
           }
         ],
         area: {

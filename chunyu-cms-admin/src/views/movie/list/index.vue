@@ -180,7 +180,7 @@
       <el-table-column prop="duration" label="时长"></el-table-column>
       <el-table-column prop="seasonCount" label="季数"></el-table-column>
       <el-table-column prop="episodeCount" label="集数"></el-table-column>
-      <el-table-column prop="moviePv.pv" label="访问量"></el-table-column>
+      <el-table-column prop="pv.pv" label="访问量"></el-table-column>
       <el-table-column
         prop="userCollectsCount"
         label="收藏量"
@@ -235,7 +235,7 @@ import { getColumnAll } from "@/views/basic/column/services";
 const { proxy } = getCurrentInstance();
 const { movie_category_type } = proxy.useDict("movie_category_type");
 
-const maxHeight = window.innerHeight - 280;
+const maxHeight = window.innerHeight - 350;
 const loading = ref(true);
 const list = ref([]);
 const total = ref(0);
