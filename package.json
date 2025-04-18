@@ -1,7 +1,7 @@
 {
   "name": "chunyu-cms-v2",
   "version": "2.0.0",
-  "description": "## 项目简介 淳渔是一款快速搭建影视类网站的系统，它用户端基于[nuxt3](https://nuxt.com/)和 [element-ui](https://element.eleme.cn/#/zh-CN) ,管理端基于 [vue3](https://cn.vuejs.org/) 和 [element-ui](https://element.eleme.cn/#/zh-CN) ，数据库采用 mysql ，缓存采用 redis。",
+  "description": "基于Node.js Nuxt3 实战开发的一套完整的影视类网站系统。",
   "main": "index.js",
   "bin": {
     "deploy": "bin/deploy.js"
@@ -18,7 +18,7 @@
   "bugs": {
     "url": "https://github.com/yinMrsir/chunyu-cms-v2/issues"
   },
-  "homepage": "https://github.com/yinMrsir/chunyu-cms-v2#readme",
+  "homepage": "https://cms.yinchunyu.com",
   "dependencies": {
     "xgplayer": "^3.0.21",
     "xgplayer-mp4": "^3.0.21"
