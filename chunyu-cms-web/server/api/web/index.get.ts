@@ -23,5 +23,5 @@ export default defineCachedEventHandler(
       }
     );
   },
-  { maxAge: 60 * 30 }
+  { base: 'redis', maxAge: 60 * 30 }
 );

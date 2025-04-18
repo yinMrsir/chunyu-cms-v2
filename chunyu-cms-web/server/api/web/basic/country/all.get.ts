@@ -6,5 +6,5 @@ export default defineCachedEventHandler(
   async () => {
     return await countryServices.allList();
   },
-  { maxAge: 60 * 30 }
+  { base: 'redis', maxAge: 60 * 60 }
 );

@@ -42,6 +42,7 @@ export default defineCachedEventHandler(
     return data.rows;
   },
   {
+    base: 'redis',
     maxAge: 60 * 30
   }
 );

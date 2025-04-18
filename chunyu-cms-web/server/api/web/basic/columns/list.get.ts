@@ -2,6 +2,9 @@ import { ColumnsServices } from '~/server/services/basic/columns/columns.service
 
 const columnsServices = new ColumnsServices();
 
-export default defineEventHandler(async () => {
-  return await columnsServices.allList({ status: '0' });
-});
+export default defineCachedEventHandler(
+  async () => {
+    return await columnsServices.allList({ status: '0' });
+  },
+  { base: 'redis', maxAge: 60 * 60 }
+);

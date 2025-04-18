@@ -7,5 +7,5 @@ export default defineCachedEventHandler(
     const query = getQuery(event);
     return await genreServices.allList({ ...query, status: '0' });
   },
-  { maxAge: 60 * 30 }
+  { base: 'redis', maxAge: 60 * 60 }
 );

@@ -18,3 +18,5 @@ export const DICTTYPE_KEY = 'sys:dictType'; // 字典
 export const SYSCONFIG_KEY = 'sys:sysConfig'; // 参数配置
 
 export const JOB_TASK_KEY = 'job:task'; // 定时任务
+
+export const USER_WEB_KEY = 'nitro:handlers'; // 用户端接口缓存
