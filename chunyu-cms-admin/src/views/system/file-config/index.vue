@@ -76,12 +76,7 @@ const columns = ref([
   {
     title: "自定义域名",
     field: "endpoint",
-    add: true,
-  },
-  {
-    title: "超时(秒)",
-    field: "timeout",
-    type: "number",
+    hidden: true,
     add: true,
   },
   {
