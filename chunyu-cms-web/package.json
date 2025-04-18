@@ -60,6 +60,8 @@
     "svg-captcha": "^1.4.0",
     "swiper": "^11.2.6",
     "systeminformation": "^5.23.13",
-    "ua-parser-js": "^2.0.0"
+    "ua-parser-js": "^2.0.0",
+    "xgplayer": "^3.0.21",
+    "xgplayer-mp4": "^3.0.21"
   }
 }

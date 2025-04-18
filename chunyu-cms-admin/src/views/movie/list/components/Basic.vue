@@ -292,28 +292,28 @@ const genresLoading = ref(false);
 const genres = ref([]);
 const statusList = ref([
   {
-    label: "处理中",
-    value: -9,
-  },
-  {
-    label: "待完善",
-    value: -8,
-  },
-  {
-    label: "待审核",
-    value: -7,
-  },
-  {
-    label: "隐藏",
-    value: -1,
-  },
-  {
     label: "正常",
     value: 0,
   },
   {
     label: "锁定",
     value: 1,
+  },
+  {
+    label: "处理中",
+    value: 2,
+  },
+  {
+    label: "待完善",
+    value: 3,
+  },
+  {
+    label: "待审核",
+    value: 4,
+  },
+  {
+    label: "隐藏",
+    value: 5,
   },
 ]);
 const versions = ref(["2D", "3D", "iMax", "iMax3D"]);

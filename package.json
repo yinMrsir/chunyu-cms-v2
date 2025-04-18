@@ -19,8 +19,5 @@
     "url": "https://github.com/yinMrsir/chunyu-cms-v2/issues"
   },
   "homepage": "https://cms.yinchunyu.com",
-  "dependencies": {
-    "xgplayer": "^3.0.21",
-    "xgplayer-mp4": "^3.0.21"
-  }
+  "dependencies": {}
 }

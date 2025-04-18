@@ -11,7 +11,7 @@ import { moviePvTable } from './moviePv';
 // 定义 MovieBasic 表
 export const movieBasicsTable = mysqlTable('movie_basics', {
   movieBasicsId: int('movie_basics_id').autoincrement().primaryKey(),
-  // 状态： -9: 处理中 -8: 待完善 -7: 待审核 -1: 隐藏 0: 正常 1: 锁定
+  // 状态： 0: 正常 1: 锁定 2: 处理中 3: 待完善 4: 待审核 5: 隐藏
   status: char('status', { length: 1 }).default('0'),
   // 上映状态: 0: 无 1: 即将上映 2: 正在热映
   releaseStatus: char('release_status', { length: 1 }).default('0'),
