@@ -1,7 +1,7 @@
 # 淳渔CMS V2
 
 ## 项目简介
-淳渔是一款快速搭建影视类网站的系统，它用户端基于[nuxt3](https://nuxt.com/) ,管理端基于 [vue3](https://cn.vuejs.org/) 和 [element-ui](https://element.eleme.cn/#/zh-CN) ，数据库采用 mysql ，缓存采用 redis。
+淳渔是一款快速搭建影视类网站的系统，它用户端和后端都基于[nuxt3](https://nuxt.com/)开发 ,管理端基于 [vue3](https://cn.vuejs.org/) 和 [element-ui](https://element.eleme.cn/#/zh-CN) ，数据库采用 mysql ，缓存采用 redis。
 
 V2相比[V1版本](https://github.com/yinMrsir/chunyu-cms)使用[DrizzleOrm](https://orm.drizzle.team/)替换了typeOrm，我想你会更容易上手操作。但请注意不支持mysql5.x，建议使用mysql8.x。
 
