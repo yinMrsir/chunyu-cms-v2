@@ -232,9 +232,16 @@
       append-to-body
       :close-on-click-modal="false"
     >
-      <el-form ref="formRef" :model="form" label-width="100px" :rules="rules">
+      <el-form
+        ref="formRef"
+        :model="form"
+        :label-width="formLabelWidth"
+        :label-position="formLabelPosition"
+        :rules="rules"
+      >
         <el-form-item
           v-for="item in formOptions"
+          :key="item.field"
           :label="`${item.title}：`"
           :prop="item.field"
         >
@@ -270,10 +277,10 @@
               v-bind="item.formProps"
             >
               <el-option
-                v-for="(item, index) in item.options"
+                v-for="(o, index) in item.options"
                 :key="index"
-                :label="item.label"
-                :value="item.value"
+                :label="o.label"
+                :value="o.value"
               >
               </el-option>
             </el-select>
@@ -408,6 +415,14 @@ const props = defineProps({
   isAutoFetch: {
     type: Boolean,
     default: true,
+  },
+  formLabelWidth: {
+    type: String,
+    default: "100px",
+  },
+  formLabelPosition: {
+    type: String,
+    default: "right",
   },
 });
 const list = ref([]);

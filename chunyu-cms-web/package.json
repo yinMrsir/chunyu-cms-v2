@@ -20,6 +20,7 @@
     "@iconify-json/flat-color-icons": "^1.2.1",
     "@nuxt/devtools": "latest",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "@types/ali-oss": "^6.16.11",
     "@types/crypto-js": "^4.2.2",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^18.17.1",
@@ -39,6 +40,7 @@
   "dependencies": {
     "@baiducloud/qianfan": "^0.2.0",
     "@types/showdown": "^2.0.6",
+    "ali-oss": "^6.22.0",
     "cheerio": "^1.0.0",
     "clipboard": "^2.0.11",
     "crypto-js": "^4.2.0",

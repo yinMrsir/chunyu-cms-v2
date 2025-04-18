@@ -16,9 +16,9 @@
 
       <!-- 选择视频 -->
       <div v-else class="choose-btn">
-        <el-button type="primary" icon="Camera" @click="chosenFileHandle"
-          >选择视频</el-button
-        >
+        <el-button type="primary" icon="Camera" @click="chosenFileHandle">
+          选择视频
+        </el-button>
         <p>视频大小不超过{{ maxSize }}MB</p>
         <p>当前只支持 {{ acceptTypeStr }} 格式视频</p>
       </div>
@@ -69,7 +69,7 @@ const props = defineProps({
   // 最大尺寸/MB
   maxSize: {
     type: Number,
-    default: 500,
+    default: 2048,
   },
   maxMinute: {
     // 最大时长/分钟

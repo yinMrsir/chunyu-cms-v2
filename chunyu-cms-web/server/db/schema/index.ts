@@ -11,6 +11,7 @@ import * as loginInfoSchema from './monitor/log/logininfo';
 import * as jobSchema from './monitor/job';
 import * as jobLogSchema from './monitor/jobLog';
 import * as sysConfigSchema from './system/sysConfig';
+import * as fileConfigSchema from './system/fileConfig';
 // 以下是业务模块
 import * as countrySchema from './basic/country';
 import * as languageSchema from './basic/language';
@@ -45,6 +46,7 @@ export default {
   ...jobSchema,
   ...jobLogSchema,
   ...sysConfigSchema,
+  ...fileConfigSchema,
   ...countrySchema,
   ...languageSchema,
   ...bannerSchema,
