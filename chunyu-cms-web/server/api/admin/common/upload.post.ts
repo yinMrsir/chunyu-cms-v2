@@ -31,14 +31,14 @@ export default defineEventHandler(async (event: H3Event<EventHandlerRequest>) =>
     // 创建目录
     shareServices.createDirectorySync(dir);
     const fileName = `/${shareServices.generateRandomValue(9)}.${fileExtension}`;
+    // 如果是阿里云上传
+    if (fileConfig?.configValue === 'aliyun') {
+      return createAliyunFile(file, dir + fileName);
+    }
     const filePath = join(process.cwd(), dir, fileName);
     // 将文件内容写入到服务器上的指定路径
     await writeFile(filePath, file.data);
     const size = fs.statSync(filePath).size;
-    // 如果是阿里云上传
-    if (fileConfig?.configValue === 'aliyun') {
-      return createAliyunFile(file, dir + fileName, filePath, size);
-    }
     if (mimeType === 'video/mp4') {
       return createApiResponse({
         name: file.filename,
@@ -66,7 +66,7 @@ export default defineEventHandler(async (event: H3Event<EventHandlerRequest>) =>
 /**
  * 阿里云上传文件
  */
-async function createAliyunFile(file: MultiPartData, fileName: string, filePath: string, size: number) {
+async function createAliyunFile(file: MultiPartData, fileName: string) {
   const config = await fileConfigServices.getByValue('aliyun');
   if (!config) {
     throw createError({ statusCode: 400, statusMessage: '未配置阿里云文件上传' });
@@ -79,10 +79,8 @@ async function createAliyunFile(file: MultiPartData, fileName: string, filePath:
   });
   // 默认返回图片域名为 `${bucket}.${region}.aliyuncs.com`, 如何使用自定义域名需要替换
   try {
-    const result = await client.put(fileName, path.normalize(filePath));
+    const result = await client.put(fileName, file.data);
     if (file.type === 'video/mp4') {
-      // 异步删除本地文件
-      fs.unlink(filePath, () => {});
       return createApiResponse({
         name: file.filename,
         url:
@@ -90,13 +88,11 @@ async function createAliyunFile(file: MultiPartData, fileName: string, filePath:
             ? result.url.replace(`${config.bucket}.${config.region}.aliyuncs.com`, config.endpoint)
             : result.url,
         mimeType: file.type,
-        size,
+        size: file.data.length,
         path: ''
       });
     } else {
-      const dimensions = sizeOf.default(filePath);
-      // 异步删除本地文件
-      fs.unlink(filePath, () => {});
+      const dimensions = sizeOf.default(file.data);
       return createApiResponse({
         name: file.filename,
         url:
@@ -106,7 +102,7 @@ async function createAliyunFile(file: MultiPartData, fileName: string, filePath:
         mimeType: file.type,
         width: dimensions.width,
         height: dimensions.height,
-        size
+        size: file.data.length
       });
     }
   } catch (e: any) {
