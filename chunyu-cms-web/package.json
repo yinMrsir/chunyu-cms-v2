@@ -13,7 +13,8 @@
     "lint": "pnpm lint:js && pnpm lint:prettier",
     "lintfix": "prettier --write --list-different . && pnpm lint:js --fix",
     "generate": "drizzle-kit generate",
-    "sql-push": "drizzle-kit push"
+    "sql-push": "drizzle-kit push",
+    "deploy-update": "pm2 stop chunyu-cms-web && docker stop mysql8 && pnpm build && docker start mysql8 && pm2 restart chunyu-cms-web"
   },
   "devDependencies": {
     "@element-plus/nuxt": "^1.1.0",

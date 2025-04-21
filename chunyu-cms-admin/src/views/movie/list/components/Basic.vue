@@ -239,12 +239,12 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="handleSubmit(formRef)"
-          >提 交</el-button
-        >
-        <el-button @click="proxy.$tab.closeOpenPage({ path: '/movie/list' })"
-          >取 消</el-button
-        >
+        <el-button type="primary" @click="handleSubmit(formRef)">
+          提 交
+        </el-button>
+        <el-button @click="proxy.$tab.closeOpenPage({ path: '/movie/list' })">
+          取 消
+        </el-button>
       </el-form-item>
     </el-form>
   </div>
