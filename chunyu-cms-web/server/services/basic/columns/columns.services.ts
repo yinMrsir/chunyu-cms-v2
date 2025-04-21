@@ -35,7 +35,7 @@ export class ColumnsServices {
       },
       where,
       offset,
-      limit
+      limit: Number(limit)
     });
     const totalQuery = db.$count(columnsTable, where);
     const [rows, total] = await Promise.all([rowsQuery, totalQuery]);

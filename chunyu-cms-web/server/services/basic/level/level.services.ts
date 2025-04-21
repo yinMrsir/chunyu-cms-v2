@@ -26,7 +26,7 @@ export class LevelServices {
         country: true
       },
       offset,
-      limit
+      limit: Number(limit)
     });
     const totalQuery = db.$count(levelTable);
     const [rows, total] = await Promise.all([rowsQuery, totalQuery]);

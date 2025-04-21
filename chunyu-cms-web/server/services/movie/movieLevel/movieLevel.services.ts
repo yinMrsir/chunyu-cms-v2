@@ -46,7 +46,7 @@ export class MovieLevelServices {
       },
       where,
       offset,
-      limit
+      limit: Number(limit)
     });
 
     const totalQuery = db.$count(movieLevelTable, where);

@@ -30,7 +30,7 @@ export class CountryServices {
       },
       where,
       offset,
-      limit
+      limit: Number(limit)
     });
     const totalQuery = db.$count(countryTable, where);
     const [rows, total] = await Promise.all([rowsQuery, totalQuery]);

@@ -29,7 +29,7 @@ export class BannerServices {
       },
       where,
       offset,
-      limit
+      limit: Number(limit)
     });
     const totalQuery = db.$count(bannerTable, where);
     const [rows, total] = await Promise.all([rowsQuery, totalQuery]);

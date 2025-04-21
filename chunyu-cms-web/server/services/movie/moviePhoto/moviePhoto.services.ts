@@ -29,7 +29,7 @@ export class MoviePhotoServices {
       },
       where,
       offset,
-      limit
+      limit: Number(limit)
     });
     const totalQuery = db.$count(moviePhotoTable, where);
     const [rows, total] = await Promise.all([rowsQuery, totalQuery]);

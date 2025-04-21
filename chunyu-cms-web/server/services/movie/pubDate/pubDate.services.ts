@@ -32,7 +32,7 @@ export class PubDateServices {
       },
       where,
       offset,
-      limit
+      limit: Number(limit)
     });
     const totalQuery = db.$count(pubDateTable, where);
     const [rows, total] = await Promise.all([rowsQuery, totalQuery]);

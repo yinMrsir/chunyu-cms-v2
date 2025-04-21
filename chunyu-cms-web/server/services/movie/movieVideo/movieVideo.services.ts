@@ -32,7 +32,7 @@ export class MovieVideoServices {
       },
       where,
       offset,
-      limit
+      limit: Number(limit)
     });
     const totalQuery = db.$count(movieVideoTable, where);
     const [rows, total] = await Promise.all([rowsQuery, totalQuery]);

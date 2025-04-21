@@ -72,7 +72,7 @@ export class ProfessionServices {
       },
       where,
       offset,
-      limit
+      limit: Number(limit)
     });
     const totalQuery = db.$count(professionTable, where);
     const [rows, total] = await Promise.all([rowsQuery, totalQuery]);

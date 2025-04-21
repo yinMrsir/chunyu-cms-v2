@@ -33,7 +33,7 @@ export class GenreServices {
       with: withParams,
       where,
       offset,
-      limit
+      limit: Number(limit)
     });
     const totalQuery = db.$count(genreTable, where);
     const [rows, total] = await Promise.all([rowsQuery, totalQuery]);

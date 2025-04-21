@@ -1,4 +1,4 @@
-import path, { join } from 'path';
+import { join } from 'path';
 import { writeFile } from 'fs/promises';
 import * as fs from 'fs';
 import { EventHandlerRequest, H3Event, MultiPartData, readMultipartFormData } from 'h3';

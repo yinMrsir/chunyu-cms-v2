@@ -41,7 +41,7 @@ export class LanguageServices {
       },
       where,
       offset,
-      limit
+      limit: Number(limit)
     });
     const totalQuery = db.$count(languageTable, where);
     const [rows, total] = await Promise.all([rowsQuery, totalQuery]);
