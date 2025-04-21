@@ -71,11 +71,15 @@ async function createAliyunFile(file: MultiPartData, fileName: string) {
   if (!config) {
     throw createError({ statusCode: 400, statusMessage: '未配置阿里云文件上传' });
   }
+
   const client = new OSS({
     region: config.region,
     accessKeyId: config.accessKeyId,
     accessKeySecret: config.accessKeySecret,
-    bucket: config.bucket
+    bucket: config.bucket,
+    secure: true,
+    // @ts-ignore
+    authorizationV4: true
   });
   // 默认返回图片域名为 `${bucket}.${region}.aliyuncs.com`, 如何使用自定义域名需要替换
   try {
