@@ -143,7 +143,7 @@ const columns = ref([
   },
   {
     title: "影视关联数",
-    field: "movieVideoCount",
+    field: "movieCount",
     props: { minWidth: "100px" },
   },
   {

@@ -1,6 +1,7 @@
 import { and, eq, inArray, like, sql } from 'drizzle-orm';
 import { Video, videoTable, NewVideo } from '~/server/db/schema/movie/video';
 import { queryParams } from '~/server/db/query.helper';
+import { movieVideoTable } from '~/server/db/schema/movie/movieVideo';
 
 export class VideoServices {
   /* 新增 */
@@ -25,7 +26,8 @@ export class VideoServices {
 
     const rowsQuery = db.query.videoTable.findMany({
       extras: {
-        id: sql`${videoTable.videoId}`.as('id')
+        id: sql`${videoTable.videoId}`.as('id'),
+        movieCount: db.$count(movieVideoTable, sql`movie_video.video_id = ${videoTable.videoId}`).as('movieCount')
       },
       where,
       offset,
