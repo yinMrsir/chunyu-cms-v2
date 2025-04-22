@@ -1,4 +1,4 @@
-import { eq, and, inArray, like } from 'drizzle-orm';
+import { eq, and, inArray, like, not } from 'drizzle-orm';
 import { MoviePv, moviePvTable, NewMoviePv } from '~/server/db/schema/movie/moviePv';
 import { movieBasicsTable } from '~/server/db/schema/movie/movieBasics';
 import { queryParams } from '~/server/db/query.helper';
@@ -33,7 +33,8 @@ export class MoviePvServices {
         language: string;
         year: number;
       } & queryParams
-    >
+    >,
+    movieBasicsId?: number
   ): Promise<{ rows: MoviePv[]; total: number }> {
     const { pageNum = 1, limit = 10 } = params || {};
     const offset = (pageNum - 1) * limit;
@@ -97,6 +98,9 @@ export class MoviePvServices {
           ).map(item => item.movieBasicsId)
         )
       );
+    }
+    if (movieBasicsId) {
+      whereList.push(not(eq(moviePvTable.movieBasicsId, movieBasicsId)));
     }
     const where = and(...whereList);
     const rowsQuery = db.query.moviePvTable.findMany({

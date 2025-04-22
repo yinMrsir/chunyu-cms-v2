@@ -62,9 +62,71 @@
                   </ul>
                 </div>
               </div>
+              <div>
+                <h2 class="m-y-15px">相关推荐</h2>
+                <div>
+                  <ul class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-2 gap-15px md:gap-20px text-12px">
+                    <li v-for="v in movies.rows" :key="v.movieBasicsId" class="bg-#252632 border-rd-10px">
+                      <nuxt-link :to="`/column/${v.columnValue}/video/${v.movieBasicsId}`">
+                        <img :src="v.poster" />
+                        <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
+                          <h3>{{ v.title }}</h3>
+                          <p class="text-[rgba(255,255,255,0.35)]">
+                            <template v-for="actor in v.casts"> {{ actor.actor.name }}&nbsp; </template>
+                            <span v-if="!v.casts.length">-</span>
+                          </p>
+                        </div>
+                      </nuxt-link>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="讨论" name="comment">讨论</el-tab-pane>
+          <el-tab-pane label="讨论" name="comment">
+            <el-form ref="formRef" :mode="form">
+              <el-form-item>
+                <el-input
+                  v-model="form.comment"
+                  class="comment-input"
+                  type="textarea"
+                  placeholder="恶语结善缘，恶言伤人心"
+                ></el-input>
+                <div class="flex items-center justify-end mb-10px absolute right-8px bottom-[-8px] text-12px">
+                  <el-switch
+                    v-model="form.isDm"
+                    active-value="1"
+                    inactive-value="0"
+                    style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949; margin-right: 5px"
+                    size="small"
+                  >
+                  </el-switch>
+                  发送到弹幕
+                </div>
+              </el-form-item>
+              <el-form-item>
+                <div class="flex justify-end w-full">
+                  <el-button
+                    :disabled="!form.comment.length"
+                    type="success"
+                    class="comment-button"
+                    @click="handleSubmit"
+                  >
+                    提交
+                  </el-button>
+                </div>
+              </el-form-item>
+            </el-form>
+            <div class="flex flex-col gap-y-30px">
+              <div v-for="(item, index) in 2" :key="index" class="grid grid-cols-[60px_1fr]">
+                <img src="/images/toux.png" class="w-50px h-50px border-rd-6px" alt="" />
+                <div class="text-14px flex flex-col justify-between color-gray">
+                  <span>好看，精彩！！！</span>
+                  <p class="text-12px">2022-08-08</p>
+                </div>
+              </div>
+            </div>
+          </el-tab-pane>
         </el-tabs>
       </div>
     </div>
@@ -88,6 +150,7 @@
   const textVisible = useTextVisible();
   const route = useRoute();
 
+  const form = ref({ isDm: '1', comment: '' });
   const tabStatus = ref('video');
   const vIndex = ref(0);
   // 视频支付提示插件
@@ -95,8 +158,11 @@
   // 视频组件
   let player: PresetPlayer | null = null;
 
-  const [{ data: detail }] = await Promise.all([
+  const [{ data: detail }, { data: movies }] = await Promise.all([
     useFetch(`/api/web/movie/${route.params.id}`),
+    useFetch('/api/web/movie/list', {
+      query: { columnValue: route.params.columnValue, limit: 12, notId: route.params.id }
+    }),
     useFetch(`/api/web/movie/pv`, {
       method: 'POST',
       body: {
@@ -105,7 +171,10 @@
     })
   ]);
   if (route.query.mvid) {
-    vIndex.value = detail.value?.movieVideo.findIndex(item => item.movieVideoId === Number(route.query.mvid)) || 0;
+    vIndex.value =
+      detail.value?.movieVideo.findIndex(
+        (item: { movieVideoId: number }) => item.movieVideoId === Number(route.query.mvid)
+      ) || 0;
   }
 
   onMounted(async () => {
@@ -137,15 +206,6 @@
             id: '1',
             start: 3000,
             txt: '好看，精彩！！！'
-            // 弹幕自定义样式
-            // style: {
-            //   color: '#fff',
-            //   fontSize: '12px',
-            //   border: 'solid 1px #fff',
-            //   borderRadius: '50px',
-            //   padding: '5px 10px',
-            //   backgroundColor: 'rgba(255, 255, 255, 0.1)'
-            // }
           },
           {
             duration: 15000,
@@ -162,6 +222,10 @@
     });
     payTipInstance = player.getPlugin('payTip');
   });
+
+  function handleSubmit() {
+    console.log(form.value);
+  }
 </script>
 
 <style lang="scss">
@@ -204,5 +268,47 @@
       height: 4px;
       border-radius: 2px;
     }
+    .comment-input .el-textarea__inner {
+      color: #fff;
+      border: none;
+      background-color: rgba(0, 0, 0, 0.2) !important;
+      outline: none;
+      border-radius: 10px;
+      padding: 10px;
+      -webkit-backdrop-filter: blur(5px);
+      backdrop-filter: blur(5px);
+      font-size: 14px;
+      box-shadow: 0 5px 35px rgba(0, 0, 0, 0.2);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      height: 120px;
+    }
+    .comment-button {
+      background: linear-gradient(179deg, #32ccff, #00e038) !important;
+      border: none;
+      &.is-disabled {
+        opacity: 0.6;
+      }
+    }
+  }
+  /* 定义滚动条的宽度和背景颜色 */
+  .right-video-info::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: transparent;
+  }
+
+  /* 定义滚动条轨道的样式 */
+  .right-video-info::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: transparent;
+  }
+
+  /* 定义滚动条滑块的样式 */
+  .right-video-info::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: rgba(255, 255, 255, 0.2);
   }
 </style>

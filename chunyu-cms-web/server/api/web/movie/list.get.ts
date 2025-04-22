@@ -7,10 +7,10 @@ const moviePvServices = new MoviePvServices();
 export default defineEventHandler(async event => {
   const query = getQuery(event);
   if (!query.orderBy || query.orderBy === 'createTime') {
-    return await movieBasicsServices.pageList(query);
+    return await movieBasicsServices.pageList(query, query?.notId ? Number(query.notId) : undefined);
   }
   if (query.orderBy === 'pv') {
-    const { rows, total } = await moviePvServices.byPvDescPage(query);
+    const { rows, total } = await moviePvServices.byPvDescPage(query, query?.notId ? Number(query.notId) : undefined);
     return {
       rows: rows.map(item => item.movieBasic),
       total

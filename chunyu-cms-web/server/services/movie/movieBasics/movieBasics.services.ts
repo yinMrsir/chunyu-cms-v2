@@ -1,4 +1,4 @@
-import { and, between, desc, eq, inArray, like, sql } from 'drizzle-orm';
+import { and, between, desc, eq, inArray, like, not, sql } from 'drizzle-orm';
 import { MovieBasics, movieBasicsTable, NewMovieBasics } from '~/server/db/schema/movie/movieBasics';
 import { queryParams } from '~/server/db/query.helper';
 import { movieBasicToCountryTable } from '~/server/db/schema/movie/movieBasicToCountry';
@@ -108,7 +108,8 @@ export class MovieBasicsServices {
         'date[0]': string;
         'date[1]': string;
       } & queryParams
-    >
+    >,
+    movieBasicsId?: number
   ) {
     const { pageNum = 1, limit = 10 } = params || {};
     const offset = (pageNum - 1) * limit;
@@ -157,6 +158,9 @@ export class MovieBasicsServices {
           new Date(params['date[1]'] + ' 23:59:59')
         )
       );
+    }
+    if (movieBasicsId) {
+      whereList.push(not(eq(movieBasicsTable.movieBasicsId, movieBasicsId)));
     }
     const where = and(...whereList);
 
