@@ -149,7 +149,7 @@ INSERT INTO `columns` VALUES (1, '电影', '1', 'movie', 1, '0', 'https://cms.yi
 INSERT INTO `columns` VALUES (2, '电视剧', '1', 'tv', 2, '0', 'https://cms.yinchunyu.com/uploads/2025-04-09/aJc1XDnS4.png');
 INSERT INTO `columns` VALUES (3, '动漫', '1', 'cartoon', 3, '0', 'https://cms.yinchunyu.com/uploads/2025-04-09/fdc2Kt7E1.png');
 INSERT INTO `columns` VALUES (4, '综艺', '1', 'variety', 4, '0', 'https://cms.yinchunyu.com/uploads/2025-04-09/XhFCfx1NG.png');
-INSERT INTO `columns` VALUES (5, '源码下载', '2', 'https://gitee.com/chunyu-cms/chunyu-cms-v2', 5, '0', 'https://cms.yinchunyu.com/uploads/2025-04-09/PYgWdFEAA.png');
+INSERT INTO `columns` VALUES (5, '源码下载', '2', 'https://github.com/yinMrsir/chunyu-cms-v2', 5, '0', 'https://cms.yinchunyu.com/uploads/2025-04-09/PYgWdFEAA.png');
 COMMIT;
 
 -- ----------------------------

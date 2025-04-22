@@ -36,14 +36,6 @@
       >
         GitHub
       </el-button>
-      <el-button
-        type="primary"
-        icon="Cloudy"
-        plain
-        @click="goTarget('https://gitee.com/yinMrsir/chunyu-cms-v2')"
-      >
-        码云
-      </el-button>
     </p>
   </div>
 </template>
