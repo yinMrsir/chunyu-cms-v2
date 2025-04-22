@@ -1,12 +1,24 @@
-import { mysqlTable, int } from 'drizzle-orm/mysql-core';
+import { mysqlTable, int, foreignKey } from 'drizzle-orm/mysql-core';
 import { relations } from 'drizzle-orm';
 import { countryTable } from '../basic/country';
 import { movieBasicsTable } from './movieBasics';
 
-export const movieBasicToCountryTable = mysqlTable('movie_basic_to_country', {
-  movieBasicsId: int('movie_basics_id'),
-  countryId: int('country_id')
-});
+// @ts-ignore
+export const movieBasicToCountryTable = mysqlTable(
+  'movie_basic_to_country',
+  {
+    movieBasicToCountryId: int('movie_basic_to_country_id').autoincrement().primaryKey(),
+    movieBasicsId: int('movie_basics_id'),
+    countryId: int('country_id')
+  },
+  table => [
+    foreignKey({
+      name: 'movie_basic_to_country_fk',
+      columns: [table.movieBasicsId],
+      foreignColumns: [movieBasicsTable.movieBasicsId]
+    }).onDelete('cascade')
+  ]
+);
 
 export const movieBasicToCountryRelations = relations(movieBasicToCountryTable, ({ one }) => ({
   movieBasics: one(movieBasicsTable, {

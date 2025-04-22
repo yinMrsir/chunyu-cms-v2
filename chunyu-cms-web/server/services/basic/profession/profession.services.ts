@@ -1,6 +1,7 @@
 import { and, eq, inArray, like, sql } from 'drizzle-orm';
 import { Profession, professionTable, NewProfession } from '~/server/db/schema/basic/profession';
 import { queryParams } from '~/server/db/query.helper';
+import { castTable } from '~/server/db/schema/movie/cast';
 
 export class ProfessionServices {
   /* 新增 */
@@ -94,7 +95,8 @@ export class ProfessionServices {
 
     return db.query.professionTable.findMany({
       extras: {
-        id: sql`${professionTable.professionId}`.as('id')
+        id: sql`${professionTable.professionId}`.as('id'),
+        movieCount: db.$count(castTable, sql`cast.profession_id = ${professionTable.professionId}`).as('movieCount')
       },
       where
     });

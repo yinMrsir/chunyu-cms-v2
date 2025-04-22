@@ -81,6 +81,7 @@
       <el-table-column prop="fullNameEn" min-width="110" label="英文全称" />
       <el-table-column prop="beginDate" min-width="100" label="成立时间" />
       <el-table-column prop="endDate" min-width="100" label="消失时间" />
+      <el-table-column prop="movieCount" min-width="100" label="影片数量" />
       <el-table-column
         align="left"
         prop="brief"

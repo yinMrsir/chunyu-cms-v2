@@ -94,7 +94,7 @@
       </el-table-column>
       <el-table-column prop="name" label="类型名称" />
       <el-table-column prop="nameEn" label="英文名称" />
-      <el-table-column prop="count" label="相关影视数" />
+      <el-table-column prop="movieCount" label="相关影视数" />
       <el-table-column prop="status" label="状态">
         <template #default="scope">
           <dict-tag :options="sys_normal_disable" :value="scope.row.status" />

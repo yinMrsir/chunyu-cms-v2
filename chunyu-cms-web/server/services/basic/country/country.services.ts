@@ -2,6 +2,7 @@ import { and, eq, inArray, like, sql } from 'drizzle-orm';
 import { Country, countryTable, NewCountry } from '~/server/db/schema/basic/country';
 import { queryParams } from '~/server/db/query.helper';
 import { Level, levelTable } from '~/server/db/schema/basic/level';
+import { movieBasicToCountryTable } from '~/server/db/schema/movie/movieBasicToCountry';
 
 export class CountryServices {
   /* 新增 */
@@ -26,7 +27,10 @@ export class CountryServices {
 
     const rowsQuery = db.query.countryTable.findMany({
       extras: {
-        id: sql`${countryTable.countryId}`.as('id')
+        id: sql`${countryTable.countryId}`.as('id'),
+        movieCount: db
+          .$count(movieBasicToCountryTable, sql`movie_basic_to_country.country_id = ${countryTable.countryId}`)
+          .as('movieCount')
       },
       where,
       offset,

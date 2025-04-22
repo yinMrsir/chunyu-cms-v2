@@ -2,6 +2,7 @@ import { and, eq, inArray, like, sql } from 'drizzle-orm';
 import { queryParams } from '~/server/db/query.helper';
 import { Language, languageTable, NewLanguage } from '~/server/db/schema/basic/language';
 import { countryTable } from '~/server/db/schema/basic/country';
+import { movieBasicsTable } from '~/server/db/schema/movie/movieBasics';
 
 export class LanguageServices {
   /* 新增 */
@@ -26,7 +27,10 @@ export class LanguageServices {
 
     const rowsQuery = db.query.languageTable.findMany({
       extras: {
-        id: sql`${languageTable.languageId}`.as('id')
+        id: sql`${languageTable.languageId}`.as('id'),
+        movieCount: db
+          .$count(movieBasicsTable, sql`movie_basics.languages LIKE CONCAT('%', ${languageTable.name}, '%')`)
+          .as('movieCount')
       },
       with: {
         country: {

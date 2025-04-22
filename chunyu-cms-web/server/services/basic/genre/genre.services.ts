@@ -1,6 +1,7 @@
 import { and, eq, inArray, like, sql } from 'drizzle-orm';
 import { Genre, genreTable, NewGenre } from '~/server/db/schema/basic/genre';
 import { queryParams } from '~/server/db/query.helper';
+import { movieBasicToGenreTable } from '~/server/db/schema/movie/movieBasicToGenre';
 
 export class GenreServices {
   /* 新增 */
@@ -28,7 +29,10 @@ export class GenreServices {
 
     const rowsQuery = db.query.genreTable.findMany({
       extras: {
-        id: sql`${genreTable.genreId}`.as('id')
+        id: sql`${genreTable.genreId}`.as('id'),
+        movieCount: db
+          .$count(movieBasicToGenreTable, sql`movie_basic_to_genre.genre_id = ${genreTable.genreId}`)
+          .as('movieCount')
       },
       with: withParams,
       where,
