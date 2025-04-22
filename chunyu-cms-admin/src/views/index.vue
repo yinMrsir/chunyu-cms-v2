@@ -40,7 +40,7 @@
         type="primary"
         icon="Cloudy"
         plain
-        @click="goTarget('https://gitee.com/chunyu-cms/chunyu-cms-v2')"
+        @click="goTarget('https://gitee.com/yinMrsir/chunyu-cms-v2')"
       >
         码云
       </el-button>
@@ -49,8 +49,6 @@
 </template>
 
 <script setup>
-const version = ref("0.0.1");
-
 function goTarget(url) {
   window.open(url, "__blank");
 }
