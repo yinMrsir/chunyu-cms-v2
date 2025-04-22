@@ -12,7 +12,7 @@
           <el-tab-pane label="视频" name="video">
             <div class="right-video-info">
               <div class="flex gap-x-10px text-12px">
-                <el-image style="width: 80px" :src="detail.poster"></el-image>
+                <el-image class="border-rd-10px overflow-hidden w-80px" :src="detail.poster"></el-image>
                 <div>
                   <h1 class="text-20px">{{ detail.title }}</h1>
                   <p class="color-#dedede">
@@ -45,7 +45,10 @@
                         class="flex gap-x-10px"
                       >
                         <div class="relative w-130px">
-                          <el-image class="w-130px" :src="item.cover || item.video.poster"></el-image>
+                          <el-image
+                            class="w-130px border-rd-10px overflow-hidden"
+                            :src="item.cover || item.video.poster"
+                          ></el-image>
                           <div
                             v-if="vIndex === index"
                             class="absolute w-full h-full bg-[rgba(0,0,0,0.4)] z-1 color-white left-0 top-0 flex items-center pl-40px"
@@ -66,7 +69,11 @@
                 <h2 class="m-y-15px">相关推荐</h2>
                 <div>
                   <ul class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-2 gap-15px md:gap-20px text-12px">
-                    <li v-for="v in movies.rows" :key="v.movieBasicsId" class="bg-#252632 border-rd-10px">
+                    <li
+                      v-for="v in movies.rows"
+                      :key="v.movieBasicsId"
+                      class="bg-#252632 border-rd-10px overflow-hidden"
+                    >
                       <nuxt-link :to="`/column/${v.columnValue}/video/${v.movieBasicsId}`">
                         <img :src="v.poster" />
                         <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
