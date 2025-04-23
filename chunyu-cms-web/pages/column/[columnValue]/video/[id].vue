@@ -128,7 +128,7 @@
                   v-model="form.comment"
                   class="comment-input"
                   type="textarea"
-                  placeholder="恶语结善缘，恶言伤人心"
+                  placeholder="善语结善缘，恶言伤人心"
                 ></el-input>
                 <div class="flex items-center justify-end mb-10px absolute right-8px bottom-[-8px] text-12px">
                   <el-switch
