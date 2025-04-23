@@ -2,12 +2,12 @@ body {
   font-family: PingFang SC,DFPKingGothicGB-Regular,sans-serif;
   background: #111214;
   font-size: 16px;
-  color: #ffffff;
+  color: rgba(255,255,255,0.95);
 }
 
 :root {
   --el-font-size-base: 16px !important;
-  --el-color-primary: #fff !important;
+  --el-color-primary: rgba(255,255,255,0.95) !important;
   --el-border-color-light: #fafafa14 !important;
   --el-mask-color: rgba(17,17,20,0.8) !important;
 }

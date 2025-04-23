@@ -103,7 +103,7 @@
                     <li
                       v-for="v in movies.rows"
                       :key="v.movieBasicsId"
-                      class="bg-#252632 border-rd-10px overflow-hidden"
+                      class="bg-#1c1d1f border-rd-10px overflow-hidden"
                     >
                       <nuxt-link :to="`/column/${v.columnValue}/video/${v.movieBasicsId}`">
                         <img :src="v.poster" />

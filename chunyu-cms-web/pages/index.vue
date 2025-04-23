@@ -109,7 +109,7 @@
     ul {
       @apply grid gap-15px grid-cols-3 md:grid-cols-4 lg:grid-cols-6 md:gap-x-20px;
       li {
-        background: #252632;
+        background: #1c1d1f;
         border-radius: 10px;
         overflow: hidden;
         @apply hover:scale-110 transition-all text-14px;
