@@ -127,7 +127,7 @@
         }
         p {
           color: rgba(255, 255, 255, 0.35);
-          @apply text-12px mt-5px;
+          @apply text-12px mt-5px whitespace-nowrap text-ellipsis overflow-hidden;
         }
       }
     }

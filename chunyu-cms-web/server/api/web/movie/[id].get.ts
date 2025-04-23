@@ -27,6 +27,27 @@ export default defineEventHandler(async event => {
       with: {
         video: true
       }
+    },
+    casts: {
+      columns: {
+        castId: true,
+        role: true
+      },
+      with: {
+        actor: {
+          columns: {
+            name: true,
+            avatar: true,
+            actorId: true
+          }
+        },
+        profession: {
+          columns: {
+            name: true,
+            professionId: true
+          }
+        }
+      }
     }
   });
 });

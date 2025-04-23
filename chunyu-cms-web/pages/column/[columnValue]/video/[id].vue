@@ -22,7 +22,9 @@
                         · {{ country.country.name }}
                       </span>
                     </template>
-                    <span v-if="detail.languages"> · {{ detail.languages }}</span>
+                    <span v-if="detail.languages">
+                      <span v-for="(l, index) in detail.languages.split(',')" :key="index"> · {{ l }} </span>
+                    </span>
                   </p>
                   <p v-if="detail?.tags" class="color-#999 flex gap-5px pt-5px">
                     <el-tag v-for="(tag, index) in detail?.tags.split(',')" :key="index" type="info" size="small">
@@ -65,7 +67,36 @@
                   </ul>
                 </div>
               </div>
-              <div>
+              <div v-if="detail.casts.length">
+                <h2 class="m-y-15px">相关演员</h2>
+                <swiper
+                  :slides-per-view="4"
+                  :breakpoints="{
+                    320: {
+                      slidesPerView: 4
+                    },
+                    768: {
+                      slidesPerView: 5
+                    },
+                    1024: {
+                      slidesPerView: 3
+                    }
+                  }"
+                  :space-between="10"
+                >
+                  <swiper-slide v-for="cast in detail.casts" :key="cast.castId">
+                    <div class="text-12px text-center">
+                      <img class="w-full h-110px object-contain mb-6px" :src="cast.actor.avatar" alt="" />
+                      <p>{{ cast.actor.name }}</p>
+                      <p v-if="cast.role" class="text-[rgba(255,255,255,0.35)]">饰 {{ cast.role }}</p>
+                      <p v-else class="text-[rgba(255,255,255,0.35)]">
+                        {{ cast.profession.name }}
+                      </p>
+                    </div>
+                  </swiper-slide>
+                </swiper>
+              </div>
+              <div v-if="movies.rows.length">
                 <h2 class="m-y-15px">相关推荐</h2>
                 <div>
                   <ul class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-2 gap-15px md:gap-20px text-12px">
@@ -78,7 +109,7 @@
                         <img :src="v.poster" />
                         <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
                           <h3>{{ v.title }}</h3>
-                          <p class="text-[rgba(255,255,255,0.35)]">
+                          <p class="text-[rgba(255,255,255,0.35)] whitespace-nowrap text-ellipsis overflow-hidden">
                             <template v-for="actor in v.casts"> {{ actor.actor.name }}&nbsp; </template>
                             <span v-if="!v.casts.length">-</span>
                           </p>
@@ -146,6 +177,8 @@
   import PresetPlayer from 'xgplayer';
   import '~/plugins/xgplayer/payTip/index.css';
   import dayjs from 'dayjs';
+  import { Swiper, SwiperSlide } from 'swiper/vue';
+  import 'swiper/css';
   import PayTip from '~/plugins/xgplayer/payTip';
   import { useSidebarOpen, useTextVisible } from '~/composables/states';
 

@@ -109,6 +109,7 @@
             <template #default="scope">
               <el-button
                 v-for="act in item.actions"
+                :key="act.type"
                 link
                 type="primary"
                 @click="
@@ -147,7 +148,14 @@
                       ? scope.row[item.field]
                       : baseUrl + (scope.row[item.field] || '/default.jpg')
                 "
-                :style="item.style || { width: '50px', maxHeight: '100px' }"
+                :style="
+                  item.style || {
+                    width: '50px',
+                    maxHeight: '100px',
+                    display: 'flex',
+                    itemAlign: 'center',
+                  }
+                "
                 fit="cover"
               />
             </template>
