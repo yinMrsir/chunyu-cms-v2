@@ -272,13 +272,13 @@
   #mse {
     @apply w-full !h-300px bg-#000;
 
-    @media (min-width: 768px) {
+    @media (min-width: 1024px) {
       height: calc(100vh - 65px) !important;
     }
   }
   .right-video-info {
     height: auto;
-    @media (min-width: 768px) {
+    @media (min-width: 1024px) {
       height: calc(100vh - 140px) !important;
       overflow-x: hidden;
       overflow-y: auto;
