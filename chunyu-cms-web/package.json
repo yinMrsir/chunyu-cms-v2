@@ -39,7 +39,6 @@
     "prettier": "^3.3.3"
   },
   "dependencies": {
-    "@baiducloud/qianfan": "^0.2.0",
     "@types/showdown": "^2.0.6",
     "ali-oss": "^6.22.0",
     "cheerio": "^1.0.0",
