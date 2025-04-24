@@ -88,6 +88,9 @@ devDependencies:
   '@element-plus/nuxt':
     specifier: ^1.1.0
     version: 1.1.0(@element-plus/icons-vue@2.3.1)(element-plus@2.8.7)
+  '@iconify-json/el':
+    specifier: ^1.2.1
+    version: 1.2.1
   '@iconify-json/flat-color-icons':
     specifier: ^1.2.1
     version: 1.2.1
@@ -1663,6 +1666,12 @@ packages:
   /@humanwhocodes/object-schema@2.0.3:
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
     deprecated: Use @eslint/object-schema instead
+    dev: true
+
+  /@iconify-json/el@1.2.1:
+    resolution: {integrity: sha512-yRE1zKacqO6tnfqFDvkz+3ABR1RFkBPi6jtkcwo5jSswa0xOxKkye0fDDtyvu/ViiTlWxgl7n2fFOhS5p8/txQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
     dev: true
 
   /@iconify-json/flat-color-icons@1.2.1:

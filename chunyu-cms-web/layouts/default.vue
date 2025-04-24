@@ -28,6 +28,13 @@
             </nuxt-link>
           </el-tooltip>
         </li>
+        <li class="border-solid border-t-1px border-#ffffff40 m-x-10px"></li>
+        <li>
+          <nuxt-link to="/shorts">
+            <i class="i-flat-color-icons-clapperboard w-24px h-24px"></i>
+            <span v-if="textVisible">短视频</span>
+          </nuxt-link>
+        </li>
       </ul>
       <div v-if="textVisible" class="text-10px color-[rgba(255,255,255,0.6)] p-x-20px absolute bottom-10">
         本网站为淳渔CMS演示站，提供的电视剧和电影资源均系收集于各大视频网站
@@ -80,12 +87,14 @@
       </div>
       <div class="h-58px md:hidden"></div>
       <slot />
-      <div class="text-10px color-[rgba(255,255,255,0.6)] p-x-20px mb-15px lg-md:hidden">
+      <div
+        class="text-10px color-[rgba(255,255,255,0.6)] m-x-15px mt-20px mb-15px lg-md:hidden border-solid border-#ffffff40 border-t-1px pt-20px"
+      >
         本网站为淳渔CMS演示站，提供的电视剧和电影资源均系收集于各大视频网站
         若本站收录的节目无意侵犯了贵司版权,请给542968439@qq.com留言,我们会及时逐步删除和规避程序自动搜索采集到的不提供分享的版权影视。
         本站仅供测试和学习交流。请大家支持正版。
 
-        <p class="mt-15px">Copyright 2025 淳渔影视网 Inc. All Rights Reserved.</p>
+        <p class="mt-15px text-center block">Copyright 2025 淳渔影视网 Inc. All Rights Reserved.</p>
       </div>
     </div>
 
@@ -114,6 +123,13 @@
           >
             <img :src="item.icon" alt="" class="h-24px" />
             <span>{{ item.name }}</span>
+          </nuxt-link>
+        </li>
+        <li class="border-solid border-t-1px border-#ffffff40 m-x-10px"></li>
+        <li>
+          <nuxt-link to="/shorts">
+            <i class="i-flat-color-icons-clapperboard w-24px h-24px"></i>
+            <span>短视频</span>
           </nuxt-link>
         </li>
       </ul>

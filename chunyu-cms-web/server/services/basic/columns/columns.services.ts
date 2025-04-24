@@ -1,4 +1,4 @@
-import { and, eq, inArray, like, sql } from 'drizzle-orm';
+import { and, asc, eq, inArray, like, sql } from 'drizzle-orm';
 import { Columns, columnsTable, NewColumns } from '~/server/db/schema/basic/columns';
 import { queryParams } from '~/server/db/query.helper';
 
@@ -35,7 +35,8 @@ export class ColumnsServices {
       },
       where,
       offset,
-      limit: Number(limit)
+      limit: Number(limit),
+      orderBy: [asc(columnsTable.order)]
     });
     const totalQuery = db.$count(columnsTable, where);
     const [rows, total] = await Promise.all([rowsQuery, totalQuery]);
@@ -63,7 +64,8 @@ export class ColumnsServices {
         id: sql`${columnsTable.columnId}`.as('id')
       },
       with: withParams,
-      where
+      where,
+      orderBy: [asc(columnsTable.order)]
     });
   }
 

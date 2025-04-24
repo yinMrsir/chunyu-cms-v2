@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-0 md:pt-45px pb-15px">
+  <div class="pt-0 md:pt-45px">
     <div class="banner">
       <div class="banner__left"></div>
       <div class="banner__right"></div>

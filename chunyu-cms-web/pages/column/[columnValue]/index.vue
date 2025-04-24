@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-0 md:pt-45px pb-15px">
+  <div class="pt-0 md:pt-45px">
     <Head>
       <Title>{{ $titleRender(`最新${columnInfo?.name}在线观看`) }}</Title>
       <Meta name="description" :content="`最新最全的${columnInfo?.name}在线观看尽在淳渔影视。`" />

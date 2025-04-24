@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-0 md:pt-65px show-search">
+  <div class="pt-0 md:pt-65px show-search mb-15px">
     <div class="p-x-10px">
       <el-tabs v-model="orderBy">
         <el-tab-pane label="搜索结果" name="createTime"></el-tab-pane>

@@ -7,17 +7,18 @@
             v-for="status in statusList"
             :key="status.value"
             :label="status.value"
-            >{{ status.label }}</el-radio
           >
+            {{ status.label }}
+          </el-radio>
         </el-radio-group>
       </el-form-item>
 
       <!-- 上映相关 -->
       <el-form-item label="上映状态：">
         <el-radio-group v-model="movie.releaseStatus">
-          <el-radio :label="0">无</el-radio>
-          <el-radio :label="1">即将上映</el-radio>
-          <el-radio :label="2">正在热映</el-radio>
+          <el-radio label="0">无</el-radio>
+          <el-radio label="1">即将上映</el-radio>
+          <el-radio label="2">正在热映</el-radio>
         </el-radio-group>
       </el-form-item>
 
@@ -293,27 +294,27 @@ const genres = ref([]);
 const statusList = ref([
   {
     label: "正常",
-    value: 0,
+    value: "0",
   },
   {
     label: "锁定",
-    value: 1,
+    value: "1",
   },
   {
     label: "处理中",
-    value: 2,
+    value: "2",
   },
   {
     label: "待完善",
-    value: 3,
+    value: "3",
   },
   {
     label: "待审核",
-    value: 4,
+    value: "4",
   },
   {
     label: "隐藏",
-    value: 5,
+    value: "5",
   },
 ]);
 const versions = ref(["2D", "3D", "iMax", "iMax3D"]);

@@ -134,7 +134,7 @@
         <template #default="scope">
           <el-image
             :src="scope.row.poster"
-            style="width: 50px; height: 100px"
+            style="width: 50px; height: 70px"
             fit="contain"
           />
         </template>
