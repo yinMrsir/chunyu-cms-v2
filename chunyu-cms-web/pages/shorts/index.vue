@@ -86,6 +86,7 @@
   shorts.value = shorts.value.concat(
     data.value.map(item => {
       return {
+        poster: item.poster,
         src: item.url,
         title: item.title,
         likes: 100,
