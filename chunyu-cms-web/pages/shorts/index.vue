@@ -32,7 +32,15 @@
         >
           <i class="i-el-caret-right color-white w-40px h-40px block"></i>
         </div>
-        <video class="short-video" :src="short.src" autoplay loop :muted="isMuted" controlslist="nodownload"></video>
+        <video
+          class="short-video"
+          :poster="short.poster"
+          :src="short.src"
+          autoplay
+          loop
+          :muted="isMuted"
+          controlslist="nodownload"
+        ></video>
         <div class="video-info">
           <h3>{{ short.title }}</h3>
         </div>
