@@ -17,6 +17,13 @@
     >
       <ElIconBack class="w-24px" />
     </div>
+    <div
+      class="absolute top-15px right-15px z-11 flex justify-center items-center color-white cursor-pointer"
+      @click.stop="handleCancelMuted"
+      @touchstart.stop="handleCancelMuted"
+    >
+      取消静音
+    </div>
     <div class="shorts-wrapper">
       <div v-for="(short, index) in shorts" :key="index" class="h-100vh relative">
         <div
@@ -25,7 +32,7 @@
         >
           <i class="i-el-caret-right color-white w-40px h-40px block"></i>
         </div>
-        <video class="short-video" :src="short.src" autoplay muted loop></video>
+        <video class="short-video" :src="short.src" autoplay loop :muted="isMuted" controlslist="nodownload"></video>
         <div class="video-info">
           <h3>{{ short.title }}</h3>
         </div>
@@ -66,6 +73,7 @@
   const threshold = 100;
   const isShowPlayButton = ref(false);
   const shorts = ref([]);
+  const isMuted = ref(true);
   const { data } = await useFetch('/api/web/movie/video/list');
   shorts.value = shorts.value.concat(
     data.value.map(item => {
@@ -184,6 +192,16 @@
     }
     scrollToShort(currentIndex.value);
   };
+
+  function handleCancelMuted(e) {
+    e.target.remove();
+    setTimeout(() => {
+      isMuted.value = false;
+      const currentVideo = document.querySelectorAll('.short-video')[currentIndex.value];
+      currentVideo.play();
+      isShowPlayButton.value = false;
+    }, 1000);
+  }
 </script>
 
 <style lang="scss" scoped>
