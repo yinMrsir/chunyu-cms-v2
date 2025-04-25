@@ -30,10 +30,12 @@
         </li>
         <li class="border-solid border-t-1px border-#ffffff40 m-x-10px"></li>
         <li>
-          <nuxt-link to="/shorts">
-            <i class="i-flat-color-icons-clapperboard w-24px h-24px"></i>
-            <span v-if="textVisible">短视频</span>
-          </nuxt-link>
+          <el-tooltip :disabled="textVisible" effect="dark" content="短视频" placement="right">
+            <nuxt-link to="/shorts">
+              <i class="i-flat-color-icons-clapperboard w-24px h-24px"></i>
+              <span v-if="textVisible">短视频</span>
+            </nuxt-link>
+          </el-tooltip>
         </li>
       </ul>
       <div v-if="textVisible" class="text-10px color-[rgba(255,255,255,0.6)] p-x-20px absolute bottom-10">
@@ -70,6 +72,7 @@
         </div>
         <div
           class="w-88px h-34px bg-#ffffff40 border-rd-8px flex justify-center items-center gap-5px cursor-pointer select-none"
+          @click="loginVisible = true"
         >
           <ElIconUserFilled class="w-18px"></ElIconUserFilled>
           登录
@@ -149,22 +152,26 @@
 
       <div
         class="absolute bottom-20px right-20px w-88px h-34px bg-#ffffff40 border-rd-8px flex justify-center items-center gap-5px cursor-pointer select-none"
+        @click="handleShowLogin"
       >
         <ElIconUserFilled class="w-18px"></ElIconUserFilled>
         登录
       </div>
     </el-drawer>
+
+    <Login />
   </div>
 </template>
 
 <script setup lang="ts">
-  import { useSidebarOpen, useTextVisible } from '~/composables/states';
+  import { useLoginVisible, useSidebarOpen, useTextVisible } from '~/composables/states';
 
   const route = useRoute();
   const router = useRouter();
 
   const sidebarOpen = useSidebarOpen();
   const textVisible = useTextVisible();
+  const loginVisible = useLoginVisible();
   const sidebarMobileOpen = ref(false);
   const keyword = ref('');
 
@@ -186,6 +193,11 @@
     } else {
       textVisible.value = false;
     }
+  }
+
+  function handleShowLogin() {
+    sidebarMobileOpen.value = false;
+    loginVisible.value = true;
   }
 </script>
 

@@ -2,7 +2,14 @@ import { useAuth } from '../composables/useAuth';
 
 const runtimeConfig = useRuntimeConfig();
 /* 不需要验证Auth的路由 */
-const noVerificationRouters = ['/api/admin/login', '/api/admin/logout', '/api/admin/captchaImage', '/api/web/movie/pv'];
+const noVerificationRouters = [
+  '/api/admin/login',
+  '/api/admin/logout',
+  '/api/admin/captchaImage',
+  '/api/web/movie/pv',
+  '/api/web/sendCode',
+  '/api/web/login'
+];
 
 export default defineEventHandler(async event => {
   if (!noVerificationRouters.includes(event.path) && event.path.includes('/api/admin')) {

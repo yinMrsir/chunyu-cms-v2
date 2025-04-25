@@ -59,6 +59,9 @@ dependencies:
   node-xlsx:
     specifier: ^0.24.0
     version: 0.24.0
+  nodemailer:
+    specifier: ^6.10.1
+    version: 6.10.1
   sass:
     specifier: ^1.80.6
     version: 1.80.6
@@ -115,6 +118,9 @@ devDependencies:
   '@types/node-schedule':
     specifier: ^2.1.7
     version: 2.1.7
+  '@types/nodemailer':
+    specifier: ^6.4.17
+    version: 6.4.17
   '@typescript-eslint/parser':
     specifier: ^8.13.0
     version: 8.13.0(eslint@8.57.1)(typescript@5.6.3)
@@ -2635,6 +2641,12 @@ packages:
     resolution: {integrity: sha512-955mDqvO2vFf/oL7V3WiUtiz+BugyX8uVbaT2H8oj3+8dRyH2FLiNdowe7eNqRM7IOIZvzDH76EoAT+gwm6aIQ==}
     dependencies:
       undici-types: 5.26.5
+    dev: true
+
+  /@types/nodemailer@6.4.17:
+    resolution: {integrity: sha512-I9CCaIp6DTldEg7vyUTZi8+9Vo0hi1/T8gv3C89yk1rSAAzoKQ8H8ki/jBYJSFoH/BisgLP8tkZMlQ91CIquww==}
+    dependencies:
+      '@types/node': 18.19.64
     dev: true
 
   /@types/normalize-package-data@2.4.4:
@@ -7804,6 +7816,11 @@ packages:
     hasBin: true
     dependencies:
       xlsx: '@cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz'
+    dev: false
+
+  /nodemailer@6.10.1:
+    resolution: {integrity: sha512-Z+iLaBGVaSjbIzQ4pX6XV41HrooLsQ10ZWPUehGmuantvzWoDVBnmsdUcOIDM1t+yPor5pDhVlDESgOMEGxhHA==}
+    engines: {node: '>=6.0.0'}
     dev: false
 
   /nopt@5.0.0:
