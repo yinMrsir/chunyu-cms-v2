@@ -31,6 +31,8 @@ import * as movieVideoSchema from './movie/movieVideo';
 import * as moviePhotoSchema from './movie/moviePhoto';
 import * as movieBasicToGenreSchema from './movie/movieBasicToGenre';
 import * as moviePvSchema from './movie/moviePv';
+// 用户端
+import * as memberUserSchema from './member/user';
 
 export default {
   ...userSchema,
@@ -64,5 +66,6 @@ export default {
   ...movieVideoSchema,
   ...moviePhotoSchema,
   ...movieBasicToGenreSchema,
-  ...moviePvSchema
+  ...moviePvSchema,
+  ...memberUserSchema
 };

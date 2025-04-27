@@ -17,12 +17,14 @@
             <el-form-item prop="code" class="!mb-6px relative">
               <el-input v-model="verificationLoginForm.code" placeholder="请输入验证码"></el-input>
               <div class="absolute right-8px top-[2px] z-10">
-                <el-button link size="small" @click="handleSendCode">
+                <el-button link size="small" :loading="sendCodeLoading" @click="handleSendCode">
                   {{ codeTime === 0 ? '获取验证码' : codeTime + 's后可重发' }}
                 </el-button>
               </div>
             </el-form-item>
-            <el-button class="login-button" type="primary" @click="handleLogin">登录/注册</el-button>
+            <el-button class="login-button" type="primary" :loading="submitLoading" @click="handleLogin">
+              登录/注册
+            </el-button>
           </el-form>
         </el-tab-pane>
         <el-tab-pane label="密码登录" name="2">
@@ -48,8 +50,9 @@
                 <ElIconHide v-else class="inline-block w-20px h-20px" />
               </span>
             </el-form-item>
-            <p class="text-right">忘记密码？</p>
-            <el-button class="login-button" type="primary" @click="handleLogin">登录</el-button>
+            <el-button class="login-button" type="primary" :loading="submitLoading" @click="handleLogin">
+              登录
+            </el-button>
           </el-form>
         </el-tab-pane>
       </el-tabs>
@@ -74,7 +77,10 @@
 <script setup>
   import { useLoginVisible } from '~/composables/states';
   import { request } from '~/utils/request';
+  import { WEB_TOKEN, WEB_USER_INFO } from '~/shared/cookiesName';
 
+  const token = useCookie(WEB_TOKEN);
+  const userInfo = useCookie(WEB_USER_INFO);
   const route = useRoute();
   const loginVisible = useLoginVisible();
   const checkboxRef = useTemplateRef('checkboxRef');
@@ -115,6 +121,8 @@
   const isShowPassword = ref(false);
   const codeTime = ref(0);
   let timer = null;
+  const sendCodeLoading = ref(false);
+  const submitLoading = ref(false);
 
   watch(
     () => route.path,
@@ -137,21 +145,27 @@
     if (loginType.value === '1') {
       await verificationLoginFormRef.value.validateField('email');
     }
-    await request({
-      url: '/api/web/sendCode',
-      method: 'POST',
-      body: {
-        email: verificationLoginForm.value.email
-      }
-    });
-    ElMessage.success('验证码发送成功');
-    codeTime.value = 60;
-    timer = setInterval(() => {
-      codeTime.value--;
-      if (codeTime.value === 0) {
-        clearInterval(timer);
-      }
-    }, 1000);
+    if (sendCodeLoading.value) return;
+    sendCodeLoading.value = true;
+    try {
+      await request({
+        url: '/api/web/sendCode',
+        method: 'POST',
+        body: {
+          email: verificationLoginForm.value.email
+        }
+      });
+      ElMessage.success('验证码发送成功');
+      codeTime.value = 60;
+      timer = setInterval(() => {
+        codeTime.value--;
+        if (codeTime.value === 0) {
+          clearInterval(timer);
+        }
+      }, 1000);
+    } finally {
+      sendCodeLoading.value = false;
+    }
   }
 
   // 登录
@@ -163,26 +177,37 @@
       }, 1000);
       return;
     }
-    if (loginType.value === '1') {
-      await verificationLoginFormRef.value.validate();
-      await request({
-        url: '/api/web/login',
-        method: 'POST',
-        body: {
-          ...verificationLoginForm.value,
-          loginType: loginType.value
-        }
-      });
-    } else {
-      await loginFormRef.value.validate();
-      await request({
-        url: '/api/web/login',
-        method: 'POST',
-        body: {
-          ...loginForm.value,
-          loginType: loginType.value
-        }
-      });
+    if (submitLoading.value) return;
+    submitLoading.value = true;
+    let data = null;
+    try {
+      if (loginType.value === '1') {
+        await verificationLoginFormRef.value.validate();
+        data = await request({
+          url: '/api/web/login',
+          method: 'POST',
+          body: {
+            ...verificationLoginForm.value,
+            loginType: loginType.value
+          }
+        });
+      } else {
+        await loginFormRef.value.validate();
+        data = await request({
+          url: '/api/web/login',
+          method: 'POST',
+          body: {
+            ...loginForm.value,
+            loginType: loginType.value
+          }
+        });
+      }
+      token.value = data.token;
+      userInfo.value = data.userInfo;
+      ElMessage.success('登录成功');
+      loginVisible.value = false;
+    } finally {
+      submitLoading.value = false;
     }
   }
 </script>
@@ -196,6 +221,9 @@
       color: #ffffff7f;
       font-weight: normal;
       font-size: 14px;
+      &.is-active {
+        color: #fff;
+      }
     }
     .el-button.login-button {
       background-image: linear-gradient(90deg, #00a8e6, #00b84d 50%, #00b84d);
@@ -205,10 +233,13 @@
       height: 40px;
       justify-content: center;
       line-height: 38px;
-      margin-top: 26px;
+      margin-top: 36px;
       position: relative;
       width: 100%;
       border: none;
+    }
+    .is-loading:before {
+      background: transparent !important;
     }
     .el-input__wrapper {
       background: #0000;
@@ -241,6 +272,9 @@
         top: 2px;
         left: 5px;
       }
+    }
+    input {
+      color: #ffffff;
     }
     input::placeholder {
       color: #383838;

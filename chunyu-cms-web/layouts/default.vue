@@ -70,7 +70,19 @@
             </nuxt-link>
           </div>
         </div>
+        <div v-if="userInfo" class="cursor-pointer">
+          <el-dropdown @command="handleCommand">
+            <el-avatar :size="32" :src="userInfo.avatar" />
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item command="userCenter">{{ userInfo.nickname }}的个人中心</el-dropdown-item>
+                <el-dropdown-item divided command="logout">退出登录</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </div>
         <div
+          v-else
           class="w-88px h-34px bg-#ffffff40 border-rd-8px flex justify-center items-center gap-5px cursor-pointer select-none"
           @click="loginVisible = true"
         >
@@ -150,7 +162,16 @@
         </nuxt-link>
       </div>
 
+      <nuxt-link
+        v-if="userInfo"
+        to="/user/center"
+        class="cursor-pointer absolute bottom-20px right-20px flex items-center gap-x-8px text-12px"
+      >
+        <el-avatar :size="32" :src="userInfo.avatar" />
+        {{ userInfo.nickname }}
+      </nuxt-link>
       <div
+        v-else
         class="absolute bottom-20px right-20px w-88px h-34px bg-#ffffff40 border-rd-8px flex justify-center items-center gap-5px cursor-pointer select-none"
         @click="handleShowLogin"
       >
@@ -165,9 +186,12 @@
 
 <script setup lang="ts">
   import { useLoginVisible, useSidebarOpen, useTextVisible } from '~/composables/states';
+  import { WEB_TOKEN, WEB_USER_INFO } from '~/shared/cookiesName';
 
   const route = useRoute();
   const router = useRouter();
+  const userInfo = useCookie(WEB_USER_INFO);
+  const token = useCookie(WEB_TOKEN);
 
   const sidebarOpen = useSidebarOpen();
   const textVisible = useTextVisible();
@@ -199,6 +223,20 @@
     sidebarMobileOpen.value = false;
     loginVisible.value = true;
   }
+
+  const handleCommand = (command: string | number | object) => {
+    switch (command) {
+      case 'userCenter':
+        router.push('/user/center');
+        break;
+      case 'logout':
+        userInfo.value = null;
+        token.value = null;
+        break;
+      default:
+        break;
+    }
+  };
 </script>
 
 <style lang="scss">
