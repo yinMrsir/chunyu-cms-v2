@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 22/04/2025 17:16:01
+ Date: 27/04/2025 22:23:47
 */
 
 SET NAMES utf8mb4;
@@ -36,9 +36,9 @@ CREATE TABLE `actor` (
   `brief` text,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   PRIMARY KEY (`actor_id`),
   UNIQUE KEY `actor_id` (`actor_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -73,9 +73,9 @@ CREATE TABLE `banner` (
   `url_type` char(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   `video_url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`banner_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -84,8 +84,8 @@ CREATE TABLE `banner` (
 -- Records of banner
 -- ----------------------------
 BEGIN;
-INSERT INTO `banner` VALUES (2, 'https://cms.yinchunyu.com//uploads/2025-04-10/IVRrcMX9x.jpeg', '灌篮高手', '/column/movie/video/48', '0', '', '', '2025-04-07 14:14:38', '', '2025-04-16 10:35:18', 'https://cms.yinchunyu.com/uploads/2025-04-03/vyDvWDGSc.mp4');
-INSERT INTO `banner` VALUES (3, 'https://cms.yinchunyu.com//uploads/2025-04-10/yt6JjKEmc.jpeg', '测的负担', '/column/movie/video/47', '0', '', '', '2025-04-09 07:49:12', '', '2025-04-16 10:46:19', 'https://cms.yinchunyu.com/uploads/2025-04-03/93iXAgPes.mp4');
+INSERT INTO `banner` VALUES (2, 'http://localhost:3000/uploads/2025-04-27/0vRpnmil9.jpeg', '灌篮高手', '/column/movie/video/48', '0', '', '', '2025-04-07 14:14:38', '', '2025-04-27 14:15:19', 'https://cms.yinchunyu.com/uploads/2025-04-03/vyDvWDGSc.mp4');
+INSERT INTO `banner` VALUES (3, 'http://localhost:3000/uploads/2025-04-27/fFLDMaZ5n.jpeg', '测的负担', '/column/movie/video/47', '0', '', '', '2025-04-09 07:49:12', '', '2025-04-27 14:15:25', 'https://cms.yinchunyu.com/uploads/2025-04-03/93iXAgPes.mp4');
 COMMIT;
 
 -- ----------------------------
@@ -100,11 +100,11 @@ CREATE TABLE `cast` (
   `role` varchar(255) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   PRIMARY KEY (`cast_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of cast
@@ -124,6 +124,11 @@ INSERT INTO `cast` VALUES (14, 47, 11, 21, NULL, '', '', '2025-04-11 15:17:53', 
 INSERT INTO `cast` VALUES (15, 40, 10, 21, NULL, '', '', '2025-04-11 15:17:53', '', '2025-04-11 15:17:53');
 INSERT INTO `cast` VALUES (16, 35, 10, 21, NULL, '', '', '2025-04-11 15:17:53', '', '2025-04-11 15:17:53');
 INSERT INTO `cast` VALUES (17, 47, 12, 21, NULL, '', '', '2025-04-11 15:17:53', '', '2025-04-11 15:17:53');
+INSERT INTO `cast` VALUES (18, 48, 2, 21, '王先生', '', '', '2025-04-22 06:14:48', '', '2025-04-23 02:05:54');
+INSERT INTO `cast` VALUES (19, 48, 1, 2, NULL, '', '', '2025-04-22 06:14:48', '', '2025-04-22 06:14:48');
+INSERT INTO `cast` VALUES (20, 48, 6, 21, NULL, '', '', '2025-04-22 06:14:48', '', '2025-04-22 06:14:48');
+INSERT INTO `cast` VALUES (21, 48, 7, 24, NULL, '', '', '2025-04-22 06:14:48', '', '2025-04-22 06:14:48');
+INSERT INTO `cast` VALUES (22, 48, 12, 21, NULL, '', '', '2025-04-22 06:14:48', '', '2025-04-22 06:14:48');
 COMMIT;
 
 -- ----------------------------
@@ -139,7 +144,7 @@ CREATE TABLE `columns` (
   `status` char(1) DEFAULT '0',
   `icon` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`column_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of columns
@@ -172,9 +177,9 @@ CREATE TABLE `country` (
   `brief` text DEFAULT (_utf8mb4''),
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   `end_date` date DEFAULT NULL,
   PRIMARY KEY (`country_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -207,9 +212,9 @@ CREATE TABLE `dept` (
   `mpath` varchar(255) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   PRIMARY KEY (`dept_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -236,9 +241,9 @@ CREATE TABLE `dict_data` (
   `dict_type_id` int DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   PRIMARY KEY (`dict_data_id`),
   KEY `dict_data_dict_type_id_dict_type_dict_id_fk` (`dict_type_id`),
   CONSTRAINT `dict_data_dict_type_id_dict_type_dict_id_fk` FOREIGN KEY (`dict_type_id`) REFERENCES `dict_type` (`dict_id`)
@@ -305,9 +310,9 @@ CREATE TABLE `dict_type` (
   `status` char(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   PRIMARY KEY (`dict_id`),
   UNIQUE KEY `dict_type_dict_type_unique` (`dict_type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -350,9 +355,9 @@ CREATE TABLE `file_config` (
   `timeout` int NOT NULL DEFAULT '300000',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   PRIMARY KEY (`file_config_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -375,9 +380,9 @@ CREATE TABLE `genre` (
   `status` char(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   PRIMARY KEY (`genre_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -427,9 +432,9 @@ CREATE TABLE `job` (
   `status` varchar(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   PRIMARY KEY (`job_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -473,9 +478,9 @@ CREATE TABLE `language` (
   `brief` varchar(500) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   PRIMARY KEY (`language_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -503,9 +508,9 @@ CREATE TABLE `level` (
   `description` varchar(255) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   PRIMARY KEY (`level_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -544,7 +549,7 @@ CREATE TABLE `login_info` (
   `msg` text NOT NULL DEFAULT (_utf8mb4''),
   `login_time` datetime NOT NULL,
   PRIMARY KEY (`info_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of login_info
@@ -583,6 +588,38 @@ INSERT INTO `login_info` VALUES (82, 'admin', '127.0.0.1', '内网IP', 'Chrome13
 INSERT INTO `login_info` VALUES (83, 'admin', '127.0.0.1', '内网IP', 'Chrome135', 'macOS10.15.7', '1', '验证码错误', '2025-04-21 08:11:34');
 INSERT INTO `login_info` VALUES (84, 'admin', '127.0.0.1', '内网IP', 'Chrome135', 'macOS10.15.7', '0', '登录成功', '2025-04-21 08:11:37');
 INSERT INTO `login_info` VALUES (85, 'admin', '127.0.0.1', '内网IP', 'Chrome135', 'macOS10.15.7', '0', '登录成功', '2025-04-22 03:20:07');
+INSERT INTO `login_info` VALUES (86, 'admin', '127.0.0.1', '内网IP', 'Chrome135', 'macOS10.15.7', '0', '登录成功', '2025-04-24 01:42:21');
+INSERT INTO `login_info` VALUES (87, 'admin', '127.0.0.1', '内网IP', 'Chrome135', 'macOS10.15.7', '0', '登录成功', '2025-04-27 14:15:02');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for member_user
+-- ----------------------------
+DROP TABLE IF EXISTS `member_user`;
+CREATE TABLE `member_user` (
+  `member_user_id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) DEFAULT '',
+  `nickname` varchar(255) NOT NULL,
+  `phonenumber` varchar(11) DEFAULT NULL,
+  `avatar` varchar(100) NOT NULL,
+  `salt` varchar(100) DEFAULT '',
+  `del_flag` char(1) NOT NULL DEFAULT '0',
+  `login_ip` varchar(128) DEFAULT '',
+  `login_date` date DEFAULT NULL,
+  `remark` varchar(500) DEFAULT '',
+  `create_by` varchar(64) DEFAULT '',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
+  `update_by` varchar(64) DEFAULT '',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
+  PRIMARY KEY (`member_user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of member_user
+-- ----------------------------
+BEGIN;
+INSERT INTO `member_user` VALUES (2, '542968439@qq.com', '123123', 'MIRSrZ', NULL, 'http://localhost:3000/images/toux.png', '', '0', '', NULL, '', '', '2025-04-27 09:28:03', '', '2025-04-27 09:28:03');
 COMMIT;
 
 -- ----------------------------
@@ -607,9 +644,9 @@ CREATE TABLE `menu` (
   `mpath` varchar(255) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   PRIMARY KEY (`menu_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -718,13 +755,14 @@ CREATE TABLE `movie_basic_to_country` (
   PRIMARY KEY (`movie_basic_to_country_id`),
   KEY `movie_basic_to_country_fk` (`movie_basics_id`),
   CONSTRAINT `movie_basic_to_country_fk` FOREIGN KEY (`movie_basics_id`) REFERENCES `movie_basics` (`movie_basics_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of movie_basic_to_country
 -- ----------------------------
 BEGIN;
-INSERT INTO `movie_basic_to_country` VALUES (1, 48, 1);
+INSERT INTO `movie_basic_to_country` VALUES (3, 42, 1);
+INSERT INTO `movie_basic_to_country` VALUES (4, 48, 1);
 COMMIT;
 
 -- ----------------------------
@@ -738,7 +776,7 @@ CREATE TABLE `movie_basic_to_genre` (
   PRIMARY KEY (`movie_basic_to_genre_id`),
   KEY `movie_basic_to_genre_fk` (`movie_basics_id`),
   CONSTRAINT `movie_basic_to_genre_fk` FOREIGN KEY (`movie_basics_id`) REFERENCES `movie_basics` (`movie_basics_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of movie_basic_to_genre
@@ -754,8 +792,6 @@ INSERT INTO `movie_basic_to_genre` VALUES (7, 44, 8);
 INSERT INTO `movie_basic_to_genre` VALUES (8, 44, 6);
 INSERT INTO `movie_basic_to_genre` VALUES (9, 43, 11);
 INSERT INTO `movie_basic_to_genre` VALUES (10, 43, 6);
-INSERT INTO `movie_basic_to_genre` VALUES (11, 42, 6);
-INSERT INTO `movie_basic_to_genre` VALUES (12, 42, 12);
 INSERT INTO `movie_basic_to_genre` VALUES (13, 40, 3);
 INSERT INTO `movie_basic_to_genre` VALUES (14, 40, 6);
 INSERT INTO `movie_basic_to_genre` VALUES (15, 39, 3);
@@ -792,9 +828,11 @@ INSERT INTO `movie_basic_to_genre` VALUES (45, 4, 10);
 INSERT INTO `movie_basic_to_genre` VALUES (46, 4, 11);
 INSERT INTO `movie_basic_to_genre` VALUES (47, 17, 7);
 INSERT INTO `movie_basic_to_genre` VALUES (48, 18, 7);
-INSERT INTO `movie_basic_to_genre` VALUES (58, 48, 6);
-INSERT INTO `movie_basic_to_genre` VALUES (59, 48, 11);
-INSERT INTO `movie_basic_to_genre` VALUES (60, 48, 10);
+INSERT INTO `movie_basic_to_genre` VALUES (64, 42, 6);
+INSERT INTO `movie_basic_to_genre` VALUES (65, 42, 12);
+INSERT INTO `movie_basic_to_genre` VALUES (66, 48, 6);
+INSERT INTO `movie_basic_to_genre` VALUES (67, 48, 11);
+INSERT INTO `movie_basic_to_genre` VALUES (68, 48, 10);
 COMMIT;
 
 -- ----------------------------
@@ -833,9 +871,9 @@ CREATE TABLE `movie_basics` (
   `free_duration` int NOT NULL DEFAULT '1',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   PRIMARY KEY (`movie_basics_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -867,13 +905,13 @@ INSERT INTO `movie_basics` VALUES (36, '0', '0', NULL, '红海行动', 'https://
 INSERT INTO `movie_basics` VALUES (37, '0', '0', NULL, '杀破狼2', 'https://cms.yinchunyu.com/uploads/2025-04-12/yDPDwuEN0.jpeg', NULL, NULL, NULL, NULL, 'movie', 2000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'laoying', '2025-04-12 10:58:40', 'laoying', '2025-04-12 15:34:43');
 INSERT INTO `movie_basics` VALUES (39, '0', '0', NULL, '西虹市首富', 'https://cms.yinchunyu.com/uploads/2025-04-12/NQL9atp59.jpeg', NULL, NULL, NULL, NULL, 'movie', 2000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'laoying', '2025-04-12 10:59:44', 'laoying', '2025-04-12 15:34:34');
 INSERT INTO `movie_basics` VALUES (40, '0', '0', NULL, '我是谁', 'https://cms.yinchunyu.com/uploads/2025-04-12/cZHKW7D4Q.jpeg', NULL, NULL, NULL, NULL, 'movie', 2000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'laoying', '2025-04-12 11:00:34', 'laoying', '2025-04-12 15:34:20');
-INSERT INTO `movie_basics` VALUES (42, '0', '0', NULL, '湄公河行动', 'https://cms.yinchunyu.com/uploads/2025-04-12/dAkYv2CYY.jpeg', NULL, NULL, NULL, NULL, 'movie', 2000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'laoying', '2025-04-12 11:01:20', 'laoying', '2025-04-12 15:34:02');
+INSERT INTO `movie_basics` VALUES (42, '0', '2', '2024-10-01', '湄公河行动', 'https://cms.yinchunyu.com/uploads/2025-04-12/dAkYv2CYY.jpeg', '#005762', NULL, NULL, NULL, 'movie', 2000, NULL, NULL, NULL, '2D', 1, '0', NULL, NULL, NULL, NULL, '1', '汉语普通话', '动作,战争', NULL, 0, 0, 1, '', 'laoying', '2025-04-12 11:01:20', 'laoying', '2025-04-24 01:48:20');
 INSERT INTO `movie_basics` VALUES (43, '0', '0', NULL, '扫毒', 'https://cms.yinchunyu.com/uploads/2025-04-12/xL9HV0k7r.jpeg', NULL, NULL, NULL, NULL, 'movie', 1999, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'laoying', '2025-04-12 11:03:25', 'laoying', '2025-04-12 15:33:53');
 INSERT INTO `movie_basics` VALUES (44, '0', '0', NULL, '九层妖塔', 'https://cms.yinchunyu.com/uploads/2025-04-12/cGkxCjQB4.jpeg', NULL, NULL, NULL, NULL, 'movie', 2000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'laoying', '2025-04-12 11:04:02', 'laoying', '2025-04-12 15:33:40');
 INSERT INTO `movie_basics` VALUES (45, '0', '0', NULL, '敢死队3', 'https://cms.yinchunyu.com/uploads/2025-04-12/gMXPeqiTP.jpeg', NULL, NULL, NULL, NULL, 'movie', 2000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'laoying', '2025-04-12 11:04:42', 'laoying', '2025-04-12 15:33:31');
 INSERT INTO `movie_basics` VALUES (46, '0', '0', NULL, '唐人街探案', 'https://cms.yinchunyu.com/uploads/2025-04-12/VgDMfRrvr.jpeg', NULL, NULL, NULL, NULL, 'movie', 2000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'laoying', '2025-04-12 11:05:36', 'laoying', '2025-04-12 15:33:22');
 INSERT INTO `movie_basics` VALUES (47, '0', '0', NULL, '寻龙诀', 'https://cms.yinchunyu.com/uploads/2025-04-12/gCXtYPbHP.jpeg', NULL, NULL, NULL, NULL, 'movie', 2000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'laoying', '2025-04-12 11:06:28', 'laoying', '2025-04-12 15:33:12');
-INSERT INTO `movie_basics` VALUES (48, '0', '0', NULL, '超级保镖', 'https://cms.yinchunyu.com/uploads/2025-04-12/84WAoRlXO.jpeg', NULL, NULL, NULL, NULL, 'movie', 2000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '汉语普通话,英语', NULL, NULL, 0, 0, 1, '', 'laoying', '2025-04-12 15:54:29', 'laoying', '2025-04-22 06:15:41');
+INSERT INTO `movie_basics` VALUES (48, '0', '0', NULL, '超级保镖', 'https://cms.yinchunyu.com/uploads/2025-04-12/84WAoRlXO.jpeg', NULL, NULL, NULL, NULL, 'movie', 2000, NULL, NULL, NULL, '2D', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '汉语普通话,英语', '动作', NULL, 0, 0, 1, '', 'laoying', '2025-04-12 15:54:29', 'laoying', '2025-04-24 01:49:05');
 COMMIT;
 
 -- ----------------------------
@@ -910,9 +948,9 @@ CREATE TABLE `movie_photo` (
   `del_flag` varchar(1) NOT NULL DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   PRIMARY KEY (`movie_photo_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -934,15 +972,15 @@ CREATE TABLE `movie_pv` (
   `movie_basic_id` int NOT NULL,
   `pv` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of movie_pv
 -- ----------------------------
 BEGIN;
-INSERT INTO `movie_pv` VALUES (1, 48, 36);
-INSERT INTO `movie_pv` VALUES (2, 47, 3);
-INSERT INTO `movie_pv` VALUES (3, 46, 8);
+INSERT INTO `movie_pv` VALUES (1, 48, 66);
+INSERT INTO `movie_pv` VALUES (2, 47, 8);
+INSERT INTO `movie_pv` VALUES (3, 46, 9);
 INSERT INTO `movie_pv` VALUES (4, 45, 2);
 INSERT INTO `movie_pv` VALUES (5, 44, 1);
 INSERT INTO `movie_pv` VALUES (6, 43, 2);
@@ -955,8 +993,11 @@ INSERT INTO `movie_pv` VALUES (12, 33, 1);
 INSERT INTO `movie_pv` VALUES (13, 28, 1);
 INSERT INTO `movie_pv` VALUES (14, 1, 5);
 INSERT INTO `movie_pv` VALUES (15, 52, 0);
-INSERT INTO `movie_pv` VALUES (16, 42, 2);
+INSERT INTO `movie_pv` VALUES (16, 42, 3);
 INSERT INTO `movie_pv` VALUES (17, 26, 1);
+INSERT INTO `movie_pv` VALUES (18, 40, 2);
+INSERT INTO `movie_pv` VALUES (19, 30, 3);
+INSERT INTO `movie_pv` VALUES (20, 29, 1);
 COMMIT;
 
 -- ----------------------------
@@ -974,9 +1015,9 @@ CREATE TABLE `movie_video` (
   `status` varchar(255) NOT NULL DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   PRIMARY KEY (`movie_video_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -1005,9 +1046,9 @@ CREATE TABLE `post` (
   `status` varchar(1) NOT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   PRIMARY KEY (`post_id`),
   UNIQUE KEY `post_post_code_unique` (`post_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -1032,9 +1073,9 @@ CREATE TABLE `profession` (
   `parent_id` int DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   `mpath` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`profession_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -1068,9 +1109,9 @@ CREATE TABLE `pub_date` (
   `movie_id` int NOT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   PRIMARY KEY (`pub_date_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -1098,9 +1139,9 @@ CREATE TABLE `role` (
   `del_flag` char(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -1199,9 +1240,9 @@ CREATE TABLE `sys_config` (
   `config_type` enum('Y','N') DEFAULT 'N',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   PRIMARY KEY (`sys_config_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -1235,9 +1276,9 @@ CREATE TABLE `user` (
   `dept_id` int DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   PRIMARY KEY (`user_id`),
   KEY `user_dept_id_dept_dept_id_fk` (`dept_id`),
   CONSTRAINT `user_dept_id_dept_dept_id_fk` FOREIGN KEY (`dept_id`) REFERENCES `dept` (`dept_id`)
@@ -1311,9 +1352,9 @@ CREATE TABLE `video` (
   `size` int DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `create_time` datetime DEFAULT '2025-04-27 09:28:03',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-04-22 06:14:48',
+  `update_time` datetime DEFAULT '2025-04-27 09:28:03',
   PRIMARY KEY (`video_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
