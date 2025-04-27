@@ -106,7 +106,7 @@
                       class="bg-#1c1d1f border-rd-10px overflow-hidden"
                     >
                       <nuxt-link :to="`/column/${v.columnValue}/video/${v.movieBasicsId}`">
-                        <img :src="v.poster" />
+                        <NuxtImg format="webp" loading="lazy" :alt="v?.title" :src="v?.poster" />
                         <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
                           <h3>{{ v.title }}</h3>
                           <p class="text-[rgba(255,255,255,0.35)] whitespace-nowrap text-ellipsis overflow-hidden">

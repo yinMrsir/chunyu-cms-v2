@@ -21,6 +21,7 @@
     "@iconify-json/el": "^1.2.1",
     "@iconify-json/flat-color-icons": "^1.2.1",
     "@nuxt/devtools": "latest",
+    "@nuxt/image": "^1.10.0",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@types/ali-oss": "^6.16.11",
     "@types/crypto-js": "^4.2.2",

@@ -13,7 +13,7 @@ export default defineNuxtConfig({
     'element-plus/theme-chalk/display.css',
     '@/assets/css/style.css'
   ],
-  modules: ['@element-plus/nuxt', '@unocss/nuxt'],
+  modules: ['@element-plus/nuxt', '@unocss/nuxt', '@nuxt/image'],
   vite: {
     css: {
       preprocessorOptions: {

@@ -61,7 +61,7 @@
         <ul>
           <li v-for="v in movies" :key="v.movieBasicsId">
             <nuxt-link :to="`/column/${v.columnValue}/video/${v.movieBasicsId}`">
-              <img :src="v.poster" />
+              <NuxtImg format="webp" loading="lazy" :alt="v?.title" :src="v?.poster" />
               <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
                 <h3>{{ v.title }}</h3>
                 <p>
