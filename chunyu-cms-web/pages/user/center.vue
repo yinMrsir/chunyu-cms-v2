@@ -25,7 +25,8 @@
   import { createToken } from '~/utils/request';
 
   definePageMeta({
-    layout: 'user-center'
+    layout: 'user-center',
+    middleware: 'auth'
   });
 
   const activeTab = ref('works');

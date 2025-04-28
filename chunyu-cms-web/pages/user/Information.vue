@@ -74,7 +74,8 @@
   import { WEB_USER_INFO } from '~/shared/cookiesName';
 
   definePageMeta({
-    layout: 'user-center'
+    layout: 'user-center',
+    middleware: 'auth'
   });
 
   const userInfo = useCookie(WEB_USER_INFO);
