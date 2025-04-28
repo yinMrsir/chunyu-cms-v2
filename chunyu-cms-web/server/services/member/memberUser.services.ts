@@ -81,7 +81,8 @@ export class MemberUserServices {
         birthday: true,
         introduction: true,
         loginIp: true,
-        loginDate: true
+        loginDate: true,
+        createTime: true
       },
       where,
       offset,

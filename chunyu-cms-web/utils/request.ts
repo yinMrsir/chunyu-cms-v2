@@ -24,7 +24,7 @@ export const request = options => {
         }
       })
       .catch(error => {
-        ElMessage.error(error.message);
+        ElMessage.error(error.response._data.message || error.message);
         reject(error.message);
       });
   });
