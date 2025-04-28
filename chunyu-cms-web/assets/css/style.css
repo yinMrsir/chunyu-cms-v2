@@ -8,6 +8,54 @@ body {
 :root {
   --el-font-size-base: 16px !important;
   --el-color-primary: #00da5ab2 !important;
+  --el-color-primary-light-3:  #00da5a !important;
   --el-border-color-light: #fafafa14 !important;
   --el-mask-color: rgba(17,17,20,0.8) !important;
+}
+
+.search-input {
+  position: relative;
+}
+
+.search-input input {
+  color: #fff;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  outline: none;
+  border-radius: 50px;
+  padding: 6px 20px;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  font-size: 14px;
+  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  @apply w-full md:w-[400px];
+}
+
+.search-input .search-button {
+  position: absolute;
+  right: 15px;
+  top: 8px;
+  cursor: pointer;
+}
+
+.el-tabs__item {
+  color: #999 !important;
+}
+
+.el-tabs__item.is-active {
+  color: #fff !important;
+}
+
+.el-tabs__nav-scroll {
+  padding-left: 10px !important;;
+}
+
+.el-tabs__active-bar {
+  background: #00f48e  !important;
+  box-shadow: 0 0 14px 1px #00f48e  !important;
+  box-sizing: border-box  !important;
+  height: 4px  !important;
+  border-radius: 2px !important;
 }

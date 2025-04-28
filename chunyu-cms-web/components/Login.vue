@@ -84,11 +84,11 @@
   const route = useRoute();
   const loginVisible = useLoginVisible();
   const checkboxRef = useTemplateRef('checkboxRef');
-  const loginType = ref('1');
+  const loginType = ref('2');
   const isAgree = ref('0');
   const loginForm = ref({
-    email: undefined,
-    password: undefined
+    email: '542968439@qq.com',
+    password: '888888'
   });
   const loginFormRules = ref({
     email: [

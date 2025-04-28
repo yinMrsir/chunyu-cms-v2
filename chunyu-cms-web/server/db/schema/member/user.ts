@@ -1,4 +1,4 @@
-import { char, date, int, mysqlTable, varchar } from 'drizzle-orm/mysql-core';
+import { char, int, mysqlTable, varchar, datetime, date } from 'drizzle-orm/mysql-core';
 import { columnsHelpers } from '../../columns.helpers';
 
 export const memberUserTable = mysqlTable('member_user', {
@@ -13,14 +13,20 @@ export const memberUserTable = mysqlTable('member_user', {
   phonenumber: varchar('phonenumber', { length: 11 }),
   // 头像地址
   avatar: varchar('avatar', { length: 100 }).notNull(),
+  // 生日
+  birthday: date('birthday', { mode: 'string' }),
+  // 性别
+  sex: char('sex', { length: 1 }).default('0').notNull(),
   // 盐加密
   salt: varchar('salt', { length: 100 }).default(''),
+  // 个人简介
+  introduction: varchar('introduction', { length: 500 }).default(''),
   // 删除标志
   delFlag: char('del_flag', { length: 1 }).default('0').notNull(),
   // 最后登录IP
   loginIp: varchar('login_ip', { length: 128 }).default(''),
   // 最后登录时间
-  loginDate: date('login_date', { mode: 'date' }),
+  loginDate: datetime('login_date', { mode: 'date' }).notNull(),
   // 通用字段
   ...columnsHelpers
 });

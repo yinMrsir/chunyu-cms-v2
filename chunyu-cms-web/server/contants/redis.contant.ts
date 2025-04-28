@@ -22,3 +22,4 @@ export const JOB_TASK_KEY = 'job:task'; // 定时任务
 export const USER_WEB_KEY = 'nitro:handlers'; // 用户端接口缓存
 
 export const USER_WEB_CODE_KEY = 'useWeb:code';
+export const USER_WEB_TOKEN_KEY = 'useWeb:token';

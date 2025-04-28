@@ -272,30 +272,6 @@
       }
     }
   }
-  .search-input {
-    position: relative;
-    input {
-      color: #fff;
-      border: none;
-      background-color: rgba(0, 0, 0, 0.2) !important;
-      outline: none;
-      border-radius: 50px;
-      padding: 6px 20px;
-      -webkit-backdrop-filter: blur(5px);
-      backdrop-filter: blur(5px);
-      width: 400px;
-      font-size: 14px;
-      box-shadow: 0 5px 35px rgba(0, 0, 0, 0.2);
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .search-button {
-      position: absolute;
-      right: 15px;
-      top: 8px;
-      cursor: pointer;
-    }
-  }
   .logo-text {
     color: #ffffff;
     background: linear-gradient(224deg, #fff, #d6ffea);

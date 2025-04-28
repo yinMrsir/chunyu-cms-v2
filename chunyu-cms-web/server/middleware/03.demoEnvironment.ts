@@ -1,7 +1,6 @@
-import { useAuth } from '../composables/useAuth';
-
 const runtimeConfig = useRuntimeConfig();
-/* 不需要验证Auth的路由 */
+
+/* 放开执行的路由 */
 const noVerificationRouters = [
   '/api/admin/login',
   '/api/admin/logout',
@@ -11,12 +10,7 @@ const noVerificationRouters = [
   '/api/web/login'
 ];
 
-export default defineEventHandler(async event => {
-  if (!noVerificationRouters.includes(event.path) && event.path.includes('/api/admin')) {
-    const auth = useAuth(event);
-    event.context.user = await auth.verification();
-    event.context.validatePermission = auth.validatePermission;
-  }
+export default defineEventHandler(event => {
   // 演示环境
   if (
     runtimeConfig.isDemoEnvironment &&

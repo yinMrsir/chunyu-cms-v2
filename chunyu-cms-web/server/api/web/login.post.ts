@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 import { createApiResponse } from '~/server/utils/apiResponse';
-import { USER_WEB_CODE_KEY } from '~/server/contants/redis.contant';
+import { USER_WEB_CODE_KEY, USER_WEB_TOKEN_KEY } from '~/server/contants/redis.contant';
 import { MemberUserServices } from '~/server/services/member/memberUser.services';
 import { SharedServices } from '~/server/services/admin/share/shared.services';
 
@@ -11,6 +11,7 @@ const sharedServices = new SharedServices();
 
 export default defineEventHandler(async event => {
   const body = await readBody(event);
+  const ip = getRequestIP(event)?.replace('::ffff:', '');
   if (!body.email) {
     return createApiResponse(null, 400, '邮箱不能为空');
   }
@@ -27,15 +28,19 @@ export default defineEventHandler(async event => {
       // 创建用户
       const nickname = sharedServices.generateRandomValue(6);
       const avatar = runtimeConfig.imgHost + '/images/toux.png';
-      const memberUserId = await memberUserServices.createUser({
+      const memberUserId = await memberUserServices.add({
         email: body.email,
         nickname,
-        avatar
+        avatar,
+        loginIp: ip,
+        loginDate: new Date(),
+        createTime: new Date()
       });
       const payload = { memberUserId, nickname, email: body.email, avatar };
       const token = (jwt as any).default.sign(payload, runtimeConfig.jwt.secret, {
         expiresIn: '7d'
       });
+      await redis.setItem(`${USER_WEB_TOKEN_KEY}:${memberUserId}`, token);
       return createApiResponse({ userInfo: payload, token }, 200, '登录成功');
     } else {
       const payload = {
@@ -47,6 +52,8 @@ export default defineEventHandler(async event => {
       const token = (jwt as any).default.sign(payload, runtimeConfig.jwt.secret, {
         expiresIn: '7d'
       });
+      await redis.setItem(`${USER_WEB_TOKEN_KEY}:${memberUser.memberUserId}`, token);
+      await memberUserServices.update(memberUser.memberUserId, { loginIp: ip, loginDate: new Date() });
       return createApiResponse({ userInfo: payload, token }, 200, '登录成功');
     }
   } else if (body.loginType === '2') {
@@ -54,7 +61,8 @@ export default defineEventHandler(async event => {
       return createApiResponse(null, 400, '密码不能为空');
     }
     const memberUser = await memberUserServices.getUserByEmail(body.email);
-    if (memberUser && memberUser.password === body.password) {
+    const comparePassword = sharedServices.md5(body.password + memberUser?.salt);
+    if (memberUser && comparePassword === memberUser.password) {
       const payload = {
         memberUserId: memberUser.memberUserId,
         nickname: memberUser.nickname,
@@ -64,6 +72,8 @@ export default defineEventHandler(async event => {
       const token = (jwt as any).default.sign(payload, runtimeConfig.jwt.secret, {
         expiresIn: '7d'
       });
+      await redis.setItem(`${USER_WEB_TOKEN_KEY}:${memberUser.memberUserId}`, token);
+      await memberUserServices.update(memberUser.memberUserId, { loginIp: ip, loginDate: new Date() });
       return createApiResponse({ userInfo: payload, token }, 200, '登录成功');
     } else if (!memberUser) {
       return createApiResponse(null, 400, '用户不存在');
