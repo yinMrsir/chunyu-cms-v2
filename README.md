@@ -47,7 +47,7 @@ IS_DEMO_ENVIRONMENT=false
 IMG_HOST=http://localhost:3000
 # 用户发送邮件的邮箱
 FORM_USER_EMAIL=1378151264@qq.com
-# 用户发送邮件的邮箱密码
+# 用户发送邮件的邮箱密码 注意此处为qq邮箱的授权码，不是qq邮箱的密码
 FORM_USER_EMAIL_PASSWORD=efmogxbvncejffih
 # 使用 Gmail 服务，你可以使用其他服务，如 'QQ'
 USER_EMAIL_SERVICE=QQ
