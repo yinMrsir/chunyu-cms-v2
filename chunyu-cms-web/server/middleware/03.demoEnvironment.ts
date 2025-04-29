@@ -5,9 +5,11 @@ const noVerificationRouters = [
   '/api/admin/login',
   '/api/admin/logout',
   '/api/admin/captchaImage',
+  '/api/admin/common/upload',
   '/api/web/movie/pv',
   '/api/web/sendCode',
-  '/api/web/login'
+  '/api/web/login',
+  '/api/web/member/user'
 ];
 
 export default defineEventHandler(event => {

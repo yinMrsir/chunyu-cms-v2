@@ -5,16 +5,34 @@
       <Meta name="description" :content="detail.summary" />
     </Head>
 
-    <div class="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-x-20px relative">
+    <div class="grid grid-cols-1 lg:grid-cols-[1fr_300px] relative">
       <div id="mse"></div>
-      <div class="p-10px">
+      <div class="p-x-20px">
         <el-tabs v-model="tabStatus">
           <el-tab-pane label="视频" name="video">
+            <template #label>
+              视频
+              <span class="color-yellow text-12px mr-10px">
+                <i class="i-fxemoji-fire w-24px inline-block"></i>
+                {{ detail.pv?.pv || 0 }}
+              </span>
+            </template>
             <div class="right-video-info">
-              <div class="flex gap-x-10px text-12px">
-                <el-image class="border-rd-10px overflow-hidden w-80px" :src="detail.poster"></el-image>
+              <div class="grid grid-cols-[60px_1fr] gap-x-10px text-12px">
+                <el-image class="border-rd-10px overflow-hidden w-60px" :src="detail.poster"></el-image>
                 <div>
-                  <h1 class="text-20px">{{ detail.title }}</h1>
+                  <h1 class="text-20px">
+                    {{ detail.title }}
+                    <el-popover placement="bottom" effect="dark" :width="240">
+                      <template #reference>
+                        <span class="color-orange text-12px">7.0分</span>
+                      </template>
+                      <div class="flex items-center">
+                        <span class="text-14px">我的评分：</span>
+                        <el-rate v-model="rate" allow-half @change="onRatechange" />
+                      </div>
+                    </el-popover>
+                  </h1>
                   <p class="color-#dedede">
                     {{ detail.year }}
                     <template v-if="detail.movieBasicToCountry.length">
@@ -171,15 +189,13 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
   import 'xgplayer/dist/index.min.css';
   import 'xgplayer/es/plugins/danmu/index.css';
-  import PresetPlayer from 'xgplayer';
   import '~/plugins/xgplayer/payTip/index.css';
   import dayjs from 'dayjs';
   import { Swiper, SwiperSlide } from 'swiper/vue';
   import 'swiper/css';
-  import PayTip from '~/plugins/xgplayer/payTip';
   import { useSidebarOpen, useTextVisible } from '~/composables/states';
 
   definePageMeta({
@@ -193,10 +209,7 @@
   const form = ref({ isDm: '1', comment: '' });
   const tabStatus = ref('video');
   const vIndex = ref(0);
-  // 视频支付提示插件
-  let payTipInstance: PayTip | null = null;
-  // 视频组件
-  let player: PresetPlayer | null = null;
+  const rate = ref();
 
   const [{ data: detail }, { data: movies }] = await Promise.all([
     useFetch(`/api/web/movie/${route.params.id}`),
@@ -211,23 +224,19 @@
     })
   ]);
   if (route.query.mvid) {
-    vIndex.value =
-      detail.value?.movieVideo.findIndex(
-        (item: { movieVideoId: number }) => item.movieVideoId === Number(route.query.mvid)
-      ) || 0;
+    vIndex.value = detail.value?.movieVideo.findIndex(item => item.movieVideoId === Number(route.query.mvid)) || 0;
   }
 
   onMounted(async () => {
     sidebarOpen.value = false;
     textVisible.value = false;
-    const [Player, Mp4Plugin, Danmu, PayTip] = await Promise.all([
+    const [Player, Mp4Plugin, Danmu] = await Promise.all([
       import('xgplayer'),
       import('xgplayer-mp4'),
-      import('xgplayer/es/plugins/danmu'),
-      import('~/plugins/xgplayer/payTip')
+      import('xgplayer/es/plugins/danmu')
     ]);
-    // eslint-disable-next-line new-cap
-    player = new Player.default({
+    // eslint-disable-next-line no-new
+    new Player.default({
       id: 'mse',
       controls: {
         autoHide: false
@@ -238,7 +247,7 @@
       playsinline: true,
       height: '100%',
       width: '100%',
-      plugins: [Mp4Plugin.default, Danmu.default, PayTip.default],
+      plugins: [Mp4Plugin.default, Danmu.default],
       danmu: {
         comments: [
           {
@@ -260,12 +269,13 @@
         }
       }
     });
-    payTipInstance = player.getPlugin('payTip');
   });
 
   function handleSubmit() {
     console.log(form.value);
   }
+
+  function onRatechange() {}
 </script>
 
 <style lang="scss">

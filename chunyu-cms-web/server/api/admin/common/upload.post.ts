@@ -23,7 +23,7 @@ export default defineEventHandler(async (event: H3Event<EventHandlerRequest>) =>
     }
     const fileConfig = await sysConfigServices.findByConfigKey('fileConfig');
     // 获取图片的MIME类型（例如:image/png）
-    const mimeType = file.type;
+    const mimeType = file.type || 'image/png';
     // 提取文件扩展名（例如:png）
     const fileExtension = mimeType?.split('/')[1];
     const currentDate = dayjs().format('YYYY-MM-DD');

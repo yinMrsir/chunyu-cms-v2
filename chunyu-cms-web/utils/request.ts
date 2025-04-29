@@ -5,7 +5,7 @@ export const createToken = () => {
   return 'Bearer ' + token.value;
 };
 
-export const request = options => {
+export const request = (options: { url: any; method: any; body: any }) => {
   return new Promise<any>((resolve, reject) => {
     $fetch(options.url, {
       method: options.method || 'get',
@@ -15,7 +15,7 @@ export const request = options => {
         token: createToken()
       }
     })
-      .then(response => {
+      .then((response: any) => {
         if (response.code === 200) {
           resolve(response.data);
         } else {

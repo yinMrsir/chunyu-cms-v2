@@ -6,6 +6,7 @@ const movieBasicsServices = new MovieBasicsServices();
 export default defineEventHandler(async event => {
   const id = getRouterParam(event, 'id');
   return await movieBasicsServices.findById(Number(id), {
+    pv: true,
     movieBasicToCountry: {
       with: {
         country: true

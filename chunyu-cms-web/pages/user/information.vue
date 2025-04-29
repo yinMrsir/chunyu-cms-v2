@@ -4,16 +4,9 @@
       <el-tab-pane label="个人资料" name="information">
         <el-form ref="formRef" class="mt-15px" :model="form" label-width="80px">
           <el-form-item label="头像">
-            <el-upload
-              class="avatar-uploader"
-              action="https://jsonplaceholder.typicode.com/posts/"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              :before-upload="beforeAvatarUpload"
-            >
-              <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>
+            <div class="avatar-box" @click="handleShowAvatarDialog">
+              <el-avatar :src="form?.avatar" :size="60"></el-avatar>
+            </div>
           </el-form-item>
           <el-form-item label="邮箱">
             <el-input v-model="form.email" disabled></el-input>
@@ -66,10 +59,41 @@
         </el-form>
       </el-tab-pane>
     </el-tabs>
+
+    <el-dialog v-model="avatarDialogVisible" :width="dialogWidth" style="background: #1e2126">
+      <div class="flex gap-x-30px">
+        <div>
+          <vue-cropper
+            ref="cropperRef"
+            :src="avatarImg"
+            :aspect-ratio="1"
+            :container-style="{ width: '200px', height: '200px' }"
+            @ready="updatePreview"
+            @cropmove="updatePreview"
+          />
+        </div>
+        <div>
+          <el-upload action="#" :http-request="requestUpload" :show-file-list="false" :before-upload="beforeUpload">
+            <el-button size="small" type="primary">点击上传</el-button>
+          </el-upload>
+          <div class="preview-container mt-15px flex flex-col gap-y-10px">
+            <el-avatar :src="previewImage" :size="60" />
+            <el-avatar :src="previewImage" :size="40" />
+            <el-avatar :src="previewImage" :size="20" />
+          </div>
+        </div>
+      </div>
+      <template #footer>
+        <el-button @click="avatarDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="handleSaveAvatar">保存</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
+  import VueCropper from 'vue-cropperjs';
+  import 'cropperjs/dist/cropper.css';
   import { createToken } from '~/utils/request';
   import { WEB_TOKEN, WEB_USER_INFO } from '~/shared/cookiesName';
 
@@ -83,6 +107,7 @@
   const userInfo = useCookie(WEB_USER_INFO);
 
   const activeTab = ref('information');
+  const cropperRef = useTemplateRef('cropperRef');
   const form = ref({
     nickname: '',
     phonenumber: '',
@@ -110,7 +135,10 @@
       }
     ]
   });
-  const imageUrl = ref('');
+  const avatarDialogVisible = ref(false);
+  const avatarImg = ref('');
+  const previewImage = ref('');
+  const dialogWidth = ref('360px');
 
   const { data } = await useFetch('/api/web/member/user', {
     headers: {
@@ -127,24 +155,8 @@
     throw createError({ statusCode: 500, statusMessage: '服务器错误' });
   }
 
-  const handleAvatarSuccess = (res, file) => {
-    imageUrl.value = URL.createObjectURL(file.raw);
-  };
-
-  const beforeAvatarUpload = file => {
-    const isJPG = file.type === 'image/jpeg';
-    const isLt2M = file.size / 1024 / 1024 < 2;
-
-    if (!isJPG) {
-      ElMessage.error('上传头像图片只能是 JPG 格式!');
-    }
-    if (!isLt2M) {
-      ElMessage.error('上传头像图片大小不能超过 2MB!');
-    }
-    return isJPG && isLt2M;
-  };
-
   const handleUpdatePassword = async () => {
+    await passwordFormRef.value.validate();
     await request({
       url: '/api/web/member/user/updatePassword',
       method: 'post',
@@ -163,6 +175,70 @@
     userInfo.value = form.value;
     ElMessage.success('修改成功');
   };
+
+  function handleShowAvatarDialog() {
+    avatarImg.value = form.value.avatar;
+    avatarDialogVisible.value = true;
+  }
+
+  /** 覆盖默认上传行为 */
+  function requestUpload() {}
+
+  /** 上传预处理 */
+  function beforeUpload(file) {
+    if (!file.type.includes('image/')) {
+      ElMessage.error('文件格式错误，请上传图片类型,如：JPG，PNG后缀的文件。');
+    } else {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = event => {
+        avatarImg.value = event.target.result;
+        if (cropperRef.value) {
+          cropperRef.value.replace(event.target.result);
+        }
+      };
+    }
+  }
+
+  /** 更新实时预览图片 **/
+  const updatePreview = () => {
+    if (cropperRef.value) {
+      const canvas = cropperRef.value.getCroppedCanvas(); // 获取裁剪后的 Canvas
+      if (canvas) {
+        previewImage.value = canvas.toDataURL(); // 将 Canvas 转换为 Base64 图片
+      }
+    }
+  };
+
+  async function handleSaveAvatar() {
+    const canvas = cropperRef.value.getCroppedCanvas();
+    if (!canvas) {
+      ElMessage.error('无法获取裁剪后的图片');
+      return;
+    }
+    // 将 Canvas 转换为 Blob
+    const blob = await new Promise(resolve => {
+      canvas.toBlob(resolve, 'image/jpeg', 0.9); // 质量参数：0.9
+    });
+    // 创建 FormData
+    const formData = new FormData();
+    formData.append('file', blob, 'avatar.jpg'); // 设置文件名
+
+    const result = await fetch('/api/admin/common/upload', {
+      headers: {
+        contentType: 'multipart/form-data'
+      },
+      method: 'POST',
+      body: formData
+    });
+    const data = await result.json();
+    if (data.code === 200) {
+      form.value.avatar = data.data.url;
+    } else {
+      ElMessage.error('上传失败');
+    }
+    avatarDialogVisible.value = false;
+  }
 </script>
 
 <style lang="scss">
@@ -180,6 +256,21 @@
     input::placeholder,
     textarea::placeholder {
       color: rgba(255, 255, 255, 0.2);
+    }
+  }
+  .avatar-box {
+    position: relative;
+    cursor: pointer;
+    &:hover::before {
+      content: '+';
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: rgba(0, 0, 0, 0.5);
+      font-size: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 </style>
