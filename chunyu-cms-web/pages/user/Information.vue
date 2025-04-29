@@ -71,16 +71,27 @@
 
 <script setup>
   import { createToken } from '~/utils/request';
-  import { WEB_USER_INFO } from '~/shared/cookiesName';
+  import { WEB_TOKEN, WEB_USER_INFO } from '~/shared/cookiesName';
 
   definePageMeta({
     layout: 'user-center',
     middleware: 'auth'
   });
 
+  const router = useRouter();
+  const token = useCookie(WEB_TOKEN);
   const userInfo = useCookie(WEB_USER_INFO);
+
   const activeTab = ref('information');
-  const form = ref({});
+  const form = ref({
+    nickname: '',
+    phonenumber: '',
+    sex: '',
+    birthday: '',
+    introduction: '',
+    avatar: '',
+    email: ''
+  });
   const passwordFormRef = useTemplateRef('passwordFormRef');
   const passwordForm = ref({});
   const passwordFormRules = ref({
@@ -106,7 +117,15 @@
       Token: createToken()
     }
   });
-  form.value = data.value.data;
+  if (data.value?.code === 200) {
+    form.value = data.value.data;
+  } else if (data.value?.code === 401) {
+    token.value = null;
+    userInfo.value = null;
+    router.push('/');
+  } else {
+    throw createError({ statusCode: 500, statusMessage: '服务器错误' });
+  }
 
   const handleAvatarSuccess = (res, file) => {
     imageUrl.value = URL.createObjectURL(file.raw);

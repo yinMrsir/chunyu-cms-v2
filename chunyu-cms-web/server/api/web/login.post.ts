@@ -72,7 +72,7 @@ export default defineEventHandler(async event => {
       const token = (jwt as any).default.sign(payload, runtimeConfig.jwt.secret, {
         expiresIn: '7d'
       });
-      await redis.setItem(`${USER_WEB_TOKEN_KEY}:${memberUser.memberUserId}`, token);
+      await redis.setItem(`${USER_WEB_TOKEN_KEY}:${memberUser.memberUserId}`, token, { ttl: 60 * 60 * 24 * 7 });
       await memberUserServices.update(memberUser.memberUserId, { loginIp: ip, loginDate: new Date() });
       return createApiResponse({ userInfo: payload, token }, 200, '登录成功');
     } else if (!memberUser) {
