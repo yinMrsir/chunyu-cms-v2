@@ -76,7 +76,13 @@
           </li>
         </ul>
       </div>
-      <div v-if="isShowLoading" ref="pageBottomRef" v-loading="true" class="h-60px"></div>
+      <div
+        v-if="isShowLoading"
+        ref="pageBottomRef"
+        v-loading="true"
+        style="--el-mask-color: transparent"
+        class="h-60px"
+      ></div>
     </div>
   </div>
 </template>
@@ -182,13 +188,9 @@
     return html;
   });
 
-  onMounted(() => {
+  if (process.client) {
     createTrigger();
-  });
-
-  onUnmounted(() => {
-    trigger.kill();
-  });
+  }
 
   function createTrigger() {
     trigger = ScrollTrigger.create({

@@ -20,7 +20,13 @@
           </li>
         </ul>
       </div>
-      <div v-if="isShowLoading" ref="pageBottomRef" v-loading="true" class="h-60px"></div>
+      <div
+        v-if="isShowLoading"
+        ref="pageBottomRef"
+        v-loading="true"
+        style="--el-mask-color: transparent"
+        class="h-60px"
+      ></div>
     </div>
   </div>
 </template>
@@ -38,7 +44,7 @@
   });
 
   const route = useRoute();
-  const { query, params } = route;
+  const { query } = route;
   const currentPage = ref<number>((route.query.page && +route.query.page) || 1);
   const orderBy = ref<string>((query.orderBy as string) || 'createTime');
   const pageBottomRef = useTemplateRef('pageBottomRef');
@@ -63,7 +69,7 @@
     isShowLoading.value = false;
   }
 
-  onMounted(() => {
+  if (process.client) {
     trigger = ScrollTrigger.create({
       trigger: pageBottomRef.value as HTMLDivElement,
       start: 'top bottom',
@@ -84,11 +90,7 @@
       },
       markers: process.dev // 开发环境下显示标记
     });
-  });
-
-  onUnmounted(() => {
-    trigger.kill();
-  });
+  }
 </script>
 
 <style lang="scss">
