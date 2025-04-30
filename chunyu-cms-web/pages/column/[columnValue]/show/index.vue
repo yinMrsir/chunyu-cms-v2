@@ -83,6 +83,7 @@
         style="--el-mask-color: transparent"
         class="h-60px"
       ></div>
+      <el-empty v-if="!isShowLoading && !movies.length" description="暂无数据" :image-size="60"></el-empty>
     </div>
   </div>
 </template>
