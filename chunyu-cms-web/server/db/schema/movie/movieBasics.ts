@@ -7,7 +7,7 @@ import { movieBasicToCountryTable } from './movieBasicToCountry';
 import { movieVideoTable } from './movieVideo';
 import { castTable } from './cast';
 import { moviePvTable } from './moviePv';
-import { movieRateTable } from '~/server/db/schema/movie/rate';
+import { movieRateTable } from './rate';
 
 // 定义 MovieBasic 表
 export const movieBasicsTable = mysqlTable('movie_basics', {
