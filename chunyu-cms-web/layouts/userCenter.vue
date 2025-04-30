@@ -68,12 +68,16 @@
           </el-dropdown>
         </div>
       </div>
-      <slot />
+      <el-config-provider :locale="zhCn">
+        <slot />
+      </el-config-provider>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+  import { ElConfigProvider } from 'element-plus';
+  import zhCn from 'element-plus/es/locale/lang/zh-cn';
   import { WEB_TOKEN, WEB_USER_INFO } from '~/shared/cookiesName';
 
   const keyword = ref('');

@@ -56,7 +56,10 @@
         <ul>
           <li v-for="v in item.movies" :key="v.movieBasicsId">
             <nuxt-link :to="`/column/${v.columnValue}/video/${v.movieBasicsId}`">
-              <NuxtImg size="200px" format="webp" loading="lazy" :alt="v?.title" :src="v.poster" />
+              <div class="relative">
+                <NuxtImg size="200px" format="webp" loading="lazy" :alt="v?.title" :src="v.poster" />
+                <span v-if="v.movieRate" class="rate"> {{ v.movieRate.rate.toFixed(1) }} </span>
+              </div>
               <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
                 <h3>{{ v.title }}</h3>
                 <p>
@@ -128,6 +131,14 @@
         p {
           color: rgba(255, 255, 255, 0.35);
           @apply text-12px mt-5px whitespace-nowrap text-ellipsis overflow-hidden;
+        }
+        .rate {
+          @apply color-#fff absolute right-10px bottom-10px z-10 text-14px;
+          text-shadow:
+            -1px -1px 0 #0006,
+            1px -1px 0 #0006,
+            -1px 1px 0 #0006,
+            1px 1px 0 #0006;
         }
       }
     }

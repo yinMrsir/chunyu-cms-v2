@@ -22,6 +22,7 @@ export default defineCachedEventHandler(
                 poster: true
               },
               with: {
+                movieRate: true,
                 casts: {
                   columns: {},
                   with: {
@@ -42,6 +43,7 @@ export default defineCachedEventHandler(
     return data.rows;
   },
   {
+    swr: process.env.NODE_ENV !== 'development',
     base: 'redis',
     maxAge: 60 * 30
   }

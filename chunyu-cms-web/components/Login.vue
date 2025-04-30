@@ -206,6 +206,7 @@
       userInfo.value = data.userInfo;
       ElMessage.success('登录成功');
       loginVisible.value = false;
+      window.location.reload();
     } finally {
       submitLoading.value = false;
     }

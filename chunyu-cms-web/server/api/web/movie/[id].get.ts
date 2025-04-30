@@ -7,6 +7,11 @@ export default defineEventHandler(async event => {
   const id = getRouterParam(event, 'id');
   return await movieBasicsServices.findById(Number(id), {
     pv: true,
+    movieRate: {
+      columns: {
+        rate: true
+      }
+    },
     movieBasicToCountry: {
       with: {
         country: true

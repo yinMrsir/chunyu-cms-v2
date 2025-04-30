@@ -1,7 +1,9 @@
 <template>
   <div v-if="userInfoData.data" class="p-20px pt-74px center-index">
     <div class="grid grid-cols-[132px_1fr] mb-20px">
-      <el-avatar :size="112" :src="userInfoData.data.avatar" />
+      <div class="center-index__avatar" @click="router.push('/user/information')">
+        <el-avatar :size="112" :src="userInfoData.data.avatar" />
+      </div>
       <div class="pt-10px">
         <h1>{{ userInfoData.data.nickname }}</h1>
         <p class="text-12px color-#FFFFFF59 mt-6px">{{ userInfoData.data.introduction }}</p>
@@ -50,5 +52,21 @@
 
 <style lang="scss">
   .center-index {
+    &__avatar {
+      position: relative;
+      cursor: pointer;
+      &:hover::before {
+        content: '修改头像';
+        position: absolute;
+        width: 112px;
+        height: 112px;
+        background: rgba(0, 0, 0, 0.5);
+        font-size: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+      }
+    }
   }
 </style>

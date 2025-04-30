@@ -17,7 +17,8 @@ export default defineCachedEventHandler(
               with: {
                 actor: true
               }
-            }
+            },
+            movieRate: true
           }
         }
       }

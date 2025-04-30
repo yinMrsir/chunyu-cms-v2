@@ -7,6 +7,7 @@ import { movieBasicToCountryTable } from './movieBasicToCountry';
 import { movieVideoTable } from './movieVideo';
 import { castTable } from './cast';
 import { moviePvTable } from './moviePv';
+import { movieRateTable } from '~/server/db/schema/movie/rate';
 
 // 定义 MovieBasic 表
 export const movieBasicsTable = mysqlTable('movie_basics', {
@@ -85,5 +86,9 @@ export const movieBasicsTableRelations = relations(movieBasicsTable, ({ many, on
   pv: one(moviePvTable, {
     fields: [movieBasicsTable.movieBasicsId],
     references: [moviePvTable.movieBasicsId]
+  }),
+  movieRate: one(movieRateTable, {
+    fields: [movieBasicsTable.movieBasicsId],
+    references: [movieRateTable.movieBasicsId]
   })
 }));

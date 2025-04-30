@@ -4,10 +4,10 @@ import { USER_WEB_TOKEN_KEY } from '~/server/contants/redis.contant';
 const redis = useStorage('redis');
 
 /* 用户端接口需要验证的路由 */
-const noVerificationRouters = ['/api/web/member/user/updatePassword', '/api/web/member/user'];
+const noVerificationRouters = ['/api/web/member/user/updatePassword', '/api/web/member/user', '/api/web/member/rate'];
 
 export default defineEventHandler(async event => {
-  if (noVerificationRouters.includes(event.path) && event.path.includes('/api/web')) {
+  if (noVerificationRouters.includes(event.path.split('?')[0]) && event.path.includes('/api/web')) {
     const token = getHeader(event, 'Token');
     if (!token) {
       return createApiResponse(null, 401, '未登录');

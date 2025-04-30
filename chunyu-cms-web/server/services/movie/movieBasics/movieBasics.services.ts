@@ -192,7 +192,8 @@ export class MovieBasicsServices {
             }
           }
         },
-        pv: true
+        pv: true,
+        movieRate: true
       },
       where,
       offset,

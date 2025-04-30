@@ -71,7 +71,7 @@
           </div>
         </div>
         <div v-if="userInfo" class="cursor-pointer">
-          <el-dropdown @command="handleCommand">
+          <el-dropdown effec="dark" @command="handleCommand">
             <el-avatar :size="32" :src="userInfo.avatar" />
             <template #dropdown>
               <el-dropdown-menu>
@@ -232,6 +232,7 @@
       case 'logout':
         userInfo.value = null;
         token.value = null;
+        window.location.reload();
         break;
       default:
         break;

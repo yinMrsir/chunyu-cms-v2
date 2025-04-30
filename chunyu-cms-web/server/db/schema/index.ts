@@ -33,6 +33,8 @@ import * as movieBasicToGenreSchema from './movie/movieBasicToGenre';
 import * as moviePvSchema from './movie/moviePv';
 // 用户端
 import * as memberUserSchema from './member/user';
+import * as memberRateSchema from './member/rate';
+import * as movieRateSchema from './movie/rate';
 
 export default {
   ...userSchema,
@@ -67,5 +69,7 @@ export default {
   ...moviePhotoSchema,
   ...movieBasicToGenreSchema,
   ...moviePvSchema,
-  ...memberUserSchema
+  ...memberUserSchema,
+  ...memberRateSchema,
+  ...movieRateSchema
 };

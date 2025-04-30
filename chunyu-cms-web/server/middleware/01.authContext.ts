@@ -9,7 +9,7 @@ const noVerificationRouters = [
 ];
 
 export default defineEventHandler(async event => {
-  if (!noVerificationRouters.includes(event.path) && event.path.includes('/api/admin')) {
+  if (!noVerificationRouters.includes(event.path.split('?')[0]) && event.path.includes('/api/admin')) {
     const auth = useAuth(event);
     event.context.user = await auth.verification();
     event.context.validatePermission = auth.validatePermission;

@@ -10,7 +10,7 @@ export default defineNuxtConfig({
   css: [
     '@unocss/reset/tailwind-compat.css',
     'element-plus/dist/index.css',
-    'element-plus/theme-chalk/display.css',
+    'element-plus/theme-chalk/dark/css-vars.css',
     '@/assets/css/style.css'
   ],
   modules: ['@element-plus/nuxt', '@unocss/nuxt', '@nuxt/image'],
@@ -25,6 +25,9 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
+      htmlAttrs: {
+        class: 'dark'
+      },
       title: '淳渔影视CMS-Nodejs快速搭建影视类网站',
       meta: [
         { charset: 'utf-8' },

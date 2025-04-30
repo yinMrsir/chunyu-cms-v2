@@ -224,14 +224,13 @@
     const formData = new FormData();
     formData.append('file', blob, 'avatar.jpg'); // 设置文件名
 
-    const result = await fetch('/api/admin/common/upload', {
+    const data = await $fetch('/api/admin/common/upload', {
       headers: {
         contentType: 'multipart/form-data'
       },
       method: 'POST',
       body: formData
     });
-    const data = await result.json();
     if (data.code === 200) {
       form.value.avatar = data.data.url;
     } else {

@@ -61,7 +61,10 @@
         <ul>
           <li v-for="v in movies" :key="v.movieBasicsId">
             <nuxt-link :to="`/column/${v.columnValue}/video/${v.movieBasicsId}`">
-              <NuxtImg format="webp" loading="lazy" :alt="v?.title" :src="v?.poster" />
+              <div class="relative">
+                <NuxtImg format="webp" loading="lazy" :alt="v?.title" :src="v?.poster" />
+                <span v-if="v.movieRate" class="rate"> {{ v.movieRate.rate.toFixed(1) }} </span>
+              </div>
               <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
                 <h3>{{ v.title }}</h3>
                 <p>
@@ -138,20 +141,23 @@
         }));
       }
     }),
-    useAsyncData(() => {
-      return $fetch('/api/web/movie/list', {
-        query: {
-          columnValue: params.columnValue,
-          genreId: query.gid,
-          countryId: query.cid,
-          language: query.l,
-          year: query.y,
-          pageNum: currentPage.value,
-          limit: 12,
-          orderBy: orderBy.value
-        }
-      });
-    }),
+    useAsyncData(
+      `${params.columnValue}:${query.gid}:${query.cid}:${query.l}:${query.y}:${currentPage.value}:${orderBy.value}`,
+      () => {
+        return $fetch('/api/web/movie/list', {
+          query: {
+            columnValue: params.columnValue,
+            genreId: query.gid,
+            countryId: query.cid,
+            language: query.l,
+            year: query.y,
+            pageNum: currentPage.value,
+            limit: 12,
+            orderBy: orderBy.value
+          }
+        });
+      }
+    ),
     useFetch(`/api/web/column/${route.params.columnValue}`, {
       pick: ['name']
     })

@@ -25,11 +25,13 @@
                     {{ detail.title }}
                     <el-popover placement="bottom" effect="dark" :width="240">
                       <template #reference>
-                        <span class="color-orange text-12px">7.0分</span>
+                        <span class="color-orange text-12px">
+                          {{ movieRate ? `${movieRate.toFixed(1)}分` : '暂无评分' }}
+                        </span>
                       </template>
                       <div class="flex items-center">
                         <span class="text-14px">我的评分：</span>
-                        <el-rate v-model="rate" allow-half @change="onRatechange" />
+                        <el-rate v-model="rate" :disabled="rate > 0" allow-half @change="onRatechange" />
                       </div>
                     </el-popover>
                   </h1>
@@ -196,20 +198,24 @@
   import dayjs from 'dayjs';
   import { Swiper, SwiperSlide } from 'swiper/vue';
   import 'swiper/css';
-  import { useSidebarOpen, useTextVisible } from '~/composables/states';
+  import { useSidebarOpen, useTextVisible, useLoginVisible } from '~/composables/states';
+  import { WEB_TOKEN } from '#shared/cookiesName';
 
   definePageMeta({
     key: route => route.fullPath
   });
 
+  const route = useRoute();
+  const token = useCookie(WEB_TOKEN);
   const sidebarOpen = useSidebarOpen();
   const textVisible = useTextVisible();
-  const route = useRoute();
+  const loginVisible = useLoginVisible();
 
   const form = ref({ isDm: '1', comment: '' });
   const tabStatus = ref('video');
   const vIndex = ref(0);
   const rate = ref();
+  const movieRate = ref();
 
   const [{ data: detail }, { data: movies }] = await Promise.all([
     useFetch(`/api/web/movie/${route.params.id}`),
@@ -223,6 +229,7 @@
       }
     })
   ]);
+  movieRate.value = detail.value?.movieRate?.rate;
   if (route.query.mvid) {
     vIndex.value = detail.value?.movieVideo.findIndex(item => item.movieVideoId === Number(route.query.mvid)) || 0;
   }
@@ -230,52 +237,82 @@
   onMounted(async () => {
     sidebarOpen.value = false;
     textVisible.value = false;
-    const [Player, Mp4Plugin, Danmu] = await Promise.all([
-      import('xgplayer'),
-      import('xgplayer-mp4'),
-      import('xgplayer/es/plugins/danmu')
-    ]);
-    // eslint-disable-next-line no-new
-    new Player.default({
-      id: 'mse',
-      controls: {
-        autoHide: false
-      },
-      autoplay: true,
-      volume: 0.3,
-      url: detail.value?.movieVideo?.[vIndex.value]?.video?.url,
-      playsinline: true,
-      height: '100%',
-      width: '100%',
-      plugins: [Mp4Plugin.default, Danmu.default],
-      danmu: {
-        comments: [
-          {
-            duration: 15000,
-            id: '1',
-            start: 3000,
-            txt: '好看，精彩！！！'
-          },
-          {
-            duration: 15000,
-            id: '2',
-            start: 2000,
-            txt: '终于可以看了。'
+    if (detail.value?.movieVideo?.[vIndex.value]?.video?.url) {
+      const [Player, Mp4Plugin, Danmu] = await Promise.all([
+        import('xgplayer'),
+        import('xgplayer-mp4'),
+        import('xgplayer/es/plugins/danmu')
+      ]);
+      // eslint-disable-next-line no-new
+      new Player.default({
+        id: 'mse',
+        controls: {
+          autoHide: false
+        },
+        autoplay: true,
+        volume: 0.3,
+        url: detail.value?.movieVideo?.[vIndex.value]?.video?.url,
+        playsinline: true,
+        height: '100%',
+        width: '100%',
+        plugins: [Mp4Plugin.default, Danmu.default],
+        danmu: {
+          comments: [
+            {
+              duration: 15000,
+              id: '1',
+              start: 3000,
+              txt: '好看，精彩！！！'
+            },
+            {
+              duration: 15000,
+              id: '2',
+              start: 2000,
+              txt: '终于可以看了。'
+            }
+          ],
+          area: {
+            start: 0,
+            end: 1
           }
-        ],
-        area: {
-          start: 0,
-          end: 1
         }
-      }
-    });
+      });
+    }
+    if (token.value) {
+      await getMemberRate();
+    }
   });
 
   function handleSubmit() {
     console.log(form.value);
   }
 
-  function onRatechange() {}
+  /** 获取用户评分 **/
+  async function getMemberRate() {
+    const data = await request({
+      url: '/api/web/member/rate?movieBasicsId=' + route.params.id
+    });
+    rate.value = data?.rate ? data.rate / 2 : 0;
+  }
+
+  async function onRatechange(value) {
+    if (!value) return;
+    if (!token.value) {
+      loginVisible.value = true;
+      rate.value = 0;
+    } else {
+      const data = await request({
+        url: '/api/web/member/rate',
+        method: 'post',
+        body: {
+          movieBasicsId: route.params.id,
+          rate: value * 2
+        }
+      });
+      movieRate.value = data.rate;
+      ElMessage.success('评分成功');
+    }
+  }
 </script>
 
 <style lang="scss">
