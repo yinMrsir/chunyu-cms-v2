@@ -9,6 +9,7 @@ const noVerificationRouters = [
   '/api/web/movie/pv',
   '/api/web/sendCode',
   '/api/web/login',
+  '/api/web/member/rate',
   '/api/web/member/user'
 ];
 

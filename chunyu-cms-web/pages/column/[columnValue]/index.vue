@@ -28,7 +28,7 @@
               <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
                 <h3>{{ v.movieBasics?.title }}</h3>
                 <p>
-                  <template v-for="actor in v.movieBasics?.casts || []"> {{ actor.actor.name }}&nbsp; </template>
+                  <template v-for="actor in v.movieBasics?.casts || []"> {{ actor.actor?.name }}&nbsp; </template>
                   <span v-if="!v.movieBasics?.casts.length">-</span>
                 </p>
               </div>
