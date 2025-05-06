@@ -10,24 +10,28 @@
         <el-form-item label="按类型">
           <ul class="show__type-filter">
             <li :class="route.query.gid === '' || route.query.gid === undefined ? 'active' : ''">
-              <nuxt-link :to="{ path: route.path, query: { ...route.query, gid: '' } }">全部</nuxt-link>
+              <nuxt-link :to="{ path: route.path, query: { ...route.query, gid: '', orderBy } }">全部</nuxt-link>
             </li>
             <li v-for="item in genres" :key="item.id" :class="Number(route.query.gid) === item.id ? 'active' : ''">
-              <nuxt-link :to="{ path: route.path, query: { ...route.query, gid: item.id } }">{{ item.name }}</nuxt-link>
+              <nuxt-link :to="{ path: route.path, query: { ...route.query, gid: item.id, orderBy } }">
+                {{ item.name }}
+              </nuxt-link>
             </li>
           </ul>
         </el-form-item>
         <el-form-item label="按地区">
           <ul class="show__type-filter">
             <li :class="route.query.cid === '' || route.query.cid === undefined ? 'active' : ''">
-              <nuxt-link :to="{ path: route.path, query: { ...route.query, cid: '' } }">全部</nuxt-link>
+              <nuxt-link :to="{ path: route.path, query: { ...route.query, cid: '', orderBy } }">全部</nuxt-link>
             </li>
             <li
               v-for="item in countries"
               :key="item.id"
               :class="route.query.cid && +route.query.cid === +item.id ? 'active' : ''"
             >
-              <nuxt-link :to="{ path: route.path, query: { ...route.query, cid: item.id } }">{{ item.name }}</nuxt-link>
+              <nuxt-link :to="{ path: route.path, query: { ...route.query, cid: item.id, orderBy } }">
+                {{ item.name }}
+              </nuxt-link>
             </li>
           </ul>
         </el-form-item>
@@ -35,27 +39,32 @@
       <el-form-item label="按年份">
         <ul class="show__type-filter">
           <li :class="route.query.y === '' || route.query.y === undefined ? 'active' : ''">
-            <nuxt-link :to="{ path: route.path, query: { ...route.query, y: '' } }">全部</nuxt-link>
+            <nuxt-link :to="{ path: route.path, query: { ...route.query, y: '', orderBy } }">全部</nuxt-link>
           </li>
           <li v-for="item in years" :key="item" :class="route.query.y && +route.query.y === item ? 'active' : ''">
-            <nuxt-link :to="{ path: route.path, query: { ...route.query, y: item } }">{{ item }}</nuxt-link>
+            <nuxt-link :to="{ path: route.path, query: { ...route.query, y: item, orderBy } }">{{ item }}</nuxt-link>
+          </li>
+          <li :class="route.query.y === '-1' ? 'active' : ''">
+            <nuxt-link :to="{ path: route.path, query: { ...route.query, y: '-1', orderBy } }">更早</nuxt-link>
           </li>
         </ul>
       </el-form-item>
       <el-form-item label="按语言">
         <ul class="show__type-filter">
           <li :class="route.query.l === '' || route.query.l === undefined ? 'active' : ''">
-            <nuxt-link :to="{ path: route.path, query: { ...route.query, l: '' } }">全部</nuxt-link>
+            <nuxt-link :to="{ path: route.path, query: { ...route.query, l: '', orderBy } }">全部</nuxt-link>
           </li>
           <li v-for="item in languages" :key="item.id" :class="route.query.l === item.name ? 'active' : ''">
-            <nuxt-link :to="{ path: route.path, query: { ...route.query, l: item.name } }">{{ item.name }}</nuxt-link>
+            <nuxt-link :to="{ path: route.path, query: { ...route.query, l: item.name, orderBy } }">
+              {{ item.name }}
+            </nuxt-link>
           </li>
         </ul>
       </el-form-item>
       <el-tabs v-model="orderBy" @tab-change="handleTabChange">
         <el-tab-pane label="按时间" name="createTime" :disabled="pending"></el-tab-pane>
         <el-tab-pane label="按人气" name="pv" :disabled="pending"></el-tab-pane>
-        <!--        <el-tab-pane label="按评分" name="rate" :disabled="pending"></el-tab-pane>-->
+        <el-tab-pane label="按评分" name="rate" :disabled="pending"></el-tab-pane>
       </el-tabs>
       <div class="video-list">
         <ul>
@@ -63,7 +72,7 @@
             <nuxt-link :to="`/column/${v.columnValue}/video/${v.movieBasicsId}`">
               <div class="relative">
                 <NuxtImg format="webp" loading="lazy" :alt="v?.title" :src="v?.poster" />
-                <span v-if="v.movieRate" class="rate"> {{ v.movieRate.rate.toFixed(1) }} </span>
+                <span v-if="v.movieRate?.rateUserCount" class="rate"> {{ v.movieRate.rate.toFixed(1) }} </span>
               </div>
               <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
                 <h3>{{ v.title }}</h3>
@@ -102,11 +111,11 @@
 
   const route = useRoute();
   const { query, params } = route;
-  const currentPage = ref<number>((route.query.page && +route.query.page) || 1);
+  const currentPage = ref<number>((query.page && +query.page) || 1);
   const orderBy = ref<string>((query.orderBy as string) || 'createTime');
   const years = ref<number[]>([]);
   const y = new Date().getFullYear();
-  for (let i = 0; i <= 15; i++) {
+  for (let i = 0; i <= 20; i++) {
     years.value.push(y - i);
   }
   const pageBottomRef = useTemplateRef('pageBottomRef');
@@ -191,6 +200,12 @@
 
   if (process.client) {
     onMounted(() => {
+      // 处理切换类型时默认从一个滑动
+      const elTabActiveBar = document.querySelector('.el-tabs__active-bar');
+      elTabActiveBar?.classList.add('no_transition');
+      setTimeout(() => {
+        elTabActiveBar?.classList.remove('no_transition');
+      });
       createTrigger();
     });
   }
@@ -288,5 +303,11 @@
         }
       }
     }
+  }
+</style>
+
+<style lang="scss">
+  .no_transition {
+    transition: none !important;
   }
 </style>

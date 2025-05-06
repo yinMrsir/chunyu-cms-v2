@@ -155,7 +155,7 @@
           placeholder="请输入关键字"
           style="outline: 0; width: 100%"
           autocomplete="off"
-          @keyup.enter="router.push(`/search?keyword=${keyword}`)"
+          @keyup.enter="handleSearch"
         />
         <nuxt-link :to="`/search?keyword=${keyword}`" class="search-button">
           <el-icon><ElIconSearch /></el-icon>
@@ -238,6 +238,11 @@
         break;
     }
   };
+
+  function handleSearch() {
+    router.push(`/search?keyword=${keyword.value}`);
+    sidebarMobileOpen.value = false;
+  }
 </script>
 
 <style lang="scss">

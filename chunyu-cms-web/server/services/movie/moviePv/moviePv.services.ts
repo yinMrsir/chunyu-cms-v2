@@ -1,4 +1,4 @@
-import { eq, and, inArray, like, not } from 'drizzle-orm';
+import { eq, and, inArray, like, not, lt } from 'drizzle-orm';
 import { MoviePv, moviePvTable, NewMoviePv } from '~/server/db/schema/movie/moviePv';
 import { movieBasicsTable } from '~/server/db/schema/movie/movieBasics';
 import { queryParams } from '~/server/db/query.helper';
@@ -76,16 +76,30 @@ export class MoviePvServices {
       );
     }
     if (params?.year) {
-      whereList.push(
-        inArray(
-          moviePvTable.movieBasicsId,
-          (
-            await db.query.movieBasicsTable.findMany({
-              where: eq(movieBasicsTable.year, params.year)
-            })
-          ).map(item => item.movieBasicsId)
-        )
-      );
+      if (+params.year === -1) {
+        // 获取小于年份前20年的
+        whereList.push(
+          inArray(
+            moviePvTable.movieBasicsId,
+            (
+              await db.query.movieBasicsTable.findMany({
+                where: lt(movieBasicsTable.year, new Date().getFullYear() - 20)
+              })
+            ).map(item => item.movieBasicsId)
+          )
+        );
+      } else {
+        whereList.push(
+          inArray(
+            moviePvTable.movieBasicsId,
+            (
+              await db.query.movieBasicsTable.findMany({
+                where: eq(movieBasicsTable.year, params.year)
+              })
+            ).map(item => item.movieBasicsId)
+          )
+        );
+      }
     }
     if (params?.language) {
       whereList.push(
@@ -127,7 +141,8 @@ export class MoviePvServices {
                 }
               }
             },
-            pv: true
+            pv: true,
+            movieRate: true
           }
         }
       },

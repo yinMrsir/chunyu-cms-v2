@@ -23,7 +23,9 @@
             <nuxt-link :to="`/column/${item.columnValue}/video/${v.movieBasicsId}`">
               <div class="relative">
                 <NuxtImg format="webp" loading="lazy" :alt="v.movieBasics?.title" :src="v.movieBasics?.poster" />
-                <span v-if="v.movieBasics.movieRate" class="rate"> {{ v.movieBasics.movieRate.rate.toFixed(1) }} </span>
+                <span v-if="v.movieBasics.movieRate?.rateUserCount" class="rate">
+                  {{ v.movieBasics.movieRate.rate.toFixed(1) }}
+                </span>
               </div>
               <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
                 <h3>{{ v.movieBasics?.title }}</h3>

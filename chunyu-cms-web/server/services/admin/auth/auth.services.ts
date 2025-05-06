@@ -20,7 +20,7 @@ export class AuthServices {
   /* 判断验证码是否正确 */
   async checkImgCaptcha(uuid: string, code: string, { headers, user }: any) {
     const key = `${CAPTCHA_IMG_KEY}:${uuid}`;
-    const result: number | string | null = await useStorage('redis').getItem(key);
+    const result: any = await useStorage('redis').getItem(key);
     if (!lodash.isEmpty(result) || code.toLowerCase() !== String(result).toLowerCase()) {
       await this.logServices.addLoginInfo({ headers, user }, '验证码错误');
       throw createError({ statusCode: 400, message: '验证码错误' });

@@ -8,7 +8,10 @@
         <ul>
           <li v-for="v in movies" :key="v.movieBasicsId">
             <nuxt-link :to="`/column/${v.columnValue}/video/${v.movieBasicsId}`">
-              <NuxtImg format="webp" loading="lazy" :alt="v?.title" :src="v?.poster" />
+              <div class="relative">
+                <NuxtImg format="webp" loading="lazy" :alt="v?.title" :src="v?.poster" />
+                <span v-if="v.movieRate?.rateUserCount" class="rate"> {{ v.movieRate.rate.toFixed(1) }} </span>
+              </div>
               <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
                 <h3>{{ v.title }}</h3>
                 <p>
@@ -54,7 +57,7 @@
 
   const movies = ref<any[]>([]);
   const [{ data: movieData, refresh: movieRefresh }] = await Promise.all([
-    useAsyncData(() => {
+    useAsyncData(route.fullPath, () => {
       return $fetch('/api/web/movie/list', {
         query: {
           keyword: query.keyword,
@@ -71,25 +74,27 @@
   }
 
   if (process.client) {
-    trigger = ScrollTrigger.create({
-      trigger: pageBottomRef.value as HTMLDivElement,
-      start: 'top bottom',
-      onEnter: async () => {
-        // 临时禁用触发器，防止重复触发
-        trigger.disable();
-        currentPage.value++;
-        await movieRefresh();
-        movies.value = movies.value.concat(movieData.value.rows);
-        if (movies.value.length >= movieData.value?.total) {
-          isShowLoading.value = false;
-          trigger.kill();
-        } else {
-          setTimeout(() => {
-            trigger.enable();
-          });
-        }
-      },
-      markers: process.dev // 开发环境下显示标记
+    onMounted(() => {
+      trigger = ScrollTrigger.create({
+        trigger: pageBottomRef.value as HTMLDivElement,
+        start: 'top bottom',
+        onEnter: async () => {
+          // 临时禁用触发器，防止重复触发
+          trigger.disable();
+          currentPage.value++;
+          await movieRefresh();
+          movies.value = movies.value.concat(movieData.value.rows);
+          if (movies.value.length >= movieData.value?.total) {
+            isShowLoading.value = false;
+            trigger.kill();
+          } else {
+            setTimeout(() => {
+              trigger.enable();
+            });
+          }
+        },
+        markers: process.dev // 开发环境下显示标记
+      });
     });
   }
 </script>

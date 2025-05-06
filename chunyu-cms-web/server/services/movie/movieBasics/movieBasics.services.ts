@@ -1,4 +1,4 @@
-import { and, between, desc, eq, inArray, like, not, sql } from 'drizzle-orm';
+import { and, between, desc, eq, inArray, like, lt, not, sql } from 'drizzle-orm';
 import { MovieBasics, movieBasicsTable, NewMovieBasics } from '~/server/db/schema/movie/movieBasics';
 import { queryParams } from '~/server/db/query.helper';
 import { movieBasicToCountryTable } from '~/server/db/schema/movie/movieBasicToCountry';
@@ -145,7 +145,12 @@ export class MovieBasicsServices {
       );
     }
     if (params?.year) {
-      whereList.push(eq(movieBasicsTable.year, Number(params.year)));
+      if (+params.year === -1) {
+        // 获取小于年份前20年的
+        whereList.push(lt(movieBasicsTable.year, new Date().getFullYear() - 20));
+      } else {
+        whereList.push(eq(movieBasicsTable.year, Number(params.year)));
+      }
     }
     if (params?.language) {
       whereList.push(like(movieBasicsTable.languages, `%${params.language}%`));
