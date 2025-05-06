@@ -229,6 +229,11 @@
       }
     })
   ]);
+
+  if (Object.keys(detail.value).length === 0) {
+    throw createError({ statusCode: 404 });
+  }
+
   movieRate.value = detail.value?.movieRate?.rate;
   if (route.query.mvid) {
     vIndex.value = detail.value?.movieVideo.findIndex(item => item.movieVideoId === Number(route.query.mvid)) || 0;

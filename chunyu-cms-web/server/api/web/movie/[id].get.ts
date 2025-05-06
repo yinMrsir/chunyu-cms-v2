@@ -5,7 +5,7 @@ const movieBasicsServices = new MovieBasicsServices();
 
 export default defineEventHandler(async event => {
   const id = getRouterParam(event, 'id');
-  return await movieBasicsServices.findById(Number(id), {
+  const data = await movieBasicsServices.findById(Number(id), {
     pv: true,
     movieRate: {
       columns: {
@@ -56,4 +56,5 @@ export default defineEventHandler(async event => {
       }
     }
   });
+  return data || {};
 });
