@@ -111,7 +111,7 @@
   }
   const pageBottomRef = useTemplateRef('pageBottomRef');
   const isShowLoading = ref(true);
-  let trigger: ScrollTrigger;
+  let trigger: ScrollTrigger | null = null;
 
   const movies = ref<any[]>([]);
   const [
@@ -190,7 +190,9 @@
   });
 
   if (process.client) {
-    createTrigger();
+    onMounted(() => {
+      createTrigger();
+    });
   }
 
   function createTrigger() {
@@ -198,23 +200,25 @@
       trigger: pageBottomRef.value as HTMLDivElement,
       start: 'top bottom',
       onEnter: async () => {
-        if (!isShowLoading.value) {
+        if (!isShowLoading.value && pending) {
           return;
         }
         // 临时禁用触发器，防止重复触发
-        trigger.disable();
+        trigger?.disable();
         currentPage.value++;
         await movieRefresh();
-        movies.value = movies.value.concat(movieData.value.rows);
+        movies.value = movies.value.concat(movieData.value?.rows);
         if (movies.value.length >= movieData.value?.total) {
           isShowLoading.value = false;
-          trigger.kill();
+          trigger?.kill();
+          trigger = null;
         } else {
           setTimeout(() => {
-            trigger.enable();
+            trigger?.enable();
           });
         }
-      }
+      },
+      markers: process.dev // 开发环境下显示标记
     });
   }
 
@@ -223,11 +227,12 @@
     movies.value = [];
     currentPage.value = 1;
     await movieRefresh();
-    movies.value = movies.value.concat(movieData.value.rows);
+    movies.value = movies.value.concat(movieData.value?.rows);
     if (movies.value.length >= movieData.value?.total) {
       isShowLoading.value = false;
+    } else if (!trigger) {
+      createTrigger();
     }
-    createTrigger();
   }
 </script>
 
