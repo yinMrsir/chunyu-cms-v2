@@ -1,4 +1,4 @@
-import { WEB_TOKEN } from '~/shared/cookiesName';
+import { WEB_TOKEN, WEB_USER_INFO } from '~/shared/cookiesName';
 
 export const createToken = () => {
   const token = useCookie(WEB_TOKEN);
@@ -18,6 +18,11 @@ export const request = (options: { url: any; method: any; body: any }) => {
       .then((response: any) => {
         if (response.code === 200) {
           resolve(response.data);
+        } else if (response.code === 401) {
+          const token = useCookie(WEB_TOKEN);
+          const userInfo = useCookie(WEB_USER_INFO);
+          token.value = null;
+          userInfo.value = null;
         } else {
           ElMessage.error(response.msg);
           reject(response.msg);
