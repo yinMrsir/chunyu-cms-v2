@@ -73,5 +73,13 @@
     "vue-cropperjs": "^5.0.0",
     "xgplayer": "^3.0.21",
     "xgplayer-mp4": "^3.0.21"
+  },
+  "engines": {
+    "node": ">=18.16.0",
+    "pnpm": ">=8.9.2"
+  },
+  "volta": {
+    "node": "18.16.0",
+    "pnpm": "8.9.2"
   }
 }
