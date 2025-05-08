@@ -22,8 +22,7 @@ V2相比[V1版本](https://github.com/yinMrsir/chunyu-cms)使用[DrizzleOrm](htt
 
 
 ## 使用前
-
-如未安装`mysql`数据库和`redis`请先自行安装。mysql8.x，redis7。或[点击此处服务器环境安装流程](服务器环境安装流程.md)
+如未安装`node`，`mysql`数据库和`redis`请先自行安装。mysql8.x，redis7。或[点击此处服务器环境安装流程](服务器环境安装流程.md)
 
 **mysql**和**redis**配置你可以到`chunyu-cms-web/nuxt.config.ts`进行配置。你也可以创建一个`chunyu-cms-web/.env`文件
 
