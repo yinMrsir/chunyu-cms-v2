@@ -152,6 +152,7 @@
     value => {
       if (!value) {
         videoInfo.value = {};
+        form.value = {};
       }
     }
   );
