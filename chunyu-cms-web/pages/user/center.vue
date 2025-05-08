@@ -21,7 +21,12 @@
               @change="handleFileChange"
             />
           </div>
-          <div v-for="(item, index) in shorts" :key="index" class="works-box__item">
+          <div
+            v-for="(item, index) in shorts"
+            :key="index"
+            class="works-box__item"
+            @click="handlePreviewVideo(item.videoUrl)"
+          >
             <NuxtImg size="200px" format="webp" loading="lazy" :src="item.poster" />
             <span class="absolute top-10px right-10px text-14px text-white:80">{{ auditStatus[item.status] }}</span>
           </div>
@@ -91,6 +96,9 @@
         </span>
       </template>
     </el-dialog>
+    <el-dialog v-model="previewVideoVisible" class="!w-360px !md:w-600px">
+      <video v-if="previewVideo" :src="previewVideo" controls class="w-full h-400px object-contain"></video>
+    </el-dialog>
   </div>
 </template>
 
@@ -136,6 +144,17 @@
     1: '',
     2: '审核不通过'
   });
+  const previewVideo = ref('');
+  const previewVideoVisible = ref(false);
+
+  watch(
+    () => uploadShortVisible.value,
+    value => {
+      if (!value) {
+        videoInfo.value = {};
+      }
+    }
+  );
 
   const { data: userInfoData } = await useFetch('/api/web/member/user', {
     headers: {
@@ -345,6 +364,11 @@
         ElMessage.error('上传失败');
       }
     });
+  }
+
+  function handlePreviewVideo(videoUrl) {
+    previewVideo.value = videoUrl;
+    previewVideoVisible.value = true;
   }
 </script>
 

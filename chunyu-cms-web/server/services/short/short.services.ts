@@ -15,6 +15,9 @@ export class ShortServices {
     if (params?.description || params?.keyword) {
       whereList.push(like(shortTable.description, `%${params.description || params.keyword}%`));
     }
+    if (params?.status) {
+      whereList.push(eq(shortTable.status, params.status));
+    }
     if (memberUserId) {
       whereList.push(eq(shortTable.memberUserId, memberUserId));
     }
