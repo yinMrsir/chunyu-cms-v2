@@ -26,6 +26,7 @@
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@types/ali-oss": "^6.16.11",
     "@types/crypto-js": "^4.2.2",
+    "@types/fs-extra": "^11.0.4",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^18.17.1",
     "@types/node-schedule": "^2.1.7",
@@ -45,7 +46,6 @@
   "dependencies": {
     "@types/showdown": "^2.0.6",
     "ali-oss": "^6.22.0",
-    "axios": "^1.9.0",
     "cheerio": "^1.0.0",
     "clipboard": "^2.0.11",
     "crypto-js": "^4.2.0",
@@ -55,6 +55,7 @@
     "drizzle-orm": "^0.36.3",
     "element-plus": "^2.8.7",
     "exceljs": "^4.4.0",
+    "fs-extra": "^11.3.0",
     "gsap": "^3.12.5",
     "image-size": "^1.2.0",
     "jsonwebtoken": "^9.0.2",

@@ -35,14 +35,14 @@
         <video
           class="short-video"
           :poster="short.poster"
-          :src="short.src"
+          :src="short.videoUrl"
           autoplay
           loop
           :muted="isMuted"
           controlslist="nodownload"
         ></video>
         <div class="video-info">
-          <h3>{{ short.title }}</h3>
+          <h3>{{ short.description }}</h3>
         </div>
         <div class="video-actions">
           <div class="action-icon">
@@ -59,7 +59,7 @@
           </div>
           <div class="action-icon">
             <i class="i-el-share-alt w-28px h-28px"></i>
-            <span>{{ short.shares }}</span>
+            <span>{{ short.shareCount }}</span>
           </div>
         </div>
       </div>
@@ -82,20 +82,8 @@
   const isShowPlayButton = ref(false);
   const shorts = ref([]);
   const isMuted = ref(true);
-  const { data } = await useFetch('/api/web/movie/video/list');
-  shorts.value = shorts.value.concat(
-    data.value.map(item => {
-      return {
-        poster: item.poster,
-        src: item.url,
-        title: item.title,
-        likes: 100,
-        collection: 10,
-        comments: 20,
-        shares: 10
-      };
-    })
-  );
+  const { data } = await useFetch('/api/web/short/list');
+  shorts.value = shorts.value.concat(data.value);
 
   const scrollToShort = index => {
     if (isDragging.value) return;

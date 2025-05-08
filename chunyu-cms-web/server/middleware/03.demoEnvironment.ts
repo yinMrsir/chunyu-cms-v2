@@ -6,6 +6,8 @@ const noVerificationRouters = [
   '/api/admin/logout',
   '/api/admin/captchaImage',
   '/api/admin/common/upload',
+  '/api/admin/common/uploadChunk',
+  '/api/admin/common/mergeChunks',
   '/api/web/movie/pv',
   '/api/web/sendCode',
   '/api/web/login',

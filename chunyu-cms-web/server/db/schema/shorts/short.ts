@@ -1,5 +1,5 @@
 import { char, int, mysqlTable, varchar } from 'drizzle-orm/mysql-core';
-import { columnsHelpers } from '~/server/db/columns.helpers';
+import { columnsHelpers } from '../../columns.helpers';
 
 export const shortTable = mysqlTable('short', {
   shortId: int('short_id').autoincrement().primaryKey(),
@@ -10,7 +10,7 @@ export const shortTable = mysqlTable('short', {
   // 视频播放地址
   videoUrl: varchar('video_url', { length: 255 }).notNull(),
   // 视频类型
-  mimeType: varchar('mime_type', { length: 255 }).notNull(),
+  mimeType: varchar('mime_type', { length: 255 }),
   // 视频时长
   duration: int('duration'),
   // 视频宽度
@@ -33,7 +33,7 @@ export const shortTable = mysqlTable('short', {
   collection: int('collection').default(0),
   // 是否公开(1:公开,0:私密)
   isPublic: char('is_public', { length: 1 }).notNull().default('1'),
-  // 视频状态(0:审核中,1:正常,2:已封禁)
+  // 视频状态(0:审核中,1:通过,2:不通过 3:已封禁)
   status: char('status', { length: 1 }).notNull().default('0'),
   ...columnsHelpers
 });

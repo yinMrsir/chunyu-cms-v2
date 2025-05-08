@@ -4,7 +4,13 @@ import { USER_WEB_TOKEN_KEY } from '~/server/contants/redis.contant';
 const redis = useStorage('redis');
 
 /* 用户端接口需要验证的路由 */
-const noVerificationRouters = ['/api/web/member/user/updatePassword', '/api/web/member/user', '/api/web/member/rate'];
+const noVerificationRouters = [
+  '/api/web/member/user/updatePassword',
+  '/api/web/member/user',
+  '/api/web/member/rate',
+  '/api/web/member/short',
+  '/api/web/member/short/list'
+];
 
 export default defineEventHandler(async event => {
   if (noVerificationRouters.includes(event.path.split('?')[0]) && event.path.includes('/api/web')) {

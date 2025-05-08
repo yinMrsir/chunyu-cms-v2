@@ -5,7 +5,9 @@ const noVerificationRouters = [
   '/api/admin/login',
   '/api/admin/logout',
   '/api/admin/captchaImage',
-  '/api/admin/common/upload'
+  '/api/admin/common/upload',
+  '/api/admin/common/uploadChunk',
+  '/api/admin/common/mergeChunks'
 ];
 
 export default defineEventHandler(async event => {

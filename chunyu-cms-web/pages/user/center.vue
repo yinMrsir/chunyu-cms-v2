@@ -18,17 +18,12 @@
               type="file"
               text="上传封面"
               class="absolute w-full h-full left-0 top-0 opacity-0 cursor-pointer z-10"
-              @change="handleUploadShort"
+              @change="handleFileChange"
             />
           </div>
-          <div v-for="(item, index) in 1" :key="index" class="works-box__item">
-            <NuxtImg
-              size="200px"
-              format="webp"
-              loading="lazy"
-              src="http://localhost:3000/uploads/2025-05-07/4xqIH3dgk.jpeg"
-            />
-            <span class="absolute top-10px right-10px text-14px text-white:80">审核中</span>
+          <div v-for="(item, index) in shorts" :key="index" class="works-box__item">
+            <NuxtImg size="200px" format="webp" loading="lazy" :src="item.poster" />
+            <span class="absolute top-10px right-10px text-14px text-white:80">{{ auditStatus[item.status] }}</span>
           </div>
         </div>
       </el-tab-pane>
@@ -40,7 +35,7 @@
       </el-tab-pane>
     </el-tabs>
     <el-dialog v-model="uploadShortVisible" class="!w-360px !md:w-600px">
-      <div v-if="!videoInfo.url" class="flex justify-center items-center m-y-20px">
+      <div v-if="!videoInfo.videoUrl" class="flex justify-center items-center m-y-20px">
         <div id="loading-box" ref="loadingBoxRef">
           <h2 id="number" ref="loadingNumberRef"></h2>
         </div>
@@ -52,7 +47,7 @@
             class="w-200px h-360px object-contain"
             preload="metadata"
             controls
-            :src="videoInfo.url"
+            :src="videoInfo.videoUrl"
           ></video>
           <el-button size="small" @click="getCurrentTime">截取封面</el-button>
         </div>
@@ -83,14 +78,14 @@
                 placeholder="请输入作品描述"
               ></el-input>
             </el-form-item>
-            <el-form-item prop="topic">
-              <el-input-tag v-model="form.topic" :max="5" placeholder="请输入话题" aria-label="输入后请按回车键" />
-            </el-form-item>
+            <!--            <el-form-item prop="topic">-->
+            <!--              <el-input-tag v-model="form.topic" :max="5" placeholder="请输入话题" aria-label="输入后请按回车键" />-->
+            <!--            </el-form-item>-->
           </el-form>
         </div>
       </div>
       <template #footer>
-        <span v-if="videoInfo.url" class="dialog-footer">
+        <span v-if="videoInfo.videoUrl" class="dialog-footer">
           <el-button @click="uploadShortVisible = false">取 消</el-button>
           <el-button type="primary" @click="handleSubmitUploadShort">确 定</el-button>
         </span>
@@ -100,7 +95,6 @@
 </template>
 
 <script setup>
-  import axios from 'axios';
   import { createToken } from '~/utils/request';
   import { WEB_TOKEN, WEB_USER_INFO } from '~/shared/cookiesName';
 
@@ -136,6 +130,12 @@
   const videoInfo = ref({});
   const loadingBoxRef = useTemplateRef('loadingBoxRef');
   const loadingNumberRef = useTemplateRef('loadingNumberRef');
+  const shorts = ref([]);
+  const auditStatus = ref({
+    0: '审核中',
+    1: '',
+    2: '审核不通过'
+  });
 
   const { data: userInfoData } = await useFetch('/api/web/member/user', {
     headers: {
@@ -148,49 +148,116 @@
     router.push('/');
   }
 
+  const pageNum = ref(1);
+  const { data: shortData, refresh } = await useAsyncData(() => {
+    return $fetch(`/api/web/member/short/list?pageNum=${pageNum.value}&pageSize=10`, {
+      headers: {
+        Token: createToken()
+      }
+    });
+  });
+  shorts.value = shorts.value.concat(shortData.value?.rows);
+
+  // 新增短视频
   async function handleSubmitUploadShort() {
     await formRef.value.validate();
+    await request({
+      url: '/api/web/member/short',
+      method: 'post',
+      body: {
+        ...form.value,
+        ...videoInfo.value
+      }
+    });
     uploadShortVisible.value = false;
+    ElMessage.success('上传成功');
+    pageNum.value = 1;
+    shorts.value = [];
+    await refresh();
+    shorts.value = shorts.value.concat(shortData.value?.rows);
   }
 
-  // 上传短视频
-  async function handleUploadShort(e) {
+  const file = ref(null);
+  const chunkSize = 1024 * 1024 * 2; // 2MB per chunk
+
+  const handleFileChange = async e => {
     // 判断上传的文件是不是视频文件
     if (!e.target.files[0].type.includes('video')) {
       ElMessage.error('请上传视频文件');
       return;
     }
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append('file', file);
-    uploadShortVisible.value = true;
-
-    try {
-      const response = await axios.post('/api/admin/common/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        onUploadProgress: progressEvent => {
-          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          loadingBoxRef.value.style.background = `conic-gradient(#f5036c ${percentCompleted}%, #333 0%)`;
-          loadingNumberRef.value.innerHTML = `${percentCompleted >= 100 ? '99.9' : percentCompleted}<span>%</span>`;
-        }
-      });
-      videoInfo.value.url = response.data.data.url;
-      videoInfo.value.size = response.data.data.size;
-      videoInfo.value.mimeType = response.data.data.mimeType;
-      await nextTick();
-      videoRef.value.onloadedmetadata = () => {
-        // 视频信息
-        videoInfo.value.duration = videoRef.value.duration;
-        videoInfo.value.width = videoRef.value.videoWidth;
-        videoInfo.value.height = videoRef.value.videoHeight;
-      };
-    } catch (error) {
-      console.error('上传失败:', error);
-      uploadShortVisible.value = false;
+    const target = e.target;
+    if (target.files && target.files.length > 0) {
+      file.value = target.files[0];
+      await upload();
+      target.value = '';
     }
-  }
+  };
+
+  // 分片上传文件
+  const upload = async () => {
+    if (!file.value) return;
+
+    uploadShortVisible.value = true;
+    const totalChunks = Math.ceil(file.value.size / chunkSize);
+    const fileId = generateUUID(); // 唯一标识一个文件上传任务
+
+    for (let i = 0; i < totalChunks; i++) {
+      const start = i * chunkSize;
+      const end = Math.min(start + chunkSize, file.value.size);
+      const chunk = file.value.slice(start, end);
+
+      const formData = new FormData();
+      formData.append('file', chunk);
+      formData.append('fileId', fileId);
+      formData.append('chunkIndex', i.toString());
+      formData.append('totalChunks', totalChunks.toString());
+      formData.append('fileName', file.value.name);
+
+      try {
+        await $fetch('/api/admin/common/uploadChunk', {
+          method: 'POST',
+          body: formData
+        });
+        const percentCompleted = Math.round(((i + 1) * 100) / totalChunks);
+        loadingBoxRef.value.style.background = `conic-gradient(#f5036c ${percentCompleted}%, #333 0%)`;
+        loadingNumberRef.value.innerHTML = `${percentCompleted >= 100 ? '99.9' : percentCompleted}<span>%</span>`;
+      } catch (error) {
+        ElMessage.error('上传失败');
+        uploadShortVisible.value = false;
+        return;
+      }
+    }
+
+    // 所有分片上传完成后请求合并
+    const response = await $fetch('/api/admin/common/mergeChunks', {
+      method: 'POST',
+      body: {
+        fileId,
+        fileName: file.value.name
+      }
+    });
+
+    videoInfo.value.videoUrl = response.data.url;
+    videoInfo.value.size = response.data.size;
+    videoInfo.value.mimeType = response.data.mimeType;
+    await nextTick();
+    videoRef.value.onloadedmetadata = () => {
+      // 视频信息
+      videoInfo.value.duration = videoRef.value.duration;
+      videoInfo.value.width = videoRef.value.videoWidth;
+      videoInfo.value.height = videoRef.value.videoHeight;
+    };
+  };
+
+  // 生成唯一文件ID
+  const generateUUID = () => {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+      const r = (Math.random() * 16) | 0;
+      const v = c === 'x' ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
+  };
 
   // 上传封面
   async function handleUploadShortPoster(e) {
@@ -227,7 +294,7 @@
     const currentTime = videoRef.value.currentTime || 1;
     let dataURL = '';
     const video = document.createElement('video');
-    video.setAttribute('src', videoInfo.value.url);
+    video.setAttribute('src', videoInfo.value.videoUrl);
     video.setAttribute('width', videoInfo.value.width);
     video.setAttribute('height', videoInfo.value.height);
     video.setAttribute('controls', 'controls');
