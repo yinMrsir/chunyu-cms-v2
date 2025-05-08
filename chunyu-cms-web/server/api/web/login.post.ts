@@ -11,7 +11,7 @@ const sharedServices = new SharedServices();
 
 export default defineEventHandler(async event => {
   const body = await readBody(event);
-  const ip = getRequestIP(event)?.replace('::ffff:', '');
+  const ip = getRequestIP(event, { xForwardedFor: true })?.replace('::ffff:', '');
   if (!body.email) {
     return createApiResponse(null, 400, '邮箱不能为空');
   }
