@@ -1,4 +1,4 @@
-import { and, eq, like, sql } from 'drizzle-orm';
+import { and, desc, eq, like, sql } from 'drizzle-orm';
 import { NewShort, Short, shortTable } from '~/server/db/schema/shorts/short';
 import { queryParams } from '~/server/db/query.helper';
 
@@ -46,7 +46,8 @@ export class ShortServices {
       },
       where,
       offset,
-      limit: Number(limit)
+      limit: Number(limit),
+      orderBy: [desc(shortTable.shortId)]
     });
     const totalQuery = db.$count(shortTable, where);
     const [rows, total] = await Promise.all([rowsQuery, totalQuery]);
