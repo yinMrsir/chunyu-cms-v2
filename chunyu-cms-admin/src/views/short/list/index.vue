@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <table-pro ref="tableProRef" :columns="columns" :max-height="maxHeight" :table-request-fn="getShortList"></table-pro>
+    <table-pro ref="tableProRef" :columns="columns" :is-show-button-list="false" :max-height="maxHeight" :table-request-fn="getShortList"></table-pro>
     <el-dialog
         title="审核"
         v-model="dialogVisible"
@@ -84,7 +84,6 @@ const columns = ref([
     field: 'status',
     props: { minWidth: "100px" },
     type: 'select',
-    add: true,
     options: statusDict
   },
   { title: '发布人', field: 'memberUser.nickname', props: { minWidth: "120px" } },
