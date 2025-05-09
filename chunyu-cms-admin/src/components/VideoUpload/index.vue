@@ -102,6 +102,7 @@ const videoInfo = reactive({
   width: 0,
   height: 0,
 });
+const chunkSize = 1024 * 1024 * 2; // 2MB per chunk
 
 // 文件上传事件
 function chosenFileHandle() {
@@ -166,22 +167,50 @@ function cancleUpload() {
   uploadPercent.value = 0;
 }
 
-// 上传视频
-async function handleFileUpload() {
-  const formData = new FormData();
-  formData.append("file", file.value);
+// 分片上传文件
+const handleFileUpload = async () => {
+  if (!file.value) return;
+
+  const totalChunks = Math.ceil(file.value.size / chunkSize);
+  const fileId = generateUUID(); // 唯一标识一个文件上传任务
+
+  for (let i = 0; i < totalChunks; i++) {
+    const start = i * chunkSize;
+    const end = Math.min(start + chunkSize, file.value.size);
+    const chunk = file.value.slice(start, end);
+
+    const formData = new FormData();
+    formData.append('file', chunk);
+    formData.append('fileId', fileId);
+    formData.append('chunkIndex', i.toString());
+    formData.append('totalChunks', totalChunks.toString());
+    formData.append('fileName', file.value.name);
+
+    try {
+      await request({
+        url: '/common/uploadChunk',
+        method: 'POST',
+        headers: { "Content-Type": "application/x-www-form-urlencoded", repeatSubmit: false },
+        data: formData
+      });
+      uploadPercent.value = Math.round(((i + 1) * 100) / totalChunks);
+    } catch (error) {
+      console.log(error)
+      proxy.$modal.msgError('上传失败');
+      return;
+    }
+  }
+
+  // 所有分片上传完成后请求合并
   const { data } = await request({
-    url: "/common/upload",
-    method: "post",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    data: formData,
-    onUploadProgress(progress) {
-      uploadPercent.value = Math.round(
-        (progress.loaded / progress.total) * 100,
-      );
-    },
+    url: '/common/mergeChunks',
+    method: 'POST',
+    data: {
+      fileId,
+      fileName: file.value.name
+    }
   });
-  proxy.$modal.msgSuccess("上传成功");
+
   url.value = data.url;
   props.replaceUrl && (url.value = props.replaceUrl(url.value));
   isUploadSuccess.value = true;
@@ -191,6 +220,15 @@ async function handleFileUpload() {
   });
 
   proxy.$refs.fileInput.value = "";
+};
+
+// 生成唯一文件ID
+const generateUUID = () => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
 }
 
 function getCurrentTime() {

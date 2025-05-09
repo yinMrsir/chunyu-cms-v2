@@ -7,6 +7,16 @@ export class ShortServices {
     await db.insert(shortTable).values(short);
   }
 
+  async editStatus(body: { shortId: number; status: string; remark: string }) {
+    await db
+      .update(shortTable)
+      .set({
+        status: body.status,
+        remark: body.remark
+      })
+      .where(eq(shortTable.shortId, body.shortId));
+  }
+
   /* 分页查询 */
   async pageList(params?: Partial<Short & { keyword: string } & queryParams>, memberUserId?: number) {
     const { pageNum = 1, limit = 10 } = params || {};
@@ -26,6 +36,13 @@ export class ShortServices {
     const rowsQuery = db.query.shortTable.findMany({
       extras: {
         id: sql`${shortTable.shortId}`.as('id')
+      },
+      with: {
+        memberUser: {
+          columns: {
+            nickname: true
+          }
+        }
       },
       where,
       offset,

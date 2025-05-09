@@ -83,6 +83,7 @@
       v-loading="loading"
       :data="list"
       @selection-change="handleSelectionChange"
+      v-bind="$attrs"
     >
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column
@@ -143,8 +144,7 @@
                   item.render
                     ? item.render(scope.row)
                     : scope.row[item.field]?.indexOf('http') > -1 ||
-                        scope.row[item.field]?.indexOf('base64') > -1 ||
-                        scope.row[item.field]?.indexOf('/external') > -1
+                        scope.row[item.field]?.indexOf('base64') > -1
                       ? scope.row[item.field]
                       : baseUrl + (scope.row[item.field] || '/default.jpg')
                 "

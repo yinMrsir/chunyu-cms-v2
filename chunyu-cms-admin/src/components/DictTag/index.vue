@@ -21,7 +21,7 @@
   </div>
 </template>
 
-<script setup name="DictTag">
+<script setup>
 const props = defineProps({
   // 数据
   options: {

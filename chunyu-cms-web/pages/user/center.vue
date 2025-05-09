@@ -170,7 +170,7 @@
 
   const pageNum = ref(1);
   const { data: shortData, refresh } = await useAsyncData(() => {
-    return $fetch(`/api/web/member/short/list?pageNum=${pageNum.value}&pageSize=10`, {
+    return $fetch(`/api/web/member/short/list?pageNum=${pageNum.value}&limit=12`, {
       headers: {
         Token: createToken()
       }

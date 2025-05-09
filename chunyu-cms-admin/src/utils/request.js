@@ -104,7 +104,8 @@ service.interceptors.response.use(
     return Promise.resolve(res.data);
   },
   (error) => {
-    const { statusCode, message } = error.response.data;
+    console.log(error)
+    const { statusCode, message } = error.response?.data;
     if (statusCode === 401) {
       if (!isRelogin.show) {
         isRelogin.show = true;

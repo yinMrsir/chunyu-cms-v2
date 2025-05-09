@@ -15,7 +15,7 @@ export default defineEventHandler(async event => {
   const fileName = formData?.find(part => part.name === 'fileName')?.data.toString();
 
   if (!chunk || !fileId || !chunkIndex || !fileName) {
-    throw createError({ statusCode: 400, statusMessage: '缺少参数' });
+    throw createError({ statusCode: 400, message: '缺少参数' });
   }
 
   const uploadBase = resolve('./uploads');
@@ -27,5 +27,5 @@ export default defineEventHandler(async event => {
 
   await writeFile(chunkPath, chunk.data);
 
-  return { success: true, chunkIndex };
+  return createApiResponse({ success: true, chunkIndex });
 });

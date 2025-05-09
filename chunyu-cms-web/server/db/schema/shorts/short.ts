@@ -1,5 +1,7 @@
 import { char, int, mysqlTable, varchar } from 'drizzle-orm/mysql-core';
+import { relations } from 'drizzle-orm';
 import { columnsHelpers } from '../../columns.helpers';
+import { memberUserTable } from '~/server/db/schema/member/user';
 
 export const shortTable = mysqlTable('short', {
   shortId: int('short_id').autoincrement().primaryKey(),
@@ -37,6 +39,13 @@ export const shortTable = mysqlTable('short', {
   status: char('status', { length: 1 }).notNull().default('0'),
   ...columnsHelpers
 });
+
+export const shortRelation = relations(shortTable, ({ one }) => ({
+  memberUser: one(memberUserTable, {
+    fields: [shortTable.memberUserId],
+    references: [memberUserTable.memberUserId]
+  })
+}));
 
 export type Short = typeof shortTable.$inferSelect;
 export type NewShort = typeof shortTable.$inferInsert;
