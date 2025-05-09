@@ -20,7 +20,7 @@ export default defineEventHandler(event => {
   // 演示环境
   if (
     runtimeConfig.isDemoEnvironment &&
-    isMethod(event, ['POST', 'PUT']) &&
+    isMethod(event, ['POST', 'PUT', 'DELETE']) &&
     !noVerificationRouters.includes(event.path.split('?')[0]) &&
     event.context.user?.userId !== -1
   ) {
