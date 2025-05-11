@@ -36,9 +36,10 @@
           class="short-video"
           :poster="short.poster"
           :src="short.videoUrl"
-          autoplay
+          :autoplay="index === 0"
           loop
           :muted="isMuted"
+          preload="metadata"
           controlslist="nodownload"
         ></video>
         <div class="video-info">
