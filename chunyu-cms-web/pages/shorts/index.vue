@@ -69,6 +69,8 @@
 </template>
 
 <script setup>
+  import { useAsyncData } from '#app';
+
   definePageMeta({
     layout: false
   });
@@ -83,10 +85,14 @@
   const isShowPlayButton = ref(false);
   const shorts = ref([]);
   const isMuted = ref(true);
-  const { data } = await useFetch('/api/web/short/list');
+  const pageNum = ref(1);
+
+  const { data, refresh } = await useAsyncData(`data:${pageNum.value}`, () => {
+    return $fetch(`/api/web/short/list?pageNum=${pageNum.value}&limit=6`);
+  });
   shorts.value = shorts.value.concat(data.value);
 
-  const scrollToShort = index => {
+  const scrollToShort = async index => {
     if (isDragging.value) return;
     const offset = -index * 100;
     const shortsWrapper = document.querySelector('.shorts-wrapper');
@@ -101,6 +107,15 @@
           video.pause();
         }
       });
+      if (index === shorts.value.length - 1) {
+        pageNum.value++;
+        await refresh();
+        if (data.value.length) {
+          shorts.value = shorts.value.concat(data.value);
+        } else {
+          pageNum.value = 0;
+        }
+      }
     } else {
       const currentVideo = document.querySelectorAll('.short-video')[currentIndex.value];
       if (currentVideo.paused) {
