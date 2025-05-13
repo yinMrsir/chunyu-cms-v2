@@ -1,0 +1,68 @@
+import { and, desc, eq, sql } from 'drizzle-orm';
+import { commentTable, NewComment, Comment } from '~/server/db/schema/movie/comment';
+import { queryParams } from '~/server/db/query.helper';
+
+export class CommentServices {
+  /* 新增  */
+  async add(comment: NewComment) {
+    await db.insert(commentTable).values(comment);
+  }
+
+  /* 分页查询 */
+  async pageList(params?: Partial<Comment & { keyword: string } & queryParams>) {
+    const { pageNum = 1, limit = 10 } = params || {};
+    const offset = (pageNum - 1) * limit;
+    const whereList = [];
+    if (params?.isDm) {
+      whereList.push(eq(commentTable.isDm, params.isDm));
+    }
+    if (params?.videoId) {
+      whereList.push(eq(commentTable.videoId, params.videoId));
+    }
+    const where = and(...whereList);
+
+    const rowsQuery = db.query.commentTable.findMany({
+      extras: {
+        id: sql`${commentTable.videoId}`.as('id')
+      },
+      with: {
+        memberUser: {
+          columns: {
+            nickname: true,
+            avatar: true
+          }
+        }
+      },
+      where,
+      offset,
+      limit: Number(limit),
+      orderBy: [desc(commentTable.commentId)]
+    });
+    const totalQuery = db.$count(commentTable, where);
+    const [rows, total] = await Promise.all([rowsQuery, totalQuery]);
+    return {
+      rows,
+      total
+    };
+  }
+
+  /* 查询所有弹幕 */
+  async getAllDm(videoId: number) {
+    const rows = await db.query.commentTable.findMany({
+      where: and(eq(commentTable.videoId, videoId), eq(commentTable.isDm, '1'))
+    });
+    return rows.map((item: Comment) => {
+      return {
+        id: item.commentId,
+        duration: 15000,
+        start: item.start,
+        txt: item.content
+      };
+    });
+  }
+
+  /* 删除 */
+  async delete(commentId: number) {
+    await db.delete(commentTable).where(eq(commentTable.commentId, commentId));
+  }
+}

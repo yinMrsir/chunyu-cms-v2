@@ -13,7 +13,8 @@ const noVerificationRouters = [
   '/api/web/login',
   '/api/web/member/rate',
   '/api/web/member/user',
-  '/api/web/member/short'
+  '/api/web/member/short',
+  '/api/web/member/comment'
 ];
 
 export default defineEventHandler(event => {

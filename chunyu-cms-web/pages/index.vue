@@ -22,13 +22,14 @@
           :space-between="50"
           @slide-change="onSlideChange"
         >
-          <swiper-slide v-for="item in banner" :key="item.id">
+          <swiper-slide v-for="(item, index) in banner" :key="item.id">
             <video
               muted
-              autoplay
+              :autoplay="index === 0"
+              preload="metadata"
               :poster="item.img"
               :src="item.videoUrl"
-              class="h-40vh w-full object-cover md:h-70vh"
+              class="banner-video h-40vh w-full object-cover md:h-70vh"
               alt=""
             />
           </swiper-slide>
@@ -100,6 +101,14 @@
 
   const onSlideChange = (swiper: any) => {
     currIndex.value = swiper.activeIndex;
+    const videoDom = document.querySelectorAll('.banner-video');
+    videoDom.forEach((item: any, index: number) => {
+      if (index === currIndex.value) {
+        item.play();
+      } else {
+        item.pause();
+      }
+    });
   };
 
   const btnLink = computed(() => {

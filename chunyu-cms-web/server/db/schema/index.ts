@@ -36,6 +36,7 @@ import * as memberUserSchema from './member/user';
 import * as memberRateSchema from './member/rate';
 import * as movieRateSchema from './movie/rate';
 import * as shortSchema from './shorts/short';
+import * as commentSchema from './movie/comment';
 
 export default {
   ...userSchema,
@@ -73,5 +74,6 @@ export default {
   ...memberUserSchema,
   ...memberRateSchema,
   ...movieRateSchema,
-  ...shortSchema
+  ...shortSchema,
+  ...commentSchema
 };

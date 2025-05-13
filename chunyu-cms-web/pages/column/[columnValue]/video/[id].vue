@@ -145,7 +145,7 @@
             <el-form ref="formRef" :mode="form">
               <el-form-item>
                 <el-input
-                  v-model="form.comment"
+                  v-model="form.content"
                   class="comment-input"
                   type="textarea"
                   placeholder="善语结善缘，恶言伤人心"
@@ -165,7 +165,7 @@
               <el-form-item>
                 <div class="flex justify-end w-full">
                   <el-button
-                    :disabled="!form.comment.length"
+                    :disabled="!form.content.length"
                     type="success"
                     class="comment-button"
                     @click="handleSubmit"
@@ -175,13 +175,20 @@
                 </div>
               </el-form-item>
             </el-form>
-            <div class="flex flex-col gap-y-30px">
-              <div v-for="(item, index) in 2" :key="index" class="grid grid-cols-[60px_1fr]">
-                <img src="/images/toux.png" class="w-50px h-50px border-rd-6px" alt="" />
+            <div class="right-video-comment flex flex-col gap-y-30px">
+              <div v-for="(item, index) in memberComments" :key="index" class="grid grid-cols-[60px_1fr]">
+                <img
+                  :src="item?.memberUser?.avatar"
+                  class="w-50px h-50px border-rd-6px cursor-pointer"
+                  :alt="item?.memberUser?.nickname"
+                />
                 <div class="text-14px flex flex-col justify-between color-gray">
-                  <span>好看，精彩！！！</span>
-                  <p class="text-12px">2022-08-08</p>
+                  <span>{{ item?.content }}</span>
+                  <p class="text-12px">{{ dayjs(item?.createTime).format('YYYY-MM-DD HH:mm:ss') }}</p>
                 </div>
+              </div>
+              <div v-if="memberComments.length < memberCommentData.total" class="flex justify-center">
+                <el-button type="primary" size="small" @click="handleLoadMore">加载更多</el-button>
               </div>
             </div>
           </el-tab-pane>
@@ -198,6 +205,7 @@
   import dayjs from 'dayjs';
   import { Swiper, SwiperSlide } from 'swiper/vue';
   import 'swiper/css';
+  import { useAsyncData } from '#app';
   import { useSidebarOpen, useTextVisible, useLoginVisible } from '~/composables/states';
   import { WEB_TOKEN } from '#shared/cookiesName';
 
@@ -211,11 +219,14 @@
   const textVisible = useTextVisible();
   const loginVisible = useLoginVisible();
 
-  const form = ref({ isDm: '1', comment: '' });
+  const formRef = useTemplateRef('formRef');
+  const form = ref({ isDm: '1', content: '' });
   const tabStatus = ref('video');
   const vIndex = ref(0);
   const rate = ref();
   const movieRate = ref();
+  const pageNum = ref(1);
+  const memberComments = ref([]);
 
   const [{ data: detail }, { data: movies }] = await Promise.all([
     useFetch(`/api/web/movie/${route.params.id}`),
@@ -239,9 +250,22 @@
     vIndex.value = detail.value?.movieVideo.findIndex(item => item.movieVideoId === Number(route.query.mvid)) || 0;
   }
 
+  const videoId = computed(() => detail.value?.movieVideo?.[vIndex.value]?.video.videoId);
+  const { data: comments } = await useFetch(`/api/web/movie/comment?videoId=${videoId.value}`);
+  const { data: memberCommentData, refresh: memberCommentsRefresh } = await useAsyncData(
+    `${route.fullPath}:${videoId}:${pageNum}`,
+    () => {
+      return $fetch(`/api/web/movie/comment/list?videoId=${videoId.value}&pageNum=${pageNum.value}`);
+    }
+  );
+  if (memberCommentData.value.rows) {
+    memberComments.value = memberComments.value.concat(memberCommentData.value.rows);
+  }
+
   onMounted(async () => {
     sidebarOpen.value = false;
     textVisible.value = false;
+
     if (detail.value?.movieVideo?.[vIndex.value]?.video?.url) {
       const [Player, Mp4Plugin, Danmu] = await Promise.all([
         import('xgplayer'),
@@ -262,20 +286,7 @@
         width: '100%',
         plugins: [Mp4Plugin.default, Danmu.default],
         danmu: {
-          comments: [
-            {
-              duration: 15000,
-              id: '1',
-              start: 3000,
-              txt: '好看，精彩！！！'
-            },
-            {
-              duration: 15000,
-              id: '2',
-              start: 2000,
-              txt: '终于可以看了。'
-            }
-          ],
+          comments: comments.value,
           area: {
             start: 0,
             end: 1
@@ -288,8 +299,32 @@
     }
   });
 
-  function handleSubmit() {
-    console.log(form.value);
+  async function handleSubmit() {
+    if (!token.value) {
+      loginVisible.value = true;
+      return;
+    }
+    const videoDom = document.querySelector('#mse video');
+    await request({
+      url: '/api/web/member/comment',
+      method: 'post',
+      body: {
+        ...form.value,
+        videoId: detail.value?.movieVideo?.[vIndex.value]?.video.videoId,
+        start: videoDom.currentTime * 1000
+      }
+    });
+    memberComments.value = [];
+    pageNum.value = 1;
+    await memberCommentsRefresh();
+    memberComments.value = memberComments.value.concat(memberCommentData.value.rows);
+    form.value = { isDm: '1', content: '' };
+  }
+
+  async function handleLoadMore() {
+    pageNum.value++;
+    await memberCommentsRefresh();
+    memberComments.value = memberComments.value.concat(memberCommentData.value.rows);
   }
 
   /** 获取用户评分 **/
@@ -332,6 +367,14 @@
     height: auto;
     @media (min-width: 1024px) {
       height: calc(100vh - 140px) !important;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+  }
+  .right-video-comment {
+    height: auto;
+    @media (min-width: 1024px) {
+      height: calc(100vh - 340px) !important;
       overflow-x: hidden;
       overflow-y: auto;
     }
@@ -384,21 +427,24 @@
     }
   }
   /* 定义滚动条的宽度和背景颜色 */
-  .right-video-info::-webkit-scrollbar {
+  .right-video-info::-webkit-scrollbar,
+  .right-video-comment::-webkit-scrollbar {
     width: 6px;
     height: 6px;
     background-color: transparent;
   }
 
   /* 定义滚动条轨道的样式 */
-  .right-video-info::-webkit-scrollbar-track {
+  .right-video-info::-webkit-scrollbar-track,
+  .right-video-comment::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
     background-color: transparent;
   }
 
   /* 定义滚动条滑块的样式 */
-  .right-video-info::-webkit-scrollbar-thumb {
+  .right-video-info::-webkit-scrollbar-thumb,
+  .right-video-comment::-webkit-scrollbar-thumb {
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     background-color: rgba(255, 255, 255, 0.2);
