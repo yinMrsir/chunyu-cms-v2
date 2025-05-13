@@ -69,7 +69,7 @@
                         <div class="relative w-130px">
                           <el-image
                             class="w-130px border-rd-10px overflow-hidden"
-                            :src="item.cover || item.video.poster"
+                            :src="item.cover || item.video?.poster"
                           ></el-image>
                           <div
                             v-if="vIndex === index"
@@ -183,7 +183,7 @@
                   :alt="item?.memberUser?.nickname"
                 />
                 <div class="text-14px flex flex-col justify-between color-gray">
-                  <span>{{ item?.content }}</span>
+                  <span>{{ item?.memberUser?.nickname }}: {{ item?.content }}</span>
                   <p class="text-12px">{{ dayjs(item?.createTime).format('YYYY-MM-DD HH:mm:ss') }}</p>
                 </div>
               </div>
@@ -251,12 +251,12 @@
     vIndex.value = detail.value?.movieVideo.findIndex(item => item.movieVideoId === Number(route.query.mvid)) || 0;
   }
 
-  const videoId = computed(() => detail.value?.movieVideo?.[vIndex.value]?.video.videoId);
-  const { data: dms } = await useFetch(`/api/web/movie/comment/dm?videoId=${videoId.value}`);
+  const videoId = detail.value?.movieVideo?.[vIndex.value]?.video?.videoId;
+  const { data: dms } = await useFetch(`/api/web/movie/comment/dm?videoId=${videoId}`);
   const { data: memberCommentData, refresh: memberCommentsRefresh } = await useAsyncData(
     `${route.fullPath}:${videoId}:${pageNum}`,
     () => {
-      return $fetch(`/api/web/movie/comment/list?videoId=${videoId.value}&pageNum=${pageNum.value}`);
+      return $fetch(`/api/web/movie/comment/list?videoId=${videoId}&pageNum=${pageNum.value}`);
     }
   );
   if (memberCommentData.value.rows) {
