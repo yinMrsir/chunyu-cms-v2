@@ -55,7 +55,7 @@
               </div>
               <div v-if="detail.summary">
                 <h2 class="m-y-15px">节目简介</h2>
-                <div class="text-14px color-#dedede" v-html="detail.summary"></div>
+                <div class="text-12px md:text-14px color-#dedede" v-html="detail.summary"></div>
               </div>
               <div v-if="detail.movieVideo.length">
                 <h2 class="m-y-15px">相关视频</h2>
@@ -228,6 +228,10 @@
   const pageNum = ref(1);
   const memberComments = ref([]);
   let player = null;
+  // 视频支付提示插件
+  let payTipInstance = null;
+  // 是否购买了影片
+  const isUserBuy = ref(false);
 
   const [{ data: detail }, { data: movies }] = await Promise.all([
     useFetch(`/api/web/movie/${route.params.id}`),
@@ -251,14 +255,16 @@
     vIndex.value = detail.value?.movieVideo.findIndex(item => item.movieVideoId === Number(route.query.mvid)) || 0;
   }
 
-  const videoId = detail.value?.movieVideo?.[vIndex.value]?.video?.videoId;
-  const { data: dms } = await useFetch(`/api/web/movie/comment/dm?videoId=${videoId}`);
-  const { data: memberCommentData, refresh: memberCommentsRefresh } = await useAsyncData(
-    `${route.fullPath}:${videoId}:${pageNum}`,
-    () => {
-      return $fetch(`/api/web/movie/comment/list?videoId=${videoId}&pageNum=${pageNum.value}`);
-    }
-  );
+  const videoId = computed(() => detail.value?.movieVideo?.[vIndex.value]?.video?.videoId);
+  // 获取视频资源的详情，弹幕，评论
+  const [{ data: videoInfo }, { data: dms }, { data: memberCommentData, refresh: memberCommentsRefresh }] =
+    await Promise.all([
+      useFetch(`/api/web/movie/video/${videoId.value}`),
+      useFetch(`/api/web/movie/comment/dm?videoId=${videoId.value}`),
+      useAsyncData(`${route.fullPath}:${videoId.value}:${pageNum}`, () => {
+        return $fetch(`/api/web/movie/comment/list?videoId=${videoId.value}&pageNum=${pageNum.value}`);
+      })
+    ]);
   if (memberCommentData.value.rows) {
     memberComments.value = memberComments.value.concat(memberCommentData.value.rows);
   }
@@ -267,11 +273,12 @@
     sidebarOpen.value = false;
     textVisible.value = false;
 
-    if (detail.value?.movieVideo?.[vIndex.value]?.video?.url) {
-      const [Player, Mp4Plugin, Danmu] = await Promise.all([
+    if (videoInfo.value) {
+      const [Player, Mp4Plugin, Danmu, PayTip] = await Promise.all([
         import('xgplayer'),
         import('xgplayer-mp4'),
-        import('xgplayer/es/plugins/danmu')
+        import('xgplayer/es/plugins/danmu'),
+        import('~/plugins/xgplayer/payTip')
       ]);
 
       // eslint-disable-next-line new-cap
@@ -282,19 +289,39 @@
         },
         autoplay: true,
         volume: 0.3,
-        url: detail.value?.movieVideo?.[vIndex.value]?.video?.url,
+        url: videoInfo.value.url,
         playsinline: true,
         height: '100%',
         width: '100%',
-        plugins: [Mp4Plugin.default, Danmu.default],
+        plugins: [Mp4Plugin.default, Danmu.default, PayTip.default],
         danmu: {
           comments: dms.value,
           area: {
             start: 0,
             end: 1
           }
+        },
+        payTip: {
+          tip: `此为付费视频，支付${detail.value.paymentAmount}金币继续观看？`,
+          lookTime: detail.value.freeDuration * 60,
+          arriveTime() {
+            if (isUserBuy.value) return;
+            // 影片设置了需要购买才能观看并且是正片
+            if (+detail.value.isPay === 1) {
+              player?.pause();
+              payTipInstance?.show('flex');
+            }
+          },
+          clickButton() {
+            if (!token.value) {
+              loginVisible.value = true;
+            } else {
+              player && buyMovie(player);
+            }
+          }
         }
       });
+      payTipInstance = player.getPlugin('payTip');
     }
     if (token.value) {
       await getMemberRate();
@@ -364,6 +391,23 @@
       movieRate.value = data.rate;
       ElMessage.success('评分成功');
     }
+  }
+
+  /** 购买影视 */
+  function buyMovie(player) {
+    ElMessageBox.confirm(`确定要支付${detail.value.paymentAmount}金币购买此影片吗？`, '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(() => {
+      isUserBuy.value = true;
+      player.play();
+      payTipInstance?.hide();
+      ElMessage({
+        type: 'success',
+        message: '购买成功'
+      });
+    });
   }
 </script>
 

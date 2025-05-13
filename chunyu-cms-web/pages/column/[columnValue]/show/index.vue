@@ -73,6 +73,7 @@
               <div class="relative">
                 <NuxtImg format="webp" loading="lazy" :alt="v?.title" :src="v?.poster" />
                 <span v-if="v.movieRate?.rateUserCount" class="rate"> {{ v.movieRate.rate.toFixed(1) }} </span>
+                <span v-if="v.isPay === 1" class="absolute right-0 top-0 z-10 text-14px p-x-8px bg-orange">付费</span>
               </div>
               <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
                 <h3>{{ v.title }}</h3>

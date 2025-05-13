@@ -50,4 +50,11 @@ export class VideoServices {
       )
     );
   }
+
+  /* 通过videoId查询 */
+  async getByVideoId(videoId: number) {
+    return await db.query.videoTable.findFirst({
+      where: eq(videoTable.videoId, Number(videoId))
+    });
+  }
 }

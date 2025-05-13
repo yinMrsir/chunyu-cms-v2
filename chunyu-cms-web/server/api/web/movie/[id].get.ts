@@ -31,7 +31,13 @@ export default defineEventHandler(async event => {
       where: (movieVideo: MovieVideo, { eq }: any) => eq(movieVideo.status, '0'),
       orderBy: (movieVideo: MovieVideo, { asc }: any) => [asc(movieVideo.sort)],
       with: {
-        video: true
+        video: {
+          columns: {
+            videoId: true,
+            title: true,
+            poster: true
+          }
+        }
       }
     },
     casts: {

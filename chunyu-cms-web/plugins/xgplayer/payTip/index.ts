@@ -1,5 +1,5 @@
 import PresetPlayer, { Plugin, Events } from 'xgplayer';
-import { IPluginOptions } from 'xgplayer/es/plugin/plugin';
+import type { IPluginOptions } from 'xgplayer/es/plugin/plugin';
 
 // payTipPlugin.js
 export default class payTip extends Plugin {
@@ -9,11 +9,11 @@ export default class payTip extends Plugin {
   private readonly tip: string;
 
   // 插件的名称，将作为插件实例的唯一key值
-  static get pluginName() {
+  static override get pluginName() {
     return 'payTip';
   }
 
-  static get defaultConfig() {
+  static override get defaultConfig() {
     return {
       lookTime: 60,
       tip: '此为付费视频, 支持后继续观看?'
@@ -28,15 +28,15 @@ export default class payTip extends Plugin {
     this.clickButton = args?.config.clickButton;
   }
 
-  beforePlayerInit() {
+  override beforePlayerInit() {
     // TODO 播放器调用start初始化播放源之前的逻辑
   }
 
-  afterPlayerInit() {
+  override afterPlayerInit() {
     // TODO 播放器调用start初始化播放源之后的逻辑
   }
 
-  afterCreate() {
+  override afterCreate() {
     // 对当前插件根节点内部类名为.icon的元素绑定click事件
     this.bind('.el-button', 'click', this.clickButton);
 
@@ -50,11 +50,11 @@ export default class payTip extends Plugin {
     (this.find('.tip-text') as HTMLSpanElement).innerHTML = this.tip;
   }
 
-  destroy() {
+  override destroy() {
     this.unbind('.el-button', 'click', this.clickButton);
   }
 
-  render() {
+  override render() {
     return `<div id="pay-tip-plugin" class="pay-tip-plugin">
               <span class="tip-text"></span>
               <button type="button" class="el-button el-button--primary el-button--small">支 付</button>

@@ -19,7 +19,8 @@ export default defineCachedEventHandler(
               columns: {
                 movieBasicsId: true,
                 title: true,
-                poster: true
+                poster: true,
+                isPay: true
               },
               with: {
                 movieRate: true,
