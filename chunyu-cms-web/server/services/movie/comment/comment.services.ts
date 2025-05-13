@@ -1,4 +1,4 @@
-import { and, desc, eq, sql } from 'drizzle-orm';
+import { and, desc, eq, sql, inArray } from 'drizzle-orm';
 import { commentTable, NewComment, Comment } from '~/server/db/schema/movie/comment';
 import { queryParams } from '~/server/db/query.helper';
 
@@ -24,13 +24,18 @@ export class CommentServices {
 
     const rowsQuery = db.query.commentTable.findMany({
       extras: {
-        id: sql`${commentTable.videoId}`.as('id')
+        id: sql`${commentTable.commentId}`.as('id')
       },
       with: {
         memberUser: {
           columns: {
             nickname: true,
             avatar: true
+          }
+        },
+        video: {
+          columns: {
+            title: true
           }
         }
       },
@@ -63,7 +68,12 @@ export class CommentServices {
   }
 
   /* 删除 */
-  async delete(commentId: number) {
-    await db.delete(commentTable).where(eq(commentTable.commentId, commentId));
+  async delete(commentIds: string[]) {
+    await db.delete(commentTable).where(
+      inArray(
+        commentTable.commentId,
+        commentIds.map(item => Number(item))
+      )
+    );
   }
 }
