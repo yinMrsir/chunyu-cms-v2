@@ -5,7 +5,8 @@ import { queryParams } from '~/server/db/query.helper';
 export class CommentServices {
   /* 新增  */
   async add(comment: NewComment) {
-    await db.insert(commentTable).values(comment);
+    const [{ commentId }] = await db.insert(commentTable).values(comment).$returningId();
+    return commentId;
   }
 
   /* 分页查询 */

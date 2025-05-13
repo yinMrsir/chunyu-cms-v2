@@ -227,6 +227,7 @@
   const movieRate = ref();
   const pageNum = ref(1);
   const memberComments = ref([]);
+  let player = null;
 
   const [{ data: detail }, { data: movies }] = await Promise.all([
     useFetch(`/api/web/movie/${route.params.id}`),
@@ -251,7 +252,7 @@
   }
 
   const videoId = computed(() => detail.value?.movieVideo?.[vIndex.value]?.video.videoId);
-  const { data: comments } = await useFetch(`/api/web/movie/comment?videoId=${videoId.value}`);
+  const { data: dms } = await useFetch(`/api/web/movie/comment/dm?videoId=${videoId.value}`);
   const { data: memberCommentData, refresh: memberCommentsRefresh } = await useAsyncData(
     `${route.fullPath}:${videoId}:${pageNum}`,
     () => {
@@ -272,8 +273,9 @@
         import('xgplayer-mp4'),
         import('xgplayer/es/plugins/danmu')
       ]);
-      // eslint-disable-next-line no-new
-      new Player.default({
+
+      // eslint-disable-next-line new-cap
+      player = new Player.default({
         id: 'mse',
         controls: {
           autoHide: false
@@ -286,7 +288,7 @@
         width: '100%',
         plugins: [Mp4Plugin.default, Danmu.default],
         danmu: {
-          comments: comments.value,
+          comments: dms.value,
           area: {
             start: 0,
             end: 1
@@ -305,15 +307,25 @@
       return;
     }
     const videoDom = document.querySelector('#mse video');
-    await request({
+    const start = Math.floor(videoDom.currentTime * 1000);
+    const commentId = await request({
       url: '/api/web/member/comment',
       method: 'post',
       body: {
         ...form.value,
         videoId: detail.value?.movieVideo?.[vIndex.value]?.video.videoId,
-        start: videoDom.currentTime * 1000
+        start
       }
     });
+    if (form.value.isDm === '1') {
+      // 发送弹幕
+      player.getPlugin('danmu').sendComment({
+        duration: 15000,
+        id: commentId,
+        start,
+        txt: form.value.content
+      });
+    }
     memberComments.value = [];
     pageNum.value = 1;
     await memberCommentsRefresh();

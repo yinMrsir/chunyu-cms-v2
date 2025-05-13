@@ -9,6 +9,6 @@ export default defineEventHandler(async event => {
   const body = await readBody(event);
   body.memberUserId = event.context.memberUser.memberUserId;
   body.createTime = new Date();
-  await commentServices.add(body);
-  return createApiResponse(null);
+  const commentId = await commentServices.add(body);
+  return createApiResponse(commentId);
 });
