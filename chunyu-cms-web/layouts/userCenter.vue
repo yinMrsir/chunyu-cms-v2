@@ -13,9 +13,9 @@
             </nuxt-link>
           </li>
           <li>
-            <nuxt-link to="/shorts">
-              <i class="i-flat-color-icons-clapperboard"></i>
-              <span class="text-12px">短视频</span>
+            <nuxt-link to="/user/wallet">
+              <i class="i-fxemoji-moneybag"></i>
+              <span class="text-12px">钱包</span>
             </nuxt-link>
           </li>
         </ul>

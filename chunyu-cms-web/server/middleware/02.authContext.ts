@@ -10,7 +10,11 @@ const noVerificationRouters = [
   '/api/web/member/rate',
   '/api/web/member/short',
   '/api/web/member/short/list',
-  '/api/web/member/comment'
+  '/api/web/member/comment',
+  '/api/web/member/wallet',
+  '/api/web/member/wallet/recharge',
+  '/api/web/member/wallet/deduct',
+  '/api/web/member/movie/buy'
 ];
 
 export default defineEventHandler(async event => {

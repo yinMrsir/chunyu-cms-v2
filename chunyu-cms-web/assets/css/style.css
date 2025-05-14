@@ -10,6 +10,12 @@ body {
   --el-font-size-base: 16px !important;
   --el-color-primary: #00da5ab2 !important;
   --el-color-primary-light-3: #00da5a !important;
+
+}
+
+.el-button:active {
+  --el-button-active-bg-color: #0eb653 !important;
+  --el-button-active-border-color: #045927 !important;
 }
 
 .search-input {

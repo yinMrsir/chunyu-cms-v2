@@ -3,11 +3,14 @@ import { Storage } from 'unstorage';
 import { MemberUser, memberUserTable, NewMemberUser } from '~/server/db/schema/member/user';
 import { queryParams } from '~/server/db/query.helper';
 import { USER_WEB_TOKEN_KEY } from '~/server/contants/redis.contant';
+import { MemberWalletServices } from '~/server/services/member/memberWallet.services';
 
 export class MemberUserServices {
   private redis: Storage<any>;
+  private memberWalletServices: MemberWalletServices;
   constructor() {
     this.redis = useStorage('redis');
+    this.memberWalletServices = new MemberWalletServices();
   }
 
   // 通过邮箱查询用户
@@ -38,8 +41,11 @@ export class MemberUserServices {
 
   // 创建用户
   async add(user: NewMemberUser): Promise<Number> {
-    const [{ memberUserId }] = await db.insert(memberUserTable).values(user).$returningId();
-    return memberUserId;
+    return await db.transaction(async tx => {
+      const [{ memberUserId }] = await tx.insert(memberUserTable).values(user).$returningId();
+      await this.memberWalletServices.add({ memberUserId, gold: 0 });
+      return memberUserId;
+    });
   }
 
   // 更新用户信息

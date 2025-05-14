@@ -185,7 +185,6 @@
         prop="userCollectsCount"
         label="收藏量"
       ></el-table-column>
-      <el-table-column prop="address" label="评论数"></el-table-column>
       <el-table-column prop="isPay" label="是否付费">
         <template #default="scope">
           <el-tag :type="scope.row.isPay === 1 ? 'warning' : 'success'">{{

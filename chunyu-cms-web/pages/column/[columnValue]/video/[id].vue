@@ -208,6 +208,7 @@
   import { useAsyncData } from '#app';
   import { useSidebarOpen, useTextVisible, useLoginVisible } from '~/composables/states';
   import { WEB_TOKEN } from '#shared/cookiesName';
+  import { createToken } from '~/utils/request';
 
   definePageMeta({
     key: route => route.fullPath
@@ -230,10 +231,8 @@
   let player = null;
   // 视频支付提示插件
   let payTipInstance = null;
-  // 是否购买了影片
-  const isUserBuy = ref(false);
 
-  const [{ data: detail }, { data: movies }] = await Promise.all([
+  const [{ data: detail }, { data: movies }, {}, { data: isUserBuy }] = await Promise.all([
     useFetch(`/api/web/movie/${route.params.id}`),
     useFetch('/api/web/movie/list', {
       query: { columnValue: route.params.columnValue, limit: 12, notId: route.params.id }
@@ -242,6 +241,11 @@
       method: 'POST',
       body: {
         movieBasicsId: route.params.id
+      }
+    }),
+    useFetch(`/api/web/member/movie/buyStatus?movieBasicsId=${route.params.id}`, {
+      headers: {
+        Token: createToken()
       }
     })
   ]);
@@ -399,7 +403,14 @@
       confirmButtonText: '确定',
       cancelButtonText: '取消',
       type: 'warning'
-    }).then(() => {
+    }).then(async () => {
+      await request({
+        url: '/api/web/member/movie/buy',
+        method: 'post',
+        body: {
+          movieBasicsId: route.params.id
+        }
+      });
       isUserBuy.value = true;
       player.play();
       payTipInstance?.hide();

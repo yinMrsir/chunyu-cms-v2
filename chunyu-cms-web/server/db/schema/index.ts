@@ -34,9 +34,12 @@ import * as moviePvSchema from './movie/moviePv';
 // 用户端
 import * as memberUserSchema from './member/user';
 import * as memberRateSchema from './member/rate';
+import * as memberWalletSchema from './member/wallet';
+import * as memberWalletLogSchema from './member/walletLog';
+import * as memberMovieSchema from './member/movie';
 import * as movieRateSchema from './movie/rate';
-import * as shortSchema from './shorts/short';
 import * as commentSchema from './movie/comment';
+import * as shortSchema from './shorts/short';
 
 export default {
   ...userSchema,
@@ -73,7 +76,10 @@ export default {
   ...moviePvSchema,
   ...memberUserSchema,
   ...memberRateSchema,
+  ...memberWalletSchema,
+  ...memberWalletLogSchema,
+  ...memberMovieSchema,
   ...movieRateSchema,
-  ...shortSchema,
-  ...commentSchema
+  ...commentSchema,
+  ...shortSchema
 };

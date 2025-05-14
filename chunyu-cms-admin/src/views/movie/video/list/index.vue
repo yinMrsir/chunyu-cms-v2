@@ -147,6 +147,11 @@ const columns = ref([
     props: { minWidth: "100px" },
   },
   {
+    title: '评论数',
+    field: 'commentCount',
+    props: { minWidth: "100px" },
+  },
+  {
     title: "创建时间",
     field: "createTime",
     type: "dateTime",
