@@ -7,9 +7,9 @@
         </nuxt-link>
         <ul class="menu">
           <li>
-            <nuxt-link to="/">
-              <i class="i-flat-color-icons-home"></i>
-              <span class="text-12px">首页</span>
+            <nuxt-link to="/user/center">
+              <i class="i-fxemoji-contact"></i>
+              <span class="text-12px">个人中心</span>
             </nuxt-link>
           </li>
           <li>
@@ -61,7 +61,7 @@
             <el-avatar :size="32" :src="userInfo.avatar" />
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item command="userCenter">{{ userInfo.nickname }}的个人中心</el-dropdown-item>
+                <el-dropdown-item command="userCenter">个人中心</el-dropdown-item>
                 <el-dropdown-item divided command="logout">退出登录</el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -114,7 +114,7 @@
         a {
           @apply flex flex-col justify-center items-center gap-5px;
           i {
-            @apply w-24px h-24px;
+            @apply w-22px h-22px;
           }
         }
       }
