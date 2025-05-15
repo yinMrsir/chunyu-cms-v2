@@ -50,6 +50,15 @@ FORM_USER_EMAIL=1378151264@qq.com
 FORM_USER_EMAIL_PASSWORD=efmogxbvncejffih
 # 使用 Gmail 服务，你可以使用其他服务，如 'QQ'
 USER_EMAIL_SERVICE=QQ
+
+# 微信支付：直连商户申请的公众号或移动应用appid
+WECHAT_PAY_APP_ID=wx8d0f5c0f5c0f5c0f5
+# 微信支付：商户号
+WECHAT_PAY_MCH_ID=1234567890
+# 公钥文件绝对路径
+WECHAT_PAY_PUBLIC_KEY=/path/to/apiclient_cert.pem
+# 秘钥文件绝对路径
+WECHAT_PAY_PRIVATE_KEY=/path/to/apiclient_key.pem
 ```
 
 **注意：** `mysql`和`redis`的端口号，用户名，密码，数据库名称，jwt加密密钥等配置信息，请自行修改。
@@ -172,6 +181,13 @@ server {
 nginx更详细配置可[查看](nginx.conf)
 
 Nuxt项目部署文档：https://nuxt.com/docs/getting-started/deployment
+
+## 支付相关
+
+微信支付库：https://github.com/klover2/wechatpay-node-v3-ts
+
+微信支付开发文档：https://pay.weixin.qq.com/doc/v3/merchant/4012791874
+
 
 ## 有任何疑问可添加微信
 

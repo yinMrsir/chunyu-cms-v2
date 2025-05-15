@@ -36,11 +36,19 @@
         </el-table>
       </el-tab-pane>
     </el-tabs>
+    <el-dialog v-model="payDialogVisible" title="支付" width="300px">
+      <div class="flex flex-col gap-30px justify-center items-center">
+        <qrcode-vue v-if="payDialogVisible" :value="qrcodeUrl" :size="160" level="H" />
+        <p>请使用微信扫码支付</p>
+        <el-button type="primary" @click="handlePayEnd">我已支付</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
   import dayjs from 'dayjs';
+  import QrcodeVue from 'qrcode.vue';
   import { createToken } from '~/utils/request';
 
   definePageMeta({
@@ -54,10 +62,13 @@
     }
   });
 
+  const payDialogVisible = ref(false);
+  const qrcodeUrl = ref('');
   const movieList = ref([]);
   const goldList = ref([]);
   const moviePageNum = ref(1);
   const goldPageNum = ref(1);
+  const outTradeNo = ref('');
 
   getMemberMovieList();
   async function getMemberMovieList() {
@@ -80,18 +91,55 @@
       confirmButtonText: '确认',
       cancelButtonText: '取消'
     }).then(async ({ value }) => {
-      await request({
-        url: '/api/web/member/wallet/recharge',
+      // 提交订单
+      const data = await request({
+        url: '/api/web/member/order/create',
         method: 'POST',
         body: {
           gold: value
         }
       });
-      await refreshWallet();
-      ElMessage({
-        type: 'success',
-        message: `充值成功`
-      });
+      // 弹出二维码显示
+      qrcodeUrl.value = data.codeUrl;
+      payDialogVisible.value = true;
+      outTradeNo.value = data.outTradeNo;
+      await getOrderStatus(data.outTradeNo);
     });
+  }
+
+  // 轮询获取订单状态
+  async function getOrderStatus(outTradeNo) {
+    const data = await request({
+      url: `/api/web/member/order/query?outTradeNo=${outTradeNo}`
+    });
+    if (data.status === 'SUCCESS') {
+      await refreshWallet();
+      payDialogVisible.value = false;
+      ElMessage.success('充值成功');
+    } else if (data.status === 'CLOSED') {
+      ElMessage.error(`订单已关闭`);
+    } else {
+      await sleep(1);
+      await getOrderStatus(outTradeNo);
+    }
+  }
+
+  // 支付成功
+  async function handlePayEnd() {
+    const data = await request({
+      url: '/api/web/member/order/asyncOrder',
+      method: 'post',
+      data: {
+        outTradeNo: outTradeNo.value
+      }
+    });
+    if (data.trade_state === 'SUCCESS') {
+      await refreshWallet();
+      payDialogVisible.value = false;
+    }
+  }
+
+  function sleep(time) {
+    return new Promise(resolve => setTimeout(resolve, time * 1000));
   }
 </script>

@@ -3,13 +3,19 @@ import { and, eq, inArray } from 'drizzle-orm';
 import { Job, jobTable, NewJob } from '~/server/db/schema/monitor/job';
 import { JobLog, jobLogTable } from '~/server/db/schema/monitor/jobLog';
 import { queryParams } from '~/server/db/query.helper';
-import { JOB_TASK_KEY } from '~/server/contants/redis.contant';
+import { MemberOrderServices } from '~/server/services/member/memberOrder.services';
+import { MemberWalletServices } from '~/server/services/member/memberWallet.services';
+import { WxPayServices } from '~/server/services/wxPay/wxPay.services';
 
 export class JobServices {
   private static instance: any;
   private readonly jobs: any;
+  private memberOrderServices: MemberOrderServices;
+  private memberWalletServices: MemberWalletServices;
   private constructor() {
     this.jobs = {};
+    this.memberOrderServices = new MemberOrderServices();
+    this.memberWalletServices = new MemberWalletServices();
   }
 
   public static getInstance(): JobServices {
@@ -250,8 +256,29 @@ export class JobServices {
     };
   }
 
-  test(params: any[]) {
-    console.log('定时任务参数', params);
+  // 同步微信支付订单状态
+  async syncOrderStatus() {
+    // 查询所有未支付的订单
+    const orders = await this.memberOrderServices.findAllUnpaid();
+    for (const order of orders) {
+      const result: any = await WxPayServices.getInstance().query({ out_trade_no: order.outTradeNo });
+      const queryCount = (order.queryCount as number) + 1;
+      const memberOrder = await this.memberOrderServices.updateByOutTradeNo(result.data.out_trade_no, {
+        status: result.data.trade_state,
+        transactionId: result.data.transaction_id,
+        paidAt: result.data.success_time,
+        remark: result.data.trade_state_desc,
+        queryCount,
+        updateTime: new Date()
+      });
+      // 如果订单已支付
+      if (result.data.trade_state === 'SUCCESS') {
+        await this.memberWalletServices.recharge(memberOrder.memberUserId, memberOrder.totalAmount);
+      }
+      if ((order.queryCount as number) >= 30 && result.data.trade_state === 'NOTPAY') {
+        await WxPayServices.getInstance().close(order.outTradeNo);
+      }
+    }
   }
 }
 

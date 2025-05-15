@@ -107,6 +107,13 @@ export default defineNuxtConfig({
         user: process.env.FORM_USER_EMAIL || '',
         pass: process.env.FORM_USER_EMAIL_PASSWORD || ''
       }
+    },
+    // 微信支付配置
+    wechatPay: {
+      appId: process.env.WECHAT_PAY_APP_ID || '',
+      mchId: process.env.WECHAT_PAY_MCH_ID || '',
+      publicKey: process.env.WECHAT_PAY_PUBLIC_KEY || '',
+      privateKey: process.env.WECHAT_PAY_PRIVATE_KEY || ''
     }
   },
   compatibilityDate: '2024-11-04'

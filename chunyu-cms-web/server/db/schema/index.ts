@@ -37,6 +37,7 @@ import * as memberRateSchema from './member/rate';
 import * as memberWalletSchema from './member/wallet';
 import * as memberWalletLogSchema from './member/walletLog';
 import * as memberMovieSchema from './member/movie';
+import * as memberOrderSchema from './member/order';
 import * as movieRateSchema from './movie/rate';
 import * as commentSchema from './movie/comment';
 import * as shortSchema from './shorts/short';
@@ -79,6 +80,7 @@ export default {
   ...memberWalletSchema,
   ...memberWalletLogSchema,
   ...memberMovieSchema,
+  ...memberOrderSchema,
   ...movieRateSchema,
   ...commentSchema,
   ...shortSchema

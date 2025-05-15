@@ -173,4 +173,16 @@ export class SharedServices {
       console.error(`创建目录 ${directoryPath} 时出错：`, err);
     }
   }
+
+  /**
+   * 生成订单编号
+   */
+  generateOrderNumber() {
+    // 获取当前时间戳，精确到毫秒
+    const timestamp = new Date().getTime();
+    // 生成一个 4 位的随机数
+    const randomNum = Math.floor(Math.random() * 9000) + 1000;
+    // 组合时间戳和随机数形成订单编号
+    return `ORD${timestamp}${randomNum}`;
+  }
 }
