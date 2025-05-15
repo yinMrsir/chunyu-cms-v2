@@ -77,6 +77,13 @@ export class MemberUserServices {
       extras: {
         id: sql`${memberUserTable.memberUserId}`.as('id')
       },
+      with: {
+        memberWallet: {
+          columns: {
+            gold: true
+          }
+        }
+      },
       columns: {
         memberUserId: true,
         email: true,

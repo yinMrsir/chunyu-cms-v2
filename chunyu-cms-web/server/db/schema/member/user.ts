@@ -1,5 +1,7 @@
 import { char, int, mysqlTable, varchar, datetime, date } from 'drizzle-orm/mysql-core';
+import { relations } from 'drizzle-orm';
 import { columnsHelpers } from '../../columns.helpers';
+import { memberWalletTable } from './wallet';
 
 export const memberUserTable = mysqlTable('member_user', {
   memberUserId: int('member_user_id').autoincrement().primaryKey(),
@@ -30,6 +32,13 @@ export const memberUserTable = mysqlTable('member_user', {
   // 通用字段
   ...columnsHelpers
 });
+
+export const memberUserRelations = relations(memberUserTable, ({ one }) => ({
+  memberWallet: one(memberWalletTable, {
+    fields: [memberUserTable.memberUserId],
+    references: [memberWalletTable.memberUserId]
+  })
+}));
 
 export type MemberUser = typeof memberUserTable.$inferSelect;
 export type NewMemberUser = typeof memberUserTable.$inferInsert;

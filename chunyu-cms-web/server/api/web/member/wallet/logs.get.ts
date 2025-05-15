@@ -4,6 +4,6 @@ const memberWalletLogServices = new MemberWalletLogServices();
 
 export default defineEventHandler(async event => {
   const query = getQuery(event);
-  const data = await memberWalletLogServices.list(query);
+  const data = await memberWalletLogServices.list(query, event.context.memberUser.memberUserId);
   return createApiResponse(data);
 });

@@ -11,10 +11,12 @@ const noVerificationRouters = [
   '/api/web/member/short',
   '/api/web/member/short/list',
   '/api/web/member/comment',
+  '/api/web/member/movie/buy',
+  '/api/web/member/movie/list',
   '/api/web/member/wallet',
   '/api/web/member/wallet/recharge',
   '/api/web/member/wallet/deduct',
-  '/api/web/member/movie/buy',
+  '/api/web/member/wallet/logs',
   '/api/web/member/order/create'
 ];
 
