@@ -5,6 +5,13 @@
 
 V2相比[V1版本](https://github.com/yinMrsir/chunyu-cms)使用[DrizzleOrm](https://orm.drizzle.team/)替换了typeOrm，我想你会更容易上手操作。但请注意不支持mysql5.x，建议使用mysql8.x。
 
+## 核心功能
+* 用户端界面：采用Nuxt3构建，提供流畅的用户体验。
+* 管理端界面：基于Vue3和Element-UI，方便管理员进行网站内容的管理和更新。
+* 影视评分系统：用户可以对影视作品进行评分和评论。
+* 视频付费观看：支持视频内容的付费观看，为网站提供盈利渠道。
+* 短视频：支持短视频的播放，用户可以上传短视频。
+
 ## 在线体验
 - [用户端演示地址](http://cms.yinchunyu.com)
 - [管理端演示地址](http://cms.yinchunyu.com/admin)
