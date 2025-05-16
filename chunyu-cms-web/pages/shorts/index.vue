@@ -47,7 +47,12 @@
         </div>
         <div class="video-actions">
           <div class="action-icon">
-            <i class="i-el-heart w-28px h-28px"></i>
+            <i
+              class="i-el-heart w-28px h-28px"
+              :class="[currUserShortInfo?.isLike ? 'color-#FE2C55' : '']"
+              @click.stop="e => handleLike(e, short)"
+              @touchstart.stop="e => handleLike(e, short)"
+            ></i>
             <span>{{ short.likes }}</span>
           </div>
           <div class="action-icon">
@@ -86,6 +91,7 @@
   const shorts = ref([]);
   const isMuted = ref(true);
   const pageNum = ref(1);
+  const currUserShortInfo = ref({});
 
   const { data, refresh } = await useAsyncData(`data:${pageNum.value}`, () => {
     return $fetch(`/api/web/short/list?pageNum=${pageNum.value}&limit=6`);
@@ -215,6 +221,15 @@
       isShowPlayButton.value = false;
     }, 1000);
   }
+
+  function handleLike(e) {
+    if (currUserShortInfo.value.isLike) {
+      currUserShortInfo.value.isLike = false;
+    } else {
+      currUserShortInfo.value.isLike = true;
+      e.target.classList.add('animate__bounceIn');
+    }
+  }
 </script>
 
 <style lang="scss" scoped>
@@ -242,6 +257,24 @@
     }
     span {
       @apply text-14px;
+    }
+  }
+
+  .animate__bounceIn {
+    animation: bounceIn 0.6s cubic-bezier(0.17, 0.89, 0.32, 1.49);
+  }
+  @keyframes bounceIn {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
     }
   }
 </style>
