@@ -1,7 +1,7 @@
 import { int, mysqlTable } from 'drizzle-orm/mysql-core';
 import { relations } from 'drizzle-orm';
 import { columnsHelpers } from '../../columns.helpers';
-import { shortTable } from '~/server/db/schema/shorts/short';
+import { shortTable } from '../shorts/short';
 
 export const memberLikeTable = mysqlTable('member_like', {
   memberLikeId: int('member_like_id').autoincrement().primaryKey(),
