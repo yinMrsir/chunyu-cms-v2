@@ -58,7 +58,7 @@
               <i
                 class="i-el-heart w-28px h-28px"
                 :class="[currUserShortInfo?.isLike ? 'color-#FE2C55' : '']"
-                @click.stop="e => handleLike(e, short)"
+                @mousedown.stop="e => handleLike(e, short)"
                 @touchstart.stop="e => handleLike(e, short)"
               ></i>
               <span>{{ short.likes }}</span>
