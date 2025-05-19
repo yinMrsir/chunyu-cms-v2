@@ -2,6 +2,7 @@ import { MemberOrderServices } from '~/server/services/member/memberOrder.servic
 import { SharedServices } from '~/server/services/admin/share/shared.services';
 import { WxPayServices } from '~/server/services/wxPay/wxPay.services';
 
+const runtimeConfig = useRuntimeConfig();
 const memberOrderServices = new MemberOrderServices();
 const sharedServices = new SharedServices();
 
@@ -20,7 +21,7 @@ export default defineEventHandler(async event => {
   const params = {
     description,
     out_trade_no: outTradeNo,
-    notify_url: 'https://cms.chunyu.com/api/web/member/wallet/recharge',
+    notify_url: `${runtimeConfig.public.serverHost}/api/web/member/wallet/recharge`,
     amount: {
       total: totalAmount
     },

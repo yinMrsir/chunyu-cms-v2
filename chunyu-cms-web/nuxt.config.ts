@@ -80,7 +80,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      globalTitle: '淳渔影视'
+      globalTitle: '淳渔影视',
+      serverHost: process.env.SERVER_HOST || 'http://localhost:3000'
     },
     // mysql连接配置
     mysql: {

@@ -49,6 +49,8 @@ REDIS_PASSWORD=
 REDIS_DB=0
 # 是否演示环境
 IS_DEMO_ENVIRONMENT=false
+# 服务端域名
+SERVER_HOST=http://localhost:3000
 # 图片域名
 IMG_HOST=http://localhost:3000
 # 用户发送邮件的邮箱
