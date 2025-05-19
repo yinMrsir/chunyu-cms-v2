@@ -17,6 +17,13 @@ export class ShortServices {
       .where(eq(shortTable.shortId, body.shortId));
   }
 
+  /* 通过shortId查询 */
+  async getById(shortId: number) {
+    return await db.query.shortTable.findFirst({
+      where: eq(shortTable.shortId, shortId)
+    });
+  }
+
   /* 分页查询 */
   async pageList(params?: Partial<Short & { keyword: string } & queryParams>, memberUserId?: number) {
     const { pageNum = 1, limit = 10 } = params || {};
@@ -40,7 +47,9 @@ export class ShortServices {
       with: {
         memberUser: {
           columns: {
-            nickname: true
+            memberUserId: true,
+            nickname: true,
+            avatar: true
           }
         }
       },

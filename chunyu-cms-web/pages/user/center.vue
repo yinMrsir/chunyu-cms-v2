@@ -33,7 +33,17 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="喜欢" name="like">
-        <el-empty description="暂无数据" :image-size="60"></el-empty>
+        <div v-if="likes.length" class="works-box">
+          <div
+            v-for="(item, index) in likes"
+            :key="index"
+            class="works-box__item"
+            @click="handlePreviewVideo(item.videoUrl)"
+          >
+            <NuxtImg size="200px" format="webp" loading="lazy" :src="item.poster" />
+          </div>
+        </div>
+        <el-empty v-else description="暂无数据" :image-size="60"></el-empty>
       </el-tab-pane>
       <el-tab-pane label="收藏" name="collection">
         <el-empty description="暂无数据" :image-size="60"></el-empty>
@@ -146,6 +156,7 @@
   });
   const previewVideo = ref('');
   const previewVideoVisible = ref(false);
+  const likes = ref([]);
 
   watch(
     () => uploadShortVisible.value,
@@ -177,6 +188,20 @@
     });
   });
   shorts.value = shorts.value.concat(shortData.value?.rows);
+
+  watch(
+    () => activeTab.value,
+    async () => {
+      if (activeTab.value === 'like') {
+        pageNum.value = 1;
+        likes.value = [];
+        const data = await request({
+          url: `/api/web/member/short/like/list?pageNum=${pageNum.value}&limit=12`
+        });
+        likes.value = likes.value.concat(data.rows);
+      }
+    }
+  );
 
   // 新增短视频
   async function handleSubmitUploadShort() {

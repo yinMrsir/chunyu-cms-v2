@@ -90,7 +90,7 @@
           登录
         </div>
       </div>
-      <div class="flex justify-between h-58px items-center p-x-20px md:hidden fixed w-full bg-#111214 z-10">
+      <div class="flex justify-between h-58px items-center p-x-20px md:hidden fixed w-full bg-#111214 z-999">
         <nuxt-link to="/" class="flex items-center gap-x-5px">
           <img src="../assets/images/logo.png" alt="" class="h-28px border-rd-5px" />
           <span class="color-#fff text-20px font-bold logo-text">淳渔影视</span>
