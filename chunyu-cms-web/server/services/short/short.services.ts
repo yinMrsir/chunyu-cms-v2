@@ -20,6 +20,15 @@ export class ShortServices {
   /* 通过shortId查询 */
   async getById(shortId: number) {
     return await db.query.shortTable.findFirst({
+      with: {
+        memberUser: {
+          columns: {
+            memberUserId: true,
+            nickname: true,
+            avatar: true
+          }
+        }
+      },
       where: eq(shortTable.shortId, shortId)
     });
   }

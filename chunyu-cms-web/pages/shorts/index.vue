@@ -50,7 +50,7 @@
             <div
               class="action-icon"
               @touchstart.stop="router.push({ path: `/shorts/user/${short.memberUser.memberUserId}` })"
-              @click.stop="router.push({ path: `/shorts/user/${short.memberUser.memberUserId}` })"
+              @mousedown.stop="router.push({ path: `/shorts/user/${short.memberUser.memberUserId}` })"
             >
               <el-avatar :src="short.memberUser.avatar" class="border-#fff border-width-1px"></el-avatar>
             </div>
@@ -87,6 +87,7 @@
   import { useAsyncData } from '#app';
   import { WEB_TOKEN } from '#shared/cookiesName';
   import { useLoginVisible } from '~/composables/states';
+  import { obfuscateId } from '~/utils/obfuscator';
 
   definePageMeta({
     layout: false
@@ -141,6 +142,9 @@
     const offset = -index * 100;
     const shortsWrapper = document.querySelector('.shorts-wrapper');
     shortsWrapper.style.transform = `translateY(${offset}vh)`;
+
+    window.history.pushState({}, '', `/shorts/${obfuscateId(shorts.value[index].shortId)}`);
+
     if (previousIndex.value !== index) {
       isShowPlayButton.value = false;
       shorts.value.forEach((_, i) => {
@@ -294,49 +298,6 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  .shorts-wrapper {
-    @apply w-full relative;
-    transition: transform 0.3s ease-in-out;
-  }
-
-  .short-video {
-    @apply w-full h-full object-contain top-0 left-0;
-  }
-
-  .video-info {
-    @apply absolute bottom-20px left-20px z-10;
-  }
-
-  .video-actions {
-    @apply absolute bottom-30px right-20px z-10 flex flex-col gap-20px;
-  }
-
-  .action-icon {
-    @apply flex flex-col items-center cursor-pointer;
-    i {
-      @apply mb-8px hover:scale-120 transition-all;
-    }
-    span {
-      @apply text-14px;
-    }
-  }
-
-  .animate__bounceIn {
-    animation: bounceIn 0.6s cubic-bezier(0.17, 0.89, 0.32, 1.49);
-  }
-  @keyframes bounceIn {
-    0% {
-      transform: scale(0);
-      opacity: 0;
-    }
-    50% {
-      transform: scale(1.2);
-      opacity: 1;
-    }
-    100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-  }
+<style lang="scss">
+  @import '../../assets/css/short.scss';
 </style>

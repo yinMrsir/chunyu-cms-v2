@@ -12,9 +12,14 @@
     <el-tabs v-model="activeTab">
       <el-tab-pane label="作品" name="works">
         <div class="works-box">
-          <div v-for="(item, index) in shorts" :key="index" class="works-box__item">
+          <nuxt-link
+            v-for="(item, index) in shorts"
+            :key="index"
+            :to="`/shorts/${obfuscateId(item.id)}`"
+            class="works-box__item"
+          >
             <NuxtImg size="200px" format="webp" loading="lazy" :src="item.poster" />
-          </div>
+          </nuxt-link>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -22,6 +27,8 @@
 </template>
 
 <script setup>
+  import { obfuscateId } from '~/utils/obfuscator';
+
   const route = useRoute();
 
   const activeTab = ref('works');
