@@ -25,12 +25,23 @@
     <div class="trending-list trending-box m-x-auto mt-20px text-14px">
       <div class="trending-item">
         <nuxt-link
-          v-for="item in list"
+          v-for="(item, index) in list"
           :key="item.id"
           :to="`/column/${item.movie.columnValue}/video/${item.movie.movieBasicsId}`"
           class="grid grid-cols-[120px_1fr] mb-25px relative"
         >
-          <img class="w-100px border-rd-10px" :src="item.movie.poster" alt="" />
+          <div class="relative">
+            <img class="w-100px border-rd-10px" :src="item.movie.poster" alt="" />
+            <span
+              style="font-family: Impact, sans-serif"
+              class="absolute left-5px top-5px font-bold text-18px text-shadow-[0_0_5px_#000]"
+              :class="
+                index === 0 ? 'color-#f42c5e' : index === 1 ? 'color-#ff8000' : index === 2 ? 'color-#ffbf00' : ''
+              "
+            >
+              {{ index + 1 }}
+            </span>
+          </div>
           <div class="trending-info">
             <div>
               <div class="text-16px mb-6px">
@@ -198,7 +209,7 @@
         @apply whitespace-nowrap overflow-hidden text-ellipsis inline-block w-[calc(100vw-220px)] md:w-[calc(100vw-580px)] xl:w-50vw;
       }
       &__info {
-        @apply color-#ffffff66 w-[calc(100vw-220px)] md:w-[calc(100vw-580px)] xl:w-50vw;
+        @apply color-#ffffff66 w-[calc(100vw-240px)] md:w-[calc(100vw-580px)] xl:w-50vw;
         text-overflow: ellipsis;
         display: -webkit-box;
         overflow: hidden;

@@ -112,7 +112,7 @@ export class MovieWeeklyVisitsServices {
       where,
       offset,
       limit: Number(limit),
-      orderBy: [desc(movieWeeklyVisitsTable.weeklyIncrement)]
+      orderBy: [desc(movieWeeklyVisitsTable.weeklyIncrement), desc(movieWeeklyVisitsTable.id)]
     });
     const totalQuery = db.$count(movieWeeklyVisitsTable, where);
     const [rows, total] = await Promise.all([rowsQuery, totalQuery]);

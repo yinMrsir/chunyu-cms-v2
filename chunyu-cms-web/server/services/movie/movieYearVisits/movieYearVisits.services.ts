@@ -104,7 +104,7 @@ export class MovieYearVisitsServices {
       where,
       offset,
       limit: Number(limit),
-      orderBy: [desc(movieYearVisitsTable.yearIncrement)]
+      orderBy: [desc(movieYearVisitsTable.yearIncrement), desc(movieYearVisitsTable.id)]
     });
     const totalQuery = db.$count(movieYearVisitsTable, where);
     const [rows, total] = await Promise.all([rowsQuery, totalQuery]);

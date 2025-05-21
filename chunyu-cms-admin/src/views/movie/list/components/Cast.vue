@@ -34,7 +34,7 @@ const columns = ref([
     title: "头像",
     field: "actor.avatar",
     type: "img",
-    render: ({ actor }) => actor.avatar,
+    render: ({ actor }) => actor?.avatar,
   },
   { title: "中文名", field: "actor.name" },
   { title: "职务", field: "profession.name" },
@@ -43,7 +43,7 @@ const columns = ref([
     field: "actor.gender",
     type: "radio",
     options: sex_type,
-    render: ({ actor }) => (+actor.gender === 1 ? "男" : "女"),
+    render: ({ actor }) => (+actor?.gender === 1 ? "男" : "女"),
   },
   {
     title: "国家/地区",
@@ -53,7 +53,7 @@ const columns = ref([
     title: "出生日期",
     field: "actor.birthday",
     type: "date",
-    render: ({ actor }) => actor.birthday,
+    render: ({ actor }) => actor?.birthday,
   },
   {
     title: "影人名称",

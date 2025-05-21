@@ -231,6 +231,10 @@ import { getCountryAll } from "@/views/basic/country/services";
 import { getLanguageAll } from "@/views/basic/language/services";
 import { getColumnAll } from "@/views/basic/column/services";
 
+defineOptions({
+  name: 'MovieList'
+})
+
 const { proxy } = getCurrentInstance();
 const { movie_category_type } = proxy.useDict("movie_category_type");
 
