@@ -29,6 +29,14 @@
           </el-tooltip>
         </li>
         <li class="border-solid border-t-1px border-#ffffff40 m-x-10px"></li>
+        <li :class="route.path.includes('/trending') ? 'active' : ''">
+          <el-tooltip :disabled="textVisible" effect="dark" content="排行版" placement="right">
+            <nuxt-link to="/trending/movie">
+              <i class="i-flat-color-icons-bar-chart w-24px h-24px"></i>
+              <span v-if="textVisible">排行版</span>
+            </nuxt-link>
+          </el-tooltip>
+        </li>
         <li>
           <el-tooltip :disabled="textVisible" effect="dark" content="短视频" placement="right">
             <nuxt-link to="/shorts">
@@ -141,6 +149,12 @@
           </nuxt-link>
         </li>
         <li class="border-solid border-t-1px border-#ffffff40 m-x-10px"></li>
+        <li>
+          <nuxt-link to="/trending/movie">
+            <i class="i-flat-color-icons-bar-chart w-24px h-24px"></i>
+            <span>排行版</span>
+          </nuxt-link>
+        </li>
         <li>
           <nuxt-link to="/shorts">
             <i class="i-flat-color-icons-clapperboard w-24px h-24px"></i>

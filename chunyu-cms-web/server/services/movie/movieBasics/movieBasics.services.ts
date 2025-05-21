@@ -215,6 +215,13 @@ export class MovieBasicsServices {
     };
   }
 
+  /* 根据columnValue的值查询所有 */
+  async findByColumnValue(columnValue: string) {
+    return await db.query.movieBasicsTable.findMany({
+      where: eq(movieBasicsTable.columnValue, columnValue)
+    });
+  }
+
   /* 删除 */
   async delete(genreIds: string[]) {
     await db.delete(movieBasicsTable).where(

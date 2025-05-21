@@ -211,7 +211,8 @@
       </el-form-item>
 
       <el-form-item label="简介：">
-        <rich-text-editor v-model="movie.summary"></rich-text-editor>
+        <rich-text-editor v-if="isRichEdit" v-model="movie.summary"></rich-text-editor>
+        <el-input v-else v-model="movie.summary" type="textarea" rows="6" placeholder="请输入简介" />
       </el-form-item>
 
       <el-form-item label="是否付费">
@@ -263,6 +264,8 @@ const { proxy } = getCurrentInstance();
 const emit = defineEmits(["success"]);
 const { movie_category_type } = proxy.useDict("movie_category_type");
 
+// 是否使用富文本编辑器
+const isRichEdit = ref(false);
 const id = ref("");
 const movie = ref({
   columnValue: "movie",

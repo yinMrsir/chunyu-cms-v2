@@ -158,4 +158,9 @@ export class MoviePvServices {
       total
     };
   }
+
+  // 获取所有
+  async findAll() {
+    return await db.query.moviePvTable.findMany();
+  }
 }

@@ -55,7 +55,7 @@
               </div>
               <div v-if="detail.summary">
                 <h2 class="m-y-15px">节目简介</h2>
-                <div class="text-12px md:text-14px color-#dedede" v-html="detail.summary"></div>
+                <div class="text-14px color-#dedede" v-html="detail.summary"></div>
               </div>
               <div v-if="detail.movieVideo.length">
                 <h2 class="m-y-15px">相关视频</h2>

@@ -6,16 +6,25 @@ import { queryParams } from '~/server/db/query.helper';
 import { MemberOrderServices } from '~/server/services/member/memberOrder.services';
 import { MemberWalletServices } from '~/server/services/member/memberWallet.services';
 import { WxPayServices } from '~/server/services/wxPay/wxPay.services';
+import { MovieWeeklyVisitsServices } from '~/server/services/movie/movieWeeklyVisits/movieWeeklyVisits.services';
+import { MovieMonthVisitsServices } from '~/server/services/movie/movieMonthVisits/movieMonthVisits.services';
+import { MovieYearVisitsServices } from '~/server/services/movie/movieYearVisits/movieYearVisits.services';
 
 export class JobServices {
   private static instance: any;
   private readonly jobs: any;
   private memberOrderServices: MemberOrderServices;
   private memberWalletServices: MemberWalletServices;
+  private movieWeeklyVisitsServices: MovieWeeklyVisitsServices;
+  private movieMontVisitsServices: MovieMonthVisitsServices;
+  private movieYearVisitsServices: MovieYearVisitsServices;
   private constructor() {
     this.jobs = {};
     this.memberOrderServices = new MemberOrderServices();
     this.memberWalletServices = new MemberWalletServices();
+    this.movieWeeklyVisitsServices = new MovieWeeklyVisitsServices();
+    this.movieMontVisitsServices = new MovieMonthVisitsServices();
+    this.movieYearVisitsServices = new MovieYearVisitsServices();
   }
 
   public static getInstance(): JobServices {
@@ -279,6 +288,21 @@ export class JobServices {
         await WxPayServices.getInstance().close(order.outTradeNo);
       }
     }
+  }
+
+  // 生成周排名
+  async generateWeeklyStatistics() {
+    await this.movieWeeklyVisitsServices.updateVisits();
+  }
+
+  // 生成月排名
+  async generateMonthStatistics() {
+    await this.movieMontVisitsServices.updateVisits();
+  }
+
+  // 生成年排名
+  async generateYearStatistics() {
+    await this.movieYearVisitsServices.updateVisits();
   }
 }
 

@@ -31,6 +31,9 @@ import * as movieVideoSchema from './movie/movieVideo';
 import * as moviePhotoSchema from './movie/moviePhoto';
 import * as movieBasicToGenreSchema from './movie/movieBasicToGenre';
 import * as moviePvSchema from './movie/moviePv';
+import * as movieWeeklyVisitsSchema from './movie/movieWeeklyVisits';
+import * as movieMonthVisitsSchema from './movie/movieMonthVisits';
+import * as movieYearVisitsSchema from './movie/movieYearVisits';
 // 用户端
 import * as memberUserSchema from './member/user';
 import * as memberRateSchema from './member/rate';
@@ -76,6 +79,9 @@ export default {
   ...moviePhotoSchema,
   ...movieBasicToGenreSchema,
   ...moviePvSchema,
+  ...movieWeeklyVisitsSchema,
+  ...movieMonthVisitsSchema,
+  ...movieYearVisitsSchema,
   ...memberUserSchema,
   ...memberRateSchema,
   ...memberWalletSchema,

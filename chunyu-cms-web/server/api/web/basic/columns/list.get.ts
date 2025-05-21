@@ -3,8 +3,9 @@ import { ColumnsServices } from '~/server/services/basic/columns/columns.service
 const columnsServices = new ColumnsServices();
 
 export default defineCachedEventHandler(
-  async () => {
-    return await columnsServices.allList({ status: '0' });
+  async event => {
+    const query = getQuery(event);
+    return await columnsServices.allList({ ...query, status: '0' });
   },
   { base: 'redis', maxAge: 60 * 60 }
 );
