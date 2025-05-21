@@ -32,6 +32,9 @@ import Photos from "./components/Photos";
 import Cast from "./components/Cast";
 import tab from "@/plugins/tab";
 
+defineOptions({
+  name: 'Movieadd'
+})
 const route = useRoute();
 
 const data = ref({ id: route.query?.id });

@@ -232,7 +232,7 @@ import { getLanguageAll } from "@/views/basic/language/services";
 import { getColumnAll } from "@/views/basic/column/services";
 
 defineOptions({
-  name: 'MovieList'
+  name: 'Movielist'
 })
 
 const { proxy } = getCurrentInstance();

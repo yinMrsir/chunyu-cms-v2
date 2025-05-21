@@ -137,7 +137,7 @@
       list.value = list.value.concat(weeklys.value.rows);
       if (list.value.length >= weeklys.value?.total) {
         isShowLoading.value = false;
-      } else if (!trigger) {
+      } else {
         createTrigger();
       }
     }

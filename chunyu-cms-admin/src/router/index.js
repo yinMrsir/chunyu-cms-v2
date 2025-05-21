@@ -171,7 +171,7 @@ export const dynamicRoutes = [
       {
         path: "add",
         component: () => import("@/views/movie/list/add"),
-        name: "Movie-add",
+        name: "Movieadd",
         meta: {
           title: "新增影视",
           noCache: false,
