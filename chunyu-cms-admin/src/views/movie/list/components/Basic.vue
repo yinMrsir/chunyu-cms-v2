@@ -212,7 +212,7 @@
 
       <el-form-item label="简介：">
         <rich-text-editor v-if="isRichEdit" v-model="movie.summary"></rich-text-editor>
-        <el-input v-else v-model="movie.summary" type="textarea" rows="6" placeholder="请输入简介" />
+        <el-input v-else v-model="movie.summary" type="textarea" :rows="6" placeholder="请输入简介" />
       </el-form-item>
 
       <el-form-item label="是否付费">
