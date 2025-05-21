@@ -1,7 +1,7 @@
 import { int, mysqlTable, varchar } from 'drizzle-orm/mysql-core';
 import { relations } from 'drizzle-orm';
 import { columnsHelpers } from '../../columns.helpers';
-import { movieBasicsTable } from '~/server/db/schema/movie/movieBasics';
+import { movieBasicsTable } from './movieBasics';
 
 /**
  * 电影年访问量统计表
