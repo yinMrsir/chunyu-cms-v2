@@ -138,7 +138,3 @@
     }
   }
 </script>
-
-<style lang="scss">
-  @import '../../assets/css/short.scss';
-</style>

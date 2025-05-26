@@ -11,7 +11,8 @@ export default defineNuxtConfig({
     '@unocss/reset/tailwind-compat.css',
     'element-plus/dist/index.css',
     'element-plus/theme-chalk/dark/css-vars.css',
-    '@/assets/css/style.css'
+    '@/assets/css/style.css',
+    '@/assets/css/short.scss'
   ],
   modules: ['@element-plus/nuxt', '@unocss/nuxt', '@nuxt/image'],
   vite: {

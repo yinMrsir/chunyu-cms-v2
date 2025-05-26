@@ -11,21 +11,22 @@ dayjs.extend(isoWeek);
 export class MovieYearVisitsServices {
   private moviePvServices: MoviePvServices;
   private movieBasicsServices: MovieBasicsServices;
+  private currentDate: dayjs.Dayjs;
   constructor() {
     this.moviePvServices = new MoviePvServices();
     this.movieBasicsServices = new MovieBasicsServices();
+    // 获取今天的日期
+    this.currentDate = dayjs();
   }
 
   async updateVisits() {
-    // 获取今天的日期
-    const currentDate = dayjs();
     // 获取本月年份
-    const yearNumber = currentDate.format('YYYY');
+    const yearNumber = this.currentDate.format('YYYY');
     // 遍历所有有访问记录的影片
     const moviesWithVisits = await this.moviePvServices.findAll();
 
     // 上年
-    const lastYearDate = currentDate.subtract(1, 'year');
+    const lastYearDate = this.currentDate.subtract(1, 'year');
     // 上年 年份
     const lastYearNumber = lastYearDate.format('YYYY');
 
@@ -67,7 +68,7 @@ export class MovieYearVisitsServices {
     const { pageNum = 1, limit = 10 } = params || {};
     const offset = (pageNum - 1) * limit;
 
-    const whereList = [];
+    const whereList = [eq(movieYearVisitsTable.yearNumber, this.currentDate.format('YYYY'))];
 
     if (params?.columnValue) {
       const movieList = await this.movieBasicsServices.findByColumnValue(params.columnValue);

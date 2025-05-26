@@ -11,25 +11,29 @@ dayjs.extend(isoWeek);
 export class MovieWeeklyVisitsServices {
   private moviePvServices: MoviePvServices;
   private movieBasicsServices: MovieBasicsServices;
+  private currentDate: dayjs.Dayjs;
+  private readonly currentYearNumber: number;
+  private readonly currentWeekNumber: number;
   constructor() {
     this.moviePvServices = new MoviePvServices();
     this.movieBasicsServices = new MovieBasicsServices();
+
+    // 获取今天的日期
+    this.currentDate = dayjs();
+    // 获取本周的年份
+    this.currentYearNumber = this.currentDate.isoWeekYear();
+    // 获取本周的周数
+    this.currentWeekNumber = this.currentDate.isoWeek();
   }
 
   async updateVisits() {
-    // 获取今天的日期
-    const currentDate = dayjs();
-    // 获取本周的年份
-    const currentYearNumber = currentDate.isoWeekYear();
-    // 获取本周的周数
-    const currentWeekNumber = currentDate.isoWeek();
     // 遍历所有有访问记录的影片
     const moviesWithVisits = await this.moviePvServices.findAll();
     // 当前需要存储的周期
-    const weekNumber = currentYearNumber + '-' + currentWeekNumber;
+    const weekNumber = this.currentYearNumber + '-' + this.currentWeekNumber;
 
     // 上周
-    const lastWeekDate = currentDate.subtract(1, 'week');
+    const lastWeekDate = this.currentDate.subtract(1, 'week');
     // 上周 年份
     const lastYearNumber = lastWeekDate.isoWeekYear();
     // 上周 周数
@@ -56,7 +60,12 @@ export class MovieWeeklyVisitsServices {
             weeklyIncrement: movie.pv - (lastWeekRecord?.weeklyPv || 0),
             updateTime: new Date()
           })
-          .where(eq(movieWeeklyVisitsTable.movieBasicsId, movie.movieBasicsId));
+          .where(
+            and(
+              eq(movieWeeklyVisitsTable.movieBasicsId, movie.movieBasicsId),
+              eq(movieWeeklyVisitsTable.weekNumber, weekNumber)
+            )
+          );
       }
     }
   }
@@ -75,7 +84,7 @@ export class MovieWeeklyVisitsServices {
     const { pageNum = 1, limit = 10 } = params || {};
     const offset = (pageNum - 1) * limit;
 
-    const whereList = [];
+    const whereList = [eq(movieWeeklyVisitsTable.weekNumber, this.currentYearNumber + '-' + this.currentWeekNumber)];
 
     if (params?.columnValue) {
       const movieList = await this.movieBasicsServices.findByColumnValue(params.columnValue);
