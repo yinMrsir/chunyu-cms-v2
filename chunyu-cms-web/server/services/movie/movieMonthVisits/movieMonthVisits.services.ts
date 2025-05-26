@@ -40,7 +40,10 @@ export class MovieMonthVisitsServices {
     for (const movie of moviesWithVisits) {
       const currentWeekRecord = await this.findOne(movie.movieBasicsId, monthNumber);
       const lastWeekRecord = await db.query.movieMonthVisitsTable.findFirst({
-        where: eq(movieMonthVisitsTable.monthNumber, lastYearNumber + '-' + lastWeekNumber)
+        where: and(
+          eq(movieMonthVisitsTable.monthNumber, lastYearNumber + '-' + lastWeekNumber),
+          eq(movieMonthVisitsTable.movieBasicsId, movie.movieBasicsId)
+        )
       });
       if (!currentWeekRecord) {
         await db.insert(movieMonthVisitsTable).values({
