@@ -195,6 +195,7 @@
     }
     if (query.gid) {
       html += '最新最全的';
+      html += countries.value?.find(item => item.id === Number(query.cid))?.name;
       html += genres.value?.find(item => item.id === Number(query.gid))?.name;
       html += '在线观看';
     }
