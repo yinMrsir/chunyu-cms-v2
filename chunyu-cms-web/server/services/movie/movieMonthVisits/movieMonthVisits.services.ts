@@ -11,28 +11,22 @@ dayjs.extend(isoWeek);
 export class MovieMonthVisitsServices {
   private moviePvServices: MoviePvServices;
   private movieBasicsServices: MovieBasicsServices;
-  private currentDate: dayjs.Dayjs;
-  private currentYearNumber: string;
-  private currentMonthNumber: string;
   constructor() {
     this.moviePvServices = new MoviePvServices();
     this.movieBasicsServices = new MovieBasicsServices();
-    // 获取今天的日期
-    this.currentDate = dayjs();
-    // 获取本月年份
-    this.currentYearNumber = this.currentDate.format('YYYY');
-    // 获取本月月份
-    this.currentMonthNumber = this.currentDate.format('MM');
   }
 
   async updateVisits() {
+    // 获取今天的日期
+    const currentDate = dayjs();
+
     // 遍历所有有访问记录的影片
     const moviesWithVisits = await this.moviePvServices.findAll();
     // 当前需要存储的月期
-    const monthNumber = this.currentYearNumber + '-' + this.currentMonthNumber;
+    const monthNumber = currentDate.format('YYYY-MM');
 
     // 上月
-    const lastMonthDate = this.currentDate.subtract(1, 'month');
+    const lastMonthDate = currentDate.subtract(1, 'month');
     // 上月 年份
     const lastYearNumber = lastMonthDate.format('YYYY');
     // 上月
@@ -81,7 +75,8 @@ export class MovieMonthVisitsServices {
     const { pageNum = 1, limit = 10 } = params || {};
     const offset = (pageNum - 1) * limit;
 
-    const whereList = [eq(movieMonthVisitsTable.monthNumber, this.currentYearNumber + '-' + this.currentMonthNumber)];
+    const currentDate = dayjs();
+    const whereList = [eq(movieMonthVisitsTable.monthNumber, currentDate.format('YYYY-MM'))];
 
     if (params?.columnValue) {
       const movieList = await this.movieBasicsServices.findByColumnValue(params.columnValue);
