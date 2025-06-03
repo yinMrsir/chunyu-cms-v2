@@ -27,24 +27,20 @@ export class MovieMonthVisitsServices {
 
     // 上月
     const lastMonthDate = currentDate.subtract(1, 'month');
-    // 上月 年份
-    const lastYearNumber = lastMonthDate.format('YYYY');
-    // 上月
-    const lastWeekNumber = lastMonthDate.format('MM');
     for (const movie of moviesWithVisits) {
-      const currentWeekRecord = await this.findOne(movie.movieBasicsId, monthNumber);
-      const lastWeekRecord = await db.query.movieMonthVisitsTable.findFirst({
+      const currentMonthRecord = await this.findOne(movie.movieBasicsId, monthNumber);
+      const lastMonthRecord = await db.query.movieMonthVisitsTable.findFirst({
         where: and(
-          eq(movieMonthVisitsTable.monthNumber, lastYearNumber + '-' + lastWeekNumber),
+          eq(movieMonthVisitsTable.monthNumber, lastMonthDate.format('YYYY-MM')),
           eq(movieMonthVisitsTable.movieBasicsId, movie.movieBasicsId)
         )
       });
-      if (!currentWeekRecord) {
+      if (!currentMonthRecord) {
         await db.insert(movieMonthVisitsTable).values({
           movieBasicsId: movie.movieBasicsId,
           monthNumber,
           monthPv: movie?.pv || 0,
-          monthIncrement: movie.pv - (lastWeekRecord?.monthPv || 0),
+          monthIncrement: movie.pv - (lastMonthRecord?.monthPv || 0),
           createTime: new Date(),
           updateTime: new Date()
         });
@@ -53,10 +49,15 @@ export class MovieMonthVisitsServices {
           .update(movieMonthVisitsTable)
           .set({
             monthPv: movie?.pv || 0,
-            monthIncrement: movie.pv - (lastWeekRecord?.monthPv || 0),
+            monthIncrement: movie.pv - (lastMonthRecord?.monthPv || 0),
             updateTime: new Date()
           })
-          .where(eq(movieMonthVisitsTable.movieBasicsId, movie.movieBasicsId));
+          .where(
+            and(
+              eq(movieMonthVisitsTable.movieBasicsId, movie.movieBasicsId),
+              eq(movieMonthVisitsTable.monthNumber, monthNumber)
+            )
+          );
       }
     }
   }

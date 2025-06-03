@@ -30,19 +30,19 @@ export class MovieYearVisitsServices {
     const lastYearNumber = lastYearDate.format('YYYY');
 
     for (const movie of moviesWithVisits) {
-      const currentWeekRecord = await this.findOne(movie.movieBasicsId, yearNumber);
-      const lastWeekRecord = await db.query.movieYearVisitsTable.findFirst({
+      const currentYearRecord = await this.findOne(movie.movieBasicsId, yearNumber);
+      const lastYearRecord = await db.query.movieYearVisitsTable.findFirst({
         where: and(
           eq(movieYearVisitsTable.yearNumber, lastYearNumber),
           eq(movieYearVisitsTable.movieBasicsId, movie.movieBasicsId)
         )
       });
-      if (!currentWeekRecord) {
+      if (!currentYearRecord) {
         await db.insert(movieYearVisitsTable).values({
           movieBasicsId: movie.movieBasicsId,
           yearNumber,
           yearPv: movie?.pv || 0,
-          yearIncrement: movie.pv - (lastWeekRecord?.yearPv || 0),
+          yearIncrement: movie.pv - (lastYearRecord?.yearPv || 0),
           createTime: new Date(),
           updateTime: new Date()
         });
@@ -51,10 +51,15 @@ export class MovieYearVisitsServices {
           .update(movieYearVisitsTable)
           .set({
             yearPv: movie?.pv || 0,
-            yearIncrement: movie.pv - (lastWeekRecord?.yearPv || 0),
+            yearIncrement: movie.pv - (lastYearRecord?.yearPv || 0),
             updateTime: new Date()
           })
-          .where(eq(movieYearVisitsTable.movieBasicsId, movie.movieBasicsId));
+          .where(
+            and(
+              eq(movieYearVisitsTable.movieBasicsId, movie.movieBasicsId),
+              eq(movieYearVisitsTable.yearNumber, yearNumber)
+            )
+          );
       }
     }
   }
