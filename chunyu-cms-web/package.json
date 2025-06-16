@@ -46,7 +46,6 @@
   "dependencies": {
     "@types/showdown": "^2.0.6",
     "ali-oss": "^6.22.0",
-    "cheerio": "^1.0.0",
     "clipboard": "^2.0.11",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.13",
