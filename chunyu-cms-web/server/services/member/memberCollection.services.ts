@@ -75,8 +75,7 @@ export class MemberCollectionServices {
             playCount: true,
             likes: true,
             comments: true,
-            collection: true,
-            createdAt: true
+            collection: true
           },
           with: {
             memberUser: {
