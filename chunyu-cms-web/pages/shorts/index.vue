@@ -46,36 +46,11 @@
           <div class="video-info">
             <h3>{{ short.description }}</h3>
           </div>
-          <div class="video-actions">
-            <div
-              class="action-icon"
-              @touchstart.stop="router.push({ path: `/shorts/user/${short.memberUser.memberUserId}` })"
-              @mousedown.stop="router.push({ path: `/shorts/user/${short.memberUser.memberUserId}` })"
-            >
-              <el-avatar :src="short.memberUser.avatar" class="border-#fff border-width-1px"></el-avatar>
-            </div>
-            <div class="action-icon">
-              <i
-                class="i-el-heart w-28px h-28px"
-                :class="[currUserShortInfo?.isLike ? 'color-#FE2C55' : '']"
-                @mousedown.stop="e => handleLike(e, short)"
-                @touchstart.stop="e => handleLike(e, short)"
-              ></i>
-              <span>{{ short.likes }}</span>
-            </div>
-            <div class="action-icon">
-              <i class="i-el-star w-28px h-28px"></i>
-              <span>{{ short.collection }}</span>
-            </div>
-            <div class="action-icon">
-              <i class="i-el-comment w-24px h-24px"></i>
-              <span>{{ short.comments }}</span>
-            </div>
-            <div class="action-icon">
-              <i class="i-el-share-alt w-28px h-28px"></i>
-              <span>{{ short.shareCount }}</span>
-            </div>
-          </div>
+          <ShortVideoActions
+            :short="short"
+            :initial-status="currUserShortInfo"
+            @update:status="currUserShortInfo = $event"
+          />
         </div>
       </div>
     </div>
@@ -86,7 +61,6 @@
 <script setup>
   import { useAsyncData } from '#app';
   import { WEB_TOKEN } from '#shared/cookiesName';
-  import { useLoginVisible } from '~/composables/states';
   import { obfuscateId } from '~/utils/obfuscator';
 
   definePageMeta({
@@ -94,7 +68,6 @@
   });
 
   const token = useCookie(WEB_TOKEN);
-  const loginVisible = useLoginVisible();
   const router = useRouter();
   const currentIndex = ref(0);
   const previousIndex = ref(0);
@@ -107,8 +80,12 @@
   const isMuted = ref(true);
   const pageNum = ref(1);
   const currUserShortInfo = ref({
-    isLike: false
+    isLike: false,
+    isCollection: false
   });
+
+  // 使用通用短视频操作composable
+  const { getShortUserStatus } = useShortActions();
 
   const { data, refresh } = await useAsyncData(`data:${pageNum.value}`, () => {
     return $fetch(`/api/web/short/list?pageNum=${pageNum.value}&limit=6`);
@@ -132,9 +109,8 @@
     getCurrentShortInfo(currentShort.value.shortId);
   }
   async function getCurrentShortInfo(shortId) {
-    currUserShortInfo.value.isLike = await request({
-      url: '/api/web/member/short/info?shortId=' + shortId
-    });
+    const status = await getShortUserStatus(shortId);
+    currUserShortInfo.value = { ...status };
   }
 
   const scrollToShort = async index => {
@@ -262,39 +238,6 @@
       currentVideo.play();
       isShowPlayButton.value = false;
     }, 1000);
-  }
-
-  async function handleLike(e, short) {
-    if (!token.value) {
-      loginVisible.value = true;
-      return;
-    }
-    if (currUserShortInfo.value.isLike) {
-      await request({
-        url: '/api/web/member/short/like/cancel',
-        method: 'POST',
-        body: {
-          shortId: currentShort.value.shortId
-        }
-      });
-      currUserShortInfo.value.isLike = false;
-      short.likes -= 1;
-    } else {
-      await request({
-        url: '/api/web/member/short/like',
-        method: 'POST',
-        body: {
-          shortId: currentShort.value.shortId
-        }
-      });
-      currUserShortInfo.value.isLike = true;
-      await nextTick();
-      e.target.classList.add('animate__bounceIn');
-      short.likes += 1;
-      setTimeout(() => {
-        e.target.classList.remove('animate__bounceIn');
-      }, 1000);
-    }
   }
 </script>
 

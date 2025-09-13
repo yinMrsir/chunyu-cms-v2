@@ -89,9 +89,7 @@
       "compositePrimaryKeys": {
         "news_info_id": {
           "name": "news_info_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {},

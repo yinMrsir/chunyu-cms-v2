@@ -89,9 +89,7 @@
       "compositePrimaryKeys": {
         "news_info_id": {
           "name": "news_info_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {},
@@ -222,9 +220,7 @@
       "compositePrimaryKeys": {
         "dept_dept_id": {
           "name": "dept_dept_id",
-          "columns": [
-            "dept_id"
-          ]
+          "columns": ["dept_id"]
         }
       },
       "uniqueConstraints": {},
@@ -348,12 +344,8 @@
           "name": "dict_data_dict_type_id_dict_type_dict_id_fk",
           "tableFrom": "dict_data",
           "tableTo": "dict_type",
-          "columnsFrom": [
-            "dict_type_id"
-          ],
-          "columnsTo": [
-            "dict_id"
-          ],
+          "columnsFrom": ["dict_type_id"],
+          "columnsTo": ["dict_id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -361,9 +353,7 @@
       "compositePrimaryKeys": {
         "dict_data_dict_data_id": {
           "name": "dict_data_dict_data_id",
-          "columns": [
-            "dict_data_id"
-          ]
+          "columns": ["dict_data_id"]
         }
       },
       "uniqueConstraints": {},
@@ -447,17 +437,13 @@
       "compositePrimaryKeys": {
         "dict_type_dict_id": {
           "name": "dict_type_dict_id",
-          "columns": [
-            "dict_id"
-          ]
+          "columns": ["dict_id"]
         }
       },
       "uniqueConstraints": {
         "dict_type_dict_type_unique": {
           "name": "dict_type_dict_type_unique",
-          "columns": [
-            "dict_type"
-          ]
+          "columns": ["dict_type"]
         }
       },
       "checkConstraint": {}
@@ -622,9 +608,7 @@
       "compositePrimaryKeys": {
         "menu_menu_id": {
           "name": "menu_menu_id",
-          "columns": [
-            "menu_id"
-          ]
+          "columns": ["menu_id"]
         }
       },
       "uniqueConstraints": {},
@@ -744,9 +728,7 @@
       "compositePrimaryKeys": {
         "role_role_id": {
           "name": "role_role_id",
-          "columns": [
-            "role_id"
-          ]
+          "columns": ["role_id"]
         }
       },
       "uniqueConstraints": {},
@@ -776,12 +758,8 @@
           "name": "role_to_menu_role_id_role_role_id_fk",
           "tableFrom": "role_to_menu",
           "tableTo": "role",
-          "columnsFrom": [
-            "role_id"
-          ],
-          "columnsTo": [
-            "role_id"
-          ],
+          "columnsFrom": ["role_id"],
+          "columnsTo": ["role_id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -789,12 +767,8 @@
           "name": "role_to_menu_menu_id_menu_menu_id_fk",
           "tableFrom": "role_to_menu",
           "tableTo": "menu",
-          "columnsFrom": [
-            "menu_id"
-          ],
-          "columnsTo": [
-            "menu_id"
-          ],
+          "columnsFrom": ["menu_id"],
+          "columnsTo": ["menu_id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -950,9 +924,7 @@
       "compositePrimaryKeys": {
         "user_user_id": {
           "name": "user_user_id",
-          "columns": [
-            "user_id"
-          ]
+          "columns": ["user_id"]
         }
       },
       "uniqueConstraints": {},
@@ -982,12 +954,8 @@
           "name": "user_to_role_user_id_user_user_id_fk",
           "tableFrom": "user_to_role",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "user_id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["user_id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -995,12 +963,8 @@
           "name": "user_to_role_role_id_role_role_id_fk",
           "tableFrom": "user_to_role",
           "tableTo": "role",
-          "columnsFrom": [
-            "role_id"
-          ],
-          "columnsTo": [
-            "role_id"
-          ],
+          "columnsFrom": ["role_id"],
+          "columnsTo": ["role_id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }

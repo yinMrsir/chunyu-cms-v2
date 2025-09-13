@@ -46,7 +46,17 @@
         <el-empty v-else description="暂无数据" :image-size="60"></el-empty>
       </el-tab-pane>
       <el-tab-pane label="收藏" name="collection">
-        <el-empty description="暂无数据" :image-size="60"></el-empty>
+        <div v-if="collections.length" class="works-box">
+          <div
+            v-for="(item, index) in collections"
+            :key="index"
+            class="works-box__item"
+            @click="handlePreviewVideo(item.videoUrl)"
+          >
+            <NuxtImg size="200px" format="webp" loading="lazy" :src="item.poster" />
+          </div>
+        </div>
+        <el-empty v-else description="暂无数据" :image-size="60"></el-empty>
       </el-tab-pane>
     </el-tabs>
     <el-dialog v-model="uploadShortVisible" class="!w-360px !md:w-600px">
@@ -157,6 +167,7 @@
   const previewVideo = ref('');
   const previewVideoVisible = ref(false);
   const likes = ref([]);
+  const collections = ref([]);
 
   watch(
     () => uploadShortVisible.value,
@@ -199,6 +210,13 @@
           url: `/api/web/member/short/like/list?pageNum=${pageNum.value}&limit=12`
         });
         likes.value = likes.value.concat(data.rows);
+      } else if (activeTab.value === 'collection') {
+        pageNum.value = 1;
+        collections.value = [];
+        const data = await request({
+          url: `/api/web/member/short/collection/list?pageNum=${pageNum.value}&limit=12`
+        });
+        collections.value = collections.value.concat(data.rows);
       }
     }
   );

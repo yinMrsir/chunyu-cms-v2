@@ -32,34 +32,11 @@
           <div class="video-info">
             <h3>{{ short.description }}</h3>
           </div>
-          <div class="video-actions">
-            <div
-              class="action-icon"
-              @click.stop="router.push({ path: `/shorts/user/${short.memberUser?.memberUserId}` })"
-            >
-              <el-avatar :src="short.memberUser?.avatar" class="border-#fff border-width-1px"></el-avatar>
-            </div>
-            <div class="action-icon">
-              <i
-                class="i-el-heart w-28px h-28px"
-                :class="[currUserShortInfo?.isLike ? 'color-#FE2C55' : '']"
-                @click.stop="e => handleLike(e, short)"
-              ></i>
-              <span>{{ short.likes }}</span>
-            </div>
-            <div class="action-icon">
-              <i class="i-el-star w-28px h-28px"></i>
-              <span>{{ short.collection }}</span>
-            </div>
-            <div class="action-icon">
-              <i class="i-el-comment w-24px h-24px"></i>
-              <span>{{ short.comments }}</span>
-            </div>
-            <div class="action-icon">
-              <i class="i-el-share-alt w-28px h-28px"></i>
-              <span>{{ short.shareCount }}</span>
-            </div>
-          </div>
+          <ShortVideoActions
+            :short="short"
+            :initial-status="currUserShortInfo"
+            @update:status="currUserShortInfo = $event"
+          />
         </div>
       </div>
     </div>
@@ -70,7 +47,6 @@
 <script setup>
   import { deObfuscateId } from '~/utils/obfuscator';
   import { WEB_TOKEN } from '#shared/cookiesName';
-  import { useLoginVisible } from '~/composables/states';
 
   definePageMeta({
     layout: false
@@ -79,18 +55,27 @@
   const route = useRoute();
   const router = useRouter();
   const token = useCookie(WEB_TOKEN);
-  const loginVisible = useLoginVisible();
 
   const isMuted = ref(true);
   const currUserShortInfo = ref({
-    isLike: false
+    isLike: false,
+    isCollection: false
   });
+
+  // 使用通用短视频操作composable
+  const { getShortUserStatus } = useShortActions();
 
   const shortId = computed(() => {
     return deObfuscateId(Number(route.params.obfuscatedId));
   });
 
   const { data: short } = await useFetch(`/api/web/short/${shortId.value}`);
+
+  // 获取用户交互状态
+  if (token.value) {
+    const status = await getShortUserStatus(shortId.value);
+    currUserShortInfo.value = { ...status };
+  }
 
   function handleBackOrHome() {
     router.back();
@@ -103,38 +88,5 @@
       const currentVideo = document.querySelector('.short-video');
       currentVideo.play();
     }, 1000);
-  }
-
-  async function handleLike(e, short) {
-    if (!token.value) {
-      loginVisible.value = true;
-      return;
-    }
-    if (currUserShortInfo.value.isLike) {
-      await request({
-        url: '/api/web/member/short/like/cancel',
-        method: 'POST',
-        body: {
-          shortId: shortId.value
-        }
-      });
-      currUserShortInfo.value.isLike = false;
-      short.likes -= 1;
-    } else {
-      await request({
-        url: '/api/web/member/short/like',
-        method: 'POST',
-        body: {
-          shortId: shortId.value
-        }
-      });
-      currUserShortInfo.value.isLike = true;
-      await nextTick();
-      e.target.classList.add('animate__bounceIn');
-      short.likes += 1;
-      setTimeout(() => {
-        e.target.classList.remove('animate__bounceIn');
-      }, 1000);
-    }
   }
 </script>

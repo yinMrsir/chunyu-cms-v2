@@ -1,8 +1,11 @@
 body {
-  font-family: PingFang SC,DFPKingGothicGB-Regular,sans-serif;
+  font-family:
+    PingFang SC,
+    DFPKingGothicGB-Regular,
+    sans-serif;
   background: #111214;
   font-size: 16px;
-  color: rgba(255,255,255,0.95);
+  color: rgba(255, 255, 255, 0.95);
   overscroll-behavior: none;
 }
 
@@ -10,7 +13,6 @@ body {
   --el-font-size-base: 16px !important;
   --el-color-primary: #00da5ab2 !important;
   --el-color-primary-light-3: #00da5a !important;
-
 }
 
 .el-button:active {
@@ -54,13 +56,13 @@ body {
 }
 
 .el-tabs__nav-scroll {
-  padding-left: 10px !important;;
+  padding-left: 10px !important;
 }
 
 .el-tabs__active-bar {
-  background: #00f48e  !important;
-  box-shadow: 0 0 14px 1px #00f48e  !important;
-  box-sizing: border-box  !important;
-  height: 4px  !important;
+  background: #00f48e !important;
+  box-shadow: 0 0 14px 1px #00f48e !important;
+  box-sizing: border-box !important;
+  height: 4px !important;
   border-radius: 2px !important;
 }
