@@ -29,14 +29,17 @@ export default defineNuxtConfig({
       htmlAttrs: {
         class: 'dark'
       },
-      title: '淳渔影视CMS-Nodejs快速搭建影视类网站',
+      title: '淳渔影视-免费在线观看正版高清电视剧、短剧、电影、综艺、动漫',
       meta: [
         { charset: 'utf-8' },
         {
           name: 'viewport',
           content: 'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'
         },
-        { name: 'keywords', content: '淳渔影视,最新电影，最新电视剧' },
+        {
+          name: 'keywords',
+          content: '淳渔影视,最新电影,最新电视剧,影视大全,免费,高清,在线视频,电影,电视剧,短剧,综艺,动漫,纪录片'
+        },
         {
           name: 'description',
           content: '淳渔影视更新最快的影视网站之一，收集了全网最新高分电影,电视剧,综艺,动漫等热播剧目免费在线观看！'
