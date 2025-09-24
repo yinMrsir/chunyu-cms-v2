@@ -2,7 +2,7 @@ import { WEB_TOKEN, WEB_USER_INFO } from '~/shared/cookiesName';
 
 export const createToken = () => {
   const token = useCookie(WEB_TOKEN);
-  return 'Bearer ' + token.value;
+  return token.value ? 'Bearer ' + token.value : '';
 };
 
 export const request = (options: { url: any; method?: any; body?: any }) => {
