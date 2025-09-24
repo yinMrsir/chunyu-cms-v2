@@ -1,7 +1,7 @@
 <template>
   <div class="pt-0 md:pt-65px show-page">
     <Head>
-      <Title>{{ $titleRender(`${title}_${columnInfo?.name}`) }}</Title>
+      <Title>{{ $titleRender(`${title}${columnInfo?.name}`) }}</Title>
       <Meta name="description" :content="`最新最全的${title}${columnInfo?.name}尽在淳渔影视。`" />
     </Head>
 
@@ -195,8 +195,8 @@
     }
     if (query.gid) {
       html += '最新最全的';
-      html += countries.value?.find(item => item.id === Number(query.cid))?.name;
-      html += genres.value?.find(item => item.id === Number(query.gid))?.name;
+      html += countries.value?.find(item => item.id === Number(query.cid))?.name || '';
+      html += genres.value?.find(item => item.id === Number(query.gid))?.name || '';
       html += '在线观看';
     }
     return html;

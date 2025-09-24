@@ -1,7 +1,7 @@
 <template>
   <div class="pt-0 md:pt-65px video-detail">
     <Head>
-      <Title>{{ $titleRender(`${detail.title}_${detail.title}在线观看`) }}</Title>
+      <Title>{{ $titleRender(`${detail.title}在线观看`) }}</Title>
       <Meta name="description" :content="detail.summary" />
     </Head>
 
