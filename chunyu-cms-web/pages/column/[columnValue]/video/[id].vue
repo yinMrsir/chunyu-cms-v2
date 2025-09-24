@@ -43,11 +43,11 @@
                       </span>
                     </template>
                     <span v-if="detail.languages">
-                      <span v-for="(l, index) in detail.languages.split(',')" :key="index"> · {{ l }} </span>
+                      <span v-for="(l, index) in splitArr(detail.languages)" :key="index"> · {{ l }} </span>
                     </span>
                   </p>
                   <p v-if="detail?.tags" class="color-#999 flex gap-5px pt-5px">
-                    <el-tag v-for="(tag, index) in detail?.tags.split(',')" :key="index" type="info" size="small">
+                    <el-tag v-for="(tag, index) in splitArr(detail?.tags)" :key="index" type="info" size="small">
                       {{ tag }}
                     </el-tag>
                   </p>
@@ -232,7 +232,7 @@
   // 视频支付提示插件
   let payTipInstance = null;
 
-  const [{ data: detail }, { data: movies }, {}, { data: isUserBuy }] = await Promise.all([
+  const [{ data: detail }, { data: movies }, , { data: isUserBuy }] = await Promise.all([
     useFetch(`/api/web/movie/${route.params.id}`),
     useFetch('/api/web/movie/list', {
       query: { columnValue: route.params.columnValue, limit: 12, notId: route.params.id }
@@ -420,11 +420,15 @@
       });
     });
   }
+
+  const splitArr = detail => {
+    return detail ? detail.split(',') : '';
+  };
 </script>
 
 <style lang="scss">
   #mse {
-    @apply w-full !h-300px bg-#000;
+    @apply w-full !h-300px bg-black;
 
     @media (min-width: 1024px) {
       height: calc(100vh - 65px) !important;
