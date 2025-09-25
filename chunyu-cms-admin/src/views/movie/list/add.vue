@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-tabs v-model="currTab" tab-position="top" type="border-card">
-      <el-tab-pane label="基本信息">
+      <el-tab-pane label="基本信息" name="基本信息">
         <basic @success="setId" />
       </el-tab-pane>
       <el-tab-pane v-if="data.id" label="上映时间">
@@ -33,12 +33,12 @@ import Cast from "./components/Cast";
 import tab from "@/plugins/tab";
 
 defineOptions({
-  name: 'Movieadd'
-})
+  name: "Movieadd",
+});
 const route = useRoute();
 
 const data = ref({ id: route.query?.id });
-const currTab = ref(null);
+const currTab = ref("基本信息");
 
 provide("data", data.value);
 
@@ -46,11 +46,30 @@ onMounted(() => {
   setTitle();
 });
 
+onActivated(() => {
+  data.value.id = route.query?.id;
+  currTab.value = "基本信息";
+  setTitle();
+});
+
+watch(
+  () => route.fullPath,
+  () => {
+    if (data.value.id !== route.query?.id) {
+      currTab.value = "基本信息";
+    }
+  }
+);
+
 function setTitle() {
-  const obj = Object.assign({}, route, {
+  // 创建精确的当前路由对象，确保只更新当前页面的tab
+  const currentView = {
+    path: route.path,
+    query: route.query,
+    name: route.name,
     title: data.value.id ? "编辑影视" : "新增影视",
-  });
-  tab.updatePage(obj);
+  };
+  tab.updatePage(currentView);
 }
 
 function setId(id) {

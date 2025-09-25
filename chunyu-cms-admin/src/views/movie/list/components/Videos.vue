@@ -67,7 +67,7 @@ const columns = ref([
       style: "width: 100%",
       remoteMethod: async (query) => {
         const currItem = columns.value.find(
-          (value) => value.field === "videoId",
+          (value) => value.field === "videoId"
         );
         if (query) {
           const { data } = await getVideoList({ title: query });
@@ -100,7 +100,7 @@ const columns = ref([
         type: "edit",
         beforeCallback: (row) => {
           const currItem = columns.value.find(
-            (value) => value.field === "videoId",
+            (value) => value.field === "videoId"
           );
           currItem.options = [
             { label: row.video.title, value: row.video.videoId },
@@ -129,7 +129,7 @@ onActivated(() => {
   }
   if (data.id) {
     proxy.$nextTick(() => {
-      proxy.$refs.table.getList({ movieId: data.id });
+      proxy.$refs.table?.getList({ movieId: data.id });
     });
   }
 });

@@ -89,7 +89,7 @@ onActivated(() => {
   }
   if (data.id) {
     proxy.$nextTick(() => {
-      proxy.$refs.table.getList({ movieId: data.id });
+      proxy.$refs.table?.getList({ movieId: data.id });
     });
   }
 });
