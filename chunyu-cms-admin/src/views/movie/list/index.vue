@@ -114,9 +114,9 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button type="primary" plain icon="Plus" @click="handleAdd"
-          >新增</el-button
-        >
+        <el-button type="primary" plain icon="Plus" @click="handleAdd">
+          新增
+        </el-button>
       </el-col>
       <right-toolbar
         v-model:show-search="showSearch"
@@ -205,12 +205,12 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="130" align="center">
         <template #default="scope">
-          <el-button link type="primary" @click="handleUpdate(scope.row)"
-            >编辑</el-button
-          >
-          <el-button link type="primary" @click="handleDelete(scope.row)"
-            >删除</el-button
-          >
+          <el-button link type="primary" @click="handleUpdate(scope.row)">
+            编辑
+          </el-button>
+          <el-button link type="primary" @click="handleDelete(scope.row)">
+            删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -232,8 +232,8 @@ import { getLanguageAll } from "@/views/basic/language/services";
 import { getColumnAll } from "@/views/basic/column/services";
 
 defineOptions({
-  name: 'Movielist'
-})
+  name: "Movielist",
+});
 
 const { proxy } = getCurrentInstance();
 const { movie_category_type } = proxy.useDict("movie_category_type");

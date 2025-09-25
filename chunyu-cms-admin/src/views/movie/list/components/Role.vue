@@ -66,7 +66,7 @@ onActivated(() => {
   }
   if (proxy.$route.query.id) {
     proxy.$nextTick(() => {
-      proxy.$refs.table.getList({ movieId: proxy.$route.query.id });
+      proxy.$refs.table?.getList({ movieId: proxy.$route.query.id });
     });
   }
 });
