@@ -206,7 +206,7 @@
   import { Swiper, SwiperSlide } from 'swiper/vue';
   import 'swiper/css';
   import { useAsyncData } from '#app';
-  import { useSidebarOpen, useTextVisible, useLoginVisible } from '~/composables/states';
+  import { useLoginVisible } from '~/composables/states';
   import { WEB_TOKEN } from '#shared/cookiesName';
   import { createToken } from '~/utils/request';
 
@@ -216,8 +216,6 @@
 
   const route = useRoute();
   const token = useCookie(WEB_TOKEN);
-  const sidebarOpen = useSidebarOpen();
-  const textVisible = useTextVisible();
   const loginVisible = useLoginVisible();
 
   const formRef = useTemplateRef('formRef');
@@ -274,9 +272,6 @@
   }
 
   onMounted(async () => {
-    sidebarOpen.value = false;
-    textVisible.value = false;
-
     if (videoInfo.value) {
       const [Player, Mp4Plugin, Danmu, PayTip] = await Promise.all([
         import('xgplayer'),
