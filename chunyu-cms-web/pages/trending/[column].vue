@@ -27,7 +27,7 @@
         <nuxt-link
           v-for="(item, index) in list"
           :key="item.id"
-          :to="`/column/${item.movie.columnValue}/video/${item.movie.movieBasicsId}`"
+          :to="`/column/${item.movie.columnValue}/detail/${item.movie.movieBasicsId}`"
           class="grid grid-cols-[120px_1fr] mb-25px relative"
         >
           <div class="relative">

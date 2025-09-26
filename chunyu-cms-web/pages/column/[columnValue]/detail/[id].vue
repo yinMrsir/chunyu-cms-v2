@@ -215,7 +215,13 @@
     useFetch('/api/web/movie/list', {
       query: { columnValue: route.params.columnValue, limit: 12, notId: route.params.id }
     }),
-    useFetch('/api/web/basic/dictData/list', { query: { limit: 100, dictType: 'videos_type' } })
+    useFetch('/api/web/basic/dictData/list', { query: { limit: 100, dictType: 'videos_type' } }),
+    useFetch(`/api/web/movie/pv`, {
+      method: 'POST',
+      body: {
+        movieBasicsId: route.params.id
+      }
+    })
   ]);
 
   if (!videoDetail.value) {

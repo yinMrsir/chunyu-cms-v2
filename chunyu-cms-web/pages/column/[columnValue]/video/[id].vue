@@ -230,16 +230,10 @@
   // 视频支付提示插件
   let payTipInstance = null;
 
-  const [{ data: detail }, { data: movies }, , { data: isUserBuy }] = await Promise.all([
+  const [{ data: detail }, { data: movies }, { data: isUserBuy }] = await Promise.all([
     useFetch(`/api/web/movie/${route.params.id}`),
     useFetch('/api/web/movie/list', {
       query: { columnValue: route.params.columnValue, limit: 12, notId: route.params.id }
-    }),
-    useFetch(`/api/web/movie/pv`, {
-      method: 'POST',
-      body: {
-        movieBasicsId: route.params.id
-      }
     }),
     useFetch(`/api/web/member/movie/buyStatus?movieBasicsId=${route.params.id}`, {
       headers: {
