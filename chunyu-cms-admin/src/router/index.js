@@ -175,7 +175,7 @@ export const dynamicRoutes = [
         meta: {
           title: "新增影视",
           noCache: false,
-          activeMenu: "/movie/list",
+          activeMenu: "/movie/movieList",
         },
       },
     ],

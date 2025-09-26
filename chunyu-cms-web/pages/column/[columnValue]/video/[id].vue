@@ -267,16 +267,29 @@
 
   onMounted(async () => {
     if (videoInfo.value) {
-      const [Player, Mp4Plugin, Danmu, PayTip] = await Promise.all([
+      const [Player, Mp4Plugin, Danmu, PayTip, HlsPlugin] = await Promise.all([
         import('xgplayer'),
         import('xgplayer-mp4'),
         import('xgplayer/es/plugins/danmu'),
-        import('~/plugins/xgplayer/payTip')
+        import('~/plugins/xgplayer/payTip'),
+        import('xgplayer-hls.js')
       ]);
+
+      const videoType = videoInfo.value.url.split('.').pop();
+      const plugins = [Danmu.default, PayTip.default];
+      if (videoType === 'm3u8') {
+        plugins.push(HlsPlugin.default);
+      } else if (videoType === 'mp4') {
+        plugins.push(Mp4Plugin.default);
+      } else {
+        ElMessage.error('暂不支持该视频格式播放');
+        return;
+      }
 
       // eslint-disable-next-line new-cap
       player = new Player.default({
         id: 'mse',
+        useHls: true,
         controls: {
           autoHide: false
         },
@@ -286,7 +299,7 @@
         playsinline: true,
         height: '100%',
         width: '100%',
-        plugins: [Mp4Plugin.default, Danmu.default, PayTip.default],
+        plugins,
         danmu: {
           comments: dms.value,
           area: {

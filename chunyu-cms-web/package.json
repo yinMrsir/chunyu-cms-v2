@@ -73,8 +73,9 @@
     "ua-parser-js": "^2.0.0",
     "vue-cropperjs": "^5.0.0",
     "wechatpay-node-v3": "^2.2.1",
-    "xgplayer": "^3.0.21",
-    "xgplayer-mp4": "^3.0.21"
+    "xgplayer": "3.0.23",
+    "xgplayer-hls.js": "3.0.23",
+    "xgplayer-mp4": "3.0.23"
   },
   "engines": {
     "node": ">=18.16.0",
