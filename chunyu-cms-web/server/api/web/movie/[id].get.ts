@@ -28,7 +28,8 @@ export default defineEventHandler(async event => {
       }
     },
     movieVideo: {
-      where: (movieVideo: MovieVideo, { eq }: any) => eq(movieVideo.status, '0'),
+      where: (movieVideo: MovieVideo, { eq, and, inArray }: any) =>
+        and(eq(movieVideo.status, '0'), inArray(movieVideo.typeId, ['1', '2', '3', '4'])),
       orderBy: (movieVideo: MovieVideo, { asc }: any) => [asc(movieVideo.sort)],
       with: {
         video: {

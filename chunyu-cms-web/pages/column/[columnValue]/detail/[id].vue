@@ -30,7 +30,7 @@
 
               <!-- 视频操作按钮 -->
               <div class="flex gap-2 ml-4">
-                <button
+                <!-- <button
                   class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-800 transition-colors"
                   :class="{ 'text-red-500': isLiked }"
                   @click="handleLike"
@@ -45,7 +45,7 @@
                 >
                   <i class="i-el-star text-xl"></i>
                   <span class="text-xs mt-1">{{ formatNumber(videoDetail.favorites || 0) }}</span>
-                </button>
+                </button> -->
                 <button
                   class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-800 transition-colors"
                   @click="handleShare"
@@ -76,17 +76,28 @@
           </div>
 
           <div class="bg-#141414 rounded-lg p-4 mb-6 mt-6">
-            <el-tabs>
-              <el-tab-pane label="正片">
-                <nuxt-link class="el-button" :to="`/column/${route.params.columnValue}/video/${route.params.id}`">
-                  播放
-                </nuxt-link>
-              </el-tab-pane>
-              <el-tab-pane label="预告片">暂无数据</el-tab-pane>
-              <el-tab-pane label="花絮">暂无数据</el-tab-pane>
-              <el-tab-pane label="片段">暂无数据</el-tab-pane>
-              <el-tab-pane label="其他资源">暂无数据</el-tab-pane>
+            <el-tabs v-model="typeId">
+              <el-tab-pane
+                v-for="type in videoTypes"
+                :key="type.dictValue"
+                :label="type.dictLabel"
+                :name="type.dictValue"
+              ></el-tab-pane>
             </el-tabs>
+            <nuxt-link
+              v-for="item in movieVideoList"
+              :key="item.videoId"
+              :to="
+                item.typeId === '5'
+                  ? item.link
+                  : `/column/${route.params.columnValue}/video/${route.params.id}?mvid=${item.movieVideoId}`
+              "
+              :target="item.typeId === '5' ? '_blank' : '_self'"
+              class="el-button"
+            >
+              {{ item.title }}
+            </nuxt-link>
+            <el-empty v-if="!movieVideoList.length" :image-size="30" description="无数据"></el-empty>
           </div>
 
           <!-- 演员信息 -->
@@ -182,33 +193,50 @@
 </template>
 
 <script setup>
-  import { useLoginVisible } from '~/composables/states';
-  import { WEB_TOKEN } from '#shared/cookiesName';
-  import { useShortActions } from '~/composables/useShortActions';
+  // import { useLoginVisible } from '~/composables/states';
+  // import { WEB_TOKEN } from '#shared/cookiesName';
+  // import { useShortActions } from '~/composables/useShortActions';
 
   definePageMeta({
     key: route => route.fullPath
   });
 
   const route = useRoute();
-  const token = useCookie(WEB_TOKEN);
-  const loginVisible = useLoginVisible();
-  const { handleLike: likeVideo, handleFavorite: favoriteVideo } = useShortActions();
+  // const token = useCookie(WEB_TOKEN);
+  // const loginVisible = useLoginVisible();
+  // const { handleLike: likeVideo, handleFavorite: favoriteVideo } = useShortActions();
 
-  const isLiked = ref(false);
-  const isFavorited = ref(false);
+  // const isLiked = ref(false);
+  // const isFavorited = ref(false);
 
   // 获取视频详情
-  const [{ data: videoDetail }, { data: relatedVideos }] = await Promise.all([
+  const [{ data: videoDetail }, { data: relatedVideos }, { data: videoTypes }] = await Promise.all([
     useFetch(`/api/web/movie/${route.params.id}`),
     useFetch('/api/web/movie/list', {
       query: { columnValue: route.params.columnValue, limit: 12, notId: route.params.id }
-    })
+    }),
+    useFetch('/api/web/basic/dictData/list', { query: { limit: 100, dictType: 'videos_type' } })
   ]);
 
   if (!videoDetail.value) {
     throw createError({ statusCode: 404, statusMessage: '视频不存在' });
   }
+
+  const typeId = ref('1');
+
+  // 获取视频
+  const { data: movieVideoList, refresh } = await useAsyncData('videoTypeGetVideo' + typeId, () =>
+    $fetch('/api/web/movie/videoType/list', {
+      query: { movieId: route.params.id, typeId: typeId.value, status: 0, limit: 1000 }
+    })
+  );
+
+  watch(
+    () => typeId.value,
+    () => {
+      refresh();
+    }
+  );
 
   // 格式化数字
   function formatNumber(num) {
@@ -240,54 +268,54 @@
   }
 
   // 点赞功能
-  async function handleLike() {
-    if (!token.value) {
-      loginVisible.value = true;
-      return;
-    }
+  // async function handleLike() {
+  //   if (!token.value) {
+  //     loginVisible.value = true;
+  //     return;
+  //   }
 
-    try {
-      await likeVideo(
-        { event: {} },
-        {
-          videoId: videoDetail.value.videoId,
-          likes: videoDetail.value.likes || 0
-        },
-        { isLike: isLiked.value }
-      );
-      isLiked.value = !isLiked.value;
-      videoDetail.value.likes = isLiked.value
-        ? (videoDetail.value.likes || 0) + 1
-        : Math.max(0, (videoDetail.value.likes || 0) - 1);
-    } catch (error) {
-      console.error('点赞失败:', error);
-    }
-  }
+  //   try {
+  //     await likeVideo(
+  //       { event: {} },
+  //       {
+  //         videoId: videoDetail.value.videoId,
+  //         likes: videoDetail.value.likes || 0
+  //       },
+  //       { isLike: isLiked.value }
+  //     );
+  //     isLiked.value = !isLiked.value;
+  //     videoDetail.value.likes = isLiked.value
+  //       ? (videoDetail.value.likes || 0) + 1
+  //       : Math.max(0, (videoDetail.value.likes || 0) - 1);
+  //   } catch (error) {
+  //     console.error('点赞失败:', error);
+  //   }
+  // }
 
-  // 收藏功能
-  async function handleFavorite() {
-    if (!token.value) {
-      loginVisible.value = true;
-      return;
-    }
+  // // 收藏功能
+  // async function handleFavorite() {
+  //   if (!token.value) {
+  //     loginVisible.value = true;
+  //     return;
+  //   }
 
-    try {
-      await favoriteVideo(
-        { event: {} },
-        {
-          videoId: videoDetail.value.videoId,
-          favorites: videoDetail.value.favorites || 0
-        },
-        { isCollection: isFavorited.value }
-      );
-      isFavorited.value = !isFavorited.value;
-      videoDetail.value.favorites = isFavorited.value
-        ? (videoDetail.value.favorites || 0) + 1
-        : Math.max(0, (videoDetail.value.favorites || 0) - 1);
-    } catch (error) {
-      console.error('收藏失败:', error);
-    }
-  }
+  //   try {
+  //     await favoriteVideo(
+  //       { event: {} },
+  //       {
+  //         videoId: videoDetail.value.videoId,
+  //         favorites: videoDetail.value.favorites || 0
+  //       },
+  //       { isCollection: isFavorited.value }
+  //     );
+  //     isFavorited.value = !isFavorited.value;
+  //     videoDetail.value.favorites = isFavorited.value
+  //       ? (videoDetail.value.favorites || 0) + 1
+  //       : Math.max(0, (videoDetail.value.favorites || 0) - 1);
+  //   } catch (error) {
+  //     console.error('收藏失败:', error);
+  //   }
+  // }
 
   // 分享功能
   function handleShare() {
