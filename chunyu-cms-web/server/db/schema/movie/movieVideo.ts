@@ -13,7 +13,9 @@ export const movieVideoTable = mysqlTable('movie_video', {
   // 标题，字符串类型，可选
   title: varchar('title', { length: 200 }).notNull().default(''),
   // 关联的视频，整数类型，必填
-  videoId: int('video_id').notNull(),
+  videoId: int('video_id'),
+  // 视频地址，字符串类型，可选，默认值为空字符串
+  link: varchar('link', { length: 255 }).notNull().default(''),
   // 封面，字符串类型，可选，默认值为空字符串
   cover: varchar('cover', { length: 255 }).notNull().default(''),
   // 排序，整数类型，必填，默认值为1

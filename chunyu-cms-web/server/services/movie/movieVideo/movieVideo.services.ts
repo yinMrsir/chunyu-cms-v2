@@ -1,4 +1,4 @@
-import { and, eq, inArray, sql } from 'drizzle-orm';
+import { and, asc, eq, inArray, sql } from 'drizzle-orm';
 import { MovieVideo, movieVideoTable, NewMovieVideo } from '~/server/db/schema/movie/movieVideo';
 import { queryParams } from '~/server/db/query.helper';
 
@@ -21,6 +21,12 @@ export class MovieVideoServices {
     if (params?.movieId) {
       whereList.push(eq(movieVideoTable.movieId, params.movieId));
     }
+    if (params?.typeId) {
+      whereList.push(eq(movieVideoTable.typeId, params.typeId));
+    }
+    if (params?.status) {
+      whereList.push(eq(movieVideoTable.status, params.status));
+    }
     const where = and(...whereList);
 
     const rowsQuery = db.query.movieVideoTable.findMany({
@@ -32,6 +38,7 @@ export class MovieVideoServices {
       },
       where,
       offset,
+      orderBy: [asc(movieVideoTable.sort), asc(movieVideoTable.movieVideoId)],
       limit: Number(limit)
     });
     const totalQuery = db.$count(movieVideoTable, where);

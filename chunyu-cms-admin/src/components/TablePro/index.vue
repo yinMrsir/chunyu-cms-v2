@@ -117,16 +117,16 @@
                   act.type === 'edit'
                     ? handleUpdate(scope.row, act.beforeCallback)
                     : act.type === 'delete'
-                      ? handleDelete(scope.row)
-                      : act.click && act.click(scope.row)
+                    ? handleDelete(scope.row)
+                    : act.click && act.click(scope.row)
                 "
               >
                 {{
                   act.type === "edit"
                     ? "编辑"
                     : act.type === "delete"
-                      ? "删除"
-                      : act.text
+                    ? "删除"
+                    : act.text
                 }}
               </el-button>
             </template>
@@ -140,13 +140,14 @@
           >
             <template #default="scope">
               <el-image
+                v-if="scope.row[item.field] || item.render(scope.row)"
                 :src="
                   item.render
                     ? item.render(scope.row)
                     : scope.row[item.field]?.indexOf('http') > -1 ||
-                        scope.row[item.field]?.indexOf('base64') > -1
-                      ? scope.row[item.field]
-                      : baseUrl + (scope.row[item.field] || '/default.jpg')
+                      scope.row[item.field]?.indexOf('base64') > -1
+                    ? scope.row[item.field]
+                    : baseUrl + (scope.row[item.field] || '/default.jpg')
                 "
                 :style="
                   item.style || {
@@ -196,7 +197,7 @@
               <span>{{
                 parseTime(
                   scope.row[item.field],
-                  item.type === "date" ? "{y}-{m}-{d}" : item.dateFormat,
+                  item.type === "date" ? "{y}-{m}-{d}" : item.dateFormat
                 )
               }}</span>
             </template>
@@ -283,6 +284,7 @@
               v-model="form[item.field]"
               :placeholder="`请选择${item.title}`"
               v-bind="item.formProps"
+              @change="item.change"
             >
               <el-option
                 v-for="(o, index) in item.options"
