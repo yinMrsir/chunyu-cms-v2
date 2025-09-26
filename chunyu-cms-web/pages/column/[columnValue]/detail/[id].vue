@@ -1,8 +1,8 @@
 <template>
   <div class="pt-0 md:pt-45px video-detail-page">
     <Head>
-      <Title>{{ $titleRender(`${videoDetail.title} - 视频详情`) }}</Title>
-      <Meta name="description" :content="videoDetail.description || videoDetail.title" />
+      <Title>{{ $titleRender(`${videoDetail.title}在线免费观看`) }}</Title>
+      <Meta name="description" :content="videoDetail.summary || videoDetail.title" />
     </Head>
 
     <div class="mx-auto px-4">
