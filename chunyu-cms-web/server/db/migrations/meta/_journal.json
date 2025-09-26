@@ -15,6 +15,20 @@
       "when": 1733933380905,
       "tag": "0001_superb_amazoness",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1758867608091,
+      "tag": "0002_plain_shaman",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1758867888204,
+      "tag": "0003_sticky_master_chief",
+      "breakpoints": true
     }
   ]
 }

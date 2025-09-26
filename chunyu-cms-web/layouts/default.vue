@@ -46,13 +46,6 @@
           </el-tooltip>
         </li>
       </ul>
-      <div v-if="textVisible" class="text-10px color-[rgba(255,255,255,0.6)] p-x-20px absolute bottom-10">
-        本网站为淳渔CMS演示站，提供的电视剧和电影资源均系收集于各大视频网站
-        若本站收录的节目无意侵犯了贵司版权,请给542968439@qq.com留言,我们会及时逐步删除和规避程序自动搜索采集到的不提供分享的版权影视。
-        本站仅供测试和学习交流。请大家支持正版。
-
-        <p class="mt-15px">Copyright 2025 淳渔影视网 Inc. All Rights Reserved.</p>
-      </div>
     </div>
     <div class="main-content transition-all duration-300 lt-md:ml-0px" :class="sidebarOpen ? 'ml-180px' : 'ml-64px'">
       <div
@@ -111,13 +104,16 @@
       <div class="h-58px md:hidden"></div>
       <slot />
       <div
-        class="text-10px color-[rgba(255,255,255,0.6)] m-x-15px mt-20px mb-15px lg-md:hidden border-solid border-#ffffff40 border-t-1px pt-20px"
+        v-if="isShowFooter"
+        class="text-10px color-[rgba(255,255,255,0.6)] m-x-15px mt-20px mb-15px border-solid border-#ffffff40 border-t-1px pt-20px"
       >
-        本网站为淳渔CMS演示站，提供的电视剧和电影资源均系收集于各大视频网站
-        若本站收录的节目无意侵犯了贵司版权,请给542968439@qq.com留言,我们会及时逐步删除和规避程序自动搜索采集到的不提供分享的版权影视。
-        本站仅供测试和学习交流。请大家支持正版。
+        <div class="w-50% m-x-auto text-center">
+          本网站提供的电视剧和电影资源均系收集于各大视频网站
+          若本站收录的节目无意侵犯了贵司版权,请给542968439@qq.com留言,我们会及时逐步删除和规避程序自动搜索采集到的不提供分享的版权影视。
+          本站仅供测试和学习交流。请大家支持正版。
 
-        <p class="mt-15px text-center block">Copyright 2025 淳渔影视网 Inc. All Rights Reserved.</p>
+          <p class="mt-15px text-center block">Copyright {{ dayjs().format('YYYY') }} 淳渔影视 All Rights Reserved.</p>
+        </div>
       </div>
     </div>
 
@@ -199,6 +195,7 @@
 </template>
 
 <script setup lang="ts">
+  import dayjs from 'dayjs';
   import { useLoginVisible, useSidebarOpen, useTextVisible } from '~/composables/states';
   import { WEB_TOKEN, WEB_USER_INFO } from '~/shared/cookiesName';
 
@@ -219,6 +216,10 @@
       sidebarMobileOpen.value = false;
     }
   );
+
+  const isShowFooter = computed(() => {
+    return !route.fullPath.includes('/column/movie/video');
+  });
 
   const { data: navigation } = await useFetch('/api/web/basic/columns/list');
 

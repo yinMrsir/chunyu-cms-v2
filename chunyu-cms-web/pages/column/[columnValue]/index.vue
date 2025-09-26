@@ -20,7 +20,7 @@
       <div class="video-list">
         <ul>
           <li v-for="v in item.movies" :key="v.movieBasicsId">
-            <nuxt-link :to="`/column/${item.columnValue}/video/${v.movieBasicsId}`">
+            <nuxt-link :to="`/column/${item.columnValue}/detail/${v.movieBasicsId}`">
               <div class="relative">
                 <NuxtImg format="webp" loading="lazy" :alt="v.movieBasics?.title" :src="v.movieBasics?.poster" />
                 <span v-if="v.movieBasics.movieRate?.rateUserCount" class="rate">

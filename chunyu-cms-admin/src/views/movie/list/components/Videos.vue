@@ -43,7 +43,7 @@ const columns = ref([
   {
     title: "标题",
     field: "title",
-    add: [{ required: true, message: "请输入标题" }],
+    add: [{ required: true, message: "请输入标题", trigger: "blur" }],
   },
   {
     title: "所属分类",
@@ -52,6 +52,19 @@ const columns = ref([
     options: videosType,
     search: true,
     add: [{ required: true, message: "请选择分类" }],
+    change: (value) => {
+      const videoId = columns.value.find((item) => item.field === "videoId");
+      const link = columns.value.find((item) => item.field === "link");
+      if (+value === 5) {
+        videoId.add = false;
+        link.add = [
+          { required: true, message: "请输入视频地址", trigger: "blur" },
+        ];
+      } else {
+        videoId.add = [{ required: true, message: "请输入视频名称查询" }];
+        link.add = false;
+      }
+    },
   },
   {
     title: "关联视频",
@@ -82,16 +95,23 @@ const columns = ref([
     },
   },
   {
+    title: "视频地址",
+    field: "link",
+    add: false,
+    props: { width: "170px" },
+  },
+  {
     title: "状态",
     field: "status",
     add: true,
     type: "select",
     options: sysNormalDisable,
+    search: true,
   },
   {
     title: "排序",
     field: "sort",
-    add: [{ required: true, message: "请输入排序" }],
+    add: [{ required: true, message: "请输入排序", trigger: "change" }],
     type: "number",
   },
   {
