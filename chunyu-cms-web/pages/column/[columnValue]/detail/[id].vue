@@ -121,20 +121,26 @@
             </el-tabs>
 
             <!-- 资源列表 -->
-            <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
-              <nuxt-link
-                v-for="resource in videoResourceList"
-                :key="resource.resourceId"
-                :to="`/column/${route.params.columnValue}/resources/${route.params.id}?rid=${resource.resourceId}&rtype=${resource.resources}`"
-                class="p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
-              >
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <i class="i-el-link text-blue-400"></i>
-                    <span class="text-white font-medium line-height-1">{{ resource.title }}</span>
+            <div class="mt-4">
+              <div class="pb-5 flex text-12px">
+                <ElIconWarnTriangleFilled class="w20px color-red-5" />
+                不要轻易信视频中的广告，谨防上当受骗！
+              </div>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <nuxt-link
+                  v-for="resource in videoResourceList"
+                  :key="resource.resourceId"
+                  :to="`/column/${route.params.columnValue}/resources/${route.params.id}?rid=${resource.resourceId}&rtype=${resource.resources}`"
+                  class="p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
+                >
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <i class="i-el-link text-blue-400"></i>
+                      <span class="text-white font-medium line-height-1">{{ resource.title }}</span>
+                    </div>
                   </div>
-                </div>
-              </nuxt-link>
+                </nuxt-link>
+              </div>
               <div v-if="!videoResourceList || videoResourceList.length === 0">
                 <i class="i el-folder-opened text-2xl mb-2"></i>
                 <p>暂无资源</p>
