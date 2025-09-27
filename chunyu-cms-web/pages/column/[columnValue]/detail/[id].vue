@@ -136,7 +136,7 @@
                   <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
                       <i class="i-el-link text-blue-400"></i>
-                      <span class="text-white font-medium line-height-1">{{ resource.title }}</span>
+                      <span class="text-white font-medium">{{ resource.title }}</span>
                     </div>
                   </div>
                 </nuxt-link>
@@ -326,12 +326,6 @@
       refreshResources();
     }
   );
-
-  // 获取资源类型名称
-  function getResourceTypeName(resourcesType) {
-    const type = resourcesSourceType.value?.find(item => item.dictValue === resourcesType);
-    return type ? type.dictLabel : '未知类型';
-  }
 
   // 格式化数字
   function formatNumber(num) {

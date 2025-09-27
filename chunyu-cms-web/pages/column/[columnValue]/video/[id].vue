@@ -334,6 +334,14 @@
     }
   });
 
+  // 组件卸载时销毁播放器
+  onUnmounted(() => {
+    if (player) {
+      player.destroy();
+      player = null;
+    }
+  });
+
   async function handleSubmit() {
     if (!token.value) {
       loginVisible.value = true;

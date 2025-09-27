@@ -274,6 +274,14 @@
     }
   });
 
+  // 组件卸载时销毁播放器
+  onUnmounted(() => {
+    if (player) {
+      player.destroy();
+      player = null;
+    }
+  });
+
   /** 获取用户评分 **/
   async function getMemberRate() {
     const data = await request({
