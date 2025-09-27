@@ -175,9 +175,19 @@ export const dynamicRoutes = [
         meta: {
           title: "新增影视",
           noCache: false,
-          activeMenu: "/movie/list",
+          activeMenu: "/movie/movieList",
         },
       },
+      {
+        path: 'resources',
+        component: () => import("@/views/movie/list/resources"),
+        name: "Movieresources",
+        meta: {
+          title: "资源管理",
+          noCache: false,
+          activeMenu: "/movie/movieList",
+        },
+      }
     ],
   },
 ];
