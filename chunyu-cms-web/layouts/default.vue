@@ -210,6 +210,127 @@
   const sidebarMobileOpen = ref(false);
   const keyword = ref('');
 
+  // 反调试保护（仅在非开发模式下启用）
+  onMounted(() => {
+    if (process.env.NODE_ENV !== 'development') {
+      antiDebug();
+    }
+  });
+
+  function antiDebug() {
+    let debugInterval;
+
+    // 检测开发者工具
+    function checkDevTools() {
+      const start = new Date();
+      debugger;
+      if (new Date() - start > 100) {
+        showDebugWarning();
+      }
+    }
+
+    // 显示调试警告
+    function showDebugWarning() {
+      document.body.innerHTML = `
+        <div style="
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: #000;
+          color: #fff;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 24px;
+          font-family: Arial, sans-serif;
+          z-index: 999999;
+        ">
+          <div style="text-align: center;">
+            <h1 style="color: #ff4444; margin-bottom: 20px;">⚠️ DEBUG MODE DETECTED</h1>
+            <p>Developer tools are not allowed in this application.</p>
+            <p style="margin-top: 10px; font-size: 16px; color: #ccc;">Please close developer tools to continue.</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // 定期检测
+    debugInterval = setInterval(() => {
+      checkDevTools();
+    }, 1000);
+
+    // 检测控制台输出
+    const consoleLog = console.log;
+    const consoleWarn = console.warn;
+    const consoleError = console.error;
+    const consoleInfo = console.info;
+
+    console.log = function () {
+      showDebugWarning();
+      return consoleLog.apply(console, arguments);
+    };
+
+    console.warn = function () {
+      showDebugWarning();
+      return consoleWarn.apply(console, arguments);
+    };
+
+    console.error = function () {
+      showDebugWarning();
+      return consoleError.apply(console, arguments);
+    };
+
+    console.info = function () {
+      showDebugWarning();
+      return consoleInfo.apply(console, arguments);
+    };
+
+    // 检测开发者工具快捷键
+    document.addEventListener('keydown', e => {
+      // F12
+      if (e.keyCode === 123) {
+        e.preventDefault();
+        showDebugWarning();
+      }
+      // Ctrl+Shift+I
+      if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+        e.preventDefault();
+        showDebugWarning();
+      }
+      // Ctrl+Shift+J
+      if (e.ctrlKey && e.shiftKey && e.keyCode === 74) {
+        e.preventDefault();
+        showDebugWarning();
+      }
+      // Ctrl+Shift+C
+      if (e.ctrlKey && e.shiftKey && e.keyCode === 67) {
+        e.preventDefault();
+        showDebugWarning();
+      }
+      // Ctrl+U
+      if (e.ctrlKey && e.keyCode === 85) {
+        e.preventDefault();
+        showDebugWarning();
+      }
+    });
+
+    // 检测右键菜单
+    document.addEventListener('contextmenu', e => {
+      e.preventDefault();
+      showDebugWarning();
+    });
+
+    // 检测页面源码查看
+    document.addEventListener('keydown', e => {
+      if ((e.ctrlKey || e.metaKey) && e.keyCode === 85) {
+        e.preventDefault();
+        showDebugWarning();
+      }
+    });
+  }
+
   watch(
     () => route.path,
     () => {
