@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 26/09/2025 16:04:33
+ Date: 27/09/2025 10:51:02
 */
 
 SET NAMES utf8mb4;
@@ -36,9 +36,9 @@ CREATE TABLE `actor` (
   `brief` text,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`actor_id`),
   UNIQUE KEY `actor_id` (`actor_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -75,9 +75,9 @@ CREATE TABLE `banner` (
   `url_type` char(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   `video_url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`banner_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -103,9 +103,9 @@ CREATE TABLE `cast` (
   `role` varchar(255) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`cast_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -173,9 +173,9 @@ CREATE TABLE `comment` (
   `start` int NOT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`comment_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -212,9 +212,9 @@ CREATE TABLE `country` (
   `brief` text DEFAULT (_utf8mb4''),
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   `end_date` date DEFAULT NULL,
   PRIMARY KEY (`country_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -247,9 +247,9 @@ CREATE TABLE `dept` (
   `mpath` varchar(255) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`dept_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -276,13 +276,13 @@ CREATE TABLE `dict_data` (
   `dict_type_id` int DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`dict_data_id`),
   KEY `dict_data_dict_type_id_dict_type_dict_id_fk` (`dict_type_id`),
   CONSTRAINT `dict_data_dict_type_id_dict_type_dict_id_fk` FOREIGN KEY (`dict_type_id`) REFERENCES `dict_type` (`dict_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of dict_data
@@ -332,6 +332,7 @@ INSERT INTO `dict_data` VALUES (41, 3, '壁纸', '3', NULL, 'default', 'N', '0',
 INSERT INTO `dict_data` VALUES (42, 1, '未审核', '1', NULL, 'warning', 'N', '0', 15, '', '', '2025-04-07 09:20:01', 'admin', '2025-04-07 11:08:38');
 INSERT INTO `dict_data` VALUES (43, 2, '已通过', '2', NULL, 'success', 'N', '0', 15, '', '', '2025-04-07 09:20:01', 'admin', '2025-04-07 11:08:33');
 INSERT INTO `dict_data` VALUES (44, 3, '未通过', '3', NULL, 'danger', 'N', '0', 15, '', '', '2025-04-07 09:20:01', '', '2025-04-07 09:20:01');
+INSERT INTO `dict_data` VALUES (45, 1, '魔都资源', '1', NULL, 'default', 'N', '0', 16, 'https://moduzy5.com/', '', '2025-09-26 06:24:52', 'admin', '2025-09-26 12:28:33');
 COMMIT;
 
 -- ----------------------------
@@ -345,12 +346,12 @@ CREATE TABLE `dict_type` (
   `status` char(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`dict_id`),
   UNIQUE KEY `dict_type_dict_type_unique` (`dict_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of dict_type
@@ -371,6 +372,7 @@ INSERT INTO `dict_type` VALUES (12, '性别类型', 'sex_type', '0', '', '', '20
 INSERT INTO `dict_type` VALUES (13, '影视分类', 'videos_type', '0', '', '', '2025-04-07 09:12:56', '', '2025-04-07 09:12:56');
 INSERT INTO `dict_type` VALUES (14, '图片类型', 'movie_img_type', '0', '', '', '2025-04-07 09:20:01', '', '2025-04-07 09:20:01');
 INSERT INTO `dict_type` VALUES (15, '图片状态', 'movie_img_status', '0', '', '', '2025-04-07 09:20:01', '', '2025-04-07 09:20:01');
+INSERT INTO `dict_type` VALUES (16, '视频资源来源', 'video_resources_source', '0', '', '', '2025-09-26 06:24:52', 'admin', '2025-09-26 12:55:20');
 COMMIT;
 
 -- ----------------------------
@@ -390,9 +392,9 @@ CREATE TABLE `file_config` (
   `timeout` int NOT NULL DEFAULT '300000',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`file_config_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -415,9 +417,9 @@ CREATE TABLE `genre` (
   `status` char(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`genre_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -467,9 +469,9 @@ CREATE TABLE `job` (
   `status` varchar(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`job_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -497,7 +499,7 @@ CREATE TABLE `job_log` (
   `exception_info` varchar(2000) DEFAULT '',
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`job_log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9271 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9543 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of job_log
@@ -1195,6 +1197,278 @@ INSERT INTO `job_log` VALUES (9267, '生成月排名(每30分钟执行一次)', 
 INSERT INTO `job_log` VALUES (9268, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 07:58:46');
 INSERT INTO `job_log` VALUES (9269, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 08:00:00');
 INSERT INTO `job_log` VALUES (9270, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 08:01:00');
+INSERT INTO `job_log` VALUES (9271, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 08:17:23');
+INSERT INTO `job_log` VALUES (9272, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 08:17:23');
+INSERT INTO `job_log` VALUES (9273, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 08:17:23');
+INSERT INTO `job_log` VALUES (9274, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 08:17:29');
+INSERT INTO `job_log` VALUES (9275, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 08:17:29');
+INSERT INTO `job_log` VALUES (9276, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 08:17:29');
+INSERT INTO `job_log` VALUES (9277, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 08:17:43');
+INSERT INTO `job_log` VALUES (9278, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 08:17:43');
+INSERT INTO `job_log` VALUES (9279, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 08:17:43');
+INSERT INTO `job_log` VALUES (9280, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 08:17:49');
+INSERT INTO `job_log` VALUES (9281, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 08:17:49');
+INSERT INTO `job_log` VALUES (9282, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 08:17:49');
+INSERT INTO `job_log` VALUES (9283, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 08:18:14');
+INSERT INTO `job_log` VALUES (9284, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 08:18:14');
+INSERT INTO `job_log` VALUES (9285, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 08:18:14');
+INSERT INTO `job_log` VALUES (9286, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 08:30:00');
+INSERT INTO `job_log` VALUES (9287, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 08:31:00');
+INSERT INTO `job_log` VALUES (9288, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 08:33:42');
+INSERT INTO `job_log` VALUES (9289, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 08:33:42');
+INSERT INTO `job_log` VALUES (9290, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 08:33:42');
+INSERT INTO `job_log` VALUES (9291, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 09:00:00');
+INSERT INTO `job_log` VALUES (9292, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 09:01:00');
+INSERT INTO `job_log` VALUES (9293, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 09:30:00');
+INSERT INTO `job_log` VALUES (9294, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 09:31:00');
+INSERT INTO `job_log` VALUES (9295, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 10:28:43');
+INSERT INTO `job_log` VALUES (9296, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 10:28:43');
+INSERT INTO `job_log` VALUES (9297, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 10:45:03');
+INSERT INTO `job_log` VALUES (9298, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 10:45:03');
+INSERT INTO `job_log` VALUES (9299, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 11:05:15');
+INSERT INTO `job_log` VALUES (9300, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 11:05:15');
+INSERT INTO `job_log` VALUES (9301, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 11:26:07');
+INSERT INTO `job_log` VALUES (9302, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 11:26:07');
+INSERT INTO `job_log` VALUES (9303, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 11:26:07');
+INSERT INTO `job_log` VALUES (9304, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 11:30:00');
+INSERT INTO `job_log` VALUES (9305, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 11:31:00');
+INSERT INTO `job_log` VALUES (9306, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 11:43:50');
+INSERT INTO `job_log` VALUES (9307, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 11:43:50');
+INSERT INTO `job_log` VALUES (9308, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 11:43:50');
+INSERT INTO `job_log` VALUES (9309, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 11:50:33');
+INSERT INTO `job_log` VALUES (9310, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 11:50:33');
+INSERT INTO `job_log` VALUES (9311, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 11:50:33');
+INSERT INTO `job_log` VALUES (9312, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 11:56:00');
+INSERT INTO `job_log` VALUES (9313, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 11:56:00');
+INSERT INTO `job_log` VALUES (9314, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 11:56:00');
+INSERT INTO `job_log` VALUES (9315, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 11:57:23');
+INSERT INTO `job_log` VALUES (9316, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 11:57:23');
+INSERT INTO `job_log` VALUES (9317, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 11:57:23');
+INSERT INTO `job_log` VALUES (9318, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 11:57:35');
+INSERT INTO `job_log` VALUES (9319, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 11:57:35');
+INSERT INTO `job_log` VALUES (9320, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 11:57:35');
+INSERT INTO `job_log` VALUES (9321, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 11:57:49');
+INSERT INTO `job_log` VALUES (9322, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 11:57:49');
+INSERT INTO `job_log` VALUES (9323, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 11:57:49');
+INSERT INTO `job_log` VALUES (9324, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 11:59:58');
+INSERT INTO `job_log` VALUES (9325, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 11:59:58');
+INSERT INTO `job_log` VALUES (9326, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 11:59:58');
+INSERT INTO `job_log` VALUES (9327, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 12:00:00');
+INSERT INTO `job_log` VALUES (9328, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 12:01:00');
+INSERT INTO `job_log` VALUES (9329, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 12:01:57');
+INSERT INTO `job_log` VALUES (9330, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 12:02:02');
+INSERT INTO `job_log` VALUES (9331, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 12:02:02');
+INSERT INTO `job_log` VALUES (9332, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 12:02:02');
+INSERT INTO `job_log` VALUES (9333, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 12:02:14');
+INSERT INTO `job_log` VALUES (9334, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 12:02:14');
+INSERT INTO `job_log` VALUES (9335, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 12:02:14');
+INSERT INTO `job_log` VALUES (9336, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 12:02:40');
+INSERT INTO `job_log` VALUES (9337, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 12:02:40');
+INSERT INTO `job_log` VALUES (9338, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 12:02:40');
+INSERT INTO `job_log` VALUES (9339, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 12:02:52');
+INSERT INTO `job_log` VALUES (9340, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 12:02:58');
+INSERT INTO `job_log` VALUES (9341, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 12:02:58');
+INSERT INTO `job_log` VALUES (9342, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 12:02:58');
+INSERT INTO `job_log` VALUES (9343, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 12:08:01');
+INSERT INTO `job_log` VALUES (9344, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 12:08:01');
+INSERT INTO `job_log` VALUES (9345, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 12:08:01');
+INSERT INTO `job_log` VALUES (9346, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 12:08:11');
+INSERT INTO `job_log` VALUES (9347, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 12:08:11');
+INSERT INTO `job_log` VALUES (9348, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 12:08:11');
+INSERT INTO `job_log` VALUES (9349, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 12:08:17');
+INSERT INTO `job_log` VALUES (9350, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 12:08:17');
+INSERT INTO `job_log` VALUES (9351, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 12:08:17');
+INSERT INTO `job_log` VALUES (9352, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 12:08:57');
+INSERT INTO `job_log` VALUES (9353, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 12:08:57');
+INSERT INTO `job_log` VALUES (9354, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 12:08:57');
+INSERT INTO `job_log` VALUES (9355, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 12:10:30');
+INSERT INTO `job_log` VALUES (9356, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 12:10:30');
+INSERT INTO `job_log` VALUES (9357, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 12:10:30');
+INSERT INTO `job_log` VALUES (9358, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 12:10:35');
+INSERT INTO `job_log` VALUES (9359, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 12:10:35');
+INSERT INTO `job_log` VALUES (9360, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 12:10:35');
+INSERT INTO `job_log` VALUES (9361, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 12:30:00');
+INSERT INTO `job_log` VALUES (9362, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 12:31:00');
+INSERT INTO `job_log` VALUES (9363, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 13:00:00');
+INSERT INTO `job_log` VALUES (9364, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 13:01:00');
+INSERT INTO `job_log` VALUES (9365, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 13:30:00');
+INSERT INTO `job_log` VALUES (9366, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 13:31:00');
+INSERT INTO `job_log` VALUES (9367, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 13:51:37');
+INSERT INTO `job_log` VALUES (9368, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 13:51:38');
+INSERT INTO `job_log` VALUES (9369, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 13:51:38');
+INSERT INTO `job_log` VALUES (9370, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 13:55:38');
+INSERT INTO `job_log` VALUES (9371, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 13:55:38');
+INSERT INTO `job_log` VALUES (9372, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 13:55:38');
+INSERT INTO `job_log` VALUES (9373, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 13:55:50');
+INSERT INTO `job_log` VALUES (9374, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 13:55:50');
+INSERT INTO `job_log` VALUES (9375, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 13:55:50');
+INSERT INTO `job_log` VALUES (9376, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 13:57:13');
+INSERT INTO `job_log` VALUES (9377, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 13:57:13');
+INSERT INTO `job_log` VALUES (9378, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 13:57:13');
+INSERT INTO `job_log` VALUES (9379, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 13:57:21');
+INSERT INTO `job_log` VALUES (9380, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 13:57:21');
+INSERT INTO `job_log` VALUES (9381, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 13:57:21');
+INSERT INTO `job_log` VALUES (9382, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 13:57:50');
+INSERT INTO `job_log` VALUES (9383, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 13:57:50');
+INSERT INTO `job_log` VALUES (9384, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 13:57:50');
+INSERT INTO `job_log` VALUES (9385, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 13:58:25');
+INSERT INTO `job_log` VALUES (9386, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 13:58:25');
+INSERT INTO `job_log` VALUES (9387, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 13:58:25');
+INSERT INTO `job_log` VALUES (9388, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 14:00:00');
+INSERT INTO `job_log` VALUES (9389, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:00:13');
+INSERT INTO `job_log` VALUES (9390, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:00:13');
+INSERT INTO `job_log` VALUES (9391, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:00:13');
+INSERT INTO `job_log` VALUES (9392, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:00:17');
+INSERT INTO `job_log` VALUES (9393, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:00:17');
+INSERT INTO `job_log` VALUES (9394, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:00:17');
+INSERT INTO `job_log` VALUES (9395, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:00:22');
+INSERT INTO `job_log` VALUES (9396, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:00:22');
+INSERT INTO `job_log` VALUES (9397, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:00:22');
+INSERT INTO `job_log` VALUES (9398, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 14:01:00');
+INSERT INTO `job_log` VALUES (9399, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:04:32');
+INSERT INTO `job_log` VALUES (9400, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:04:32');
+INSERT INTO `job_log` VALUES (9401, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:04:32');
+INSERT INTO `job_log` VALUES (9402, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:05:01');
+INSERT INTO `job_log` VALUES (9403, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:05:01');
+INSERT INTO `job_log` VALUES (9404, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:05:01');
+INSERT INTO `job_log` VALUES (9405, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:05:25');
+INSERT INTO `job_log` VALUES (9406, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:05:25');
+INSERT INTO `job_log` VALUES (9407, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:05:25');
+INSERT INTO `job_log` VALUES (9408, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:05:30');
+INSERT INTO `job_log` VALUES (9409, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:05:30');
+INSERT INTO `job_log` VALUES (9410, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:05:30');
+INSERT INTO `job_log` VALUES (9411, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:05:45');
+INSERT INTO `job_log` VALUES (9412, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:05:45');
+INSERT INTO `job_log` VALUES (9413, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:05:45');
+INSERT INTO `job_log` VALUES (9414, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:06:11');
+INSERT INTO `job_log` VALUES (9415, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:06:11');
+INSERT INTO `job_log` VALUES (9416, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:06:11');
+INSERT INTO `job_log` VALUES (9417, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:07:30');
+INSERT INTO `job_log` VALUES (9418, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:07:30');
+INSERT INTO `job_log` VALUES (9419, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:07:30');
+INSERT INTO `job_log` VALUES (9420, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:07:45');
+INSERT INTO `job_log` VALUES (9421, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:07:45');
+INSERT INTO `job_log` VALUES (9422, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:07:45');
+INSERT INTO `job_log` VALUES (9423, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:09:58');
+INSERT INTO `job_log` VALUES (9424, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:09:58');
+INSERT INTO `job_log` VALUES (9425, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:09:58');
+INSERT INTO `job_log` VALUES (9426, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:10:05');
+INSERT INTO `job_log` VALUES (9427, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:10:05');
+INSERT INTO `job_log` VALUES (9428, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:10:05');
+INSERT INTO `job_log` VALUES (9429, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:10:07');
+INSERT INTO `job_log` VALUES (9430, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:10:07');
+INSERT INTO `job_log` VALUES (9431, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:10:07');
+INSERT INTO `job_log` VALUES (9432, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:19:24');
+INSERT INTO `job_log` VALUES (9433, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:19:24');
+INSERT INTO `job_log` VALUES (9434, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:19:24');
+INSERT INTO `job_log` VALUES (9435, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:20:23');
+INSERT INTO `job_log` VALUES (9436, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:20:23');
+INSERT INTO `job_log` VALUES (9437, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:20:23');
+INSERT INTO `job_log` VALUES (9438, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:20:28');
+INSERT INTO `job_log` VALUES (9439, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:20:28');
+INSERT INTO `job_log` VALUES (9440, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:20:28');
+INSERT INTO `job_log` VALUES (9441, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:20:33');
+INSERT INTO `job_log` VALUES (9442, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:20:33');
+INSERT INTO `job_log` VALUES (9443, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:20:33');
+INSERT INTO `job_log` VALUES (9444, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 14:30:00');
+INSERT INTO `job_log` VALUES (9445, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 14:31:00');
+INSERT INTO `job_log` VALUES (9446, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:45:42');
+INSERT INTO `job_log` VALUES (9447, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:45:43');
+INSERT INTO `job_log` VALUES (9448, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:45:43');
+INSERT INTO `job_log` VALUES (9449, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:48:31');
+INSERT INTO `job_log` VALUES (9450, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:48:31');
+INSERT INTO `job_log` VALUES (9451, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:48:31');
+INSERT INTO `job_log` VALUES (9452, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:51:06');
+INSERT INTO `job_log` VALUES (9453, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:51:06');
+INSERT INTO `job_log` VALUES (9454, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:51:06');
+INSERT INTO `job_log` VALUES (9455, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:51:14');
+INSERT INTO `job_log` VALUES (9456, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:51:14');
+INSERT INTO `job_log` VALUES (9457, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:51:14');
+INSERT INTO `job_log` VALUES (9458, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:51:29');
+INSERT INTO `job_log` VALUES (9459, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:51:29');
+INSERT INTO `job_log` VALUES (9460, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:51:29');
+INSERT INTO `job_log` VALUES (9461, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:51:30');
+INSERT INTO `job_log` VALUES (9462, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:51:30');
+INSERT INTO `job_log` VALUES (9463, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:51:30');
+INSERT INTO `job_log` VALUES (9464, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:52:08');
+INSERT INTO `job_log` VALUES (9465, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:52:08');
+INSERT INTO `job_log` VALUES (9466, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:52:08');
+INSERT INTO `job_log` VALUES (9467, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:52:19');
+INSERT INTO `job_log` VALUES (9468, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:52:19');
+INSERT INTO `job_log` VALUES (9469, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:52:19');
+INSERT INTO `job_log` VALUES (9470, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:52:35');
+INSERT INTO `job_log` VALUES (9471, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:52:35');
+INSERT INTO `job_log` VALUES (9472, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:52:35');
+INSERT INTO `job_log` VALUES (9473, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:52:41');
+INSERT INTO `job_log` VALUES (9474, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:52:41');
+INSERT INTO `job_log` VALUES (9475, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:52:41');
+INSERT INTO `job_log` VALUES (9476, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:52:43');
+INSERT INTO `job_log` VALUES (9477, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:52:43');
+INSERT INTO `job_log` VALUES (9478, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:52:43');
+INSERT INTO `job_log` VALUES (9479, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:52:44');
+INSERT INTO `job_log` VALUES (9480, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:52:44');
+INSERT INTO `job_log` VALUES (9481, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:52:44');
+INSERT INTO `job_log` VALUES (9482, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-26 14:53:32');
+INSERT INTO `job_log` VALUES (9483, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-26 14:53:32');
+INSERT INTO `job_log` VALUES (9484, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-26 14:53:32');
+INSERT INTO `job_log` VALUES (9485, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 15:00:00');
+INSERT INTO `job_log` VALUES (9486, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 15:01:00');
+INSERT INTO `job_log` VALUES (9487, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 15:39:42');
+INSERT INTO `job_log` VALUES (9488, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 15:39:42');
+INSERT INTO `job_log` VALUES (9489, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 16:16:02');
+INSERT INTO `job_log` VALUES (9490, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '执行任务成功', '0', '', '2025-09-26 16:16:02');
+INSERT INTO `job_log` VALUES (9491, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 16:16:02');
+INSERT INTO `job_log` VALUES (9492, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 16:33:18');
+INSERT INTO `job_log` VALUES (9493, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 16:33:18');
+INSERT INTO `job_log` VALUES (9494, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 17:11:53');
+INSERT INTO `job_log` VALUES (9495, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 17:11:53');
+INSERT INTO `job_log` VALUES (9496, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 17:41:19');
+INSERT INTO `job_log` VALUES (9497, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 17:41:19');
+INSERT INTO `job_log` VALUES (9498, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 18:17:20');
+INSERT INTO `job_log` VALUES (9499, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 18:17:20');
+INSERT INTO `job_log` VALUES (9500, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 18:43:35');
+INSERT INTO `job_log` VALUES (9501, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 18:43:35');
+INSERT INTO `job_log` VALUES (9502, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 19:02:02');
+INSERT INTO `job_log` VALUES (9503, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 19:02:02');
+INSERT INTO `job_log` VALUES (9504, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 19:42:54');
+INSERT INTO `job_log` VALUES (9505, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 19:42:54');
+INSERT INTO `job_log` VALUES (9506, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 20:00:04');
+INSERT INTO `job_log` VALUES (9507, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 20:19:29');
+INSERT INTO `job_log` VALUES (9508, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 20:42:36');
+INSERT INTO `job_log` VALUES (9509, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 20:42:36');
+INSERT INTO `job_log` VALUES (9510, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 21:01:34');
+INSERT INTO `job_log` VALUES (9511, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 21:01:34');
+INSERT INTO `job_log` VALUES (9512, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 21:44:38');
+INSERT INTO `job_log` VALUES (9513, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 21:44:38');
+INSERT INTO `job_log` VALUES (9514, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 22:02:42');
+INSERT INTO `job_log` VALUES (9515, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 22:02:42');
+INSERT INTO `job_log` VALUES (9516, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 22:30:48');
+INSERT INTO `job_log` VALUES (9517, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 22:47:02');
+INSERT INTO `job_log` VALUES (9518, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 23:05:31');
+INSERT INTO `job_log` VALUES (9519, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 23:05:31');
+INSERT INTO `job_log` VALUES (9520, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-26 23:54:36');
+INSERT INTO `job_log` VALUES (9521, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-26 23:54:36');
+INSERT INTO `job_log` VALUES (9522, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-27 00:13:21');
+INSERT INTO `job_log` VALUES (9523, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-27 00:13:21');
+INSERT INTO `job_log` VALUES (9524, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-27 00:30:31');
+INSERT INTO `job_log` VALUES (9525, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-27 00:47:53');
+INSERT INTO `job_log` VALUES (9526, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-27 01:04:04');
+INSERT INTO `job_log` VALUES (9527, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-27 01:04:04');
+INSERT INTO `job_log` VALUES (9528, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-27 01:39:30');
+INSERT INTO `job_log` VALUES (9529, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-27 01:39:30');
+INSERT INTO `job_log` VALUES (9530, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-27 02:00:00');
+INSERT INTO `job_log` VALUES (9531, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-27 02:01:00');
+INSERT INTO `job_log` VALUES (9532, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '执行任务成功', '0', '', '2025-09-27 02:30:00');
+INSERT INTO `job_log` VALUES (9533, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '执行任务成功', '0', '', '2025-09-27 02:31:00');
+INSERT INTO `job_log` VALUES (9534, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-27 02:44:09');
+INSERT INTO `job_log` VALUES (9535, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-27 02:44:09');
+INSERT INTO `job_log` VALUES (9536, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-27 02:44:09');
+INSERT INTO `job_log` VALUES (9537, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-27 02:44:41');
+INSERT INTO `job_log` VALUES (9538, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-27 02:44:41');
+INSERT INTO `job_log` VALUES (9539, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-27 02:44:41');
+INSERT INTO `job_log` VALUES (9540, '生成周排名(每30分钟执行一次)', 'DEFAULT', 'generateWeeklyStatistics()', '启动任务成功', '0', '', '2025-09-27 02:45:12');
+INSERT INTO `job_log` VALUES (9541, '生成月排名(每30分钟执行一次)', 'DEFAULT', 'generateMonthStatistics()', '启动任务成功', '0', '', '2025-09-27 02:45:12');
+INSERT INTO `job_log` VALUES (9542, '生成年排名(每天零点执行一次)', 'DEFAULT', 'generateYearStatistics()', '启动任务成功', '0', '', '2025-09-27 02:45:12');
 COMMIT;
 
 -- ----------------------------
@@ -1213,9 +1487,9 @@ CREATE TABLE `language` (
   `brief` varchar(500) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`language_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -1243,9 +1517,9 @@ CREATE TABLE `level` (
   `description` varchar(255) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`level_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -1667,9 +1941,9 @@ CREATE TABLE `member_collection` (
   `short_id` int NOT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`member_collection_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -1693,9 +1967,9 @@ CREATE TABLE `member_like` (
   `short_id` int NOT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`member_like_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -1725,9 +1999,9 @@ CREATE TABLE `member_movie` (
   `movie_basics_id` int NOT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`member_movie_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -1754,9 +2028,9 @@ CREATE TABLE `member_order` (
   `description` varchar(255) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`member_order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -1771,9 +2045,9 @@ CREATE TABLE `member_rate` (
   `rate` int DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`member_rate_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -1810,9 +2084,9 @@ CREATE TABLE `member_user` (
   `login_date` datetime NOT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   `birthday` date DEFAULT NULL,
   `sex` char(1) NOT NULL DEFAULT '0',
   `introduction` varchar(500) DEFAULT '',
@@ -1837,9 +2111,9 @@ CREATE TABLE `member_wallet` (
   `gold` int NOT NULL DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`member_wallet_id`),
   UNIQUE KEY `member_wallet_member_user_id_unique` (`member_user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -1862,9 +2136,9 @@ CREATE TABLE `member_wallet_log` (
   `type` char(1) NOT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`member_wallet_log_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -1899,9 +2173,9 @@ CREATE TABLE `menu` (
   `mpath` varchar(255) DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`menu_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -2016,7 +2290,7 @@ CREATE TABLE `movie_basic_to_country` (
   PRIMARY KEY (`movie_basic_to_country_id`),
   KEY `movie_basic_to_country_fk` (`movie_basics_id`),
   CONSTRAINT `movie_basic_to_country_fk` FOREIGN KEY (`movie_basics_id`) REFERENCES `movie_basics` (`movie_basics_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of movie_basic_to_country
@@ -2037,7 +2311,7 @@ INSERT INTO `movie_basic_to_country` VALUES (13, 59, 1);
 INSERT INTO `movie_basic_to_country` VALUES (14, 60, 1);
 INSERT INTO `movie_basic_to_country` VALUES (15, 61, 1);
 INSERT INTO `movie_basic_to_country` VALUES (18, 63, 8);
-INSERT INTO `movie_basic_to_country` VALUES (20, 64, 1);
+INSERT INTO `movie_basic_to_country` VALUES (21, 64, 1);
 COMMIT;
 
 -- ----------------------------
@@ -2051,7 +2325,7 @@ CREATE TABLE `movie_basic_to_genre` (
   PRIMARY KEY (`movie_basic_to_genre_id`),
   KEY `movie_basic_to_genre_fk` (`movie_basics_id`),
   CONSTRAINT `movie_basic_to_genre_fk` FOREIGN KEY (`movie_basics_id`) REFERENCES `movie_basics` (`movie_basics_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of movie_basic_to_genre
@@ -2125,9 +2399,9 @@ INSERT INTO `movie_basic_to_genre` VALUES (108, 48, 11);
 INSERT INTO `movie_basic_to_genre` VALUES (109, 48, 10);
 INSERT INTO `movie_basic_to_genre` VALUES (110, 66, 12);
 INSERT INTO `movie_basic_to_genre` VALUES (111, 66, 10);
-INSERT INTO `movie_basic_to_genre` VALUES (112, 64, 10);
-INSERT INTO `movie_basic_to_genre` VALUES (113, 64, 7);
-INSERT INTO `movie_basic_to_genre` VALUES (114, 64, 3);
+INSERT INTO `movie_basic_to_genre` VALUES (115, 64, 10);
+INSERT INTO `movie_basic_to_genre` VALUES (116, 64, 7);
+INSERT INTO `movie_basic_to_genre` VALUES (117, 64, 3);
 COMMIT;
 
 -- ----------------------------
@@ -2166,9 +2440,9 @@ CREATE TABLE `movie_basics` (
   `free_duration` int NOT NULL DEFAULT '1',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`movie_basics_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -2221,7 +2495,7 @@ INSERT INTO `movie_basics` VALUES (59, '0', '0', NULL, '宠物医生第二季', 
 INSERT INTO `movie_basics` VALUES (60, '0', '0', NULL, '跟着爸爸去露营', 'https://cms.yinchunyu.com/uploads/2025-05-04/izTOD4aMe.jpeg', NULL, NULL, NULL, NULL, 'variety', 2022, NULL, NULL, NULL, '2D', NULL, '0', NULL, NULL, NULL, NULL, NULL, '汉语普通话', NULL, NULL, 0, 0, 1, '', 'laoying', '2025-05-04 05:28:17', 'laoying', '2025-05-04 05:28:17');
 INSERT INTO `movie_basics` VALUES (61, '0', '0', NULL, '奇妙热榜挑战派对', 'https://cms.yinchunyu.com/uploads/2025-05-04/rnXHGuDDH.jpeg', NULL, NULL, NULL, NULL, 'variety', 2022, NULL, NULL, NULL, '2D', NULL, '0', NULL, NULL, NULL, NULL, NULL, '汉语普通话', NULL, NULL, 0, 0, 1, '', 'laoying', '2025-05-04 05:29:03', 'laoying', '2025-05-04 05:29:03');
 INSERT INTO `movie_basics` VALUES (63, '0', '0', NULL, '孝利家民宿 第一季', 'https://cms.yinchunyu.com/uploads/2025-05-11/ptnz0hy44.png', NULL, NULL, '효리네민박', NULL, 'variety', 2017, NULL, NULL, NULL, '2D', NULL, '0', 1, 1, 14, 14, NULL, '韩语', NULL, '<p>《孝利家民宿》为韩国JTBC的综艺节目，由李孝利主持，节目背景为李孝利与丈夫李尚顺音乐家在韩国济州岛开设的民宿，并邀请IU担任民宿职员。节目事前透过官网发布，开放所有人申请，并由制作单位通知成功住宿者；节目从5月19日连续开拍11天，而于5月30日结束拍摄，预计于2017年6月中播出，将有12集。</p>\n<p>节目每集将记录李孝利、李孝利丈夫、IU与入住房客所有发生的互动点滴与故事。</p>', 0, 0, 1, '', 'laoying', '2025-05-11 14:08:06', 'laoying', '2025-05-11 14:12:39');
-INSERT INTO `movie_basics` VALUES (64, '0', '1', NULL, '有病才会喜欢你', 'https://cms.yinchunyu.com/uploads/2025-05-13/ao4kZx9Xv.png', NULL, NULL, NULL, 'Lovesick', 'movie', 2025, NULL, '111', NULL, '2D', NULL, '0', NULL, NULL, NULL, NULL, NULL, '汉语普通话', '爱情,剧情,青春', '<p>我们忘不掉的是青春，还是青春里的那个人呢？一个是吊儿郎当，活在当下的学渣叶子杰（詹怀云 饰），在面临退学危机时，意外发现装病似乎可以逃过一劫？一个是沉稳内敛，渴望未来的学霸叶梓洁（江齐 饰），她仿佛装了测谎雷达，总会找到叶子杰疑似装病的证据！两个人相似的名字暗示了他们注定交织的命运。原本水火不相容的他们，因为这场&ldquo;有病&rdquo;乌龙，在一次次谍对谍的较量中渐渐靠近，暗生情愫&hellip;然而青春常常伴随遗憾，相爱的人也总是难免分离，但也正因如此，才要把握现在，在这个明媚的春天，即刻告白吧！告诉那个人：我就是有病，才会这么喜欢你。</p>', 1, 10, 1, '', 'laoying', '2025-05-13 13:09:59', 'laoying', '2025-09-26 02:35:52');
+INSERT INTO `movie_basics` VALUES (64, '0', '1', NULL, '有病才会喜欢你', 'https://cms.yinchunyu.com/uploads/2025-05-13/ao4kZx9Xv.png', NULL, NULL, NULL, 'Lovesick', 'movie', 2025, NULL, '111', NULL, '2D', NULL, '0', NULL, NULL, NULL, NULL, NULL, '汉语普通话', '爱情,剧情,青春', '我们忘不掉的是青春，还是青春里的那个人呢？一个是吊儿郎当，活在当下的学渣叶子杰（詹怀云 饰），在面临退学危机时，意外发现装病似乎可以逃过一劫？一个是沉稳内敛，渴望未来的学霸叶梓洁（江齐 饰），她仿佛装了测谎雷达，总会找到叶子杰疑似装病的证据！两个人相似的名字暗示了他们注定交织的命运。原本水火不相容的他们，因为这场&ldquo;有病&rdquo;乌龙，在一次次谍对谍的较量中渐渐靠近，暗生情愫&hellip;然而青春常常伴随遗憾，相爱的人也总是难免分离，但也正因如此，才要把握现在，在这个明媚的春天，即刻告白吧！告诉那个人：我就是有病，才会这么喜欢你。', 1, 10, 1, '', 'laoying', '2025-05-13 13:09:59', 'laoying', '2025-09-26 13:06:50');
 INSERT INTO `movie_basics` VALUES (66, '0', '0', NULL, '731', 'http://localhost:3000/uploads/2025-09-25/74UYo0tzr.png', NULL, NULL, NULL, NULL, 'movie', 2025, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '', 'admin', '2025-09-25 09:19:23', 'admin', '2025-09-25 09:19:23');
 COMMIT;
 
@@ -2255,9 +2529,9 @@ CREATE TABLE `movie_month_visits` (
   `month_increment` int NOT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=141 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -2357,54 +2631,54 @@ INSERT INTO `movie_month_visits` VALUES (89, 22, '2025-06', 8, 0, '', '', '2025-
 INSERT INTO `movie_month_visits` VALUES (90, 63, '2025-06', 17, 0, '', '', '2025-06-03 01:41:41', '', '2025-06-18 07:01:00');
 INSERT INTO `movie_month_visits` VALUES (91, 28, '2025-06', 6, 0, '', '', '2025-06-03 01:41:41', '', '2025-06-18 07:01:00');
 INSERT INTO `movie_month_visits` VALUES (92, 64, '2025-06', 58, 0, '', '', '2025-06-03 01:41:41', '', '2025-06-18 07:01:00');
-INSERT INTO `movie_month_visits` VALUES (93, 48, '2025-09', 87, 87, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (94, 47, '2025-09', 38, 38, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (95, 44, '2025-09', 21, 21, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (96, 52, '2025-09', 133, 133, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (97, 40, '2025-09', 35, 35, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (98, 49, '2025-09', 21, 21, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (99, 57, '2025-09', 21, 21, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (100, 53, '2025-09', 30, 30, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (101, 23, '2025-09', 16, 16, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (102, 61, '2025-09', 25, 25, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (103, 4, '2025-09', 11, 11, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (104, 46, '2025-09', 39, 39, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (105, 21, '2025-09', 7, 7, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (106, 29, '2025-09', 36, 36, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (107, 50, '2025-09', 44, 44, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (108, 26, '2025-09', 31, 31, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (109, 24, '2025-09', 22, 22, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (110, 45, '2025-09', 21, 21, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (111, 58, '2025-09', 46, 46, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (112, 39, '2025-09', 16, 16, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (113, 32, '2025-09', 13, 13, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (114, 19, '2025-09', 7, 7, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (115, 30, '2025-09', 8, 8, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (116, 56, '2025-09', 17, 17, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (117, 59, '2025-09', 18, 18, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (118, 1, '2025-09', 25, 25, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (119, 54, '2025-09', 43, 43, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (120, 60, '2025-09', 18, 18, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (121, 55, '2025-09', 23, 23, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (122, 25, '2025-09', 19, 19, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (123, 51, '2025-09', 33, 33, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (124, 36, '2025-09', 9, 9, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (125, 37, '2025-09', 13, 13, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (126, 42, '2025-09', 17, 17, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (127, 43, '2025-09', 18, 18, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (128, 27, '2025-09', 14, 14, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (129, 17, '2025-09', 6, 6, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (130, 35, '2025-09', 17, 17, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (131, 33, '2025-09', 17, 17, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (132, 20, '2025-09', 7, 7, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (133, 31, '2025-09', 9, 9, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (134, 18, '2025-09', 6, 6, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (135, 22, '2025-09', 8, 8, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (136, 63, '2025-09', 18, 18, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (137, 28, '2025-09', 6, 6, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (138, 64, '2025-09', 107, 107, '', '', '2025-09-13 03:31:00', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (139, 66, '2025-09', 18, 18, '', '', '2025-09-25 10:04:26', '', '2025-09-26 08:01:00');
-INSERT INTO `movie_month_visits` VALUES (140, 66, '2025-09', 18, 18, '', '', '2025-09-25 10:04:26', '', '2025-09-26 08:01:00');
+INSERT INTO `movie_month_visits` VALUES (93, 48, '2025-09', 87, 87, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (94, 47, '2025-09', 38, 38, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (95, 44, '2025-09', 23, 23, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (96, 52, '2025-09', 135, 135, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (97, 40, '2025-09', 35, 35, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (98, 49, '2025-09', 21, 21, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (99, 57, '2025-09', 21, 21, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (100, 53, '2025-09', 30, 30, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (101, 23, '2025-09', 16, 16, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (102, 61, '2025-09', 25, 25, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (103, 4, '2025-09', 11, 11, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (104, 46, '2025-09', 39, 39, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (105, 21, '2025-09', 7, 7, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (106, 29, '2025-09', 36, 36, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (107, 50, '2025-09', 44, 44, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (108, 26, '2025-09', 31, 31, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (109, 24, '2025-09', 22, 22, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (110, 45, '2025-09', 21, 21, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (111, 58, '2025-09', 46, 46, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (112, 39, '2025-09', 16, 16, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (113, 32, '2025-09', 13, 13, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (114, 19, '2025-09', 7, 7, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (115, 30, '2025-09', 8, 8, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (116, 56, '2025-09', 17, 17, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (117, 59, '2025-09', 18, 18, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (118, 1, '2025-09', 25, 25, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (119, 54, '2025-09', 43, 43, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (120, 60, '2025-09', 18, 18, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (121, 55, '2025-09', 23, 23, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (122, 25, '2025-09', 19, 19, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (123, 51, '2025-09', 33, 33, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (124, 36, '2025-09', 9, 9, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (125, 37, '2025-09', 13, 13, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (126, 42, '2025-09', 17, 17, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (127, 43, '2025-09', 18, 18, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (128, 27, '2025-09', 14, 14, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (129, 17, '2025-09', 6, 6, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (130, 35, '2025-09', 17, 17, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (131, 33, '2025-09', 17, 17, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (132, 20, '2025-09', 7, 7, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (133, 31, '2025-09', 9, 9, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (134, 18, '2025-09', 6, 6, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (135, 22, '2025-09', 8, 8, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (136, 63, '2025-09', 18, 18, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (137, 28, '2025-09', 6, 6, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (138, 64, '2025-09', 126, 126, '', '', '2025-09-13 03:31:00', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (139, 66, '2025-09', 81, 81, '', '', '2025-09-25 10:04:26', '', '2025-09-27 02:31:00');
+INSERT INTO `movie_month_visits` VALUES (140, 66, '2025-09', 81, 81, '', '', '2025-09-25 10:04:26', '', '2025-09-27 02:31:00');
 COMMIT;
 
 -- ----------------------------
@@ -2423,9 +2697,9 @@ CREATE TABLE `movie_photo` (
   `del_flag` varchar(1) NOT NULL DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`movie_photo_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -2458,8 +2732,8 @@ CREATE TABLE `movie_pv` (
 BEGIN;
 INSERT INTO `movie_pv` VALUES (1, 48, 87);
 INSERT INTO `movie_pv` VALUES (2, 47, 38);
-INSERT INTO `movie_pv` VALUES (3, 44, 21);
-INSERT INTO `movie_pv` VALUES (4, 52, 133);
+INSERT INTO `movie_pv` VALUES (3, 44, 23);
+INSERT INTO `movie_pv` VALUES (4, 52, 135);
 INSERT INTO `movie_pv` VALUES (5, 40, 35);
 INSERT INTO `movie_pv` VALUES (6, 49, 21);
 INSERT INTO `movie_pv` VALUES (7, 57, 21);
@@ -2501,8 +2775,8 @@ INSERT INTO `movie_pv` VALUES (47, 18, 6);
 INSERT INTO `movie_pv` VALUES (48, 22, 8);
 INSERT INTO `movie_pv` VALUES (49, 63, 18);
 INSERT INTO `movie_pv` VALUES (50, 28, 6);
-INSERT INTO `movie_pv` VALUES (51, 64, 107);
-INSERT INTO `movie_pv` VALUES (52, 66, 18);
+INSERT INTO `movie_pv` VALUES (51, 64, 126);
+INSERT INTO `movie_pv` VALUES (52, 66, 81);
 COMMIT;
 
 -- ----------------------------
@@ -2516,9 +2790,9 @@ CREATE TABLE `movie_rate` (
   `rate_user_count` int NOT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`movie_rate_id`),
   UNIQUE KEY `movie_rate_movie_basics_id_unique` (`movie_basics_id`),
   CONSTRAINT `movie_rate_movie_basics_id_fkey` FOREIGN KEY (`movie_basics_id`) REFERENCES `movie_basics` (`movie_basics_id`) ON DELETE CASCADE
@@ -2558,9 +2832,9 @@ CREATE TABLE `movie_video` (
   `status` varchar(255) NOT NULL DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   `link` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`movie_video_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -2603,9 +2877,9 @@ CREATE TABLE `movie_weekly_visits` (
   `weekly_increment` int NOT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=278 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -2843,53 +3117,53 @@ INSERT INTO `movie_weekly_visits` VALUES (227, 22, '2025-37', 8, 8, '', '', '202
 INSERT INTO `movie_weekly_visits` VALUES (228, 63, '2025-37', 17, 17, '', '', '2025-09-13 03:30:00', '', '2025-09-13 09:07:06');
 INSERT INTO `movie_weekly_visits` VALUES (229, 28, '2025-37', 6, 6, '', '', '2025-09-13 03:30:00', '', '2025-09-13 09:07:06');
 INSERT INTO `movie_weekly_visits` VALUES (230, 64, '2025-37', 59, 59, '', '', '2025-09-13 03:30:00', '', '2025-09-13 09:07:06');
-INSERT INTO `movie_weekly_visits` VALUES (231, 48, '2025-39', 87, 87, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (232, 47, '2025-39', 38, 38, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (233, 44, '2025-39', 21, 21, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (234, 52, '2025-39', 133, 133, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (235, 40, '2025-39', 35, 35, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (236, 49, '2025-39', 21, 21, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (237, 57, '2025-39', 21, 21, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (238, 53, '2025-39', 30, 30, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (239, 23, '2025-39', 16, 16, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (240, 61, '2025-39', 25, 25, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (241, 4, '2025-39', 11, 11, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (242, 46, '2025-39', 39, 39, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (243, 21, '2025-39', 7, 7, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (244, 29, '2025-39', 36, 36, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (245, 50, '2025-39', 44, 44, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (246, 26, '2025-39', 31, 31, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (247, 24, '2025-39', 22, 22, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (248, 45, '2025-39', 21, 21, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (249, 58, '2025-39', 46, 46, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (250, 39, '2025-39', 16, 16, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (251, 32, '2025-39', 13, 13, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (252, 19, '2025-39', 7, 7, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (253, 30, '2025-39', 8, 8, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (254, 56, '2025-39', 17, 17, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (255, 59, '2025-39', 18, 18, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (256, 1, '2025-39', 25, 25, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (257, 54, '2025-39', 43, 43, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (258, 60, '2025-39', 18, 18, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (259, 55, '2025-39', 23, 23, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (260, 25, '2025-39', 19, 19, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (261, 51, '2025-39', 33, 33, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (262, 36, '2025-39', 9, 9, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (263, 37, '2025-39', 13, 13, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (264, 42, '2025-39', 17, 17, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (265, 43, '2025-39', 18, 18, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (266, 27, '2025-39', 14, 14, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (267, 17, '2025-39', 6, 6, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (268, 35, '2025-39', 17, 17, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (269, 33, '2025-39', 17, 17, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (270, 20, '2025-39', 7, 7, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (271, 31, '2025-39', 9, 9, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (272, 18, '2025-39', 6, 6, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (273, 22, '2025-39', 8, 8, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (274, 63, '2025-39', 18, 18, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (275, 28, '2025-39', 6, 6, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (276, 64, '2025-39', 107, 107, '', '', '2025-09-24 09:00:00', '', '2025-09-26 08:00:00');
-INSERT INTO `movie_weekly_visits` VALUES (277, 66, '2025-39', 18, 18, '', '', '2025-09-25 09:30:00', '', '2025-09-26 08:00:00');
+INSERT INTO `movie_weekly_visits` VALUES (231, 48, '2025-39', 87, 87, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (232, 47, '2025-39', 38, 38, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (233, 44, '2025-39', 23, 23, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (234, 52, '2025-39', 135, 135, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (235, 40, '2025-39', 35, 35, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (236, 49, '2025-39', 21, 21, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (237, 57, '2025-39', 21, 21, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (238, 53, '2025-39', 30, 30, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (239, 23, '2025-39', 16, 16, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (240, 61, '2025-39', 25, 25, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (241, 4, '2025-39', 11, 11, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (242, 46, '2025-39', 39, 39, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (243, 21, '2025-39', 7, 7, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (244, 29, '2025-39', 36, 36, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (245, 50, '2025-39', 44, 44, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (246, 26, '2025-39', 31, 31, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (247, 24, '2025-39', 22, 22, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (248, 45, '2025-39', 21, 21, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (249, 58, '2025-39', 46, 46, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (250, 39, '2025-39', 16, 16, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (251, 32, '2025-39', 13, 13, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (252, 19, '2025-39', 7, 7, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (253, 30, '2025-39', 8, 8, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (254, 56, '2025-39', 17, 17, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (255, 59, '2025-39', 18, 18, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (256, 1, '2025-39', 25, 25, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (257, 54, '2025-39', 43, 43, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (258, 60, '2025-39', 18, 18, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (259, 55, '2025-39', 23, 23, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (260, 25, '2025-39', 19, 19, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (261, 51, '2025-39', 33, 33, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (262, 36, '2025-39', 9, 9, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (263, 37, '2025-39', 13, 13, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (264, 42, '2025-39', 17, 17, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (265, 43, '2025-39', 18, 18, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (266, 27, '2025-39', 14, 14, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (267, 17, '2025-39', 6, 6, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (268, 35, '2025-39', 17, 17, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (269, 33, '2025-39', 17, 17, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (270, 20, '2025-39', 7, 7, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (271, 31, '2025-39', 9, 9, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (272, 18, '2025-39', 6, 6, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (273, 22, '2025-39', 8, 8, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (274, 63, '2025-39', 18, 18, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (275, 28, '2025-39', 6, 6, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (276, 64, '2025-39', 126, 126, '', '', '2025-09-24 09:00:00', '', '2025-09-27 02:30:00');
+INSERT INTO `movie_weekly_visits` VALUES (277, 66, '2025-39', 81, 81, '', '', '2025-09-25 09:30:00', '', '2025-09-27 02:30:00');
 COMMIT;
 
 -- ----------------------------
@@ -2904,9 +3178,9 @@ CREATE TABLE `movie_year_visits` (
   `year_increment` int NOT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -2914,53 +3188,53 @@ CREATE TABLE `movie_year_visits` (
 -- Records of movie_year_visits
 -- ----------------------------
 BEGIN;
-INSERT INTO `movie_year_visits` VALUES (1, 48, '2025', 87, 87, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (2, 47, '2025', 38, 38, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (3, 44, '2025', 21, 21, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (4, 52, '2025', 133, 133, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (5, 40, '2025', 35, 35, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (6, 49, '2025', 21, 21, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (7, 57, '2025', 21, 21, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (8, 53, '2025', 30, 30, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (9, 23, '2025', 16, 16, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (10, 61, '2025', 25, 25, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (11, 4, '2025', 11, 11, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (12, 46, '2025', 37, 37, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (13, 21, '2025', 7, 7, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (14, 29, '2025', 35, 35, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (15, 50, '2025', 44, 44, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (16, 26, '2025', 31, 31, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (17, 24, '2025', 22, 22, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (18, 45, '2025', 20, 20, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (19, 58, '2025', 46, 46, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (20, 39, '2025', 16, 16, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (21, 32, '2025', 13, 13, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (22, 19, '2025', 7, 7, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (23, 30, '2025', 8, 8, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (24, 56, '2025', 17, 17, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (25, 59, '2025', 18, 18, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (26, 1, '2025', 24, 24, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (27, 54, '2025', 43, 43, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (28, 60, '2025', 18, 18, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (29, 55, '2025', 23, 23, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (30, 25, '2025', 19, 19, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (31, 51, '2025', 33, 33, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (32, 36, '2025', 9, 9, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (33, 37, '2025', 13, 13, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (34, 42, '2025', 17, 17, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (35, 43, '2025', 18, 18, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (36, 27, '2025', 14, 14, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (37, 17, '2025', 6, 6, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (38, 35, '2025', 17, 17, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (39, 33, '2025', 17, 17, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (40, 20, '2025', 7, 7, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (41, 31, '2025', 9, 9, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (42, 18, '2025', 6, 6, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:16');
-INSERT INTO `movie_year_visits` VALUES (43, 22, '2025', 8, 8, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:17');
-INSERT INTO `movie_year_visits` VALUES (44, 63, '2025', 17, 17, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:17');
-INSERT INTO `movie_year_visits` VALUES (45, 28, '2025', 6, 6, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:17');
-INSERT INTO `movie_year_visits` VALUES (46, 64, '2025', 88, 88, '', '', '2025-05-21 03:57:54', '', '2025-09-25 16:11:17');
-INSERT INTO `movie_year_visits` VALUES (47, 66, '2025', 0, 0, '', '', '2025-09-25 16:11:17', '', '2025-09-25 16:11:17');
+INSERT INTO `movie_year_visits` VALUES (1, 48, '2025', 87, 87, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (2, 47, '2025', 38, 38, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (3, 44, '2025', 21, 21, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (4, 52, '2025', 135, 135, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (5, 40, '2025', 35, 35, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (6, 49, '2025', 21, 21, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (7, 57, '2025', 21, 21, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (8, 53, '2025', 30, 30, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (9, 23, '2025', 16, 16, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (10, 61, '2025', 25, 25, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (11, 4, '2025', 11, 11, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (12, 46, '2025', 39, 39, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (13, 21, '2025', 7, 7, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (14, 29, '2025', 36, 36, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (15, 50, '2025', 44, 44, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (16, 26, '2025', 31, 31, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (17, 24, '2025', 22, 22, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (18, 45, '2025', 21, 21, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (19, 58, '2025', 46, 46, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (20, 39, '2025', 16, 16, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (21, 32, '2025', 13, 13, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (22, 19, '2025', 7, 7, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (23, 30, '2025', 8, 8, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (24, 56, '2025', 17, 17, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (25, 59, '2025', 18, 18, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:02');
+INSERT INTO `movie_year_visits` VALUES (26, 1, '2025', 25, 25, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:03');
+INSERT INTO `movie_year_visits` VALUES (27, 54, '2025', 43, 43, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:03');
+INSERT INTO `movie_year_visits` VALUES (28, 60, '2025', 18, 18, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:03');
+INSERT INTO `movie_year_visits` VALUES (29, 55, '2025', 23, 23, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:03');
+INSERT INTO `movie_year_visits` VALUES (30, 25, '2025', 19, 19, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:03');
+INSERT INTO `movie_year_visits` VALUES (31, 51, '2025', 33, 33, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:03');
+INSERT INTO `movie_year_visits` VALUES (32, 36, '2025', 9, 9, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:03');
+INSERT INTO `movie_year_visits` VALUES (33, 37, '2025', 13, 13, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:03');
+INSERT INTO `movie_year_visits` VALUES (34, 42, '2025', 17, 17, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:03');
+INSERT INTO `movie_year_visits` VALUES (35, 43, '2025', 18, 18, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:03');
+INSERT INTO `movie_year_visits` VALUES (36, 27, '2025', 14, 14, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:03');
+INSERT INTO `movie_year_visits` VALUES (37, 17, '2025', 6, 6, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:03');
+INSERT INTO `movie_year_visits` VALUES (38, 35, '2025', 17, 17, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:03');
+INSERT INTO `movie_year_visits` VALUES (39, 33, '2025', 17, 17, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:03');
+INSERT INTO `movie_year_visits` VALUES (40, 20, '2025', 7, 7, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:03');
+INSERT INTO `movie_year_visits` VALUES (41, 31, '2025', 9, 9, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:03');
+INSERT INTO `movie_year_visits` VALUES (42, 18, '2025', 6, 6, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:03');
+INSERT INTO `movie_year_visits` VALUES (43, 22, '2025', 8, 8, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:03');
+INSERT INTO `movie_year_visits` VALUES (44, 63, '2025', 18, 18, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:03');
+INSERT INTO `movie_year_visits` VALUES (45, 28, '2025', 6, 6, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:03');
+INSERT INTO `movie_year_visits` VALUES (46, 64, '2025', 119, 119, '', '', '2025-05-21 03:57:54', '', '2025-09-26 16:16:03');
+INSERT INTO `movie_year_visits` VALUES (47, 66, '2025', 72, 72, '', '', '2025-09-25 16:11:17', '', '2025-09-26 16:16:03');
 COMMIT;
 
 -- ----------------------------
@@ -2975,9 +3249,9 @@ CREATE TABLE `post` (
   `status` varchar(1) NOT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`post_id`),
   UNIQUE KEY `post_post_code_unique` (`post_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -3002,9 +3276,9 @@ CREATE TABLE `profession` (
   `parent_id` int DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   `mpath` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`profession_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -3038,9 +3312,9 @@ CREATE TABLE `pub_date` (
   `movie_id` int NOT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`pub_date_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -3068,9 +3342,9 @@ CREATE TABLE `role` (
   `del_flag` char(1) DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -3181,9 +3455,9 @@ CREATE TABLE `short` (
   `status` char(1) NOT NULL DEFAULT '0',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`short_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -3220,9 +3494,9 @@ CREATE TABLE `sys_config` (
   `config_type` enum('Y','N') DEFAULT 'N',
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`sys_config_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -3256,9 +3530,9 @@ CREATE TABLE `user` (
   `dept_id` int DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`user_id`),
   KEY `user_dept_id_dept_dept_id_fk` (`dept_id`),
   CONSTRAINT `user_dept_id_dept_dept_id_fk` FOREIGN KEY (`dept_id`) REFERENCES `dept` (`dept_id`)
@@ -3333,9 +3607,9 @@ CREATE TABLE `video` (
   `size` int DEFAULT NULL,
   `remark` varchar(500) DEFAULT '',
   `create_by` varchar(64) DEFAULT '',
-  `create_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
   `update_by` varchar(64) DEFAULT '',
-  `update_time` datetime DEFAULT '2025-09-26 06:24:52',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
   PRIMARY KEY (`video_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -3348,6 +3622,33 @@ INSERT INTO `video` VALUES (3, '按钮波纹悬停效果', 'https://cms.yinchuny
 INSERT INTO `video` VALUES (4, '私家侦探 预告片', 'https://cms.yinchunyu.com/uploads/2025-04-21/XjUUJl7J0.mp4', 'http://yinchunyu.oss-cn-shenzhen.aliyuncs.com/uploads/2025-04-19/ukEs3nGUY.jpeg', '703200215.mp4', '/data/wwwroot/chunyu-cms-v2/chunyu-cms-web/uploads/2025-04-21/XjUUJl7J0.mp4', 18, 720, 1280, 7659970, '', '', '2025-04-18 08:56:56', '', '2025-04-21 03:05:37');
 INSERT INTO `video` VALUES (5, '宇宙守卫队', 'https://cms.yinchunyu.com/uploads/2025-05-09/Q993OBuaa.mp4', 'https://cms.yinchunyu.com/uploads/2025-05-09/YIx4jRj0L.jpeg', '703200128.mp4', '/data/wwwroot/chunyu-cms-v2/chunyu-cms-web/uploads/2025-05-09/Q993OBuaa.mp4', 50, 720, 1280, 18360492, '', '', '2025-05-08 08:41:52', '', '2025-05-08 08:41:52');
 INSERT INTO `video` VALUES (6, '有病才喜欢你', 'https://cms.yinchunyu.com/uploads/2025-05-13/tLwryR716.mp4', 'https://cms.yinchunyu.com/uploads/2025-05-13/cAG2vEMqq.jpeg', '703200254.mp4', '/data/wwwroot/chunyu-cms-v2/chunyu-cms-web/uploads/2025-05-13/tLwryR716.mp4', 95, 720, 1280, 35630607, '', '', '2025-05-13 06:14:56', '', '2025-05-13 06:14:56');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for video_resource
+-- ----------------------------
+DROP TABLE IF EXISTS `video_resource`;
+CREATE TABLE `video_resource` (
+  `resource_id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `resources` varchar(10) NOT NULL DEFAULT '1',
+  `url` varchar(500) NOT NULL,
+  `remark` varchar(500) DEFAULT '',
+  `create_by` varchar(64) DEFAULT '',
+  `create_time` datetime DEFAULT '2025-09-26 14:10:49',
+  `update_by` varchar(64) DEFAULT '',
+  `update_time` datetime DEFAULT '2025-09-26 14:10:49',
+  `movie_id` int NOT NULL,
+  PRIMARY KEY (`resource_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=168 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of video_resource
+-- ----------------------------
+BEGIN;
+INSERT INTO `video_resource` VALUES (1, '第01集', '1', 'https://play.modujx10.com/20240229/4HZBxyXt/index.m3u8', '', 'admin', '2025-09-26 14:12:00', 'admin', '2025-09-26 14:12:00', 66);
+INSERT INTO `video_resource` VALUES (2, '第02集', '1', 'https://play.modujx10.com/20240229/Nsz2aeWd/index.m3u8', '', 'admin', '2025-09-26 14:12:00', 'admin', '2025-09-26 14:12:00', 66);
+INSERT INTO `video_resource` VALUES (3, '第03集', '1', 'https://play.modujx10.com/20240229/nk4oDMiw/index.m3u8', '', 'admin', '2025-09-26 14:12:00', 'admin', '2025-09-26 14:12:00', 66);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
