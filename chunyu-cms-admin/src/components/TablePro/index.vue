@@ -35,23 +35,24 @@
       </template>
 
       <el-form-item>
-        <el-button type="primary" icon="Search" @click="handleQuery"
-          >搜索</el-button
-        >
+        <el-button type="primary" icon="Search" @click="handleQuery">
+          搜索
+        </el-button>
         <el-button icon="Refresh" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-      <el-col v-if="isShowButtonList" :span="1.5">
+      <el-col :span="1.5">
         <el-button
           v-if="formOptions.length > 0"
           type="primary"
           plain
           icon="Plus"
           @click="handleAdd"
-          >新增</el-button
         >
+          新增
+        </el-button>
       </el-col>
       <el-col v-if="isShowButtonList" :span="1.5">
         <el-button
@@ -60,8 +61,9 @@
           icon="Edit"
           :disabled="single"
           @click="handleUpdate"
-          >修改</el-button
         >
+          修改
+        </el-button>
       </el-col>
       <el-col v-if="isShowButtonList" :span="1.5">
         <el-button
@@ -70,8 +72,9 @@
           icon="Delete"
           :disabled="multiple"
           @click="handleDelete"
-          >删除</el-button
         >
+          删除
+        </el-button>
       </el-col>
       <right-toolbar
         v-model:show-search="showSearch"

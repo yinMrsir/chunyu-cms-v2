@@ -254,3 +254,21 @@ export function deleteMovieRoleActor(ids) {
     method: "delete",
   });
 }
+
+// 新增影视资源
+export function createVideoResource(data) {
+  return request({
+    url: "/video/resource",
+    method: "post",
+    data,
+  });
+}
+
+// 查询影视资源
+export function getVideoResourceList(query) {
+  return request({
+    url: "/video/resource/list",
+    method: "get",
+    params: query,
+  });
+}

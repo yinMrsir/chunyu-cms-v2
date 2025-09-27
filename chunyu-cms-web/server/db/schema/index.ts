@@ -46,6 +46,7 @@ import * as memberCollectionSchema from './member/collection';
 import * as movieRateSchema from './movie/rate';
 import * as commentSchema from './movie/comment';
 import * as shortSchema from './shorts/short';
+import * as videoResourceSchema from './movie/videoResource';
 
 export default {
   ...userSchema,
@@ -71,6 +72,7 @@ export default {
   ...columnsSchema,
   ...actorSchema,
   ...videoSchema,
+  ...videoResourceSchema,
   ...movieBasicsSchema,
   ...movieBasicToCountrySchema,
   ...pubDateSchema,

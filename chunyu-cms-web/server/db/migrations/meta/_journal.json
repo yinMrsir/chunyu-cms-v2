@@ -29,6 +29,20 @@
       "when": 1758867888204,
       "tag": "0003_sticky_master_chief",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1758895170406,
+      "tag": "0004_cooing_namora",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1758895846329,
+      "tag": "0005_youthful_red_ghost",
+      "breakpoints": true
     }
   ]
 }

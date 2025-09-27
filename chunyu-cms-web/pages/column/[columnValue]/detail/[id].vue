@@ -84,26 +84,68 @@
                 :name="type.dictValue"
               ></el-tab-pane>
             </el-tabs>
-            <nuxt-link
-              v-for="item in movieVideoList"
-              :key="item.videoId"
-              :to="
-                item.typeId === '5'
-                  ? item.link
-                  : `/column/${route.params.columnValue}/video/${route.params.id}?mvid=${item.movieVideoId}`
-              "
-              :target="item.typeId === '5' ? '_blank' : '_self'"
-              class="el-button"
-            >
-              {{ item.title }}
-            </nuxt-link>
-            <el-empty v-if="!movieVideoList.length" :image-size="30" description="无数据"></el-empty>
+            <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+              <nuxt-link
+                v-for="item in movieVideoList"
+                :key="item.videoId"
+                :to="
+                  item.typeId === '5'
+                    ? item.link
+                    : `/column/${route.params.columnValue}/video/${route.params.id}?mvid=${item.movieVideoId}`
+                "
+                :target="item.typeId === '5' ? '_blank' : '_self'"
+                class="p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <i class="i-el-link text-blue-400"></i>
+                    <span class="text-white font-medium">{{ item.title }}</span>
+                  </div>
+                </div>
+              </nuxt-link>
+            </div>
+            <div v-if="!movieVideoList.length">
+              <i class="i el-folder-opened text-2xl mb-2"></i>
+              <p>暂无数据</p>
+            </div>
+          </div>
+
+          <div class="bg-#141414 rounded-lg p-4 mb-6 mt-6">
+            <el-tabs v-model="resourcesSource">
+              <el-tab-pane
+                v-for="type in resourcesSourceType"
+                :key="type.dictValue"
+                :label="type.dictLabel"
+                :name="type.dictValue"
+              ></el-tab-pane>
+            </el-tabs>
+
+            <!-- 资源列表 -->
+            <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+              <nuxt-link
+                v-for="resource in videoResourceList"
+                :key="resource.resourceId"
+                :to="`/column/${route.params.columnValue}/resources/${route.params.id}?rid=${resource.resourceId}&rtype=${resource.resources}`"
+                class="p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <i class="i-el-link text-blue-400"></i>
+                    <span class="text-white font-medium line-height-1">{{ resource.title }}</span>
+                  </div>
+                </div>
+              </nuxt-link>
+              <div v-if="!videoResourceList || videoResourceList.length === 0">
+                <i class="i el-folder-opened text-2xl mb-2"></i>
+                <p>暂无资源</p>
+              </div>
+            </div>
           </div>
 
           <!-- 演员信息 -->
           <div v-if="videoDetail.casts.length" class="bg-#141414 rounded-lg p-4 mb-6 mt-6">
             <h3 class="text-lg font-semibold text-white mb-4">相关演员</h3>
-            <div class="grid grid-cols-6 gap-15px md:gap-20px">
+            <div class="grid grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-15px md:gap-20px">
               <div v-for="cast in videoDetail.casts" :key="cast.castId" class="text-12px text-center">
                 <img class="w-full aspect-3/4 object-cover mb-6px" :src="cast.actor.avatar" alt="" />
                 <p>{{ cast.actor.name }}</p>
@@ -120,7 +162,7 @@
             <h3 class="text-lg font-semibold text-white mb-4">相关推荐</h3>
             <div class="space-y-3">
               <div>
-                <ul class="grid grid-cols-6 gap-15px md:gap-20px text-12px">
+                <ul class="grid grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-15px md:gap-20px text-12px">
                   <li
                     v-for="v in relatedVideos.rows"
                     :key="v.movieBasicsId"
@@ -210,31 +252,58 @@
   // const isFavorited = ref(false);
 
   // 获取视频详情
-  const [{ data: videoDetail }, { data: relatedVideos }, { data: videoTypes }] = await Promise.all([
-    useFetch(`/api/web/movie/${route.params.id}`),
-    useFetch('/api/web/movie/list', {
-      query: { columnValue: route.params.columnValue, limit: 12, notId: route.params.id }
-    }),
-    useFetch('/api/web/basic/dictData/list', { query: { limit: 100, dictType: 'videos_type' } }),
-    useFetch(`/api/web/movie/pv`, {
-      method: 'POST',
-      body: {
-        movieBasicsId: route.params.id
-      }
-    })
-  ]);
+  const [{ data: videoDetail }, { data: relatedVideos }, { data: videoTypes }, { data: resourcesSourceType }] =
+    await Promise.all([
+      useFetch(`/api/web/movie/${route.params.id}`),
+      useFetch('/api/web/movie/list', {
+        query: { columnValue: route.params.columnValue, limit: 12, notId: route.params.id }
+      }),
+      useFetch('/api/web/basic/dictData/list', {
+        query: { limit: 100, dictType: 'videos_type' },
+        transform: data => {
+          return data.map(item => ({
+            dictLabel: item.dictLabel,
+            dictValue: item.dictValue
+          }));
+        }
+      }),
+      useFetch('/api/web/basic/dictData/list', {
+        query: { limit: 100, dictType: 'video_resources_source' },
+        transform: data => {
+          return data.map(item => ({
+            dictLabel: item.dictLabel,
+            dictValue: item.dictValue
+          }));
+        }
+      }),
+      useFetch(`/api/web/movie/pv`, {
+        method: 'POST',
+        body: {
+          movieBasicsId: route.params.id
+        }
+      })
+    ]);
 
   if (!videoDetail.value) {
     throw createError({ statusCode: 404, statusMessage: '视频不存在' });
   }
 
   const typeId = ref('1');
+  const resourcesSource = ref('1');
 
   // 获取视频
   const { data: movieVideoList, refresh } = await useAsyncData('videoTypeGetVideo' + typeId, () =>
     $fetch('/api/web/movie/videoType/list', {
       query: { movieId: route.params.id, typeId: typeId.value, status: 0, limit: 1000 }
     })
+  );
+  // 获取资源数据
+  const { data: videoResourceList, refresh: refreshResources } = await useAsyncData(
+    'videoResources' + resourcesSource,
+    () =>
+      $fetch('/api/web/video/resource/list', {
+        query: { movieId: route.params.id, resources: resourcesSource.value, limit: 1000 }
+      })
   );
 
   watch(
@@ -243,6 +312,20 @@
       refresh();
     }
   );
+
+  // 监听资源来源变化
+  watch(
+    () => resourcesSource.value,
+    () => {
+      refreshResources();
+    }
+  );
+
+  // 获取资源类型名称
+  function getResourceTypeName(resourcesType) {
+    const type = resourcesSourceType.value?.find(item => item.dictValue === resourcesType);
+    return type ? type.dictLabel : '未知类型';
+  }
 
   // 格式化数字
   function formatNumber(num) {

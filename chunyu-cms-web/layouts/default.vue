@@ -217,8 +217,12 @@
     }
   );
 
+  const fullPathArr = ['/movie/video', '/movie/resources'];
   const isShowFooter = computed(() => {
-    return !route.fullPath.includes('/column/movie/video');
+    // 检查当前路径是否是否包含数组中的任何一个子路径
+    const hasMatch = fullPathArr.some(path => route.fullPath.includes(path));
+    // 如果包含包含则返回false，否则返回true
+    return !hasMatch;
   });
 
   const { data: navigation } = await useFetch('/api/web/basic/columns/list');

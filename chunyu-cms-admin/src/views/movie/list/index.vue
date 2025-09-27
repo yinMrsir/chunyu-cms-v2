@@ -187,9 +187,9 @@
       ></el-table-column>
       <el-table-column prop="isPay" label="是否付费">
         <template #default="scope">
-          <el-tag :type="scope.row.isPay === 1 ? 'warning' : 'success'">{{
-            scope.row.isPay === 1 ? "付费" : "免费"
-          }}</el-tag>
+          <el-tag :type="scope.row.isPay === 1 ? 'warning' : 'success'">
+            {{ scope.row.isPay === 1 ? "付费" : "免费" }}
+          </el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="movieVideosCount" label="视频数"></el-table-column>
@@ -203,8 +203,11 @@
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="130" align="center">
+      <el-table-column fixed="right" label="操作" width="180px" align="center">
         <template #default="scope">
+          <el-button link type="primary" @click="handleResources(scope.row)">
+            资源管理
+          </el-button>
           <el-button link type="primary" @click="handleUpdate(scope.row)">
             编辑
           </el-button>
@@ -296,6 +299,10 @@ function resetQuery() {
 /** 修改按钮操作 */
 function handleUpdate(row) {
   proxy.$tab.openPage("/movie/add?id=" + row.id);
+}
+/** 资源管理按钮操作 */
+function handleResources(row) {
+  proxy.$tab.openPage("/movie/resources?id=" + row.id);
 }
 /** 删除按钮操作 */
 function handleDelete(row) {
