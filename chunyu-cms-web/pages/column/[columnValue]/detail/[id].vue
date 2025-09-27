@@ -147,11 +147,11 @@
             <h3 class="text-lg font-semibold text-white mb-4">相关演员</h3>
             <div class="grid grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-15px md:gap-20px">
               <div v-for="cast in videoDetail.casts" :key="cast.castId" class="text-12px text-center">
-                <img class="w-full aspect-3/4 object-cover mb-6px" :src="cast.actor.avatar" alt="" />
-                <p>{{ cast.actor.name }}</p>
+                <img class="w-full aspect-3/4 object-cover mb-6px" :src="cast.actor?.avatar" alt="" />
+                <p>{{ cast.actor?.name }}</p>
                 <p v-if="cast.role" class="text-[rgba(255,255,255,0.35)]">饰 {{ cast.role }}</p>
                 <p v-else class="text-[rgba(255,255,255,0.35)]">
-                  {{ cast.profession.name }}
+                  {{ cast.profession?.name }}
                 </p>
               </div>
             </div>
@@ -173,7 +173,7 @@
                       <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
                         <h3>{{ v.title }}</h3>
                         <p class="text-[rgba(255,255,255,0.35)] whitespace-nowrap text-ellipsis overflow-hidden">
-                          <template v-for="actor in v.casts"> {{ actor.actor.name }}&nbsp; </template>
+                          <template v-for="actor in v.casts"> {{ actor.actor?.name }}&nbsp; </template>
                           <span v-if="!v.casts.length">-</span>
                         </p>
                       </div>
