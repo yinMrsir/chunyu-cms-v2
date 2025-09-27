@@ -3,7 +3,6 @@ import { MovieBasicsServices } from '~/server/services/movie/movieBasics/movieBa
 const movieBasicsServices = new MovieBasicsServices();
 
 export default defineEventHandler(async event => {
-  console.log(getRouterParams(event));
   const ids = getRouterParam(event, 'ids');
   if (!ids) {
     throw createError({ statusCode: 400, message: '参数错误' });

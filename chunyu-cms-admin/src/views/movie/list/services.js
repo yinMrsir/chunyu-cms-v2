@@ -272,3 +272,11 @@ export function getVideoResourceList(query) {
     params: query,
   });
 }
+
+// 删除关联角色
+export function deleteVideoResource(ids) {
+  return request({
+    url: "/video/resource/" + ids,
+    method: "delete",
+  });
+}

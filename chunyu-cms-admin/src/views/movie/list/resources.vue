@@ -16,9 +16,10 @@
       ></el-tab-pane>
     </el-tabs>
     <table-pro
+      ref="tableProRef"
       :columns="columns"
-      :is-show-button-list="false"
       :table-request-fn="getVideoResourceList"
+      :delete-fn="deleteVideoResource"
       :table-params="{ resources: activeName, movieId: route.query.id }"
     ></table-pro>
 
@@ -36,6 +37,8 @@
           </el-select>
         </el-form-item>
         <el-form-item label="资源信息" prop="content">
+          格式示例(多个换行)：
+          第1集$https://play.xxx.com/20240921/1WzwEt10/index.m3u8
           <el-input
             v-model="form.content"
             type="textarea"
@@ -53,14 +56,19 @@
 </template>
 
 <script setup>
-import { watch } from "vue";
-import { getVideoResourceList, createVideoResource } from "./services";
+import { useTemplateRef, watch } from "vue";
+import {
+  getVideoResourceList,
+  createVideoResource,
+  deleteVideoResource,
+} from "./services";
 
 const route = useRoute();
 const { proxy } = getCurrentInstance();
 const { video_resources_source: videoResourcesSource } = proxy.useDict(
   "video_resources_source"
 );
+const tableProRef = useTemplateRef("tableProRef");
 
 const activeName = ref("1");
 const columns = ref([
@@ -71,6 +79,17 @@ const columns = ref([
     field: "createTime",
     type: "dateTime",
     props: { width: "160px" },
+  },
+  {
+    title: "操作",
+    field: "action",
+    actions: [
+      {
+        type: "delete",
+        onClick: (row) => handleDelete(row),
+      },
+    ],
+    props: { width: "80px" },
   },
 ]);
 const dialogVisible = ref(false);
@@ -110,6 +129,7 @@ function submitForm() {
       });
       await createVideoResource({ list });
       proxy.$message.success("新增成功");
+      tableProRef.value.getList();
       dialogVisible.value = false;
     }
   });
@@ -121,6 +141,6 @@ function submitForm() {
   position: absolute;
   right: 20px;
   top: 20px;
-  z-index: 10;
+  z-index: 1;
 }
 </style>

@@ -54,7 +54,7 @@
           新增
         </el-button>
       </el-col>
-      <el-col v-if="isShowButtonList" :span="1.5">
+      <el-col v-if="isShowButtonList && formOptions.length" :span="1.5">
         <el-button
           type="success"
           plain
