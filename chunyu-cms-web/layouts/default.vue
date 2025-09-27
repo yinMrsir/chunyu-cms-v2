@@ -107,7 +107,7 @@
         v-if="isShowFooter"
         class="text-10px color-[rgba(255,255,255,0.6)] m-x-15px mt-20px mb-15px border-solid border-#ffffff40 border-t-1px pt-20px"
       >
-        <div class="w-50% m-x-auto text-center">
+        <div class="p-x-5vh m-x-auto text-center">
           本网站提供的电视剧和电影资源均系收集于各大视频网站
           若本站收录的节目无意侵犯了贵司版权,请给542968439@qq.com留言,我们会及时逐步删除和规避程序自动搜索采集到的不提供分享的版权影视。
           本站仅供测试和学习交流。请大家支持正版。
@@ -222,38 +222,42 @@
 
     // 检测开发者工具
     function checkDevTools() {
-      const start = new Date();
-      debugger;
-      if (new Date() - start > 100) {
-        showDebugWarning();
+      try {
+        const start = new Date();
+        debugger;
+        if (new Date() - start > 100) {
+          showDebugWarning();
+        }
+      } catch (error) {
+        // 忽略调试器相关错误
       }
     }
 
     // 显示调试警告
     function showDebugWarning() {
-      document.body.innerHTML = `
-        <div style="
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: #000;
-          color: #fff;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          font-size: 24px;
-          font-family: Arial, sans-serif;
-          z-index: 999999;
-        ">
-          <div style="text-align: center;">
-            <h1 style="color: #ff4444; margin-bottom: 20px;">⚠️ DEBUG MODE DETECTED</h1>
-            <p>Developer tools are not allowed in this application.</p>
-            <p style="margin-top: 10px; font-size: 16px; color: #ccc;">Please close developer tools to continue.</p>
-          </div>
-        </div>
-      `;
+      // document.body.innerHTML = `
+      //   <div style="
+      //     position: fixed;
+      //     top: 0;
+      //     left: 0;
+      //     width: 100%;
+      //     height: 100%;
+      //     background: #000;
+      //     color: #fff;
+      //     display: flex;
+      //     justify-content: center;
+      //     align-items: center;
+      //     font-size: 24px;
+      //     font-family: Arial, sans-serif;
+      //     z-index: 999999;
+      //   ">
+      //     <div style="text-align: center;">
+      //       <h1 style="color: #ff4444; margin-bottom: 20px;">⚠️ DEBUG MODE DETECTED</h1>
+      //       <p>Developer tools are not allowed in this application.</p>
+      //       <p style="margin-top: 10px; font-size: 16px; color: #ccc;">Please close developer tools to continue.</p>
+      //     </div>
+      //   </div>
+      // `;
     }
 
     // 定期检测

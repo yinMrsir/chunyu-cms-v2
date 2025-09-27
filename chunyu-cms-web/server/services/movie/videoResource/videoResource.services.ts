@@ -1,4 +1,4 @@
-import { and, desc, eq, like, sql, inArray } from 'drizzle-orm';
+import { and, asc, eq, like, sql, inArray } from 'drizzle-orm';
 import { VideoResource, videoResourceTable, NewVideoResource } from '~/server/db/schema/movie/videoResource';
 
 export class VideoResourceServices {
@@ -84,7 +84,7 @@ export class VideoResourceServices {
 
       const where = whereConditions.length > 0 ? and(...whereConditions) : undefined;
 
-      const data = await db.select().from(videoResourceTable).where(where).orderBy(desc(videoResourceTable.createTime));
+      const data = await db.select().from(videoResourceTable).where(where).orderBy(asc(videoResourceTable.resourceId));
 
       return data;
     } catch (error: any) {

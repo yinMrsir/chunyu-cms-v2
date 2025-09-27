@@ -121,20 +121,26 @@
             </el-tabs>
 
             <!-- 资源列表 -->
-            <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
-              <nuxt-link
-                v-for="resource in videoResourceList"
-                :key="resource.resourceId"
-                :to="`/column/${route.params.columnValue}/resources/${route.params.id}?rid=${resource.resourceId}&rtype=${resource.resources}`"
-                class="p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
-              >
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <i class="i-el-link text-blue-400"></i>
-                    <span class="text-white font-medium line-height-1">{{ resource.title }}</span>
+            <div class="mt-4">
+              <div class="pb-5 flex text-12px">
+                <ElIconWarnTriangleFilled class="w20px color-red-5" />
+                不要轻易信视频中的广告，谨防上当受骗！
+              </div>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <nuxt-link
+                  v-for="resource in videoResourceList"
+                  :key="resource.resourceId"
+                  :to="`/column/${route.params.columnValue}/resources/${route.params.id}?rid=${resource.resourceId}&rtype=${resource.resources}`"
+                  class="p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
+                >
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <i class="i-el-link text-blue-400"></i>
+                      <span class="text-white font-medium line-height-1">{{ resource.title }}</span>
+                    </div>
                   </div>
-                </div>
-              </nuxt-link>
+                </nuxt-link>
+              </div>
               <div v-if="!videoResourceList || videoResourceList.length === 0">
                 <i class="i el-folder-opened text-2xl mb-2"></i>
                 <p>暂无资源</p>
@@ -147,11 +153,11 @@
             <h3 class="text-lg font-semibold text-white mb-4">相关演员</h3>
             <div class="grid grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-15px md:gap-20px">
               <div v-for="cast in videoDetail.casts" :key="cast.castId" class="text-12px text-center">
-                <img class="w-full aspect-3/4 object-cover mb-6px" :src="cast.actor.avatar" alt="" />
-                <p>{{ cast.actor.name }}</p>
+                <img class="w-full aspect-3/4 object-cover mb-6px" :src="cast.actor?.avatar" alt="" />
+                <p>{{ cast.actor?.name }}</p>
                 <p v-if="cast.role" class="text-[rgba(255,255,255,0.35)]">饰 {{ cast.role }}</p>
                 <p v-else class="text-[rgba(255,255,255,0.35)]">
-                  {{ cast.profession.name }}
+                  {{ cast.profession?.name }}
                 </p>
               </div>
             </div>
@@ -173,7 +179,7 @@
                       <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
                         <h3>{{ v.title }}</h3>
                         <p class="text-[rgba(255,255,255,0.35)] whitespace-nowrap text-ellipsis overflow-hidden">
-                          <template v-for="actor in v.casts"> {{ actor.actor.name }}&nbsp; </template>
+                          <template v-for="actor in v.casts"> {{ actor.actor?.name }}&nbsp; </template>
                           <span v-if="!v.casts.length">-</span>
                         </p>
                       </div>

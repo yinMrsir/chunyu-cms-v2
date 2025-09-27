@@ -13,7 +13,7 @@ onMounted(() => {
   });
 
   // 反调试保护（仅在非开发模式下启用）
-  if (process.env.NODE_ENV !== 'development') {
+  if (process.env.NODE_ENV !== "development") {
     antiDebug();
   }
 });
@@ -24,39 +24,43 @@ function antiDebug() {
 
   // 检测开发者工具
   function checkDevTools() {
-    const start = new Date();
-    debugger;
-    if (new Date() - start > 100) {
-      debug = true;
-      showDebugWarning();
+    try {
+      const start = new Date();
+      debugger;
+      if (new Date() - start > 100) {
+        debug = true;
+        showDebugWarning();
+      }
+    } catch (error) {
+      // 忽略调试器相关错误
     }
   }
 
   // 显示调试警告
   function showDebugWarning() {
-    document.body.innerHTML = `
-      <div style="
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #000;
-        color: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 24px;
-        font-family: Arial, sans-serif;
-        z-index: 999999;
-      ">
-        <div style="text-align: center;">
-          <h1 style="color: #ff4444; margin-bottom: 20px;">⚠️ DEBUG MODE DETECTED</h1>
-          <p>Developer tools are not allowed in this application.</p>
-          <p style="margin-top: 10px; font-size: 16px; color: #ccc;">Please close developer tools to continue.</p>
-        </div>
-      </div>
-    `;
+    // document.body.innerHTML = `
+    //   <div style="
+    //     position: fixed;
+    //     top: 0;
+    //     left: 0;
+    //     width: 100%;
+    //     height: 100%;
+    //     background: #000;
+    //     color: #fff;
+    //     display: flex;
+    //     justify-content: center;
+    //     align-items: center;
+    //     font-size: 24px;
+    //     font-family: Arial, sans-serif;
+    //     z-index: 999999;
+    //   ">
+    //     <div style="text-align: center;">
+    //       <h1 style="color: #ff4444; margin-bottom: 20px;">⚠️ DEBUG MODE DETECTED</h1>
+    //       <p>Developer tools are not allowed in this application.</p>
+    //       <p style="margin-top: 10px; font-size: 16px; color: #ccc;">Please close developer tools to continue.</p>
+    //     </div>
+    //   </div>
+    // `;
   }
 
   // 定期检测
@@ -70,25 +74,25 @@ function antiDebug() {
   const consoleError = console.error;
   const consoleInfo = console.info;
 
-  console.log = function() {
+  console.log = function () {
     debug = true;
     showDebugWarning();
     return consoleLog.apply(console, arguments);
   };
 
-  console.warn = function() {
+  console.warn = function () {
     debug = true;
     showDebugWarning();
     return consoleWarn.apply(console, arguments);
   };
 
-  console.error = function() {
+  console.error = function () {
     debug = true;
     showDebugWarning();
     return consoleError.apply(console, arguments);
   };
 
-  console.info = function() {
+  console.info = function () {
     debug = true;
     showDebugWarning();
     return consoleInfo.apply(console, arguments);
@@ -98,8 +102,11 @@ function antiDebug() {
   let windowHeight = window.innerHeight;
   let windowWidth = window.innerWidth;
 
-  window.addEventListener('resize', () => {
-    if (window.innerHeight !== windowHeight || window.innerWidth !== windowWidth) {
+  window.addEventListener("resize", () => {
+    if (
+      window.innerHeight !== windowHeight ||
+      window.innerWidth !== windowWidth
+    ) {
       // 正常的窗口大小变化，更新记录
       windowHeight = window.innerHeight;
       windowWidth = window.innerWidth;
@@ -107,7 +114,7 @@ function antiDebug() {
   });
 
   // 检测开发者工具快捷键
-  document.addEventListener('keydown', (e) => {
+  document.addEventListener("keydown", (e) => {
     // F12
     if (e.keyCode === 123) {
       e.preventDefault();
@@ -136,13 +143,13 @@ function antiDebug() {
   });
 
   // 检测右键菜单
-  document.addEventListener('contextmenu', (e) => {
+  document.addEventListener("contextmenu", (e) => {
     e.preventDefault();
     showDebugWarning();
   });
 
   // 检测页面源码查看
-  document.addEventListener('keydown', (e) => {
+  document.addEventListener("keydown", (e) => {
     if ((e.ctrlKey || e.metaKey) && e.keyCode === 85) {
       e.preventDefault();
       showDebugWarning();
