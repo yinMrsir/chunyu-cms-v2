@@ -210,8 +210,6 @@ async function remoteSearch(keyword) {
   } = await request(params);
   loading.value = false;
 
-  console.log(code, rows);
-
   if (code === 200) {
     if (["language"].includes(props.type)) {
       rows.map((item) => (item.id = item.name));
