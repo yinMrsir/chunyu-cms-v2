@@ -108,7 +108,7 @@
         class="text-10px color-[rgba(255,255,255,0.6)] m-x-15px mt-20px mb-15px border-solid border-#ffffff40 border-t-1px pt-20px"
       >
         <div class="p-x-5vh m-x-auto text-center">
-          注：本网站是淳渔cms演示站点，提供的电视剧和电影资源均系收集于各大视频网站<br />
+          注：本网站为淳渔cms演示站点，提供的电视剧和电影资源均系收集于各大视频网站<br />
           若本站收录的节目无意侵犯了贵司版权,请给542968439@qq.com留言,我们会及时逐步删除和规避程序自动搜索采集到的不提供分享的版权影视。<br />
           本站仅供测试和学习交流。请大家支持正版。
 
