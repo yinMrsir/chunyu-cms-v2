@@ -106,7 +106,7 @@
                 >
                   <swiper-slide v-for="cast in detail.casts" :key="cast.castId">
                     <div class="text-12px text-center">
-                      <img class="w-full h-110px object-contain mb-6px" :src="cast.actor.avatar" alt="" />
+                      <img class="w-full h-110px object-cover mb-6px aspect-3/4" :src="cast.actor.avatar" alt="" />
                       <p>{{ cast.actor.name }}</p>
                       <p v-if="cast.role" class="text-[rgba(255,255,255,0.35)]">饰 {{ cast.role }}</p>
                       <p v-else class="text-[rgba(255,255,255,0.35)]">
@@ -126,7 +126,7 @@
                       class="bg-#1c1d1f border-rd-10px overflow-hidden"
                     >
                       <nuxt-link :to="`/column/${v.columnValue}/detail/${v.movieBasicsId}`">
-                        <NuxtImg format="webp" loading="lazy" :alt="v?.title" :src="v?.poster" />
+                        <NuxtImg format="webp" loading="lazy" :alt="v?.title" :src="v?.poster" class="aspect-3/4" />
                         <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
                           <h3>{{ v.title }}</h3>
                           <p class="text-[rgba(255,255,255,0.35)] whitespace-nowrap text-ellipsis overflow-hidden">

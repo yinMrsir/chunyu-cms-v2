@@ -167,7 +167,7 @@
           <div v-if="relatedVideos && relatedVideos.rows.length" class="bg-#141414 rounded-lg p-4 mb-6 mt-6">
             <h3 class="text-lg font-semibold text-white mb-4">相关推荐</h3>
             <div class="space-y-3">
-              <div>
+              <div class="video-list">
                 <ul class="grid grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-15px md:gap-20px text-12px">
                   <li
                     v-for="v in relatedVideos.rows"
@@ -175,7 +175,7 @@
                     class="bg-#141414 border-rd-10px overflow-hidden"
                   >
                     <nuxt-link :to="`/column/${v.columnValue}/detail/${v.movieBasicsId}`">
-                      <NuxtImg format="webp" loading="lazy" :alt="v?.title" :src="v?.poster" />
+                      <NuxtImg format="webp" loading="lazy" :alt="v?.title" :src="v?.poster" class="aspect-3/4" />
                       <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
                         <h3>{{ v.title }}</h3>
                         <p class="text-[rgba(255,255,255,0.35)] whitespace-nowrap text-ellipsis overflow-hidden">
@@ -298,14 +298,14 @@
   const resourcesSource = ref('1');
 
   // 获取视频
-  const { data: movieVideoList, refresh } = await useAsyncData('videoTypeGetVideo' + typeId, () =>
+  const { data: movieVideoList, refresh } = await useAsyncData(`videoTypeGetVideo_${route.params.id}_${typeId}`, () =>
     $fetch('/api/web/movie/videoType/list', {
       query: { movieId: route.params.id, typeId: typeId.value, status: 0, limit: 1000 }
     })
   );
   // 获取资源数据
   const { data: videoResourceList, refresh: refreshResources } = await useAsyncData(
-    'videoResources' + resourcesSource,
+    `videoResources_${route.params.id}_${resourcesSource}`,
     () =>
       $fetch('/api/web/video/resource/list', {
         query: { movieId: route.params.id, resources: resourcesSource.value, limit: 1000 }
