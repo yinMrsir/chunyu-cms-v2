@@ -41,8 +41,8 @@ V2 相比[V1 版本](https://github.com/yinMrsir/chunyu-cms)使用[DrizzleOrm](h
 **mysql**和**redis**配置你可以到`chunyu-cms-web/nuxt.config.ts`进行配置。你也可以创建一个`chunyu-cms-web/.env`文件
 
 ```dotenv
-DATABASE_USERNAME=root
-DATABASE_PASSWORD=123456
+DATABASE_USERNAME=
+DATABASE_PASSWORD=
 DATABASE_HOST=127.0.0.1
 DATABASE_PORT=3306
 DATABASE_DB=chunyu-cms-v2
@@ -61,20 +61,20 @@ SERVER_HOST=http://localhost:3000
 # 图片域名
 IMG_HOST=http://localhost:3000
 # 用户发送邮件的邮箱
-FORM_USER_EMAIL=1378151264@qq.com
+FORM_USER_EMAIL=
 # 用户发送邮件的邮箱密码 注意此处为qq邮箱的授权码，不是qq邮箱的密码
-FORM_USER_EMAIL_PASSWORD=efmogxbvncejffih
+FORM_USER_EMAIL_PASSWORD=
 # 使用 Gmail 服务，你可以使用其他服务，如 'QQ'
 USER_EMAIL_SERVICE=QQ
 
 # 微信支付：直连商户申请的公众号或移动应用appid
-WECHAT_PAY_APP_ID=wx8d0f5c0f5c0f5c0f5
+WECHAT_PAY_APP_ID=
 # 微信支付：商户号
-WECHAT_PAY_MCH_ID=1234567890
+WECHAT_PAY_MCH_ID=
 # 公钥文件绝对路径
-WECHAT_PAY_PUBLIC_KEY=/path/to/apiclient_cert.pem
+WECHAT_PAY_PUBLIC_KEY=
 # 秘钥文件绝对路径
-WECHAT_PAY_PRIVATE_KEY=/path/to/apiclient_key.pem
+WECHAT_PAY_PRIVATE_KEY=
 ```
 
 **注意：** `mysql`和`redis`的端口号，用户名，密码，数据库名称，jwt 加密密钥等配置信息，请自行修改。
