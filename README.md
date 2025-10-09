@@ -209,6 +209,33 @@ Nuxt 项目部署文档：https://nuxt.com/docs/getting-started/deployment
 
 微信支付开发文档：https://pay.weixin.qq.com/doc/v3/merchant/4012791874
 
+## drizzle ORM 同步数据库结构
+
+创建 drizzle.config.ts 文件
+
+```json
+{
+  "dialect": "mysql",
+  "out": "./server/db/migrations",
+  "schema": "./server/db/schema/*/**",
+  "dbCredentials": {
+    "url": "mysql://用户名:密码@ip地址:3306/chunyu-cms-v2"
+  }
+}
+```
+
+生成数据库结构
+
+```
+pnpm generate
+```
+
+同步数据库结构
+
+```
+pnpm sql-push
+```
+
 ## 有任何疑问可添加微信
 
 <img src="https://raw.githubusercontent.com/yinMrsir/chunyu-cms-v2/refs/heads/main/wx.png" width="300" height="409" />
