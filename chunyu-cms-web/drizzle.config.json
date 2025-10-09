@@ -1,8 +1,0 @@
-{
-  "dialect": "mysql",
-  "out": "./server/db/migrations",
-  "schema": "./server/db/schema/*/**",
-  "dbCredentials": {
-    "url": "mysql://root:123456@127.0.0.1:3306/chunyu-cms-v2"
-  }
-}

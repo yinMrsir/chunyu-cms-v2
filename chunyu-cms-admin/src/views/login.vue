@@ -26,7 +26,7 @@
           type="password"
           size="large"
           auto-complete="off"
-          placeholder="密码"
+          placeholder="默认密码：admin123"
           @keyup.enter="handleLogin"
         >
           <template #prefix
@@ -91,7 +91,7 @@ const router = useRouter();
 
 const loginForm = ref({
   username: "admin",
-  password: "admin123",
+  password: "",
   rememberMe: false,
   code: "",
   uuid: "",

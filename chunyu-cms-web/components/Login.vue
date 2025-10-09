@@ -43,7 +43,7 @@
               <el-input
                 v-model="loginForm.password"
                 :type="isShowPassword ? 'text' : 'password'"
-                placeholder="请输入密码"
+                placeholder="默认密码：888888"
               ></el-input>
               <span class="absolute right-8px top-2px z-10 cursor-pointer" @click="isShowPassword = !isShowPassword">
                 <ElIconView v-if="isShowPassword" class="inline-block w-20px h-20px" />
@@ -88,7 +88,7 @@
   const isAgree = ref('0');
   const loginForm = ref({
     email: '542968439@qq.com',
-    password: '888888'
+    password: ''
   });
   const loginFormRules = ref({
     email: [
