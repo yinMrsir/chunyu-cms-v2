@@ -31,7 +31,7 @@
           class="grid grid-cols-[120px_1fr] mb-25px relative"
         >
           <div class="relative">
-            <img class="w-100px border-rd-10px" :src="item.movie.poster" alt="" />
+            <img class="w-100px border-rd-10px aspect-[3/4] object-cover" :src="item.movie.poster" alt="" />
             <span
               style="font-family: Impact, sans-serif"
               class="absolute left-5px top-5px font-bold text-18px text-shadow-[0_0_5px_#000]"

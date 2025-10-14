@@ -1,5 +1,6 @@
 <template>
   <div class="user-center-layout">
+    <NuxtLoadingIndicator />
     <div class="fixed top-0 left-0 h-100vh z-999 w-64px bg-#000 flex flex-col justify-between">
       <div>
         <nuxt-link to="/" class="flex justify-center items-center gap-x-5px h-74px bg-#111214">
