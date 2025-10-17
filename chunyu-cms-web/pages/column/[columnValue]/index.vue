@@ -48,12 +48,16 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
   const route = useRoute();
+
   const [{ data: genres }, { data: columnInfo }] = await Promise.all([
-    useFetch(`/api/web/column/genre/${route.params.columnValue}`),
+    useFetch(`/api/web/column/genre/${route.params.columnValue}`, {
+      getCachedData: key => localCacheData(key)
+    }),
     useFetch(`/api/web/column/${route.params.columnValue}`, {
-      pick: ['name']
+      pick: ['name'],
+      getCachedData: key => localCacheData(key)
     })
   ]);
 </script>

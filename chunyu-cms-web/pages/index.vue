@@ -79,7 +79,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
   import { Swiper, SwiperSlide } from 'swiper/vue';
   import 'swiper/css';
   import 'swiper/css/pagination';
@@ -97,15 +97,18 @@
           title: item.title,
           videoUrl: item.videoUrl
         }));
-      }
+      },
+      getCachedData: key => localCacheData(key, 0)
     }),
-    useFetch('/api/web')
+    useFetch('/api/web', {
+      getCachedData: key => localCacheData(key)
+    })
   ]);
 
-  const onSlideChange = (swiper: any) => {
+  const onSlideChange = swiper => {
     currIndex.value = swiper.activeIndex;
     const videoDom = document.querySelectorAll('.banner-video');
-    videoDom.forEach((item: any, index: number) => {
+    videoDom.forEach((item, index) => {
       if (index === currIndex.value) {
         item.play();
       } else {
@@ -145,7 +148,7 @@
           @apply text-12px mt-5px whitespace-nowrap text-ellipsis overflow-hidden;
         }
         .rate {
-          @apply color-#fff absolute right-10px bottom-10px z-10 text-14px;
+          @apply text-[#fff] absolute right-10px bottom-10px z-10 text-14px;
           text-shadow:
             -1px -1px 0 #0006,
             1px -1px 0 #0006,
@@ -157,7 +160,7 @@
   }
   .genre {
     a {
-      @apply text-14px relative color-#999 hover:color-white;
+      @apply text-14px relative text-[#999] hover:text-white;
     }
     a:before {
       background: #2d2f3b;

@@ -3,6 +3,7 @@
   "private": false,
   "scripts": {
     "build": "nuxt build",
+    "build:pro": "nuxt build --dotenv .env.pro",
     "dev:pro": "nuxt dev --host 0.0.0.0 --dotenv .env.pro",
     "dev": "nuxt dev --host 0.0.0.0",
     "preview": "nuxt preview",
@@ -28,7 +29,7 @@
     "@types/crypto-js": "^4.2.2",
     "@types/fs-extra": "^11.0.4",
     "@types/jsonwebtoken": "^9.0.9",
-    "@types/node": "^18.19.87",
+    "@types/node": "^20.19.0",
     "@types/node-schedule": "^2.1.7",
     "@types/nodemailer": "^6.4.17",
     "@typescript-eslint/parser": "^8.31.1",
@@ -40,8 +41,8 @@
     "eslint": "8.57.1",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-prettier": "5.2.1",
-    "nuxt": "^3.17.1",
-    "prettier": "^3.5.3"
+    "nuxt": "^3.19.3",
+    "prettier": "^3.6.2"
   },
   "dependencies": {
     "@types/showdown": "^2.0.6",
@@ -78,11 +79,7 @@
     "xgplayer-mp4": "3.0.23"
   },
   "engines": {
-    "node": ">=18.16.0",
+    "node": ">=20.19.0",
     "pnpm": ">=8.9.2"
-  },
-  "volta": {
-    "node": "18.16.0",
-    "pnpm": "8.9.2"
   }
 }
