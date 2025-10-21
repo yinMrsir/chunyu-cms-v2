@@ -48,8 +48,8 @@ export default defineNuxtConfig({
           innerHTML: `var _hmt = _hmt || [];
           (function() {
             var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?9edadaa49ae4e9c979c6724865c04b05";
-            var s = document.getElementsByTagName("script")[0]; 
+            hm.src = "https://hm.baidu.com/hm.js?${process.env.BAIDU_STATISTICS_ID}";
+            var s = document.getElementsByTagName("script")[0];
             s.parentNode.insertBefore(hm, s);
           })();`
         }
