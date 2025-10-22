@@ -18,9 +18,11 @@ V2 相比[V1 版本](https://github.com/yinMrsir/chunyu-cms)使用[DrizzleOrm](h
 
 ## 在线体验
 
-- [用户端演示地址](http://cms.yinchunyu.com)
-- [管理端演示地址](http://cms.yinchunyu.com/admin)
-- 源码地址: [GitHub](https://github.com/yinMrsir/chunyu-cms-v2)
+- [用户端演示地址](https://cms.yinchunyu.com)
+- [管理端演示地址 1](https://cms-admin.yinchunyu.com)
+- [管理端演示地址 2](https://cms.yinchunyu.com/admin)
+- 源码地址 1: [GitHub](https://github.com/yinMrsir/chunyu-cms-v2)
+- 源码地址 2: [Gitee](https://gitee.com/chunyu-cms/chunyu-cms-v2)
 
 ## 为什么有 V2 版本？
 
@@ -147,6 +149,8 @@ server {
 }
 ```
 
+部署后访问演示地址：https://cms.yinchunyu.com/admin
+
 ### 方式二：自行部署
 
 #### 构建管理端
@@ -199,8 +203,14 @@ server {
         index index.html;
         try_files $uri $uri/ /index.html;
     }
+
+    location /api/ {
+        proxy_pass http://127.0.0.1:3000/api/;
+    }
 }
 ```
+
+部署后访问演示地址：https://cms-admin.yinchunyu.com
 
 nginx 更详细配置可[查看](nginx.conf)
 
