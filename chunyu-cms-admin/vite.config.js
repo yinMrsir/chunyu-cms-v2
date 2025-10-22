@@ -39,11 +39,6 @@ export default defineConfig(({ mode, command }) => {
           changeOrigin: true,
           rewrite: (p) => p.replace(/^\/oss/, ""),
         },
-        "/external": {
-          target: "https://cms.yinchunyu.com/external",
-          changeOrigin: true,
-          rewrite: (p) => p.replace(/^\/external/, ""),
-        },
         "/uploads": {
           target: "http://127.0.0.1:3000/uploads",
           changeOrigin: true,

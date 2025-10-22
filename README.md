@@ -75,6 +75,9 @@ WECHAT_PAY_MCH_ID=
 WECHAT_PAY_PUBLIC_KEY=
 # 秘钥文件绝对路径
 WECHAT_PAY_PRIVATE_KEY=
+
+# 百度统计：百度统计的ID
+BAIDU_STATISTICS_ID=
 ```
 
 **注意：** `mysql`和`redis`的端口号，用户名，密码，数据库名称，jwt 加密密钥等配置信息，请自行修改。
