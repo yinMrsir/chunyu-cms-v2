@@ -246,4 +246,4 @@ pnpm sql-push
 
 ## 有任何疑问可添加微信
 
-<img src="https://raw.githubusercontent.com/yinMrsir/chunyu-cms-v2/refs/heads/main/wx.png" width="300" height="409" />
+<img src="https://gitee.com/chunyu-cms/chunyu-cms-v2/raw/main/wx.png" width="300" height="409" />
