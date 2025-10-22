@@ -6,14 +6,21 @@ const runtimeConfig = useRuntimeConfig();
 const transporter = createTransport(runtimeConfig.email);
 
 export const sendEmail = async (mailOptions: { to: string; subject: string; text: string }) => {
-  try {
-    await transporter.sendMail({
-      from: runtimeConfig.email.auth.user,
-      to: mailOptions.to,
-      subject: mailOptions.subject,
-      html: mailOptions.text
-    });
-  } catch (error) {
-    return error;
-  }
+  return new Promise((resolve, reject) => {
+    transporter.sendMail(
+      {
+        from: runtimeConfig.email.auth.user,
+        to: mailOptions.to,
+        subject: mailOptions.subject,
+        html: mailOptions.text
+      },
+      (error, info) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(info);
+        }
+      }
+    );
+  });
 };
