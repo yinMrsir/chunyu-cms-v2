@@ -1,8 +1,8 @@
 import { and, desc, eq, sql } from 'drizzle-orm';
-import { MemberLike, memberLikeTable, NewMemberLike } from '~/server/db/schema/member/like';
-import { queryParams } from '~/server/db/query.helper';
-import { ShortServices } from '~/server/services/short/short.services';
-import { shortTable } from '~/server/db/schema/shorts/short';
+import { MemberLike, memberLikeTable, NewMemberLike } from '~~/server/db/schema/member/like';
+import { queryParams } from '~~/server/db/query.helper';
+import { ShortServices } from '~~/server/services/short/short.services';
+import { shortTable } from '~~/server/db/schema/shorts/short';
 
 export class MemberLikeServices {
   private shortServices: ShortServices;

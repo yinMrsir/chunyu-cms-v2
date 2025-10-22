@@ -1,4 +1,4 @@
-import { MemberOrderServices } from '~/server/services/member/memberOrder.services';
+import { MemberOrderServices } from '~~/server/services/member/memberOrder.services';
 
 const memberOrderServices = new MemberOrderServices();
 

@@ -5,9 +5,9 @@ import { EventHandlerRequest, H3Event, MultiPartData, readMultipartFormData } fr
 import dayjs from 'dayjs';
 import OSS from 'ali-oss';
 import * as sizeOf from 'image-size';
-import { SharedServices } from '~/server/services/admin/share/shared.services';
-import { SysConfigServices } from '~/server/services/admin/system/sysConfig/sys.config.services';
-import { FileConfigServices } from '~/server/services/admin/system/fileConfig/fileConfig.services';
+import { SharedServices } from '~~/server/services/admin/share/shared.services';
+import { SysConfigServices } from '~~/server/services/admin/system/sysConfig/sys.config.services';
+import { FileConfigServices } from '~~/server/services/admin/system/fileConfig/fileConfig.services';
 
 const shareServices = new SharedServices();
 const sysConfigServices = new SysConfigServices();

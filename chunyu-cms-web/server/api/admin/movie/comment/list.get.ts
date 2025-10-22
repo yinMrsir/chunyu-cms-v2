@@ -1,4 +1,4 @@
-import { CommentServices } from '~/server/services/movie/comment/comment.services';
+import { CommentServices } from '~~/server/services/movie/comment/comment.services';
 
 const commentServices = new CommentServices();
 

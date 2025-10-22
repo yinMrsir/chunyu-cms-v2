@@ -1,4 +1,4 @@
-import { ShortServices } from '~/server/services/short/short.services';
+import { ShortServices } from '~~/server/services/short/short.services';
 
 const shortServices = new ShortServices();
 

@@ -1,7 +1,7 @@
 <template>
   <div class="pt-0 md:pt-65px video-detail">
     <Head>
-      <Title>{{ $titleRender(`${detail.title}${videoInfo.title}在线观看`) }}</Title>
+      <Title>{{ $titleRender(`${detail.title}在线观看`) }}</Title>
       <Meta name="description" :content="detail.summary" />
     </Head>
 
@@ -57,20 +57,34 @@
                 <h2 class="m-y-15px">节目简介</h2>
                 <div class="text-14px color-#dedede" v-html="detail.summary"></div>
               </div>
-              <div v-if="episodes.length">
-                <h2 class="m-y-15px">选集</h2>
+              <div v-if="detail.movieVideo.length">
+                <h2 class="m-y-15px">相关视频</h2>
                 <div class="movie-video-list">
-                  <div class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-2 gap-2">
-                    <nuxt-link
-                      v-for="episode in episodes"
-                      :key="episode.movieVideoId"
-                      :to="`/column/${route.params.columnValue}/resources/${route.params.id}?rid=${episode.resourceId}&rtype=${episode.resources}`"
-                      class="episode-button"
-                      :class="{ 'episode-active': currentEpisodeId === episode.resourceId }"
-                    >
-                      {{ episode.title || `第${episode.sort}集` }}
-                    </nuxt-link>
-                  </div>
+                  <ul>
+                    <li v-for="(item, index) in detail.movieVideo" :key="item.movieVideoId">
+                      <nuxt-link
+                        :to="`/column/${detail.columnValue}/video/${detail.movieBasicsId}?mvid=${item.movieVideoId}`"
+                        class="flex gap-x-10px"
+                      >
+                        <div class="relative w-130px">
+                          <el-image
+                            class="w-130px border-rd-10px overflow-hidden"
+                            :src="item.cover || item.video?.poster"
+                          ></el-image>
+                          <div
+                            v-if="vIndex === index"
+                            class="absolute w-full h-full bg-[rgba(0,0,0,0.4)] z-1 color-white left-0 top-0 flex items-center pl-40px"
+                          >
+                            正在播放
+                          </div>
+                        </div>
+                        <div class="flex flex-col justify-between">
+                          <h3>{{ item.title }}</h3>
+                          <p class="text-12px color-#999">{{ dayjs(item.createTime).format('YYYY-MM-DD') }}</p>
+                        </div>
+                      </nuxt-link>
+                    </li>
+                  </ul>
                 </div>
               </div>
               <div v-if="detail.casts.length">
@@ -92,7 +106,7 @@
                 >
                   <swiper-slide v-for="cast in detail.casts" :key="cast.castId">
                     <div class="text-12px text-center">
-                      <img class="w-full h-110px object-contain mb-6px" :src="cast.actor.avatar" alt="" />
+                      <img class="w-full h-110px object-cover mb-6px aspect-3/4" :src="cast.actor.avatar" alt="" />
                       <p>{{ cast.actor.name }}</p>
                       <p v-if="cast.role" class="text-[rgba(255,255,255,0.35)]">饰 {{ cast.role }}</p>
                       <p v-else class="text-[rgba(255,255,255,0.35)]">
@@ -112,7 +126,7 @@
                       class="bg-#1c1d1f border-rd-10px overflow-hidden"
                     >
                       <nuxt-link :to="`/column/${v.columnValue}/detail/${v.movieBasicsId}`">
-                        <NuxtImg format="webp" loading="lazy" :alt="v?.title" :src="v?.poster" />
+                        <NuxtImg format="webp" loading="lazy" :alt="v?.title" :src="v?.poster" class="aspect-3/4" />
                         <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
                           <h3>{{ v.title }}</h3>
                           <p class="text-[rgba(255,255,255,0.35)] whitespace-nowrap text-ellipsis overflow-hidden">
@@ -127,6 +141,57 @@
               </div>
             </div>
           </el-tab-pane>
+          <el-tab-pane label="讨论" name="comment">
+            <el-form ref="formRef" :mode="form">
+              <el-form-item>
+                <el-input
+                  v-model="form.content"
+                  class="comment-input"
+                  type="textarea"
+                  placeholder="善语结善缘，恶言伤人心"
+                ></el-input>
+                <div class="flex items-center justify-end mb-10px absolute right-8px bottom-[-8px] text-12px">
+                  <el-switch
+                    v-model="form.isDm"
+                    active-value="1"
+                    inactive-value="0"
+                    style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949; margin-right: 5px"
+                    size="small"
+                  >
+                  </el-switch>
+                  发送到弹幕
+                </div>
+              </el-form-item>
+              <el-form-item>
+                <div class="flex justify-end w-full">
+                  <el-button
+                    :disabled="!form.content.length"
+                    type="success"
+                    class="comment-button"
+                    @click="handleSubmit"
+                  >
+                    提交
+                  </el-button>
+                </div>
+              </el-form-item>
+            </el-form>
+            <div class="right-video-comment flex flex-col gap-y-30px">
+              <div v-for="(item, index) in memberComments" :key="index" class="grid grid-cols-[60px_1fr]">
+                <img
+                  :src="item?.memberUser?.avatar"
+                  class="w-50px h-50px border-rd-6px cursor-pointer"
+                  :alt="item?.memberUser?.nickname"
+                />
+                <div class="text-14px flex flex-col justify-between color-gray">
+                  <span>{{ item?.memberUser?.nickname }}: {{ item?.content }}</span>
+                  <p class="text-12px">{{ dayjs(item?.createTime).format('YYYY-MM-DD HH:mm:ss') }}</p>
+                </div>
+              </div>
+              <div v-if="memberComments.length < memberCommentData.total" class="flex justify-center">
+                <el-button type="primary" size="small" @click="handleLoadMore">加载更多</el-button>
+              </div>
+            </div>
+          </el-tab-pane>
         </el-tabs>
       </div>
     </div>
@@ -137,11 +202,13 @@
   import 'xgplayer/dist/index.min.css';
   import 'xgplayer/es/plugins/danmu/index.css';
   import '~/plugins/xgplayer/payTip/index.css';
+  import dayjs from 'dayjs';
   import { Swiper, SwiperSlide } from 'swiper/vue';
   import 'swiper/css';
-  import { useLoginVisible } from '~/composables/states';
+  import { useAsyncData } from '#app';
+  import { useLoginVisible } from '~~/app/composables/states';
   import { WEB_TOKEN } from '#shared/cookiesName';
-  import { createToken } from '~/utils/request';
+  import { createToken } from '~~/app/utils/request';
 
   definePageMeta({
     key: route => route.fullPath
@@ -151,6 +218,7 @@
   const token = useCookie(WEB_TOKEN);
   const loginVisible = useLoginVisible();
 
+  const formRef = useTemplateRef('formRef');
   const form = ref({ isDm: '1', content: '' });
   const tabStatus = ref('video');
   const vIndex = ref(0);
@@ -158,8 +226,6 @@
   const movieRate = ref();
   const pageNum = ref(1);
   const memberComments = ref([]);
-  const episodes = ref([]);
-  const currentEpisodeId = ref(null);
   let player = null;
   // 视频支付提示插件
   let payTipInstance = null;
@@ -176,54 +242,41 @@
     })
   ]);
 
-  // 获取集数数据
-  const { data: episodeData } = await useFetch('/api/web/movie/resource/episodes', {
-    query: {
-      movieId: route.params.id,
-      resourceId: route.query.rid,
-      resources: route.query.rtype,
-      limit: 1000
-    }
-  });
-
-  if (episodeData.value) {
-    episodes.value = episodeData.value;
-  }
-
-  // 设置当前选中的集数
-  if (route.query.rid) {
-    currentEpisodeId.value = Number(route.query.rid);
-    // 在列表中的索引
-    vIndex.value = episodes.value.findIndex(item => item.resourceId === Number(route.query.rid)) || 0;
-  }
-
-  // 监听路由变化，更新当前集数
-  watch(
-    () => route.query.referenceid,
-    newRid => {
-      if (newRid) {
-        currentEpisodeId.value = Number(newRid);
-      }
-    }
-  );
-
   if (Object.keys(detail.value).length === 0) {
     throw createError({ statusCode: 404 });
   }
 
-  const videoInfo = computed(() => episodes.value?.[vIndex.value]);
+  movieRate.value = detail.value?.movieRate?.rate;
+  if (route.query.mvid) {
+    vIndex.value = detail.value?.movieVideo.findIndex(item => item.movieVideoId === Number(route.query.mvid)) || 0;
+  }
+
+  const videoId = computed(() => detail.value?.movieVideo?.[vIndex.value]?.video?.videoId);
+  // 获取视频资源的详情，弹幕，评论
+  const [{ data: videoInfo }, { data: dms }, { data: memberCommentData, refresh: memberCommentsRefresh }] =
+    await Promise.all([
+      useFetch(`/api/web/movie/video/${videoId.value}`),
+      useFetch(`/api/web/movie/comment/dm?videoId=${videoId.value}`),
+      useAsyncData(`${route.fullPath}:${videoId.value}:${pageNum}`, () => {
+        return $fetch(`/api/web/movie/comment/list?videoId=${videoId.value}&pageNum=${pageNum.value}`);
+      })
+    ]);
+  if (memberCommentData.value.rows) {
+    memberComments.value = memberComments.value.concat(memberCommentData.value.rows);
+  }
 
   onMounted(async () => {
     if (videoInfo.value) {
-      const [Player, Mp4Plugin, PayTip, HlsPlugin] = await Promise.all([
+      const [Player, Mp4Plugin, Danmu, PayTip, HlsPlugin] = await Promise.all([
         import('xgplayer'),
         import('xgplayer-mp4'),
-        import('~/plugins/xgplayer/payTip'),
+        import('xgplayer/es/plugins/danmu'),
+        import('~~/app/plugins/xgplayer/payTip'),
         import('xgplayer-hls.js')
       ]);
 
       const videoType = videoInfo.value.url.split('.').pop();
-      const plugins = [PayTip.default];
+      const plugins = [Danmu.default, PayTip.default];
       if (videoType === 'm3u8') {
         plugins.push(HlsPlugin.default);
       } else if (videoType === 'mp4') {
@@ -247,6 +300,13 @@
         height: '100%',
         width: '100%',
         plugins,
+        danmu: {
+          comments: dms.value,
+          area: {
+            start: 0,
+            end: 1
+          }
+        },
         payTip: {
           tip: `此为付费视频，支付${detail.value.paymentAmount}金币继续观看？`,
           lookTime: detail.value.freeDuration * 60,
@@ -281,6 +341,44 @@
       player = null;
     }
   });
+
+  async function handleSubmit() {
+    if (!token.value) {
+      loginVisible.value = true;
+      return;
+    }
+    const videoDom = document.querySelector('#mse video');
+    const start = Math.floor(videoDom.currentTime * 1000);
+    const commentId = await request({
+      url: '/api/web/member/comment',
+      method: 'post',
+      body: {
+        ...form.value,
+        videoId: detail.value?.movieVideo?.[vIndex.value]?.video.videoId,
+        start
+      }
+    });
+    if (form.value.isDm === '1') {
+      // 发送弹幕
+      player.getPlugin('danmu').sendComment({
+        duration: 15000,
+        id: commentId,
+        start,
+        txt: form.value.content
+      });
+    }
+    memberComments.value = [];
+    pageNum.value = 1;
+    await memberCommentsRefresh();
+    memberComments.value = memberComments.value.concat(memberCommentData.value.rows);
+    form.value = { isDm: '1', content: '' };
+  }
+
+  async function handleLoadMore() {
+    pageNum.value++;
+    await memberCommentsRefresh();
+    memberComments.value = memberComments.value.concat(memberCommentData.value.rows);
+  }
 
   /** 获取用户评分 **/
   async function getMemberRate() {
@@ -367,23 +465,6 @@
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     @media (min-width: 1024px) {
       grid-template-columns: repeat(1, 1fr);
-    }
-  }
-
-  .episode-button {
-    @apply px-3 py-2 text-center text-sm bg-gray-700 hover:bg-gray-600 rounded-md transition-colors text-white border border-gray-600;
-    min-height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-
-    &:hover {
-      @apply bg-blue-600 border-blue-500;
-    }
-
-    &.episode-active {
-      @apply bg-blue-600 border-blue-500 text-white font-medium;
     }
   }
   .video-detail {

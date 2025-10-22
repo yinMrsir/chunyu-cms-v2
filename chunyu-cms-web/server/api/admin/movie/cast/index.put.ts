@@ -1,4 +1,4 @@
-import { CastServices } from '~/server/services/movie/cast/cast.services';
+import { CastServices } from '~~/server/services/movie/cast/cast.services';
 
 const castServices = new CastServices();
 

@@ -1,4 +1,4 @@
-import { JobServices } from '~/server/services/admin/monitor/job/job.services';
+import { JobServices } from '~~/server/services/admin/monitor/job/job.services';
 
 export default defineNitroPlugin(async () => {
   // 启动定时任务

@@ -2,9 +2,9 @@ import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek.js';
 import { and, eq, desc, inArray } from 'drizzle-orm';
 import { MoviePvServices } from '../moviePv/moviePv.services';
-import { MovieMonthVisits, movieMonthVisitsTable } from '~/server/db/schema/movie/movieMonthVisits';
-import { queryParams } from '~/server/db/query.helper';
-import { MovieBasicsServices } from '~/server/services/movie/movieBasics/movieBasics.services';
+import { MovieMonthVisits, movieMonthVisitsTable } from '~~/server/db/schema/movie/movieMonthVisits';
+import { queryParams } from '~~/server/db/query.helper';
+import { MovieBasicsServices } from '~~/server/services/movie/movieBasics/movieBasics.services';
 
 dayjs.extend(isoWeek);
 

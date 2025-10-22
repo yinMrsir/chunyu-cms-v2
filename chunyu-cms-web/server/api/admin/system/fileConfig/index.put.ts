@@ -1,4 +1,4 @@
-import { FileConfigServices } from '~/server/services/admin/system/fileConfig/fileConfig.services';
+import { FileConfigServices } from '~~/server/services/admin/system/fileConfig/fileConfig.services';
 
 const fileConfigServices = new FileConfigServices();
 

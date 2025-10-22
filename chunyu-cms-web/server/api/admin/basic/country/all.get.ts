@@ -1,4 +1,4 @@
-import { CountryServices } from '~/server/services/basic/country/country.services';
+import { CountryServices } from '~~/server/services/basic/country/country.services';
 
 const countryServices = new CountryServices();
 

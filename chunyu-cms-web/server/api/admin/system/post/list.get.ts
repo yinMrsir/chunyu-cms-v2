@@ -1,4 +1,4 @@
-import { PostServices } from '~/server/services/admin/system/post/post.services';
+import { PostServices } from '~~/server/services/admin/system/post/post.services';
 
 export default defineEventHandler(async event => {
   await event.context.validatePermission('system:post:query');

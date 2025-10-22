@@ -1,4 +1,4 @@
-import { RoleServices } from '~/server/services/admin/system/role/role.services';
+import { RoleServices } from '~~/server/services/admin/system/role/role.services';
 
 /* 通过Id 查询角色 */
 export default defineEventHandler(async event => {

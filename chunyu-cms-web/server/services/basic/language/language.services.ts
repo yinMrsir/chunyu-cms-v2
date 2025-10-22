@@ -1,8 +1,8 @@
 import { and, eq, inArray, like, sql } from 'drizzle-orm';
-import { queryParams } from '~/server/db/query.helper';
-import { Language, languageTable, NewLanguage } from '~/server/db/schema/basic/language';
-import { countryTable } from '~/server/db/schema/basic/country';
-import { movieBasicsTable } from '~/server/db/schema/movie/movieBasics';
+import { queryParams } from '~~/server/db/query.helper';
+import { Language, languageTable, NewLanguage } from '~~/server/db/schema/basic/language';
+import { countryTable } from '~~/server/db/schema/basic/country';
+import { movieBasicsTable } from '~~/server/db/schema/movie/movieBasics';
 
 export class LanguageServices {
   /* 新增 */

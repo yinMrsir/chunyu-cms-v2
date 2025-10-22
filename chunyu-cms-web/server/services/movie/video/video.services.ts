@@ -1,8 +1,8 @@
 import { and, eq, inArray, like, sql } from 'drizzle-orm';
-import { Video, videoTable, NewVideo } from '~/server/db/schema/movie/video';
-import { queryParams } from '~/server/db/query.helper';
-import { movieVideoTable } from '~/server/db/schema/movie/movieVideo';
-import { commentTable } from '~/server/db/schema/movie/comment';
+import { Video, videoTable, NewVideo } from '~~/server/db/schema/movie/video';
+import { queryParams } from '~~/server/db/query.helper';
+import { movieVideoTable } from '~~/server/db/schema/movie/movieVideo';
+import { commentTable } from '~~/server/db/schema/movie/comment';
 
 export class VideoServices {
   /* 新增 */

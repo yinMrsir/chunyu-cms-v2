@@ -1,4 +1,4 @@
-import { ProfessionServices } from '~/server/services/basic/profession/profession.services';
+import { ProfessionServices } from '~~/server/services/basic/profession/profession.services';
 
 const professionServices = new ProfessionServices();
 

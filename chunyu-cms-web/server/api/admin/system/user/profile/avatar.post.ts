@@ -1,8 +1,8 @@
 import { join } from 'path';
 import { writeFile } from 'fs/promises';
 import { H3Event, readMultipartFormData, createError } from 'h3';
-import { SharedServices } from '~/server/services/admin/share/shared.services';
-import { UserServices } from '~/server/services/admin/system/user/user.services';
+import { SharedServices } from '~~/server/services/admin/share/shared.services';
+import { UserServices } from '~~/server/services/admin/system/user/user.services';
 
 const shareServices = new SharedServices();
 const { uploadPath, imgHost } = useRuntimeConfig();

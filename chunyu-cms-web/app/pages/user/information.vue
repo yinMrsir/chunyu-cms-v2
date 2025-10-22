@@ -94,8 +94,8 @@
 <script setup>
   import VueCropper from 'vue-cropperjs';
   import 'cropperjs/dist/cropper.css';
-  import { createToken } from '~/utils/request';
-  import { WEB_TOKEN, WEB_USER_INFO } from '~/shared/cookiesName';
+  import { createToken } from '~~/app/utils/request';
+  import { WEB_TOKEN, WEB_USER_INFO } from '~~/shared/cookiesName';
 
   definePageMeta({
     layout: 'user-center',

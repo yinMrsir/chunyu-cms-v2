@@ -1,4 +1,4 @@
-import { PostServices } from '~/server/services/admin/system/post/post.services';
+import { PostServices } from '~~/server/services/admin/system/post/post.services';
 
 /* 通过Id 查询岗位 */
 export default defineEventHandler(async event => {

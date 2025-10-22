@@ -1,11 +1,11 @@
 import { and, desc, eq, inArray, like, lt, not } from 'drizzle-orm';
-import { movieRateTable } from '~/server/db/schema/movie/rate';
-import { MemberRateServices } from '~/server/services/member/memberRate.services';
-import { memberRateTable } from '~/server/db/schema/member/rate';
-import { queryParams } from '~/server/db/query.helper';
-import { movieBasicsTable } from '~/server/db/schema/movie/movieBasics';
-import { movieBasicToGenreTable } from '~/server/db/schema/movie/movieBasicToGenre';
-import { movieBasicToCountryTable } from '~/server/db/schema/movie/movieBasicToCountry';
+import { movieRateTable } from '~~/server/db/schema/movie/rate';
+import { MemberRateServices } from '~~/server/services/member/memberRate.services';
+import { memberRateTable } from '~~/server/db/schema/member/rate';
+import { queryParams } from '~~/server/db/query.helper';
+import { movieBasicsTable } from '~~/server/db/schema/movie/movieBasics';
+import { movieBasicToGenreTable } from '~~/server/db/schema/movie/movieBasicToGenre';
+import { movieBasicToCountryTable } from '~~/server/db/schema/movie/movieBasicToCountry';
 
 export class MovieRateServices {
   private memberRateServices: MemberRateServices;

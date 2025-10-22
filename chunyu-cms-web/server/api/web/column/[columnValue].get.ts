@@ -1,4 +1,4 @@
-import { ColumnsServices } from '~/server/services/basic/columns/columns.services';
+import { ColumnsServices } from '~~/server/services/basic/columns/columns.services';
 
 const columnsServices = new ColumnsServices();
 

@@ -1,7 +1,7 @@
 import { and, eq, inArray, like, sql } from 'drizzle-orm';
-import { Profession, professionTable, NewProfession } from '~/server/db/schema/basic/profession';
-import { queryParams } from '~/server/db/query.helper';
-import { castTable } from '~/server/db/schema/movie/cast';
+import { Profession, professionTable, NewProfession } from '~~/server/db/schema/basic/profession';
+import { queryParams } from '~~/server/db/query.helper';
+import { castTable } from '~~/server/db/schema/movie/cast';
 
 export class ProfessionServices {
   /* 新增 */

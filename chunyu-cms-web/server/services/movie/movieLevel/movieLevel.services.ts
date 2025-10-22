@@ -1,6 +1,6 @@
 import { and, eq, inArray, sql } from 'drizzle-orm';
-import { MovieLevel, movieLevelTable, NewMovieLevel } from '~/server/db/schema/movie/movieLevel';
-import { queryParams } from '~/server/db/query.helper';
+import { MovieLevel, movieLevelTable, NewMovieLevel } from '~~/server/db/schema/movie/movieLevel';
+import { queryParams } from '~~/server/db/query.helper';
 export class MovieLevelServices {
   /* 新增 */
   async add(body: NewMovieLevel) {

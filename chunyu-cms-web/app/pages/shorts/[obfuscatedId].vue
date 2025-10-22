@@ -45,7 +45,7 @@
 </template>
 
 <script setup>
-  import { deObfuscateId } from '~/utils/obfuscator';
+  import { deObfuscateId } from '~~/app/utils/obfuscator';
   import { WEB_TOKEN } from '#shared/cookiesName';
 
   definePageMeta({

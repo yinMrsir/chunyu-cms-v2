@@ -1,4 +1,4 @@
-import { LanguageServices } from '~/server/services/basic/language/language.services';
+import { LanguageServices } from '~~/server/services/basic/language/language.services';
 
 const languageServices = new LanguageServices();
 

@@ -1,6 +1,6 @@
 import { and, desc, eq, sql, inArray } from 'drizzle-orm';
-import { commentTable, NewComment, Comment } from '~/server/db/schema/movie/comment';
-import { queryParams } from '~/server/db/query.helper';
+import { commentTable, NewComment, Comment } from '~~/server/db/schema/movie/comment';
+import { queryParams } from '~~/server/db/query.helper';
 
 export class CommentServices {
   /* 新增  */

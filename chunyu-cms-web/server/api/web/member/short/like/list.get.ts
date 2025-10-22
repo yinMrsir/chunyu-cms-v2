@@ -1,4 +1,4 @@
-import { MemberLikeServices } from '~/server/services/member/memberLike.services';
+import { MemberLikeServices } from '~~/server/services/member/memberLike.services';
 
 const memberLikeServices = new MemberLikeServices();
 

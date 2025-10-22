@@ -1,4 +1,4 @@
-import { WEB_TOKEN, WEB_USER_INFO } from '~/shared/cookiesName';
+import { WEB_TOKEN, WEB_USER_INFO } from '~~/shared/cookiesName';
 
 export const createToken = () => {
   const token = useCookie(WEB_TOKEN);

@@ -1,9 +1,9 @@
 import lodash from 'lodash';
 import { Storage } from 'unstorage';
-import { CAPTCHA_IMG_KEY, USER_TOKEN_KEY, USER_VERSION_KEY } from '~/server/contants/redis.contant';
-import { UserServices } from '~/server/services/admin/system/user/user.services';
-import { SharedServices } from '~/server/services/admin/share/shared.services';
-import { LogServices } from '~/server/services/admin/monitor/log/log.services';
+import { CAPTCHA_IMG_KEY, USER_TOKEN_KEY, USER_VERSION_KEY } from '~~/server/contants/redis.contant';
+import { UserServices } from '~~/server/services/admin/system/user/user.services';
+import { SharedServices } from '~~/server/services/admin/share/shared.services';
+import { LogServices } from '~~/server/services/admin/monitor/log/log.services';
 
 export class AuthServices {
   private userServices: UserServices;

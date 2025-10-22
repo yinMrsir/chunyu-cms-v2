@@ -1,6 +1,6 @@
 import { and, eq, inArray, like, sql } from 'drizzle-orm';
-import { Banner, bannerTable, NewBanner } from '~/server/db/schema/basic/banner';
-import { queryParams } from '~/server/db/query.helper';
+import { Banner, bannerTable, NewBanner } from '~~/server/db/schema/basic/banner';
+import { queryParams } from '~~/server/db/query.helper';
 
 export class BannerServices {
   /* 新增 */

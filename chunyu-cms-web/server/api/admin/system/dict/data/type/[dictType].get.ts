@@ -1,4 +1,4 @@
-import { DictServices } from '~/server/services/admin/system/dict/dict.services';
+import { DictServices } from '~~/server/services/admin/system/dict/dict.services';
 
 /* 通过字典类型查询字典数据 */
 export default defineEventHandler(async event => {

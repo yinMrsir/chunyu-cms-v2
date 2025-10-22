@@ -1,5 +1,5 @@
 import { and, eq } from 'drizzle-orm';
-import { memberRateTable, NewMemberRate } from '~/server/db/schema/member/rate';
+import { memberRateTable, NewMemberRate } from '~~/server/db/schema/member/rate';
 
 export class MemberRateServices {
   // 通过memberUserId获取会员评分

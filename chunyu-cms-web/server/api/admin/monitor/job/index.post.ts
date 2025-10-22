@@ -1,4 +1,4 @@
-import { jobServices } from '~/server/services/admin/monitor/job/job.services';
+import { jobServices } from '~~/server/services/admin/monitor/job/job.services';
 
 export default defineEventHandler(async event => {
   const body = await readBody(event);

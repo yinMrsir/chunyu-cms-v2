@@ -1,6 +1,6 @@
 import { and, eq, inArray, like, sql } from 'drizzle-orm';
-import { Actor, actorTable, NewActor } from '~/server/db/schema/movie/actor';
-import { queryParams } from '~/server/db/query.helper';
+import { Actor, actorTable, NewActor } from '~~/server/db/schema/movie/actor';
+import { queryParams } from '~~/server/db/query.helper';
 
 export class ActorServices {
   /* 新增 */

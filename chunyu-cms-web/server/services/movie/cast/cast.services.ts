@@ -1,6 +1,6 @@
 import { and, eq, inArray, sql } from 'drizzle-orm';
-import { Cast, castTable, NewCast } from '~/server/db/schema/movie/cast';
-import { queryParams } from '~/server/db/query.helper';
+import { Cast, castTable, NewCast } from '~~/server/db/schema/movie/cast';
+import { queryParams } from '~~/server/db/query.helper';
 
 export class CastServices {
   /* 新增 */

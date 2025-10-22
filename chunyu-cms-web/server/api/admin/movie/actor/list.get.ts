@@ -1,4 +1,4 @@
-import { ActorServices } from '~/server/services/movie/actor/actor.services';
+import { ActorServices } from '~~/server/services/movie/actor/actor.services';
 
 const actorServices = new ActorServices();
 

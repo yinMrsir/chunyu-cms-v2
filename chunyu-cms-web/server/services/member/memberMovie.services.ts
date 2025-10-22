@@ -1,6 +1,6 @@
 import { and, eq, desc, sql } from 'drizzle-orm';
-import { memberMovieTable, MemberMovie } from '~/server/db/schema/member/movie';
-import { queryParams } from '~/server/db/query.helper';
+import { memberMovieTable, MemberMovie } from '~~/server/db/schema/member/movie';
+import { queryParams } from '~~/server/db/query.helper';
 
 export class MemberMovieServices {
   // 通过影片ID获取会员影片

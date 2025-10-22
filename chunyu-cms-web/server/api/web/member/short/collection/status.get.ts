@@ -1,4 +1,4 @@
-import { MemberCollectionServices } from '~/server/services/member/memberCollection.services';
+import { MemberCollectionServices } from '~~/server/services/member/memberCollection.services';
 
 const memberCollectionServices = new MemberCollectionServices();
 

@@ -1,4 +1,4 @@
-import { MenuServices } from '~/server/services/admin/system/menu/menu.service';
+import { MenuServices } from '~~/server/services/admin/system/menu/menu.service';
 
 /* 菜单列表 */
 export default defineEventHandler(async event => {

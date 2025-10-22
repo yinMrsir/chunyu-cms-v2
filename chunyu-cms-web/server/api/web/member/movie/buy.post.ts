@@ -1,4 +1,4 @@
-import { MemberWalletServices } from '~/server/services/member/memberWallet.services';
+import { MemberWalletServices } from '~~/server/services/member/memberWallet.services';
 
 const memberWalletServices = new MemberWalletServices();
 

@@ -49,7 +49,7 @@
 <script setup>
   import dayjs from 'dayjs';
   import QrcodeVue from 'qrcode.vue';
-  import { createToken } from '~/utils/request';
+  import { createToken } from '~~/app/utils/request';
 
   definePageMeta({
     layout: 'user-center'

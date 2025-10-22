@@ -1,4 +1,4 @@
-import { LogServices } from '~/server/services/admin/monitor/log/log.services';
+import { LogServices } from '~~/server/services/admin/monitor/log/log.services';
 
 export default defineEventHandler(async event => {
   const query = getQuery(event);

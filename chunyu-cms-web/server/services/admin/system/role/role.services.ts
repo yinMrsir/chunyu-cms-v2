@@ -1,8 +1,8 @@
 import { and, between, eq, inArray, like } from 'drizzle-orm';
 import dayjs from 'dayjs';
-import { queryParams } from '~/server/db/query.helper';
-import { NewRole, Role, roleTable } from '~/server/db/schema/system/role';
-import { roleToMenuTable } from '~/server/db/schema/system/roleToMenu';
+import { queryParams } from '~~/server/db/query.helper';
+import { NewRole, Role, roleTable } from '~~/server/db/schema/system/role';
+import { roleToMenuTable } from '~~/server/db/schema/system/roleToMenu';
 
 export class RoleServices {
   /* 新增角色 */

@@ -1,4 +1,4 @@
-import { UserServices } from '~/server/services/admin/system/user/user.services';
+import { UserServices } from '~~/server/services/admin/system/user/user.services';
 
 export default defineEventHandler(async event => {
   const query: any = getQuery(event);

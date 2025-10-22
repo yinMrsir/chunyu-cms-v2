@@ -12,13 +12,13 @@ import {
   USER_TOKEN_KEY,
   USER_USERNAME_KEY,
   USER_VERSION_KEY
-} from '~/server/contants/redis.contant';
-import { SharedServices } from '~/server/services/admin/share/shared.services';
-import { UserServices } from '~/server/services/admin/system/user/user.services';
-import { MenuServices } from '~/server/services/admin/system/menu/menu.service';
-import { AuthServices } from '~/server/services/admin/auth/auth.services';
-import { LogServices } from '~/server/services/admin/monitor/log/log.services';
-import { SysConfigServices } from '~/server/services/admin/system/sysConfig/sys.config.services';
+} from '~~/server/contants/redis.contant';
+import { SharedServices } from '~~/server/services/admin/share/shared.services';
+import { UserServices } from '~~/server/services/admin/system/user/user.services';
+import { MenuServices } from '~~/server/services/admin/system/menu/menu.service';
+import { AuthServices } from '~~/server/services/admin/auth/auth.services';
+import { LogServices } from '~~/server/services/admin/monitor/log/log.services';
+import { SysConfigServices } from '~~/server/services/admin/system/sysConfig/sys.config.services';
 
 export class LoginServices {
   private userServices: UserServices;

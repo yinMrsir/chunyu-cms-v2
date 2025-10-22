@@ -1,4 +1,4 @@
-import { DeptServices } from '~/server/services/admin/system/dept/dept.services';
+import { DeptServices } from '~~/server/services/admin/system/dept/dept.services';
 
 /* 通过id查询部门 */
 export default defineEventHandler(async event => {

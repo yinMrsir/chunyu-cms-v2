@@ -1,4 +1,4 @@
-import { SysConfigServices } from '~/server/services/admin/system/sysConfig/sys.config.services';
+import { SysConfigServices } from '~~/server/services/admin/system/sysConfig/sys.config.services';
 
 export default defineEventHandler(async event => {
   const body = await readBody(event);

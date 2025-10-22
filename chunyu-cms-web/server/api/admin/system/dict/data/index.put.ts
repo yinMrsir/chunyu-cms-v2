@@ -1,4 +1,4 @@
-import { DictServices } from '~/server/services/admin/system/dict/dict.services';
+import { DictServices } from '~~/server/services/admin/system/dict/dict.services';
 
 const dictService = new DictServices();
 

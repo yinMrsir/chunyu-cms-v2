@@ -1,5 +1,5 @@
-import { GenreServices } from '~/server/services/basic/genre/genre.services';
-import { MovieBasicToGenre } from '~/server/db/schema/movie/movieBasicToGenre';
+import { GenreServices } from '~~/server/services/basic/genre/genre.services';
+import { MovieBasicToGenre } from '~~/server/db/schema/movie/movieBasicToGenre';
 
 const genreServices = new GenreServices();
 

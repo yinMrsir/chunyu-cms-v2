@@ -1,4 +1,4 @@
-import { ServerService } from '~/server/services/admin/monitor/server/server.services';
+import { ServerService } from '~~/server/services/admin/monitor/server/server.services';
 
 const serverServices = new ServerService();
 

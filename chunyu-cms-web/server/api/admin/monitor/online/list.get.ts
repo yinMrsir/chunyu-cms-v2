@@ -1,4 +1,4 @@
-import { OnlineServices } from '~/server/services/admin/monitor/online/online.services';
+import { OnlineServices } from '~~/server/services/admin/monitor/online/online.services';
 
 export default defineEventHandler(async event => {
   const query = getQuery(event);

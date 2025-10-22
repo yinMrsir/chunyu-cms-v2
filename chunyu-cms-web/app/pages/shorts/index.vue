@@ -61,7 +61,7 @@
 <script setup>
   import { useAsyncData } from '#app';
   import { WEB_TOKEN } from '#shared/cookiesName';
-  import { obfuscateId } from '~/utils/obfuscator';
+  import { obfuscateId } from '~~/app/utils/obfuscator';
 
   definePageMeta({
     layout: false

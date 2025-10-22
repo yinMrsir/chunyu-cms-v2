@@ -47,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-  import { useShortActions } from '~/composables/useShortActions';
+  import { useShortActions } from '~~/app/composables/useShortActions';
 
   interface Props {
     short: {

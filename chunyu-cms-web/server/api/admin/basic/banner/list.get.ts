@@ -1,4 +1,4 @@
-import { BannerServices } from '~/server/services/basic/banner/banner.services';
+import { BannerServices } from '~~/server/services/basic/banner/banner.services';
 
 const bannerServices = new BannerServices();
 

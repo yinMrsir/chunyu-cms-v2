@@ -1,4 +1,4 @@
-import { MoviePhotoServices } from '~/server/services/movie/moviePhoto/moviePhoto.services';
+import { MoviePhotoServices } from '~~/server/services/movie/moviePhoto/moviePhoto.services';
 
 const moviePhotoServices = new MoviePhotoServices();
 

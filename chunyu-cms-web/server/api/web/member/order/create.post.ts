@@ -1,6 +1,6 @@
-import { MemberOrderServices } from '~/server/services/member/memberOrder.services';
-import { SharedServices } from '~/server/services/admin/share/shared.services';
-import { WxPayServices } from '~/server/services/wxPay/wxPay.services';
+import { MemberOrderServices } from '~~/server/services/member/memberOrder.services';
+import { SharedServices } from '~~/server/services/admin/share/shared.services';
+import { WxPayServices } from '~~/server/services/wxPay/wxPay.services';
 
 const runtimeConfig = useRuntimeConfig();
 const memberOrderServices = new MemberOrderServices();

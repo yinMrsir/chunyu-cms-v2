@@ -1,6 +1,6 @@
-import { MovieBasicsServices } from '~/server/services/movie/movieBasics/movieBasics.services';
-import { MoviePvServices } from '~/server/services/movie/moviePv/moviePv.services';
-import { MovieRateServices } from '~/server/services/movie/movieRate/movieRate.services';
+import { MovieBasicsServices } from '~~/server/services/movie/movieBasics/movieBasics.services';
+import { MoviePvServices } from '~~/server/services/movie/moviePv/moviePv.services';
+import { MovieRateServices } from '~~/server/services/movie/movieRate/movieRate.services';
 
 const movieBasicsServices = new MovieBasicsServices();
 const moviePvServices = new MoviePvServices();

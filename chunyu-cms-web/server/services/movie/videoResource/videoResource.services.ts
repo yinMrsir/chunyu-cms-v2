@@ -1,5 +1,5 @@
 import { and, asc, eq, like, sql, inArray } from 'drizzle-orm';
-import { VideoResource, videoResourceTable, NewVideoResource } from '~/server/db/schema/movie/videoResource';
+import { VideoResource, videoResourceTable, NewVideoResource } from '~~/server/db/schema/movie/videoResource';
 
 export class VideoResourceServices {
   /* 新增单个 */

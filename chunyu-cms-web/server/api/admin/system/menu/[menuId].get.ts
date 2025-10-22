@@ -1,4 +1,4 @@
-import { MenuServices } from '~/server/services/admin/system/menu/menu.service';
+import { MenuServices } from '~~/server/services/admin/system/menu/menu.service';
 
 export default defineEventHandler(async evevt => {
   const menuId = getRouterParam(evevt, 'menuId');

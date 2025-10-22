@@ -1,10 +1,10 @@
 import { eq, like, and, sql, inArray, not, isNotNull, ne } from 'drizzle-orm';
 import { SharedServices } from '../../share/shared.services';
 import { RoleServices } from '../role/role.services';
-import { queryParams } from '~/server/db/query.helper';
-import { menuTable, Menu, NewMenu } from '~/server/db/schema/system/menu';
-import { roleToMenuTable } from '~/server/db/schema/system/roleToMenu';
-import { roleTable } from '~/server/db/schema/system/role';
+import { queryParams } from '~~/server/db/query.helper';
+import { menuTable, Menu, NewMenu } from '~~/server/db/schema/system/menu';
+import { roleToMenuTable } from '~~/server/db/schema/system/roleToMenu';
+import { roleTable } from '~~/server/db/schema/system/role';
 
 export class MenuServices {
   roleServices: RoleServices;

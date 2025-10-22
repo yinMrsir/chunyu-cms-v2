@@ -1,6 +1,6 @@
 import { and, eq, inArray, sql, not } from 'drizzle-orm';
-import { FileConfig, fileConfigTable, NewFileConfig } from '~/server/db/schema/system/fileConfig';
-import { queryParams } from '~/server/db/query.helper';
+import { FileConfig, fileConfigTable, NewFileConfig } from '~~/server/db/schema/system/fileConfig';
+import { queryParams } from '~~/server/db/query.helper';
 
 export class FileConfigServices {
   /* 新增 */

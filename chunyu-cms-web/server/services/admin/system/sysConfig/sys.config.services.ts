@@ -1,7 +1,7 @@
 import { like, eq, between, and, not, inArray } from 'drizzle-orm';
 import dayjs from 'dayjs';
-import { NewSysConfig, SysConfig, sysConfigTable } from '~/server/db/schema/system/sysConfig';
-import { queryParams } from '~/server/db/query.helper';
+import { NewSysConfig, SysConfig, sysConfigTable } from '~~/server/db/schema/system/sysConfig';
+import { queryParams } from '~~/server/db/query.helper';
 
 export class SysConfigServices {
   async add(body: NewSysConfig) {

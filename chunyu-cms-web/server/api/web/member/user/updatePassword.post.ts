@@ -1,5 +1,5 @@
-import { MemberUserServices } from '~/server/services/member/memberUser.services';
-import { SharedServices } from '~/server/services/admin/share/shared.services';
+import { MemberUserServices } from '~~/server/services/member/memberUser.services';
+import { SharedServices } from '~~/server/services/admin/share/shared.services';
 
 const memberUserServices = new MemberUserServices();
 const sharedServices = new SharedServices();

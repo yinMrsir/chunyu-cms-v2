@@ -1,9 +1,9 @@
 import { and, between, desc, eq, inArray, like, lt, not, sql } from 'drizzle-orm';
-import { MovieBasics, movieBasicsTable, NewMovieBasics } from '~/server/db/schema/movie/movieBasics';
-import { queryParams } from '~/server/db/query.helper';
-import { movieBasicToCountryTable } from '~/server/db/schema/movie/movieBasicToCountry';
-import { movieVideoTable } from '~/server/db/schema/movie/movieVideo';
-import { movieBasicToGenreTable } from '~/server/db/schema/movie/movieBasicToGenre';
+import { MovieBasics, movieBasicsTable, NewMovieBasics } from '~~/server/db/schema/movie/movieBasics';
+import { queryParams } from '~~/server/db/query.helper';
+import { movieBasicToCountryTable } from '~~/server/db/schema/movie/movieBasicToCountry';
+import { movieVideoTable } from '~~/server/db/schema/movie/movieVideo';
+import { movieBasicToGenreTable } from '~~/server/db/schema/movie/movieBasicToGenre';
 
 export class MovieBasicsServices {
   /* 新增 */

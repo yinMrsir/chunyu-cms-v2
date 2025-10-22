@@ -1,4 +1,4 @@
-import { LevelServices } from '~/server/services/basic/level/level.services';
+import { LevelServices } from '~~/server/services/basic/level/level.services';
 
 const levelServices = new LevelServices();
 

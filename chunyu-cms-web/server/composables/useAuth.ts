@@ -1,7 +1,7 @@
 import * as jwt from 'jsonwebtoken';
 import { H3Event } from 'h3';
-import { AuthServices } from '~/server/services/admin/auth/auth.services';
-import { USER_PERMISSIONS_KEY } from '~/server/contants/redis.contant';
+import { AuthServices } from '~~/server/services/admin/auth/auth.services';
+import { USER_PERMISSIONS_KEY } from '~~/server/contants/redis.contant';
 
 interface resp {
   userId: number;

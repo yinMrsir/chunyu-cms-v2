@@ -1,6 +1,6 @@
 import { and, eq, inArray, sql } from 'drizzle-orm';
-import { PubDate, pubDateTable, NewPubDate } from '~/server/db/schema/movie/pubDate';
-import { queryParams } from '~/server/db/query.helper';
+import { PubDate, pubDateTable, NewPubDate } from '~~/server/db/schema/movie/pubDate';
+import { queryParams } from '~~/server/db/query.helper';
 
 export class PubDateServices {
   /* 新增 */

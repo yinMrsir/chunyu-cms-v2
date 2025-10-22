@@ -1,8 +1,8 @@
 import { eq } from 'drizzle-orm';
-import { MemberWallet, memberWalletTable, NewMemberWallet } from '~/server/db/schema/member/wallet';
-import { MovieBasicsServices } from '~/server/services/movie/movieBasics/movieBasics.services';
-import { memberMovieTable } from '~/server/db/schema/member/movie';
-import { MemberWalletLogServices } from '~/server/services/member/memberWalletLog.services';
+import { MemberWallet, memberWalletTable, NewMemberWallet } from '~~/server/db/schema/member/wallet';
+import { MovieBasicsServices } from '~~/server/services/movie/movieBasics/movieBasics.services';
+import { memberMovieTable } from '~~/server/db/schema/member/movie';
+import { MemberWalletLogServices } from '~~/server/services/member/memberWalletLog.services';
 
 export class MemberWalletServices {
   private movieBasicsServices: MovieBasicsServices;

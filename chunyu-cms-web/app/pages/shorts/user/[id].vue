@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-  import { obfuscateId } from '~/utils/obfuscator';
+  import { obfuscateId } from '~~/app/utils/obfuscator';
 
   const route = useRoute();
 

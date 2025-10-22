@@ -1,6 +1,6 @@
 import { and, asc, eq, inArray, like, sql } from 'drizzle-orm';
-import { Columns, columnsTable, NewColumns } from '~/server/db/schema/basic/columns';
-import { queryParams } from '~/server/db/query.helper';
+import { Columns, columnsTable, NewColumns } from '~~/server/db/schema/basic/columns';
+import { queryParams } from '~~/server/db/query.helper';
 
 export class ColumnsServices {
   /* 新增 */

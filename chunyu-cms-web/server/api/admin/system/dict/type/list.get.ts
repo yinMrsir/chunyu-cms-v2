@@ -1,5 +1,5 @@
-import { DictServices } from '~/server/services/admin/system/dict/dict.services';
-import { useAuth } from '~/server/composables/useAuth';
+import { DictServices } from '~~/server/services/admin/system/dict/dict.services';
+import { useAuth } from '~~/server/composables/useAuth';
 
 const dictServices = new DictServices();
 

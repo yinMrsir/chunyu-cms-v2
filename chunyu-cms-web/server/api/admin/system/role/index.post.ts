@@ -1,4 +1,4 @@
-import { RoleServices } from '~/server/services/admin/system/role/role.services';
+import { RoleServices } from '~~/server/services/admin/system/role/role.services';
 
 export default defineEventHandler(async event => {
   await event.context.validatePermission('system:role:add');

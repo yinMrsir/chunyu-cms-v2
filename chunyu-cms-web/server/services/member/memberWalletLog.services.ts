@@ -1,6 +1,6 @@
 import { and, desc, eq, sql } from 'drizzle-orm';
-import { MemberWalletLog, memberWalletLogTable, NewMemberWalletLog } from '~/server/db/schema/member/walletLog';
-import { queryParams } from '~/server/db/query.helper';
+import { MemberWalletLog, memberWalletLogTable, NewMemberWalletLog } from '~~/server/db/schema/member/walletLog';
+import { queryParams } from '~~/server/db/query.helper';
 
 export class MemberWalletLogServices {
   async add(memberWalletLog: NewMemberWalletLog) {

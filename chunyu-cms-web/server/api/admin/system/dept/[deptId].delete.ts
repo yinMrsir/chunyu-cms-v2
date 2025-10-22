@@ -1,4 +1,4 @@
-import { DeptServices } from '~/server/services/admin/system/dept/dept.services';
+import { DeptServices } from '~~/server/services/admin/system/dept/dept.services';
 
 const deptServices = new DeptServices();
 

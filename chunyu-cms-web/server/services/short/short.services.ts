@@ -1,6 +1,6 @@
 import { and, desc, eq, like, sql } from 'drizzle-orm';
-import { NewShort, Short, shortTable } from '~/server/db/schema/shorts/short';
-import { queryParams } from '~/server/db/query.helper';
+import { NewShort, Short, shortTable } from '~~/server/db/schema/shorts/short';
+import { queryParams } from '~~/server/db/query.helper';
 
 export class ShortServices {
   async add(short: NewShort) {

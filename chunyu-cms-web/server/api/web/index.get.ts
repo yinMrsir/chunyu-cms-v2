@@ -1,5 +1,5 @@
-import { ColumnsServices } from '~/server/services/basic/columns/columns.services';
-import { MovieBasics } from '~/server/db/schema/movie/movieBasics';
+import { ColumnsServices } from '~~/server/services/basic/columns/columns.services';
+import { MovieBasics } from '~~/server/db/schema/movie/movieBasics';
 
 const columnsServices = new ColumnsServices();
 

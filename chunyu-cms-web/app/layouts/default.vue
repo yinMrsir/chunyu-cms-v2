@@ -197,8 +197,8 @@
 
 <script setup lang="ts">
   import dayjs from 'dayjs';
-  import { useLoginVisible, useSidebarOpen, useTextVisible } from '~/composables/states';
-  import { WEB_TOKEN, WEB_USER_INFO } from '~/shared/cookiesName';
+  import { useLoginVisible, useSidebarOpen, useTextVisible } from '~~/app/composables/states';
+  import { WEB_TOKEN, WEB_USER_INFO } from '~~/shared/cookiesName';
 
   const route = useRoute();
   const router = useRouter();

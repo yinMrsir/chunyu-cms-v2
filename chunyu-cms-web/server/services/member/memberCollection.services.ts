@@ -1,8 +1,8 @@
 import { and, desc, eq, sql } from 'drizzle-orm';
-import { MemberCollection, memberCollectionTable, NewMemberCollection } from '~/server/db/schema/member/collection';
-import { queryParams } from '~/server/db/query.helper';
-import { ShortServices } from '~/server/services/short/short.services';
-import { shortTable } from '~/server/db/schema/shorts/short';
+import { MemberCollection, memberCollectionTable, NewMemberCollection } from '~~/server/db/schema/member/collection';
+import { queryParams } from '~~/server/db/query.helper';
+import { ShortServices } from '~~/server/services/short/short.services';
+import { shortTable } from '~~/server/db/schema/shorts/short';
 
 export class MemberCollectionServices {
   private shortServices: ShortServices;

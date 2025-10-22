@@ -1,4 +1,4 @@
-import { MemberUserServices } from '~/server/services/member/memberUser.services';
+import { MemberUserServices } from '~~/server/services/member/memberUser.services';
 
 const memberUserServices = new MemberUserServices();
 

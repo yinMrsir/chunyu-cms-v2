@@ -1,7 +1,7 @@
 import { eq, inArray, and, between, like, not } from 'drizzle-orm';
 import dayjs from 'dayjs';
-import { DICTTYPE_KEY } from '~/server/contants/redis.contant';
-import { dictDataTable, dictTypeTable } from '~/server/db/schema/system/dict';
+import { DICTTYPE_KEY } from '~~/server/contants/redis.contant';
+import { dictDataTable, dictTypeTable } from '~~/server/db/schema/system/dict';
 
 type tDictType = typeof dictTypeTable.$inferInsert;
 type tDictData = typeof dictDataTable.$inferInsert;

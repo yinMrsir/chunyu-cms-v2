@@ -1,5 +1,5 @@
-import { UserServices } from '~/server/services/admin/system/user/user.services';
-import { AuthServices } from '~/server/services/admin/auth/auth.services';
+import { UserServices } from '~~/server/services/admin/system/user/user.services';
+import { AuthServices } from '~~/server/services/admin/auth/auth.services';
 
 const userServices = new UserServices();
 const authServices = new AuthServices();

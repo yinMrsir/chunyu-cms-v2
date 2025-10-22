@@ -1,4 +1,4 @@
-import { GenreServices } from '~/server/services/basic/genre/genre.services';
+import { GenreServices } from '~~/server/services/basic/genre/genre.services';
 
 const genreServices = new GenreServices();
 

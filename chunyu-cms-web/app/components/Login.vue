@@ -75,9 +75,9 @@
 </template>
 
 <script setup>
-  import { useLoginVisible } from '~/composables/states';
-  import { request } from '~/utils/request';
-  import { WEB_TOKEN, WEB_USER_INFO } from '~/shared/cookiesName';
+  import { useLoginVisible } from '~~/app/composables/states';
+  import { request } from '~~/app/utils/request';
+  import { WEB_TOKEN, WEB_USER_INFO } from '~~/shared/cookiesName';
 
   const token = useCookie(WEB_TOKEN);
   const userInfo = useCookie(WEB_USER_INFO);

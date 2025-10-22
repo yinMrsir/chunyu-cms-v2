@@ -2,7 +2,7 @@ import { createWriteStream, promises as fs, readFileSync, statSync } from 'fs';
 import { join } from 'path';
 import dayjs from 'dayjs';
 import fsExtra from 'fs-extra';
-import { SharedServices } from '~/server/services/admin/share/shared.services';
+import { SharedServices } from '~~/server/services/admin/share/shared.services';
 
 const { readdir, unlink, rm } = fs;
 const resolve = (p: string) => join(process.cwd(), p);

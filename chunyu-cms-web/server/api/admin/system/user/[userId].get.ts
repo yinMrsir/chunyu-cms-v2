@@ -1,6 +1,6 @@
-import { UserServices } from '~/server/services/admin/system/user/user.services';
-import { PostServices } from '~/server/services/admin/system/post/post.services';
-import { RoleServices } from '~/server/services/admin/system/role/role.services';
+import { UserServices } from '~~/server/services/admin/system/user/user.services';
+import { PostServices } from '~~/server/services/admin/system/post/post.services';
+import { RoleServices } from '~~/server/services/admin/system/role/role.services';
 
 const userServices = new UserServices();
 const postServices = new PostServices();

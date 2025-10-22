@@ -1,6 +1,6 @@
-import { MovieWeeklyVisitsServices } from '~/server/services/movie/movieWeeklyVisits/movieWeeklyVisits.services';
-import { MovieMonthVisitsServices } from '~/server/services/movie/movieMonthVisits/movieMonthVisits.services';
-import { MovieYearVisitsServices } from '~/server/services/movie/movieYearVisits/movieYearVisits.services';
+import { MovieWeeklyVisitsServices } from '~~/server/services/movie/movieWeeklyVisits/movieWeeklyVisits.services';
+import { MovieMonthVisitsServices } from '~~/server/services/movie/movieMonthVisits/movieMonthVisits.services';
+import { MovieYearVisitsServices } from '~~/server/services/movie/movieYearVisits/movieYearVisits.services';
 
 const movieWeeklyVisitsServices = new MovieWeeklyVisitsServices();
 const movieMonthVisitsServices = new MovieMonthVisitsServices();

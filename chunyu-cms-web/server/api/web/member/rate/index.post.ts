@@ -1,5 +1,5 @@
-import { MemberRateServices } from '~/server/services/member/memberRate.services';
-import { MovieRateServices } from '~/server/services/movie/movieRate/movieRate.services';
+import { MemberRateServices } from '~~/server/services/member/memberRate.services';
+import { MovieRateServices } from '~~/server/services/movie/movieRate/movieRate.services';
 
 const memberRateServices = new MemberRateServices();
 const movieRateServices = new MovieRateServices();

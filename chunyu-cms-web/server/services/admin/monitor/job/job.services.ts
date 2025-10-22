@@ -1,14 +1,14 @@
 import * as schedule from 'node-schedule';
 import { and, eq, inArray } from 'drizzle-orm';
-import { Job, jobTable, NewJob } from '~/server/db/schema/monitor/job';
-import { JobLog, jobLogTable } from '~/server/db/schema/monitor/jobLog';
-import { queryParams } from '~/server/db/query.helper';
-import { MemberOrderServices } from '~/server/services/member/memberOrder.services';
-import { MemberWalletServices } from '~/server/services/member/memberWallet.services';
-import { WxPayServices } from '~/server/services/wxPay/wxPay.services';
-import { MovieWeeklyVisitsServices } from '~/server/services/movie/movieWeeklyVisits/movieWeeklyVisits.services';
-import { MovieMonthVisitsServices } from '~/server/services/movie/movieMonthVisits/movieMonthVisits.services';
-import { MovieYearVisitsServices } from '~/server/services/movie/movieYearVisits/movieYearVisits.services';
+import { Job, jobTable, NewJob } from '~~/server/db/schema/monitor/job';
+import { JobLog, jobLogTable } from '~~/server/db/schema/monitor/jobLog';
+import { queryParams } from '~~/server/db/query.helper';
+import { MemberOrderServices } from '~~/server/services/member/memberOrder.services';
+import { MemberWalletServices } from '~~/server/services/member/memberWallet.services';
+import { WxPayServices } from '~~/server/services/wxPay/wxPay.services';
+import { MovieWeeklyVisitsServices } from '~~/server/services/movie/movieWeeklyVisits/movieWeeklyVisits.services';
+import { MovieMonthVisitsServices } from '~~/server/services/movie/movieMonthVisits/movieMonthVisits.services';
+import { MovieYearVisitsServices } from '~~/server/services/movie/movieYearVisits/movieYearVisits.services';
 
 export class JobServices {
   private static instance: any;

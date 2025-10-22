@@ -1,7 +1,7 @@
 import { and, between, eq, inArray, like } from 'drizzle-orm';
 import dayjs from 'dayjs';
-import { queryParams } from '~/server/db/query.helper';
-import { NewPost, Post, postTable } from '~/server/db/schema/system/post';
+import { queryParams } from '~~/server/db/query.helper';
+import { NewPost, Post, postTable } from '~~/server/db/schema/system/post';
 
 export class PostServices {
   /* 新增岗位 */

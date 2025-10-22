@@ -1,4 +1,4 @@
-import { MovieLevelServices } from '~/server/services/movie/movieLevel/movieLevel.services';
+import { MovieLevelServices } from '~~/server/services/movie/movieLevel/movieLevel.services';
 
 const movieLevelServices = new MovieLevelServices();
 

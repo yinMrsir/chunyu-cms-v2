@@ -1,4 +1,4 @@
-import { MemberMovieServices } from '~/server/services/member/memberMovie.services';
+import { MemberMovieServices } from '~~/server/services/member/memberMovie.services';
 
 const memberMovieServices = new MemberMovieServices();
 

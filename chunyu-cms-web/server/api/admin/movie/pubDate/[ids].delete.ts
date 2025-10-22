@@ -1,4 +1,4 @@
-import { PubDateServices } from '~/server/services/movie/pubDate/pubDate.services';
+import { PubDateServices } from '~~/server/services/movie/pubDate/pubDate.services';
 
 const pubDateServices = new PubDateServices();
 

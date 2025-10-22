@@ -1,9 +1,9 @@
 import { and, eq, like, sql } from 'drizzle-orm';
 import { Storage } from 'unstorage';
-import { MemberUser, memberUserTable, NewMemberUser } from '~/server/db/schema/member/user';
-import { queryParams } from '~/server/db/query.helper';
-import { USER_WEB_TOKEN_KEY } from '~/server/contants/redis.contant';
-import { MemberWalletServices } from '~/server/services/member/memberWallet.services';
+import { MemberUser, memberUserTable, NewMemberUser } from '~~/server/db/schema/member/user';
+import { queryParams } from '~~/server/db/query.helper';
+import { USER_WEB_TOKEN_KEY } from '~~/server/contants/redis.contant';
+import { MemberWalletServices } from '~~/server/services/member/memberWallet.services';
 
 export class MemberUserServices {
   private redis: Storage<any>;

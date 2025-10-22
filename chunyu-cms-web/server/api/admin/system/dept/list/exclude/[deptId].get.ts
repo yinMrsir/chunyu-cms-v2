@@ -1,4 +1,4 @@
-import { DeptServices } from '~/server/services/admin/system/dept/dept.services';
+import { DeptServices } from '~~/server/services/admin/system/dept/dept.services';
 
 /* 查询除自己(包括子类)外部门列表 */
 export default defineEventHandler(async event => {

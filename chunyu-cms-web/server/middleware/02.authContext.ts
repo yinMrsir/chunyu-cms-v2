@@ -1,5 +1,5 @@
 import * as jwt from 'jsonwebtoken';
-import { USER_WEB_TOKEN_KEY } from '~/server/contants/redis.contant';
+import { USER_WEB_TOKEN_KEY } from '../contants/redis.contant';
 
 const redis = useStorage('redis');
 

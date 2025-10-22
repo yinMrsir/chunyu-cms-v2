@@ -1,6 +1,6 @@
-import { request } from '~/utils/request';
+import { request } from '~~/app/utils/request';
 import { WEB_TOKEN } from '#shared/cookiesName';
-import { useLoginVisible } from '~/composables/states';
+import { useLoginVisible } from '~~/app/composables/states';
 
 export function useShortActions() {
   const token = useCookie(WEB_TOKEN);

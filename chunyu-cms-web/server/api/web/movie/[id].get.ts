@@ -1,5 +1,5 @@
-import { MovieBasicsServices } from '~/server/services/movie/movieBasics/movieBasics.services';
-import { MovieVideo } from '~/server/db/schema/movie/movieVideo';
+import { MovieBasicsServices } from '~~/server/services/movie/movieBasics/movieBasics.services';
+import { MovieVideo } from '~~/server/db/schema/movie/movieVideo';
 
 const movieBasicsServices = new MovieBasicsServices();
 

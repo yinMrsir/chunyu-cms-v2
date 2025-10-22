@@ -1,6 +1,6 @@
 import { eq, inArray, sql } from 'drizzle-orm';
-import { Level, levelTable, NewLevel } from '~/server/db/schema/basic/level';
-import { queryParams } from '~/server/db/query.helper';
+import { Level, levelTable, NewLevel } from '~~/server/db/schema/basic/level';
+import { queryParams } from '~~/server/db/query.helper';
 
 export class LevelServices {
   /* 新增 */

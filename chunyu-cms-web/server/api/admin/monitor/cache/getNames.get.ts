@@ -1,4 +1,4 @@
-import { DICTTYPE_KEY, USER_TOKEN_KEY, USER_WEB_KEY } from '~/server/contants/redis.contant';
+import { DICTTYPE_KEY, USER_TOKEN_KEY, USER_WEB_KEY } from '~~/server/contants/redis.contant';
 
 export default defineEventHandler(() => {
   const caches = [];

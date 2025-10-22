@@ -1,6 +1,6 @@
 import { and, asc, eq, inArray, sql } from 'drizzle-orm';
-import { MovieVideo, movieVideoTable, NewMovieVideo } from '~/server/db/schema/movie/movieVideo';
-import { queryParams } from '~/server/db/query.helper';
+import { MovieVideo, movieVideoTable, NewMovieVideo } from '~~/server/db/schema/movie/movieVideo';
+import { queryParams } from '~~/server/db/query.helper';
 
 export class MovieVideoServices {
   /* 新增 */

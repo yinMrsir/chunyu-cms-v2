@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken';
-import { MemberMovieServices } from '~/server/services/member/memberMovie.services';
-import { USER_WEB_TOKEN_KEY } from '~/server/contants/redis.contant';
+import { MemberMovieServices } from '~~/server/services/member/memberMovie.services';
+import { USER_WEB_TOKEN_KEY } from '~~/server/contants/redis.contant';
 
 const redis = useStorage('redis');
 const memberMovieServices = new MemberMovieServices();

@@ -19,5 +19,6 @@
     "url": "https://github.com/yinMrsir/chunyu-cms-v2/issues"
   },
   "homepage": "https://cms.yinchunyu.com",
-  "dependencies": {}
+  "dependencies": {},
+  "packageManager": "pnpm@10.14.0+sha1.85759954ad817d248e2fed7f789f046a24f0327d"
 }

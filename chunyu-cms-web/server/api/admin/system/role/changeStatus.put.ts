@@ -1,4 +1,4 @@
-import { RoleServices } from '~/server/services/admin/system/role/role.services';
+import { RoleServices } from '~~/server/services/admin/system/role/role.services';
 
 export default defineEventHandler(async event => {
   const body = await readBody(event);
