@@ -31,7 +31,7 @@ V2 相比[V1 版本](https://github.com/yinMrsir/chunyu-cms)使用[DrizzleOrm](h
 也考虑了是否后续会将后台管理系统也合并，但目前没有计划，、
 
 - 第一，管理端不需要 SEO。
-- 第二，如何需要集成到一个服务中，完全可以把后台管理系统打包文件移入 Nuxt 目录中，这样只需要一个服务即可。如下面的[部署方式一](#方式一-命令部署)
+- 第二，如何需要集成到一个服务中，你可以使用`pnpm run build:single`，然后通过 nginx 代理到`dist`目录即可，这样只需要一个服务，如演示地址：https://cms.yinchunyu.com/admin。
 - 第三，管理端移入 nuxt 中，会要消耗大量时间，先把时间用于其他地方，😂。
 
 当然，NestJs 有它的优势，也有很多基于它的模块，在有些功能上实现会更方便，如何你喜欢 NestJs，可以继续使用[之前的版本](https://github.com/yinMrsir/chunyu-cms)。
@@ -113,45 +113,7 @@ pnpm dev
 
 ## 部署
 
-### 方式一: 命令部署
-
-执行以下命令：
-
-```shell
-node bin/deploy.js
-```
-
-部署完成后可以访问：
-
-用户端：http://localhost:3000/
-
-管理端：http://localhost:3000/admin/
-用户名：admin，密码：admin123
-
-此方式会把管理端代码拷贝到`chunyu-cms-web/admin`目录中，但此方式路由使用的是 hash 模式。
-
-⚠️ 注意：你仍需要通过 nginx 设置代理到子目录, nginx 如下配置：
-
-```nginx configuration
-server {
-    listen 80;
-    server_name your.domain.com;
-
-    location / {
-        proxy_pass http://127.0.0.1:3000/;
-    }
-    location /uploads {
-        alias /path/to/chunyu-cms-v2/chunyu-cms-web/uploads;
-    }
-    location /admin {
-        alias /path/to/chunyu-cms-v2/chunyu-cms-web/admin;
-    }
-}
-```
-
-部署后访问演示地址：https://cms.yinchunyu.com/admin
-
-### 方式二：自行部署
+### 方式一: 自行部署（推荐）
 
 #### 构建管理端
 
@@ -196,7 +158,7 @@ server {
 
 server {
     listen 80;
-    server_name your.domain.com;
+    server_name your-admin.domain.com;
 
     location / {
         root  /path/to/chunyu-cms-v2/chunyu-cms-admin/dist;
@@ -210,11 +172,44 @@ server {
 }
 ```
 
-部署后访问演示地址：https://cms-admin.yinchunyu.com
-
 nginx 更详细配置可[查看](nginx.conf)
 
 Nuxt 项目部署文档：https://nuxt.com/docs/getting-started/deployment
+
+### 方式二: 命令部署（不推荐）
+
+执行以下命令：
+
+```shell
+node bin/deploy.js
+```
+
+部署完成后可以访问：
+
+用户端：http://localhost:3000/
+
+管理端：http://localhost:3000/admin/
+用户名：admin，密码：admin123
+
+此方式会把管理端代码拷贝到`chunyu-cms-web/public/admin`目录中，此方式路由使用的是 hash 模式。
+
+⚠️ 注意：修改管理端代码部署需要再次执行`node bin/deploy.js`命令：
+
+```nginx configuration
+server {
+    listen 80;
+    server_name your.domain.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000/;
+    }
+    location /uploads {
+        alias /path/to/chunyu-cms-v2/chunyu-cms-web/uploads;
+    }
+}
+```
+
+部署后访问演示地址：https://cms.yinchunyu.com/admin
 
 ## 支付相关
 

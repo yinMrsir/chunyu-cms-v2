@@ -28,4 +28,4 @@ ssl
 
 .data
 uploads/
-admin/
+public/admin/

@@ -81,10 +81,6 @@ export default defineNuxtConfig({
             {
               dir: path.resolve(__dirname, 'uploads'),
               baseURL: '/uploads'
-            },
-            {
-              dir: path.resolve(__dirname, 'admin'),
-              baseURL: '/admin'
             }
           ]
         : []
