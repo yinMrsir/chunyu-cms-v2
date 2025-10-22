@@ -86,8 +86,9 @@ The system uses Drizzle ORM with modular schema structure:
 1. **Content Management**: Movies, TV series, actors, genres, banners
 2. **User System**: Member registration, profiles, ratings, favorites, wallets
 3. **Payment Integration**: WeChat Pay v3 with transaction management
-4. **Analytics**: Visit statistics, user behavior tracking, content performance
+4. **Analytics**: Visit statistics, user behavior tracking, content performance, Baidu Statistics integration
 5. **Short Videos**: Upload and management system
+6. **Video Streaming**: XGPlayer integration with HLS and MP4 support
 
 ## Environment Configuration
 
@@ -99,20 +100,29 @@ The system uses Drizzle ORM with modular schema structure:
 ### Key Environment Variables (.env)
 
 ```dotenv
+# Database Configuration
 DATABASE_USERNAME=root
 DATABASE_PASSWORD=123456
 DATABASE_HOST=127.0.0.1
 DATABASE_PORT=3306
 DATABASE_DB=chunyu-cms-v2
 
+# JWT Configuration
 JWT_SECRET=chunyu-cms-v2
+
+# Redis Configuration
 REDIS_HOST=127.0.0.1
 REDIS_PORT=6379
+REDIS_USERNAME=
+REDIS_PASSWORD=
 REDIS_DB=0
+REDIS_TTL=86400
 
+# Application Configuration
 IS_DEMO_ENVIRONMENT=false
 SERVER_HOST=http://localhost:3000
 IMG_HOST=http://localhost:3000
+BAIDU_STATISTICS_ID=
 
 # Email Configuration
 FORM_USER_EMAIL=your@email.com
@@ -162,8 +172,8 @@ WECHAT_PAY_PRIVATE_KEY=/path/to/key.pem
 
 ## Runtime Requirements
 
-- **Node.js**: 18.16.0+ (managed by Volta)
-- **pnpm**: 8.9.2+ (managed by Volta)
+- **Node.js**: 20.19.0+ (managed by Volta)
+- **pnpm**: 10.14.0+ (managed by Volta)
 - **MySQL**: 8.0+
 - **Redis**: 6.0+
 
@@ -183,18 +193,25 @@ Access:
 
 ```bash
 # Build admin
-cd chunyu-cms-admin && pnpm build:prod
+cd chunyu-cms-admin && pnpm install && pnpm build:prod
 
 # Build web
-cd chunyu-cms-web && pnpm build
+cd chunyu-cms-web && pnpm install && pnpm build
 
-# Start with PM2
+# Start with PM2 (requires pm2 installed globally: npm install -g pm2)
 pm2 start pm2.config.cjs
 ```
 
 ### File Uploads
 
 Upload directory: `chunyu-cms-web/uploads/` - ensure proper write permissions
+Development: Files served from `uploads/` directory at `/uploads` base URL
+Production: Configure nginx to serve uploads directly from filesystem
+
+### Analytics and Tracking
+
+- **Baidu Statistics**: Integrated via script injection in `nuxt.config.ts`
+- **BAIDU_STATISTICS_ID**: Environment variable for Baidu Analytics site ID
 
 ## Security Notes
 
