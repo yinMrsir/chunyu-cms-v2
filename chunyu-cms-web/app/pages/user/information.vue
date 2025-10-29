@@ -23,14 +23,6 @@
               <el-radio value="2">女</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="生日">
-            <el-date-picker
-              v-model="form.birthday"
-              value-format="YYYY-MM-DD"
-              type="date"
-              placeholder="选择日期"
-            ></el-date-picker>
-          </el-form-item>
           <el-form-item label="个人简介">
             <el-input v-model="form.introduction" type="textarea" placeholder="请输入个人简介"></el-input>
           </el-form-item>
