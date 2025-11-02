@@ -143,7 +143,9 @@
           >
             <template #default="scope">
               <el-image
-                v-if="scope.row[item.field] || item.render(scope.row)"
+                v-if="
+                  scope.row[item.field] || typeof item?.render === 'function'
+                "
                 :src="
                   item.render
                     ? item.render(scope.row)
