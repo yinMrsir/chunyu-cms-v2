@@ -151,13 +151,10 @@
   const token = useCookie(WEB_TOKEN);
   const loginVisible = useLoginVisible();
 
-  const form = ref({ isDm: '1', content: '' });
   const tabStatus = ref('video');
   const vIndex = ref(0);
   const rate = ref();
   const movieRate = ref();
-  const pageNum = ref(1);
-  const memberComments = ref([]);
   const episodes = ref([]);
   const currentEpisodeId = ref(null);
   let player = null;
@@ -215,59 +212,7 @@
 
   onMounted(async () => {
     if (videoInfo.value) {
-      const [Player, Mp4Plugin, PayTip, HlsPlugin] = await Promise.all([
-        import('xgplayer'),
-        import('xgplayer-mp4'),
-        import('~~/app/plugins/xgplayer/payTip'),
-        import('xgplayer-hls.js')
-      ]);
-
-      const videoType = videoInfo.value.url.split('.').pop();
-      const plugins = [PayTip.default];
-      if (videoType === 'm3u8') {
-        plugins.push(HlsPlugin.default);
-      } else if (videoType === 'mp4') {
-        plugins.push(Mp4Plugin.default);
-      } else {
-        ElMessage.error('暂不支持该视频格式播放');
-        return;
-      }
-
-      // eslint-disable-next-line new-cap
-      player = new Player.default({
-        id: 'mse',
-        useHls: true,
-        controls: {
-          autoHide: false
-        },
-        autoplay: true,
-        volume: 0.3,
-        url: videoInfo.value.url,
-        playsinline: true,
-        height: '100%',
-        width: '100%',
-        plugins,
-        payTip: {
-          tip: `此为付费视频，支付${detail.value.paymentAmount}金币继续观看？`,
-          lookTime: detail.value.freeDuration * 60,
-          arriveTime() {
-            if (isUserBuy.value) return;
-            // 影片设置了需要购买才能观看并且是正片
-            if (+detail.value.isPay === 1) {
-              player?.pause();
-              payTipInstance?.show('flex');
-            }
-          },
-          clickButton() {
-            if (!token.value) {
-              loginVisible.value = true;
-            } else {
-              player && buyMovie(player);
-            }
-          }
-        }
-      });
-      payTipInstance = player.getPlugin('payTip');
+      await createPlayer();
     }
     if (token.value) {
       await getMemberRate();
@@ -330,6 +275,97 @@
         type: 'success',
         message: '购买成功'
       });
+    });
+  }
+
+  /** 播放下一集 */
+  function playNextEpisode() {
+    const currentIndex = vIndex.value;
+    const nextIndex = currentIndex + 1;
+
+    if (nextIndex < episodes.value.length) {
+      const nextEpisode = episodes.value[nextIndex];
+
+      // 更新路由参数
+      route.query.rid = nextEpisode.resourceId.toString();
+      route.query.rtype = nextEpisode.resources.toString();
+
+      // 更新当前集数信息
+      vIndex.value = nextIndex;
+      currentEpisodeId.value = nextEpisode.resourceId;
+
+      // 重新创建播放器以适配新的视频格式
+      if (player) {
+        player.destroy();
+        createPlayer(nextEpisode);
+      }
+
+      // 显示切换提示
+      ElMessage.info(`正在播放：${nextEpisode.title || `第${nextEpisode.sort}集`}`);
+    } else {
+      ElMessage.info('已经是最后一集了！');
+    }
+  }
+
+  /** 创建播放器 */
+  async function createPlayer(episodeInfo = videoInfo.value) {
+    const [Player, Mp4Plugin, PayTip, HlsPlugin] = await Promise.all([
+      import('xgplayer'),
+      import('xgplayer-mp4'),
+      import('~~/app/plugins/xgplayer/payTip'),
+      import('xgplayer-hls.js')
+    ]);
+
+    const videoType = episodeInfo.url.split('.').pop();
+    const plugins = [PayTip.default];
+    if (videoType === 'm3u8') {
+      plugins.push(HlsPlugin.default);
+    } else if (videoType === 'mp4') {
+      plugins.push(Mp4Plugin.default);
+    } else {
+      ElMessage.error('暂不支持该视频格式播放');
+      return;
+    }
+
+    // eslint-disable-next-line new-cap
+    player = new Player.default({
+      id: 'mse',
+      useHls: true,
+      controls: {
+        autoHide: false
+      },
+      autoplay: true,
+      volume: 0.3,
+      url: episodeInfo.url,
+      playsinline: true,
+      height: '100%',
+      width: '100%',
+      plugins,
+      payTip: {
+        tip: `此为付费视频，支付${detail.value.paymentAmount}金币继续观看？`,
+        lookTime: detail.value.freeDuration * 60,
+        arriveTime() {
+          if (isUserBuy.value) return;
+          // 影片设置了需要购买才能观看并且是正片
+          if (+detail.value.isPay === 1) {
+            player?.pause();
+            payTipInstance?.show('flex');
+          }
+        },
+        clickButton() {
+          if (!token.value) {
+            loginVisible.value = true;
+          } else {
+            player && buyMovie(player);
+          }
+        }
+      }
+    });
+
+    // 重新绑定事件监听器
+    payTipInstance = player.getPlugin('payTip');
+    player.on('ended', () => {
+      playNextEpisode();
     });
   }
 

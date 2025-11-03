@@ -217,8 +217,6 @@
   const route = useRoute();
   const token = useCookie(WEB_TOKEN);
   const loginVisible = useLoginVisible();
-
-  const formRef = useTemplateRef('formRef');
   const form = ref({ isDm: '1', content: '' });
   const tabStatus = ref('video');
   const vIndex = ref(0);
@@ -253,81 +251,26 @@
 
   const videoId = computed(() => detail.value?.movieVideo?.[vIndex.value]?.video?.videoId);
   // 获取视频资源的详情，弹幕，评论
-  const [{ data: videoInfo }, { data: dms }, { data: memberCommentData, refresh: memberCommentsRefresh }] =
-    await Promise.all([
-      useFetch(`/api/web/movie/video/${videoId.value}`),
-      useFetch(`/api/web/movie/comment/dm?videoId=${videoId.value}`),
-      useAsyncData(`${route.fullPath}:${videoId.value}:${pageNum}`, () => {
-        return $fetch(`/api/web/movie/comment/list?videoId=${videoId.value}&pageNum=${pageNum.value}`);
-      })
-    ]);
+  const [
+    { data: videoInfo, refresh: videoInfoRefresh },
+    { data: dms, refresh: dmsRefresh },
+    { data: memberCommentData, refresh: memberCommentsRefresh }
+  ] = await Promise.all([
+    useAsyncData(`videoInfo:${route.fullPath}:${videoId.value}`, () => $fetch(`/api/web/movie/video/${videoId.value}`)),
+    useAsyncData(`dm:${route.fullPath}:${videoId.value}`, () =>
+      $fetch(`/api/web/movie/comment/dm?videoId=${videoId.value}`)
+    ),
+    useAsyncData(`${route.fullPath}:${videoId.value}:${pageNum}`, () => {
+      return $fetch(`/api/web/movie/comment/list?videoId=${videoId.value}&pageNum=${pageNum.value}`);
+    })
+  ]);
   if (memberCommentData.value.rows) {
     memberComments.value = memberComments.value.concat(memberCommentData.value.rows);
   }
 
   onMounted(async () => {
     if (videoInfo.value) {
-      const [Player, Mp4Plugin, Danmu, PayTip, HlsPlugin] = await Promise.all([
-        import('xgplayer'),
-        import('xgplayer-mp4'),
-        import('xgplayer/es/plugins/danmu'),
-        import('~~/app/plugins/xgplayer/payTip'),
-        import('xgplayer-hls.js')
-      ]);
-
-      const videoType = videoInfo.value.url.split('.').pop();
-      const plugins = [Danmu.default, PayTip.default];
-      if (videoType === 'm3u8') {
-        plugins.push(HlsPlugin.default);
-      } else if (videoType === 'mp4') {
-        plugins.push(Mp4Plugin.default);
-      } else {
-        ElMessage.error('暂不支持该视频格式播放');
-        return;
-      }
-
-      // eslint-disable-next-line new-cap
-      player = new Player.default({
-        id: 'mse',
-        useHls: true,
-        controls: {
-          autoHide: false
-        },
-        autoplay: true,
-        volume: 0.3,
-        url: videoInfo.value.url,
-        playsinline: true,
-        height: '100%',
-        width: '100%',
-        plugins,
-        danmu: {
-          comments: dms.value,
-          area: {
-            start: 0,
-            end: 1
-          }
-        },
-        payTip: {
-          tip: `此为付费视频，支付${detail.value.paymentAmount}金币继续观看？`,
-          lookTime: detail.value.freeDuration * 60,
-          arriveTime() {
-            if (isUserBuy.value) return;
-            // 影片设置了需要购买才能观看并且是正片
-            if (+detail.value.isPay === 1) {
-              player?.pause();
-              payTipInstance?.show('flex');
-            }
-          },
-          clickButton() {
-            if (!token.value) {
-              loginVisible.value = true;
-            } else {
-              player && buyMovie(player);
-            }
-          }
-        }
-      });
-      payTipInstance = player.getPlugin('payTip');
+      await createPlayer(videoInfo.value);
     }
     if (token.value) {
       await getMemberRate();
@@ -428,6 +371,127 @@
         type: 'success',
         message: '购买成功'
       });
+    });
+  }
+
+  /** 播放下一个视频 */
+  async function playNextVideo() {
+    const nextIndex = vIndex.value + 1;
+
+    if (nextIndex < detail.value.movieVideo.length) {
+      const nextVideo = detail.value.movieVideo[nextIndex];
+
+      // 更新当前视频索引
+      vIndex.value = nextIndex;
+
+      // 获取下一个视频的详细信息、弹幕和评论
+      const nextVideoId = nextVideo.video?.videoId;
+      if (!nextVideoId) {
+        ElMessage.error('无法获取下一个视频信息');
+        return;
+      }
+
+      // const [{ data: nextVideoInfo }, { data: nextDms }, { data: nextMemberCommentData }] = await Promise.all([
+      //   useFetch(`/api/web/movie/video/${nextVideoId}`),
+      //   useFetch(`/api/web/movie/comment/dm?videoId=${nextVideoId}`),
+      //   useAsyncData(`${route.fullPath}:${nextVideoId}:${1}`, () => {
+      //     return $fetch(`/api/web/movie/comment/list?videoId=${nextVideoId}&pageNum=1`);
+      //   })
+      // ]);
+      await Promise.all([videoInfoRefresh(), dmsRefresh(), memberCommentsRefresh()]);
+
+      // 重新创建播放器以适配新的视频
+      if (player) {
+        player.destroy();
+        createPlayer(videoInfo.value, dms.value);
+      }
+
+      // 清空并重新加载评论
+      memberComments.value = [];
+      pageNum.value = 1;
+      if (memberCommentData.value.rows) {
+        memberComments.value = memberCommentData.value.rows;
+      }
+
+      // 显示切换提示
+      ElMessage.info(`正在播放：${nextVideo.title}`);
+    } else {
+      ElMessage.info('已经是最后一个视频了！');
+    }
+  }
+
+  /** 创建播放器 */
+  async function createPlayer(videoInfo, danmuData = dms.value) {
+    if (!videoInfo) {
+      console.warn('videoInfo is undefined');
+      return;
+    }
+    const [Player, Mp4Plugin, Danmu, PayTip, HlsPlugin] = await Promise.all([
+      import('xgplayer'),
+      import('xgplayer-mp4'),
+      import('xgplayer/es/plugins/danmu'),
+      import('~~/app/plugins/xgplayer/payTip'),
+      import('xgplayer-hls.js')
+    ]);
+    console.log(videoInfo.url);
+    const videoType = videoInfo.url.split('.').pop();
+    const plugins = [Danmu.default, PayTip.default];
+    if (videoType === 'm3u8') {
+      plugins.push(HlsPlugin.default);
+    } else if (videoType === 'mp4') {
+      plugins.push(Mp4Plugin.default);
+    } else {
+      ElMessage.error('暂不支持该视频格式播放');
+      return;
+    }
+
+    // eslint-disable-next-line new-cap
+    player = new Player.default({
+      id: 'mse',
+      useHls: true,
+      controls: {
+        autoHide: false
+      },
+      autoplay: true,
+      volume: 0.3,
+      url: videoInfo.url,
+      playsinline: true,
+      height: '100%',
+      width: '100%',
+      plugins,
+      danmu: {
+        comments: danmuData,
+        area: {
+          start: 0,
+          end: 1
+        }
+      },
+      payTip: {
+        tip: `此为付费视频，支付${detail.value.paymentAmount}金币继续观看？`,
+        lookTime: detail.value.freeDuration * 60,
+        arriveTime() {
+          if (isUserBuy.value) return;
+          // 影片设置了需要购买才能观看并且是正片
+          if (+detail.value.isPay === 1) {
+            player?.pause();
+            payTipInstance?.show('flex');
+          }
+        },
+        clickButton() {
+          if (!token.value) {
+            loginVisible.value = true;
+          } else {
+            player && buyMovie(player);
+          }
+        }
+      }
+    });
+
+    payTipInstance = player.getPlugin('payTip');
+
+    // 重新绑定事件监听器
+    player.on('ended', () => {
+      playNextVideo();
     });
   }
 
