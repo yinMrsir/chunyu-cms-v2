@@ -398,6 +398,7 @@
       //     return $fetch(`/api/web/movie/comment/list?videoId=${nextVideoId}&pageNum=1`);
       //   })
       // ]);
+      pageNum.value = 1;
       await Promise.all([videoInfoRefresh(), dmsRefresh(), memberCommentsRefresh()]);
 
       // 重新创建播放器以适配新的视频
@@ -408,7 +409,6 @@
 
       // 清空并重新加载评论
       memberComments.value = [];
-      pageNum.value = 1;
       if (memberCommentData.value.rows) {
         memberComments.value = memberCommentData.value.rows;
       }
