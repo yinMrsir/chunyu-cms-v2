@@ -2,7 +2,7 @@
  * @Description: 公共方法
  */
 
-import * as fs from 'fs';
+import * as fs from 'fs-extra';
 import CryptoJS from 'crypto-js';
 import { customAlphabet, nanoid } from 'nanoid';
 import iconv from 'iconv-lite';
@@ -163,12 +163,9 @@ export class SharedServices {
    * 检测目录是否存在，不存在则创建
    * @param directoryPath
    */
-  createDirectorySync(directoryPath: string) {
+  async createDirectorySync(directoryPath: string) {
     try {
-      if (fs.existsSync(process.cwd() + '/' + directoryPath)) {
-        return;
-      }
-      fs.mkdirSync(process.cwd() + '/' + directoryPath);
+      await fs.ensureDir(process.cwd() + '/' + directoryPath);
     } catch (err) {
       console.error(`创建目录 ${directoryPath} 时出错：`, err);
     }

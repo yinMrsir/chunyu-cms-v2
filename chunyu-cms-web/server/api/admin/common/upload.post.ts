@@ -29,7 +29,7 @@ export default defineEventHandler(async (event: H3Event<EventHandlerRequest>) =>
     const currentDate = dayjs().format('YYYY-MM-DD');
     const dir = `${uploadPath}/${currentDate}`;
     // 创建目录
-    shareServices.createDirectorySync(dir);
+    await shareServices.createDirectorySync(dir);
     const fileName = `/${shareServices.generateRandomValue(9)}.${fileExtension}`;
     // 如果是阿里云上传
     if (fileConfig?.configValue === 'aliyun') {
