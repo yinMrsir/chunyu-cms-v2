@@ -42,7 +42,7 @@
         <div class="genre flex gap-x-20px">
           <nuxt-link
             v-for="gen in item.genre"
-            :key="gen.id"
+            :key="gen.genreId"
             :to="`/column/${item.value}/show?gid=${gen.genreId}`"
             class="hidden lg:inline-block"
           >
@@ -58,7 +58,7 @@
           <li v-for="v in item.movies" :key="v.movieBasicsId">
             <nuxt-link :to="`/column/${v.columnValue}/detail/${v.movieBasicsId}`">
               <div class="relative">
-                <NuxtImg size="200px" format="webp" loading="lazy" :alt="v?.title" :src="v.poster" />
+                <NuxtImg size="200px" format="webp" loading="lazy" :alt="v?.title" :src="v.poster ?? ''" />
                 <span v-if="v.movieRate?.rateUserCount" class="rate"> {{ v.movieRate.rate.toFixed(1) }} </span>
                 <span v-if="v.isPay === 1" class="absolute right-0 top-0 z-10 text-12px md:text-14px p-x-8px bg-orange">
                   付费
@@ -79,35 +79,37 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
   import { Swiper, SwiperSlide } from 'swiper/vue';
   import 'swiper/css';
   import 'swiper/css/pagination';
+  import type { Swiper as SwiperClass } from 'swiper/types';
   import { Pagination, Autoplay } from 'swiper/modules';
+  import type { WebIndexList } from '~~/types/api/webIndex';
 
   const currIndex = ref(0);
   const [{ data: banner }, { data: columns }] = await Promise.all([
     useFetch('/api/web/basic/banner/list', {
       transform: banner => {
         return banner.map(item => ({
-          img: item.img,
+          img: item.img || '',
           url: item.url,
           urlType: item.urlType,
           id: item.id,
           title: item.title,
-          videoUrl: item.videoUrl
+          videoUrl: item.videoUrl || ''
         }));
       },
       getCachedData: key => localCacheData(key, 0)
     }),
-    useFetch('/api/web', {
+    useFetch<WebIndexList>('/api/web', {
       getCachedData: key => localCacheData(key)
     })
   ]);
 
-  const onSlideChange = swiper => {
+  const onSlideChange = (swiper: SwiperClass) => {
     currIndex.value = swiper.activeIndex;
-    const videoDom = document.querySelectorAll('.banner-video');
+    const videoDom: NodeListOf<HTMLVideoElement> = document.querySelectorAll('.banner-video');
     videoDom.forEach((item, index) => {
       if (index === currIndex.value) {
         item.play();
@@ -118,7 +120,11 @@
   };
 
   const btnLink = computed(() => {
-    return banner.value?.[currIndex.value].url;
+    const currBanner = banner.value;
+    if (currBanner && currBanner.length > 0) {
+      return currBanner[currIndex.value]?.url ?? '';
+    }
+    return '';
   });
 </script>
 
@@ -145,7 +151,7 @@
         }
         p {
           color: rgba(255, 255, 255, 0.35);
-          @apply text-12px mt-5px whitespace-nowrap text-ellipsis overflow-hidden;
+          @apply text-12px mt-5px truncate;
         }
         .rate {
           @apply text-[#fff] absolute right-10px bottom-10px z-10 text-14px;
