@@ -14,7 +14,14 @@ export default defineNuxtConfig({
     '@/assets/css/style.css',
     '@/assets/css/short.scss'
   ],
-  modules: ['@element-plus/nuxt', '@unocss/nuxt', '@nuxt/image'],
+  modules: ['@element-plus/nuxt', '@unocss/nuxt', '@nuxt/image', '@nuxtjs/i18n'],
+  i18n: {
+    defaultLocale: 'cn',
+    locales: [
+      { code: 'cn', name: 'china', file: 'cn.json' },
+      { code: 'en', name: 'English', file: 'en.json' }
+    ]
+  },
   vite: {
     css: {
       preprocessorOptions: {

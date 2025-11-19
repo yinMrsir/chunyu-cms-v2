@@ -2,7 +2,7 @@
   <div>
     <el-dialog v-model="loginVisible" width="315px" class="login-box">
       <el-tabs v-model="loginType" class="mt-15px">
-        <el-tab-pane label="验证码登录" name="1">
+        <el-tab-pane :label="$t('verification_code_login')" name="1">
           <el-form
             ref="verificationLoginFormRef"
             size="large"
@@ -12,22 +12,22 @@
             class="mt-20px"
           >
             <el-form-item prop="email">
-              <el-input v-model="verificationLoginForm.email" placeholder="请输入邮箱"></el-input>
+              <el-input v-model="verificationLoginForm.email" :placeholder="$t('please_enter_email')" />
             </el-form-item>
             <el-form-item prop="code" class="!mb-6px relative">
-              <el-input v-model="verificationLoginForm.code" placeholder="请输入验证码"></el-input>
+              <el-input v-model="verificationLoginForm.code" :placeholder="$t('please_enter_verification_code')" />
               <div class="absolute right-8px top-[2px] z-10">
                 <el-button link size="small" :loading="sendCodeLoading" @click="handleSendCode">
-                  {{ codeTime === 0 ? '获取验证码' : codeTime + 's后可重发' }}
+                  {{ codeTime === 0 ? $t('get_verification_code') : codeTime + $t('seconds_before_retry') }}
                 </el-button>
               </div>
             </el-form-item>
             <el-button class="login-button" type="primary" :loading="submitLoading" @click="handleLogin">
-              登录/注册
+              {{ $t('login_register') }}
             </el-button>
           </el-form>
         </el-tab-pane>
-        <el-tab-pane label="密码登录" name="2">
+        <el-tab-pane :label="$t('password_login')" name="2">
           <el-form
             ref="loginFormRef"
             size="large"
@@ -37,13 +37,13 @@
             class="mt-20px"
           >
             <el-form-item prop="email">
-              <el-input v-model="loginForm.email" placeholder="请输入邮箱"></el-input>
+              <el-input v-model="loginForm.email" :placeholder="$t('please_enter_email')"></el-input>
             </el-form-item>
             <el-form-item prop="password" class="!mb-6px relative">
               <el-input
                 v-model="loginForm.password"
                 :type="isShowPassword ? 'text' : 'password'"
-                placeholder="默认密码：888888"
+                :placeholder="$t('default_password')"
               ></el-input>
               <span class="absolute right-8px top-2px z-10 cursor-pointer" @click="isShowPassword = !isShowPassword">
                 <ElIconView v-if="isShowPassword" class="inline-block w-20px h-20px" />
@@ -51,7 +51,7 @@
               </span>
             </el-form-item>
             <el-button class="login-button" type="primary" :loading="submitLoading" @click="handleLogin">
-              登录
+              {{ $t('login') }}
             </el-button>
           </el-form>
         </el-tab-pane>
@@ -65,8 +65,9 @@
             style="--el-color-primary: #00da5a; --el-checkbox-bg-color: #4b4b4b"
           />
           <span>
-            同意 <nuxt-link to="/protocol" class="color-#00da5ab2">《用户协议》</nuxt-link>和
-            <nuxt-link to="/policies" class="color-#00da5ab2">《隐私条款》</nuxt-link>
+            {{ $t('agree') }} <nuxt-link to="/protocol" class="color-#00da5ab2">{{ $t('user_agreement') }}</nuxt-link>
+            {{ $t('and') }}
+            <nuxt-link to="/policies" class="color-#00da5ab2">{{ $t('privacy_policy') }}</nuxt-link>
           </span>
         </div>
       </div>
@@ -74,13 +75,14 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
   import { useLoginVisible } from '~~/app/composables/states';
   import { request } from '~~/app/utils/request';
   import { WEB_TOKEN, WEB_USER_INFO } from '~~/shared/cookiesName';
+  import type { CookieUserInfo } from '~~/types/hooks';
 
   const token = useCookie(WEB_TOKEN);
-  const userInfo = useCookie(WEB_USER_INFO);
+  const userInfo = useCookie<CookieUserInfo>(WEB_USER_INFO);
   const route = useRoute();
   const loginVisible = useLoginVisible();
   const checkboxRef = useTemplateRef('checkboxRef');
@@ -90,16 +92,17 @@
     email: '542968439@qq.com',
     password: ''
   });
+  const { t } = useI18n();
   const loginFormRules = ref({
     email: [
-      { required: true, message: '请输入邮箱', trigger: 'change' },
+      { required: true, message: t('please_enter_email'), trigger: 'change' },
       {
         pattern: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
-        message: '请输入正确的邮箱',
+        message: t('please_enter_correct_email'),
         trigger: 'change'
       }
     ],
-    password: [{ required: true, message: '请输入密码', trigger: 'change' }]
+    password: [{ required: true, message: t('please_enter_password'), trigger: 'change' }]
   });
   const loginFormRef = useTemplateRef('loginFormRef');
   const verificationLoginForm = ref({
@@ -109,18 +112,18 @@
   const verificationLoginFormRef = useTemplateRef('verificationLoginFormRef');
   const verificationLoginRules = ref({
     email: [
-      { required: true, message: '请输入邮箱', trigger: 'change' },
+      { required: true, message: t('please_enter_email'), trigger: 'change' },
       {
         pattern: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
-        message: '请输入正确的邮箱',
+        message: t('please_enter_correct_email'),
         trigger: 'change'
       }
     ],
-    code: [{ required: true, message: '请输入验证码', trigger: 'change' }]
+    code: [{ required: true, message: t('please_enter_verification_code'), trigger: 'change' }]
   });
   const isShowPassword = ref(false);
   const codeTime = ref(0);
-  let timer = null;
+  let timer: NodeJS.Timeout | undefined;
   const sendCodeLoading = ref(false);
   const submitLoading = ref(false);
 
@@ -134,8 +137,8 @@
   watch(
     () => loginType.value,
     () => {
-      verificationLoginFormRef.value.clearValidate();
-      loginFormRef.value.clearValidate();
+      verificationLoginFormRef.value?.clearValidate();
+      loginFormRef.value?.clearValidate();
     }
   );
 
@@ -143,7 +146,7 @@
   async function handleSendCode() {
     if (codeTime.value !== 0) return;
     if (loginType.value === '1') {
-      await verificationLoginFormRef.value.validateField('email');
+      await verificationLoginFormRef.value?.validateField('email');
     }
     if (sendCodeLoading.value) return;
     sendCodeLoading.value = true;
@@ -155,12 +158,13 @@
           email: verificationLoginForm.value.email
         }
       });
-      ElMessage.success('验证码发送成功');
+      ElMessage.success(t('verification_code_sent_successfully'));
       codeTime.value = 60;
       timer = setInterval(() => {
         codeTime.value--;
-        if (codeTime.value === 0) {
+        if (codeTime.value === 0 && timer) {
           clearInterval(timer);
+          timer = undefined;
         }
       }, 1000);
     } finally {
@@ -171,9 +175,9 @@
   // 登录
   async function handleLogin() {
     if (isAgree.value === '0') {
-      checkboxRef.value.classList.add('animate__shakeX');
+      checkboxRef.value?.classList.add('animate__shakeX');
       setTimeout(() => {
-        checkboxRef.value.classList.remove('animate__shakeX');
+        checkboxRef.value?.classList.remove('animate__shakeX');
       }, 1000);
       return;
     }
@@ -182,7 +186,7 @@
     let data = null;
     try {
       if (loginType.value === '1') {
-        await verificationLoginFormRef.value.validate();
+        await verificationLoginFormRef.value?.validate();
         data = await request({
           url: '/api/web/login',
           method: 'POST',
@@ -192,7 +196,7 @@
           }
         });
       } else {
-        await loginFormRef.value.validate();
+        await loginFormRef.value?.validate();
         data = await request({
           url: '/api/web/login',
           method: 'POST',
@@ -204,7 +208,7 @@
       }
       token.value = data.token;
       userInfo.value = data.userInfo;
-      ElMessage.success('登录成功');
+      ElMessage.success(t('login_successful'));
       loginVisible.value = false;
       window.location.reload();
     } finally {

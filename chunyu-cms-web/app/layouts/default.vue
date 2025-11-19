@@ -7,42 +7,42 @@
     >
       <nuxt-link to="/" class="flex justify-center items-center gap-x-5px h-74px bg-#111214">
         <img src="../assets/images/logo.png" alt="" class="h-28px border-rd-5px" />
-        <span v-if="textVisible" class="color-#fff text-24px font-bold logo-text">淳渔影视</span>
+        <span v-if="textVisible" class="color-#fff text-24px font-bold logo-text">{{ $t('web_name') }}</span>
       </nuxt-link>
       <ul class="sidebar-menu-inner">
         <li :class="route.path === '/' ? 'active' : ''">
-          <el-tooltip :disabled="textVisible" effect="dark" content="首页" placement="right">
+          <el-tooltip :disabled="textVisible" effect="dark" :content="$t('home')" placement="right">
             <nuxt-link to="/">
               <i class="i-flat-color-icons-home w-24px h-24px inline-block"></i>
-              <span v-if="textVisible">首页</span>
+              <span v-if="textVisible">{{ $t('home') }}</span>
             </nuxt-link>
           </el-tooltip>
         </li>
         <li v-for="item in navigation" :key="item.id" :class="route.params.columnValue === item.value ? 'active' : ''">
           <el-tooltip :disabled="textVisible" effect="dark" :content="item.name" placement="right">
             <nuxt-link
-              :to="+item.type === 1 ? `/column/${item.value}` : item.value"
-              :target="+item.type === 1 ? '_self' : '_blank'"
+              :to="item.type != null && +item.type === 1 ? `/column/${item.value}` : item.value || '/'"
+              :target="item.type != null && +item.type === 1 ? '_self' : '_blank'"
             >
-              <img :src="item.icon" alt="" class="h-24px" />
+              <img :src="item.icon || ''" alt="" class="h-24px" />
               <span v-if="textVisible">{{ item.name }}</span>
             </nuxt-link>
           </el-tooltip>
         </li>
         <li class="border-solid border-t-1px border-#ffffff40 m-x-10px"></li>
         <li :class="route.path.includes('/trending') ? 'active' : ''">
-          <el-tooltip :disabled="textVisible" effect="dark" content="排行版" placement="right">
+          <el-tooltip :disabled="textVisible" effect="dark" :content="$t('ranking_version')" placement="right">
             <nuxt-link to="/trending/movie">
               <i class="i-flat-color-icons-bar-chart w-24px h-24px"></i>
-              <span v-if="textVisible">排行版</span>
+              <span v-if="textVisible">{{ $t('ranking_version') }}</span>
             </nuxt-link>
           </el-tooltip>
         </li>
         <li>
-          <el-tooltip :disabled="textVisible" effect="dark" content="短视频" placement="right">
+          <el-tooltip :disabled="textVisible" effect="dark" :content="$t('short_video')" placement="right">
             <nuxt-link to="/shorts">
               <i class="i-flat-color-icons-clapperboard w-24px h-24px"></i>
-              <span v-if="textVisible">短视频</span>
+              <span v-if="textVisible">{{ $t('short_video') }}</span>
             </nuxt-link>
           </el-tooltip>
         </li>
@@ -62,7 +62,7 @@
             <input
               v-model="keyword"
               type="text"
-              placeholder="请输入关键字"
+              :placeholder="$t('please_enter_the_keywords')"
               style="outline: 0"
               autocomplete="off"
               @keyup.enter="router.push(`/search?keyword=${keyword}`)"
@@ -77,8 +77,8 @@
             <el-avatar :size="32" :src="userInfo.avatar" />
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item command="userCenter">个人中心</el-dropdown-item>
-                <el-dropdown-item divided command="logout">退出登录</el-dropdown-item>
+                <el-dropdown-item command="userCenter">{{ $t('user_center') }}</el-dropdown-item>
+                <el-dropdown-item divided command="logout">{{ $t('log_out') }}</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -89,13 +89,13 @@
           @click="loginVisible = true"
         >
           <ElIconUserFilled class="w-18px"></ElIconUserFilled>
-          登录
+          {{ $t('login') }}
         </div>
       </div>
       <div class="flex justify-between h-58px items-center p-x-20px md:hidden fixed w-full bg-#111214 z-999">
         <nuxt-link to="/" class="flex items-center gap-x-5px">
           <img src="../assets/images/logo.png" alt="" class="h-28px border-rd-5px" />
-          <span class="color-#fff text-20px font-bold logo-text">淳渔影视</span>
+          <span class="color-#fff text-20px font-bold logo-text">{{ $t('web_name') }}</span>
         </nuxt-link>
         <el-icon size="26" color="#f2f2f2" class="cursor-pointer" @click="sidebarMobileOpen = true">
           <ElIconFold v-if="sidebarMobileOpen" />
@@ -127,21 +127,21 @@
     >
       <div class="flex justify-center items-center gap-x-5px h-74px bg-#111214">
         <img src="../assets/images/logo.png" alt="" class="h-34px" />
-        <span class="color-#fff text-24px font-bold logo-text">淳渔影视</span>
+        <span class="color-#fff text-24px font-bold logo-text">{{ $t('web_name') }}</span>
       </div>
       <ul class="sidebar-menu-inner">
         <li :class="route.path === '/' ? 'active' : ''">
           <nuxt-link to="/">
             <i class="i-flat-color-icons-home w-24px h-24px inline-block"></i>
-            <span>首页</span>
+            <span>{{ $t('home') }}</span>
           </nuxt-link>
         </li>
         <li v-for="item in navigation" :key="item.id" :class="route.params.columnValue === item.value ? 'active' : ''">
           <nuxt-link
-            :to="+item.type === 1 ? `/column/${item.value}` : item.value"
-            :target="+item.type === 1 ? '_self' : '_blank'"
+            :to="item.type != null && +item.type === 1 ? `/column/${item.value}` : item.value || '/'"
+            :target="item.type != null && +item.type === 1 ? '_self' : '_blank'"
           >
-            <img :src="item.icon" alt="" class="h-24px" />
+            <img :src="item.icon || ''" alt="" class="h-24px" />
             <span>{{ item.name }}</span>
           </nuxt-link>
         </li>
@@ -149,13 +149,13 @@
         <li>
           <nuxt-link to="/trending/movie">
             <i class="i-flat-color-icons-bar-chart w-24px h-24px"></i>
-            <span>排行版</span>
+            <span>{{ $t('ranking_version') }}</span>
           </nuxt-link>
         </li>
         <li>
           <nuxt-link to="/shorts">
             <i class="i-flat-color-icons-clapperboard w-24px h-24px"></i>
-            <span>短视频</span>
+            <span>{{ $t('short_video') }}</span>
           </nuxt-link>
         </li>
       </ul>
@@ -163,7 +163,7 @@
         <input
           v-model="keyword"
           type="text"
-          placeholder="请输入关键字"
+          :placeholder="$t('please_enter_the_keywords')"
           style="outline: 0; width: 100%"
           autocomplete="off"
           @keyup.enter="handleSearch"
@@ -187,7 +187,7 @@
         @click="handleShowLogin"
       >
         <ElIconUserFilled class="w-18px"></ElIconUserFilled>
-        登录
+        {{ $t('login') }}
       </div>
     </el-drawer>
 
@@ -199,10 +199,11 @@
   import dayjs from 'dayjs';
   import { useLoginVisible, useSidebarOpen, useTextVisible } from '~~/app/composables/states';
   import { WEB_TOKEN, WEB_USER_INFO } from '~~/shared/cookiesName';
+  import type { CookieUserInfo } from '~~/types/hooks';
 
   const route = useRoute();
   const router = useRouter();
-  const userInfo = useCookie(WEB_USER_INFO);
+  const userInfo = useCookie<CookieUserInfo>(WEB_USER_INFO);
   const token = useCookie(WEB_TOKEN);
 
   const sidebarOpen = useSidebarOpen();
@@ -219,19 +220,16 @@
   });
 
   function antiDebug() {
-    let debugInterval;
-
     // 检测开发者工具
     function checkDevTools() {
       try {
-        const start = new Date();
+        const start = new Date().getTime();
+        // eslint-disable-next-line no-debugger
         debugger;
-        if (new Date() - start > 100) {
+        if (new Date().getTime() - start > 100) {
           showDebugWarning();
         }
-      } catch (error) {
-        // 忽略调试器相关错误
-      }
+      } catch (error) {}
     }
 
     // 显示调试警告
@@ -262,7 +260,7 @@
     }
 
     // 定期检测
-    debugInterval = setInterval(() => {
+    setInterval(() => {
       checkDevTools();
     }, 1000);
 
@@ -274,22 +272,22 @@
 
     console.log = function () {
       showDebugWarning();
-      return consoleLog.apply(console, arguments);
+      return consoleLog.apply(console, Array.from(arguments));
     };
 
     console.warn = function () {
       showDebugWarning();
-      return consoleWarn.apply(console, arguments);
+      return consoleWarn.apply(console, Array.from(arguments));
     };
 
     console.error = function () {
       showDebugWarning();
-      return consoleError.apply(console, arguments);
+      return consoleError.apply(console, Array.from(arguments));
     };
 
     console.info = function () {
       showDebugWarning();
-      return consoleInfo.apply(console, arguments);
+      return consoleInfo.apply(console, Array.from(arguments));
     };
 
     // 检测开发者工具快捷键
@@ -375,7 +373,7 @@
         router.push('/user/center');
         break;
       case 'logout':
-        userInfo.value = null;
+        userInfo.value = undefined;
         token.value = null;
         window.location.reload();
         break;
@@ -396,7 +394,7 @@
       a {
         @apply p-x-12px p-y-10px flex items-center gap-x-10px m-x-8px m-y-2px;
         span {
-          @apply color-[rgba(255,255,255,0.8)];
+          @apply text-white/80;
         }
         &:hover {
           background: #2d2f39;

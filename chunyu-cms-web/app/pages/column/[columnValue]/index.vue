@@ -13,7 +13,7 @@
             :to="`/column/${route.params.columnValue}/show?gid=${item.id}`"
             class="color-#999 flex items-center"
           >
-            更多 <el-icon><ElIconArrowRight /></el-icon>
+            {{ $t('more') }} <el-icon><ElIconArrowRight /></el-icon>
           </nuxt-link>
         </div>
       </div>
@@ -30,7 +30,7 @@
                   v-if="v.movieBasics.isPay === 1"
                   class="absolute right-0 top-0 z-10 text-12px md:text-14px p-x-8px bg-orange"
                 >
-                  付费
+                  {{ $t('pay') }}
                 </span>
               </div>
               <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">

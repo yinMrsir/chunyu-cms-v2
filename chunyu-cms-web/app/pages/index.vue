@@ -7,7 +7,7 @@
       <div class="banner__bottom"></div>
       <nuxt-link :to="btnLink" class="swiper-slide__play-btn">
         <el-icon><ElIconCaretRight /></el-icon>
-        播放
+        {{ $t('play') }}
       </nuxt-link>
       <div>
         <swiper
@@ -49,7 +49,7 @@
             {{ gen.name }}
           </nuxt-link>
           <nuxt-link :to="`/column/${item.value}`" class="color-#999 flex items-center">
-            更多 <el-icon><ElIconArrowRight /></el-icon>
+            {{ $t('more') }} <el-icon><ElIconArrowRight /></el-icon>
           </nuxt-link>
         </div>
       </div>
@@ -61,7 +61,7 @@
                 <NuxtImg size="200px" format="webp" loading="lazy" :alt="v?.title" :src="v.poster ?? ''" />
                 <span v-if="v.movieRate?.rateUserCount" class="rate"> {{ v.movieRate.rate.toFixed(1) }} </span>
                 <span v-if="v.isPay === 1" class="absolute right-0 top-0 z-10 text-12px md:text-14px p-x-8px bg-orange">
-                  付费
+                  {{ $t('pay') }}
                 </span>
               </div>
               <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">

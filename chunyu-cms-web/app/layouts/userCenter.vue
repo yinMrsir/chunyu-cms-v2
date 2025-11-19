@@ -80,15 +80,16 @@
   import { ElConfigProvider } from 'element-plus';
   import zhCn from 'element-plus/es/locale/lang/zh-cn';
   import { WEB_TOKEN, WEB_USER_INFO } from '~~/shared/cookiesName';
+  import type { CookieUserInfo } from '~~/types/hooks';
 
   const keyword = ref('');
   const router = useRouter();
   const token = useCookie(WEB_TOKEN);
-  const userInfo = useCookie(WEB_USER_INFO);
+  const userInfo = useCookie<CookieUserInfo>(WEB_USER_INFO);
 
   function handleLogout() {
     token.value = null;
-    userInfo.value = null;
+    userInfo.value = undefined;
     router.push('/');
   }
 
@@ -111,7 +112,7 @@
     .menu {
       @apply flex flex-col gap-y-15px mt-15px;
       li {
-        @apply hover:bg-#2d2f39 m-x-5px rounded-5px p-y-8px transition-all;
+        @apply hover:bg-[#2d2f39] m-x-5px rounded-5px p-y-8px transition-all;
         a {
           @apply flex flex-col justify-center items-center gap-5px;
           i {

@@ -2,8 +2,32 @@ import { eq, and, inArray, like, not, lt } from 'drizzle-orm';
 import { MoviePv, moviePvTable, NewMoviePv } from '~~/server/db/schema/movie/moviePv';
 import { movieBasicsTable } from '~~/server/db/schema/movie/movieBasics';
 import { queryParams } from '~~/server/db/query.helper';
-import { movieBasicToGenreTable } from '~~/server/db/schema/movie/movieBasicToGenre';
-import { movieBasicToCountryTable } from '~~/server/db/schema/movie/movieBasicToCountry';
+import { movieBasicToGenreTable, MovieBasicToGenre } from '~~/server/db/schema/movie/movieBasicToGenre';
+import { movieBasicToCountryTable, MovieBasicToCountry } from '~~/server/db/schema/movie/movieBasicToCountry';
+import type { MovieBasics } from '~~/server/db/schema/movie/movieBasics';
+import type { Country } from '~~/server/db/schema/basic/country';
+import type { Genre } from '~~/server/db/schema/basic/genre';
+import type { Cast } from '~~/server/db/schema/movie/cast';
+import type { MovieRate } from '~~/server/db/schema/movie/rate';
+import type { Actor } from '~~/server/db/schema/movie/actor';
+
+type CastVo = Cast & { actor: Actor };
+type GenreVo = MovieBasicToGenre & {
+  genre: Pick<Genre, 'genreId' | 'name'>;
+};
+type movieBasicToCountryVo = MovieBasicToCountry & {
+  country: Country | null;
+};
+
+export type MovieBasicsVo = MovieBasics & {
+  movieBasicToCountry: movieBasicToCountryVo[];
+} & { casts: CastVo[] } & { genres: GenreVo[] } & { pv: MoviePv } & {
+  movieRate: MovieRate;
+};
+
+export type MoviePvAndMovieBasics = MoviePv & {
+  movieBasic: MovieBasicsVo;
+};
 
 export class MoviePvServices {
   /* 新增 */
@@ -35,7 +59,7 @@ export class MoviePvServices {
       } & queryParams
     >,
     movieBasicsId?: number
-  ): Promise<{ rows: MoviePv[]; total: number }> {
+  ): Promise<{ rows: MoviePvAndMovieBasics[]; total: number }> {
     const { pageNum = 1, limit = 10 } = params || {};
     const offset = (pageNum - 1) * limit;
     const whereList = [];

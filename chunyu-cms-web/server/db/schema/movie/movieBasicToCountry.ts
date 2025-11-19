@@ -20,6 +20,8 @@ export const movieBasicToCountryTable = mysqlTable(
   ]
 );
 
+export type MovieBasicToCountry = typeof movieBasicToCountryTable.$inferSelect;
+
 export const movieBasicToCountryRelations = relations(movieBasicToCountryTable, ({ one }) => ({
   movieBasics: one(movieBasicsTable, {
     fields: [movieBasicToCountryTable.movieBasicsId],

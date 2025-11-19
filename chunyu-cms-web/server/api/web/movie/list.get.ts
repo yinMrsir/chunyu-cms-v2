@@ -28,5 +28,8 @@ export default defineEventHandler(async event => {
       total
     };
   }
-  return [];
+  return {
+    rows: [],
+    total: 0
+  };
 });

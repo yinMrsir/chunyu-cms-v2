@@ -1,11 +1,11 @@
 <template>
   <div class="pt-0 md:pt-45px video-detail-page">
     <Head>
-      <Title>{{ $titleRender(`${videoDetail.title}在线免费观看`) }}</Title>
-      <Meta name="description" :content="videoDetail.summary || videoDetail.title" />
+      <Title>{{ $titleRender(`${videoDetail?.title}在线免费观看`) }}</Title>
+      <Meta name="description" :content="videoDetail?.summary || videoDetail?.title" />
     </Head>
 
-    <div class="mx-auto px-4">
+    <div v-if="videoDetail" class="mx-auto px-4">
       <!-- 视频播放区域 -->
       <div class="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-6">
         <!-- 左侧视频播放器 -->
@@ -20,11 +20,11 @@
                     <i class="i-el-view"></i>
                     {{ formatNumber(videoDetail.pv?.pv || 0) }} 次观看
                   </span>
-                  <span v-if="videoDetail.duration" class="flex items-center gap-1">
+                  <span class="flex items-center gap-1">
                     <i class="i-el-time"></i>
-                    {{ formatDuration(videoDetail.duration) }}
+                    {{ formatDuration(videoDetail?.duration ? Number(videoDetail.duration) : null) }}
                   </span>
-                  <span>{{ formatDate(videoDetail.createTime) }}</span>
+                  <span>{{ formatDate(videoDetail?.createTime ? String(videoDetail?.createTime) : null) }}</span>
                 </div>
               </div>
 
@@ -79,15 +79,15 @@
             <el-tabs v-model="typeId">
               <el-tab-pane
                 v-for="type in videoTypes"
-                :key="type.dictValue"
-                :label="type.dictLabel"
-                :name="type.dictValue"
+                :key="type.dictValue ?? ''"
+                :label="type.dictLabel ?? ''"
+                :name="type.dictValue ?? ''"
               ></el-tab-pane>
             </el-tabs>
             <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
               <nuxt-link
                 v-for="item in movieVideoList"
-                :key="item.videoId"
+                :key="item.videoId ?? ''"
                 :to="
                   item.typeId === '5'
                     ? item.link
@@ -104,7 +104,7 @@
                 </div>
               </nuxt-link>
             </div>
-            <div v-if="!movieVideoList.length">
+            <div v-if="!movieVideoList?.length">
               <i class="i el-folder-opened text-2xl mb-2"></i>
               <p>暂无数据</p>
             </div>
@@ -114,9 +114,9 @@
             <el-tabs v-model="resourcesSource">
               <el-tab-pane
                 v-for="type in resourcesSourceType"
-                :key="type.dictValue"
-                :label="type.dictLabel"
-                :name="type.dictValue"
+                :key="type.dictValue ?? ''"
+                :label="type.dictLabel ?? ''"
+                :name="type.dictValue ?? ''"
               ></el-tab-pane>
             </el-tabs>
 
@@ -153,7 +153,12 @@
             <h3 class="text-lg font-semibold text-white mb-4">相关演员</h3>
             <div class="grid grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-15px md:gap-20px">
               <div v-for="cast in videoDetail.casts" :key="cast.castId" class="text-12px text-center">
-                <img class="w-full aspect-3/4 object-cover mb-6px" :src="cast.actor?.avatar" alt="" />
+                <img
+                  v-if="cast.actor?.avatar"
+                  class="w-full aspect-3/4 object-cover mb-6px"
+                  :src="cast.actor?.avatar"
+                  alt=""
+                />
                 <p>{{ cast.actor?.name }}</p>
                 <p v-if="cast.role" class="text-[rgba(255,255,255,0.35)]">饰 {{ cast.role }}</p>
                 <p v-else class="text-[rgba(255,255,255,0.35)]">
@@ -175,7 +180,14 @@
                     class="bg-#141414 border-rd-10px overflow-hidden"
                   >
                     <nuxt-link :to="`/column/${v.columnValue}/detail/${v.movieBasicsId}`">
-                      <NuxtImg format="webp" loading="lazy" :alt="v?.title" :src="v?.poster" class="aspect-3/4" />
+                      <NuxtImg
+                        v-if="v?.poster"
+                        format="webp"
+                        loading="lazy"
+                        :alt="v?.title"
+                        :src="v?.poster"
+                        class="aspect-3/4"
+                      />
                       <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
                         <h3>{{ v.title }}</h3>
                         <p class="text-[rgba(255,255,255,0.35)] whitespace-nowrap text-ellipsis overflow-hidden">
@@ -196,12 +208,17 @@
           <!-- 封面图展示 -->
           <div class="bg-black rounded-lg overflow-hidden relative mb-6">
             <div class="relative aspect-video bg-black">
-              <img :src="videoDetail.poster" :alt="videoDetail.title" class="w-full h-full object-cover" />
+              <img
+                v-if="videoDetail.poster"
+                :src="videoDetail.poster"
+                :alt="videoDetail.title"
+                class="w-full h-full object-cover"
+              />
               <!-- 视频信息标签 -->
               <div class="absolute bottom-4 left-4 text-white">
                 <div class="flex items-center gap-2 text-sm">
                   <span v-if="videoDetail.duration" class="bg-black bg-opacity-60 px-2 py-1 rounded">
-                    {{ formatDuration(videoDetail.duration) }}
+                    {{ formatDuration(videoDetail?.duration ? Number(videoDetail.duration) : null) }}
                   </span>
                   <span v-if="videoDetail.isPay === 1" class="bg-orange-500 px-2 py-1 rounded text-xs">付费</span>
                 </div>
@@ -214,11 +231,15 @@
             <div class="space-y-3 text-sm">
               <div class="flex justify-between">
                 <span class="text-gray-400">时长</span>
-                <span class="text-white">{{ formatDuration(videoDetail.duration) || '-' }}</span>
+                <span class="text-white">
+                  {{ formatDuration(videoDetail?.duration ? Number(videoDetail.duration) : null) }}
+                </span>
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-400">发布时间</span>
-                <span class="text-white">{{ formatDate(videoDetail.createTime) || '-' }}</span>
+                <span class="text-white">
+                  {{ formatDate(videoDetail?.createTime ? String(videoDetail?.createTime) : null) }}
+                </span>
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-400">观看次数</span>
@@ -240,28 +261,24 @@
   </div>
 </template>
 
-<script setup>
-  // import { useLoginVisible } from '~~/composables/states';
-  // import { WEB_TOKEN } from '#shared/cookiesName';
-  // import { useShortActions } from '~~/composables/useShortActions';
+<script setup lang="ts">
+  import type { WebMovie } from '~~/types/api/webMovie';
+  import type { WebMovieListItem } from '~~/types/api/webMovieList';
 
   definePageMeta({
     key: route => route.fullPath
   });
 
   const route = useRoute();
-  // const token = useCookie(WEB_TOKEN);
-  // const loginVisible = useLoginVisible();
-  // const { handleLike: likeVideo, handleFavorite: favoriteVideo } = useShortActions();
-
-  // const isLiked = ref(false);
-  // const isFavorited = ref(false);
 
   // 获取视频详情
   const [{ data: videoDetail }, { data: relatedVideos }, { data: videoTypes }, { data: resourcesSourceType }] =
     await Promise.all([
-      useFetch(`/api/web/movie/${route.params.id}`),
-      useFetch('/api/web/movie/list', {
+      useFetch<WebMovie>(`/api/web/movie/${route.params.id}`),
+      useFetch<{
+        rows: WebMovieListItem[];
+        total: number;
+      }>('/api/web/movie/list', {
         query: { columnValue: route.params.columnValue, limit: 12, notId: route.params.id }
       }),
       useFetch('/api/web/basic/dictData/list', {
@@ -289,6 +306,8 @@
         }
       })
     ]);
+
+  console.log(relatedVideos.value);
 
   if (!videoDetail.value) {
     throw createError({ statusCode: 404, statusMessage: '视频不存在' });
@@ -328,7 +347,7 @@
   );
 
   // 格式化数字
-  function formatNumber(num) {
+  function formatNumber(num: number | null) {
     if (!num) return '0';
     if (num >= 10000) {
       return (num / 10000).toFixed(1) + '万';
@@ -337,7 +356,7 @@
   }
 
   // 格式化时长
-  function formatDuration(seconds) {
+  function formatDuration(seconds: number | null) {
     if (!seconds) return '00:00';
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
@@ -350,68 +369,18 @@
   }
 
   // 格式化日期
-  function formatDate(dateString) {
+  function formatDate(dateString: string | null) {
     if (!dateString) return '';
     const date = new Date(dateString);
     return date.toLocaleDateString('zh-CN');
   }
 
-  // 点赞功能
-  // async function handleLike() {
-  //   if (!token.value) {
-  //     loginVisible.value = true;
-  //     return;
-  //   }
-
-  //   try {
-  //     await likeVideo(
-  //       { event: {} },
-  //       {
-  //         videoId: videoDetail.value.videoId,
-  //         likes: videoDetail.value.likes || 0
-  //       },
-  //       { isLike: isLiked.value }
-  //     );
-  //     isLiked.value = !isLiked.value;
-  //     videoDetail.value.likes = isLiked.value
-  //       ? (videoDetail.value.likes || 0) + 1
-  //       : Math.max(0, (videoDetail.value.likes || 0) - 1);
-  //   } catch (error) {
-  //     console.error('点赞失败:', error);
-  //   }
-  // }
-
-  // // 收藏功能
-  // async function handleFavorite() {
-  //   if (!token.value) {
-  //     loginVisible.value = true;
-  //     return;
-  //   }
-
-  //   try {
-  //     await favoriteVideo(
-  //       { event: {} },
-  //       {
-  //         videoId: videoDetail.value.videoId,
-  //         favorites: videoDetail.value.favorites || 0
-  //       },
-  //       { isCollection: isFavorited.value }
-  //     );
-  //     isFavorited.value = !isFavorited.value;
-  //     videoDetail.value.favorites = isFavorited.value
-  //       ? (videoDetail.value.favorites || 0) + 1
-  //       : Math.max(0, (videoDetail.value.favorites || 0) - 1);
-  //   } catch (error) {
-  //     console.error('收藏失败:', error);
-  //   }
-  // }
-
   // 分享功能
   function handleShare() {
     if (navigator.share) {
       navigator.share({
-        title: videoDetail.value.title,
-        text: videoDetail.value.description,
+        title: videoDetail.value?.title,
+        text: videoDetail.value?.summary || '',
         url: window.location.href
       });
     } else {

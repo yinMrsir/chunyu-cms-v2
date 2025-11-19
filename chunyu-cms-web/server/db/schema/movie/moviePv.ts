@@ -26,5 +26,5 @@ export const moviePvTableRelations = relations(moviePvTable, ({ one }) => ({
   })
 }));
 
-export type MoviePv = typeof moviePvTable.$inferSelect & { movieBasic?: MovieBasics };
+export type MoviePv = typeof moviePvTable.$inferSelect;
 export type NewMoviePv = typeof moviePvTable.$inferInsert;
