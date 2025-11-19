@@ -100,7 +100,7 @@
           videoUrl: item.videoUrl || ''
         }));
       },
-      getCachedData: key => localCacheData(key, 0)
+      getCachedData: key => localCacheData(key)
     }),
     useFetch<WebIndexList>('/api/web', {
       getCachedData: key => localCacheData(key)

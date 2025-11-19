@@ -288,7 +288,8 @@
             dictLabel: item.dictLabel,
             dictValue: item.dictValue
           }));
-        }
+        },
+        getCachedData: key => localCacheData(key)
       }),
       useFetch('/api/web/basic/dictData/list', {
         query: { limit: 100, dictType: 'video_resources_source' },
@@ -297,7 +298,8 @@
             dictLabel: item.dictLabel,
             dictValue: item.dictValue
           }));
-        }
+        },
+        getCachedData: key => localCacheData(key)
       }),
       useFetch(`/api/web/movie/pv`, {
         method: 'POST',
@@ -306,8 +308,6 @@
         }
       })
     ]);
-
-  console.log(relatedVideos.value);
 
   if (!videoDetail.value) {
     throw createError({ statusCode: 404, statusMessage: '视频不存在' });

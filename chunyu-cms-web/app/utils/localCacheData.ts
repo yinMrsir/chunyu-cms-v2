@@ -1,11 +1,8 @@
 export const localCacheData = (key: string, minute: number = 30) => {
   const nuxtApp = useNuxtApp();
   const data = nuxtApp.payload.data[key] || nuxtApp.static.data[key];
-  if (!data) {
+  if (!data || minute === 0) {
     return;
-  }
-  if (minute === 0) {
-    return data;
   }
   const expirationDate = new Date(data.fetchedAt);
   // 缓存时间30分钟
