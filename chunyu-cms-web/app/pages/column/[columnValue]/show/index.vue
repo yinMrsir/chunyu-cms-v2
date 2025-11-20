@@ -71,7 +71,7 @@
           <li v-for="v in movies" :key="v.movieBasicsId">
             <nuxt-link :to="`/column/${v.columnValue}/detail/${v.movieBasicsId}`">
               <div class="relative">
-                <NuxtImg format="webp" loading="lazy" :alt="v?.title" :src="v?.poster" />
+                <NuxtImg v-if="v?.poster" format="webp" loading="lazy" :alt="v?.title" :src="v?.poster" />
                 <span v-if="v.movieRate?.rateUserCount" class="rate"> {{ v.movieRate.rate.toFixed(1) }} </span>
                 <span v-if="v.isPay === 1" class="absolute right-0 top-0 z-10 text-12px md:text-14px p-x-8px bg-orange">
                   付费
@@ -103,6 +103,7 @@
 <script setup lang="ts">
   import gsap from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import type { WebMovieList, WebMovieListItem } from '~~/types/api/webMovieList';
 
   if (process.client) {
     gsap.registerPlugin(ScrollTrigger);
@@ -125,7 +126,7 @@
   const isShowLoading = ref(true);
   let trigger: ScrollTrigger | null = null;
 
-  const movies = ref<any[]>([]);
+  const movies = ref<WebMovieListItem[]>([]);
   const [
     { data: genres },
     { data: countries },
@@ -160,7 +161,7 @@
         }));
       }
     }),
-    useAsyncData(
+    useAsyncData<WebMovieList>(
       `${params.columnValue}:${query.gid}:${query.cid}:${query.l}:${query.y}:${currentPage.value}:${orderBy.value}`,
       () => {
         return $fetch('/api/web/movie/list', {
@@ -173,7 +174,7 @@
             pageNum: currentPage.value,
             limit: 12,
             orderBy: orderBy.value
-          }
+          } satisfies Record<string, any>
         });
       }
     ),
@@ -182,8 +183,8 @@
     })
   ]);
   const pending = computed(() => movieStatus.value === 'pending');
-  movies.value = movies.value.concat(movieData.value?.rows);
-  if (movies.value.length >= movieData.value?.total) {
+  movieData.value?.rows && (movies.value = movies.value.concat(movieData.value.rows));
+  if (movieData.value?.total && movies.value.length >= movieData.value.total) {
     isShowLoading.value = false;
   }
 
@@ -226,8 +227,8 @@
         trigger?.disable();
         currentPage.value++;
         await movieRefresh();
-        movies.value = movies.value.concat(movieData.value?.rows);
-        if (movies.value.length >= movieData.value?.total) {
+        movieData.value?.rows && (movies.value = movies.value.concat(movieData.value.rows));
+        if (movieData.value?.total && movies.value.length >= movieData.value.total) {
           isShowLoading.value = false;
           trigger?.kill();
           trigger = null;
@@ -246,8 +247,8 @@
     movies.value = [];
     currentPage.value = 1;
     await movieRefresh();
-    movies.value = movies.value.concat(movieData.value?.rows);
-    if (movies.value.length >= movieData.value?.total) {
+    movieData.value?.rows && (movies.value = movies.value.concat(movieData.value.rows));
+    if (movieData.value?.total && movies.value.length >= movieData.value.total) {
       isShowLoading.value = false;
     } else if (!trigger) {
       createTrigger();
@@ -258,10 +259,10 @@
 <style lang="scss">
   .show-page {
     .el-form-item__label {
-      @apply text-#999 text-14px;
+      @apply text-[#999] text-14px;
     }
     .el-tabs__item {
-      @apply text-14px color-#999;
+      @apply text-14px text-[#999];
       &.is-active {
         color: #fff;
       }
@@ -278,7 +279,7 @@
     }
     .show__type-filter {
       li {
-        @apply inline-block mr-6px h-28px p-x-12px relative color-#999 line-height-27px text-14px;
+        @apply inline-block mr-6px h-28px p-x-12px relative text-[#999] leading-[27px] text-14px;
         &.active {
           background: #00c4521a;
           border: 1px solid #00c45229;

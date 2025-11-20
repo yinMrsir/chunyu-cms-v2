@@ -263,7 +263,7 @@
 
 <script setup lang="ts">
   import type { WebMovie } from '~~/types/api/webMovie';
-  import type { WebMovieListItem } from '~~/types/api/webMovieList';
+  import type { WebMovieList } from '~~/types/api/webMovieList';
 
   definePageMeta({
     key: route => route.fullPath
@@ -275,10 +275,7 @@
   const [{ data: videoDetail }, { data: relatedVideos }, { data: videoTypes }, { data: resourcesSourceType }] =
     await Promise.all([
       useFetch<WebMovie>(`/api/web/movie/${route.params.id}`),
-      useFetch<{
-        rows: WebMovieListItem[];
-        total: number;
-      }>('/api/web/movie/list', {
+      useFetch<WebMovieList>('/api/web/movie/list', {
         query: { columnValue: route.params.columnValue, limit: 12, notId: route.params.id }
       }),
       useFetch('/api/web/basic/dictData/list', {

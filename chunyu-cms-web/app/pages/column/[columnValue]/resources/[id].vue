@@ -1,8 +1,8 @@
 <template>
   <div class="pt-0 md:pt-65px video-detail">
     <Head>
-      <Title>{{ $titleRender(`${detail.title}${videoInfo.title}在线观看`) }}</Title>
-      <Meta name="description" :content="detail.summary" />
+      <Title>{{ $titleRender(`${detail?.title}${videoInfo?.title}在线观看`) }}</Title>
+      <Meta name="description" :content="detail?.summary || ''" />
     </Head>
 
     <div class="grid grid-cols-1 lg:grid-cols-[1fr_300px] relative">
@@ -14,15 +14,19 @@
               视频
               <span class="color-yellow text-12px mr-10px">
                 <i class="i-fxemoji-fire w-24px inline-block"></i>
-                {{ detail.pv?.pv || 0 }}
+                {{ detail?.pv.pv || 0 }}
               </span>
             </template>
             <div class="right-video-info">
               <div class="grid grid-cols-[60px_1fr] gap-x-10px text-12px">
-                <el-image class="border-rd-10px overflow-hidden w-60px" :src="detail.poster"></el-image>
+                <el-image
+                  v-if="detail?.poster"
+                  class="border-rd-10px overflow-hidden w-60px"
+                  :src="detail.poster"
+                ></el-image>
                 <div>
                   <h1 class="text-20px">
-                    {{ detail.title }}
+                    {{ detail?.title }}
                     <el-popover placement="bottom" effect="dark" :width="240">
                       <template #reference>
                         <span class="color-orange text-12px">
@@ -36,13 +40,13 @@
                     </el-popover>
                   </h1>
                   <p class="color-#dedede">
-                    {{ detail.year }}
-                    <template v-if="detail.movieBasicToCountry.length">
-                      <span v-for="(country, index) in detail.movieBasicToCountry" :key="index">
+                    {{ detail?.year }}
+                    <template v-if="detail?.movieBasicToCountry.length">
+                      <span v-for="(country, index) in detail?.movieBasicToCountry" :key="index">
                         · {{ country.country.name }}
                       </span>
                     </template>
-                    <span v-if="detail.languages">
+                    <span v-if="detail?.languages">
                       <span v-for="(l, index) in splitArr(detail.languages)" :key="index"> · {{ l }} </span>
                     </span>
                   </p>
@@ -53,11 +57,11 @@
                   </p>
                 </div>
               </div>
-              <div v-if="detail.summary">
+              <div v-if="detail?.summary">
                 <h2 class="m-y-15px">节目简介</h2>
-                <div class="text-14px color-#dedede" v-html="detail.summary"></div>
+                <div class="text-14px color-#dedede" v-html="detail?.summary"></div>
               </div>
-              <div v-if="episodes.length">
+              <div v-if="episodes && episodes.length">
                 <h2 class="m-y-15px">选集</h2>
                 <div class="movie-video-list">
                   <div class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-2 gap-2">
@@ -73,7 +77,7 @@
                   </div>
                 </div>
               </div>
-              <div v-if="detail.casts.length">
+              <div v-if="detail?.casts.length">
                 <h2 class="m-y-15px">相关演员</h2>
                 <swiper
                   :slides-per-view="4"
@@ -90,9 +94,14 @@
                   }"
                   :space-between="10"
                 >
-                  <swiper-slide v-for="cast in detail.casts" :key="cast.castId">
+                  <swiper-slide v-for="cast in detail?.casts" :key="cast.castId">
                     <div class="text-12px text-center">
-                      <img class="w-full h-110px object-contain mb-6px" :src="cast.actor.avatar" alt="" />
+                      <img
+                        v-if="cast.actor.avatar"
+                        class="w-full h-110px object-contain mb-6px"
+                        :src="cast.actor.avatar"
+                        alt=""
+                      />
                       <p>{{ cast.actor.name }}</p>
                       <p v-if="cast.role" class="text-[rgba(255,255,255,0.35)]">饰 {{ cast.role }}</p>
                       <p v-else class="text-[rgba(255,255,255,0.35)]">
@@ -102,7 +111,7 @@
                   </swiper-slide>
                 </swiper>
               </div>
-              <div v-if="movies.rows.length">
+              <div v-if="movies?.rows.length">
                 <h2 class="m-y-15px">相关推荐</h2>
                 <div>
                   <ul class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-2 gap-15px md:gap-20px text-12px">
@@ -112,7 +121,7 @@
                       class="bg-#1c1d1f border-rd-10px overflow-hidden"
                     >
                       <nuxt-link :to="`/column/${v.columnValue}/detail/${v.movieBasicsId}`">
-                        <NuxtImg format="webp" loading="lazy" :alt="v?.title" :src="v?.poster" />
+                        <NuxtImg v-if="v?.poster" format="webp" loading="lazy" :alt="v?.title" :src="v.poster" />
                         <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
                           <h3>{{ v.title }}</h3>
                           <p class="text-[rgba(255,255,255,0.35)] whitespace-nowrap text-ellipsis overflow-hidden">
@@ -133,15 +142,20 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
   import 'xgplayer/dist/index.min.css';
   import 'xgplayer/es/plugins/danmu/index.css';
   import '~/plugins/xgplayer/payTip/index.css';
   import { Swiper, SwiperSlide } from 'swiper/vue';
   import 'swiper/css';
+  import type PresetPlayer from 'xgplayer';
   import { useLoginVisible } from '~~/app/composables/states';
   import { WEB_TOKEN } from '#shared/cookiesName';
   import { createToken } from '~~/app/utils/request';
+  import type { WebMovie } from '~~/types/api/webMovie';
+  import type { WebMovieResourceEpisodesItem } from '~~/types/api/webMovieResourceEpisodes';
+  import type { WebMovieList } from '~~/types/api/webMovieList';
+  import type PayTip from '~~/app/plugins/xgplayer/payTip';
 
   definePageMeta({
     key: route => route.fullPath
@@ -155,15 +169,15 @@
   const vIndex = ref(0);
   const rate = ref();
   const movieRate = ref();
-  const episodes = ref([]);
-  const currentEpisodeId = ref(null);
-  let player = null;
+  const episodes = ref<WebMovieResourceEpisodesItem[]>();
+  const currentEpisodeId = ref<number>();
+  let player: PresetPlayer | null = null;
   // 视频支付提示插件
-  let payTipInstance = null;
+  let payTipInstance: InstanceType<typeof PayTip> | null = null;
 
   const [{ data: detail }, { data: movies }, { data: isUserBuy }] = await Promise.all([
-    useFetch(`/api/web/movie/${route.params.id}`),
-    useFetch('/api/web/movie/list', {
+    useFetch<WebMovie>(`/api/web/movie/${route.params.id}`),
+    useFetch<WebMovieList>('/api/web/movie/list', {
       query: { columnValue: route.params.columnValue, limit: 12, notId: route.params.id }
     }),
     useFetch(`/api/web/member/movie/buyStatus?movieBasicsId=${route.params.id}`, {
@@ -174,7 +188,7 @@
   ]);
 
   // 获取集数数据
-  const { data: episodeData } = await useFetch('/api/web/movie/resource/episodes', {
+  const { data: episodeData } = await useFetch<WebMovieResourceEpisodesItem[]>('/api/web/movie/resource/episodes', {
     query: {
       movieId: route.params.id,
       resourceId: route.query.rid,
@@ -191,7 +205,7 @@
   if (route.query.rid) {
     currentEpisodeId.value = Number(route.query.rid);
     // 在列表中的索引
-    vIndex.value = episodes.value.findIndex(item => item.resourceId === Number(route.query.rid)) || 0;
+    vIndex.value = episodes.value?.findIndex(item => item.resourceId === Number(route.query.rid)) || 0;
   }
 
   // 监听路由变化，更新当前集数
@@ -204,7 +218,7 @@
     }
   );
 
-  if (Object.keys(detail.value).length === 0) {
+  if (detail.value && Object.keys(detail.value).length === 0) {
     throw createError({ statusCode: 404 });
   }
 
@@ -235,7 +249,7 @@
     rate.value = data?.rate ? data.rate / 2 : 0;
   }
 
-  async function onRatechange(value) {
+  async function onRatechange(value: number) {
     if (!value) return;
     if (!token.value) {
       loginVisible.value = true;
@@ -255,8 +269,8 @@
   }
 
   /** 购买影视 */
-  function buyMovie(player) {
-    ElMessageBox.confirm(`确定要支付${detail.value.paymentAmount}金币购买此影片吗？`, '提示', {
+  function buyMovie(player: PresetPlayer) {
+    ElMessageBox.confirm(`确定要支付${detail.value?.paymentAmount}金币购买此影片吗？`, '提示', {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
       type: 'warning'
@@ -283,8 +297,8 @@
     const currentIndex = vIndex.value;
     const nextIndex = currentIndex + 1;
 
-    if (nextIndex < episodes.value.length) {
-      const nextEpisode = episodes.value[nextIndex];
+    if (episodes.value && nextIndex < episodes.value.length) {
+      const nextEpisode = episodes.value?.[nextIndex];
 
       // 更新路由参数
       route.query.rid = nextEpisode.resourceId.toString();
@@ -317,7 +331,7 @@
     ]);
 
     const videoType = episodeInfo.url.split('.').pop();
-    const plugins = [PayTip.default];
+    const plugins: any[] = [PayTip.default];
     if (videoType === 'm3u8') {
       plugins.push(HlsPlugin.default);
     } else if (videoType === 'mp4') {
@@ -342,12 +356,12 @@
       width: '100%',
       plugins,
       payTip: {
-        tip: `此为付费视频，支付${detail.value.paymentAmount}金币继续观看？`,
-        lookTime: detail.value.freeDuration * 60,
+        tip: `此为付费视频，支付${detail.value?.paymentAmount}金币继续观看？`,
+        lookTime: (detail.value?.freeDuration ?? 0) * 60,
         arriveTime() {
           if (isUserBuy.value) return;
           // 影片设置了需要购买才能观看并且是正片
-          if (+detail.value.isPay === 1) {
+          if (detail.value && +detail.value.isPay === 1) {
             player?.pause();
             payTipInstance?.show('flex');
           }
@@ -369,7 +383,7 @@
     });
   }
 
-  const splitArr = detail => {
+  const splitArr = (detail: string) => {
     return detail ? detail.split(',') : '';
   };
 </script>
