@@ -184,7 +184,7 @@
   ]);
   const pending = computed(() => movieStatus.value === 'pending');
   movieData.value?.rows && (movies.value = movies.value.concat(movieData.value.rows));
-  if (movieData.value?.total && movies.value.length >= movieData.value.total) {
+  if (movies.value.length >= (movieData.value?.total ?? 0)) {
     isShowLoading.value = false;
   }
 
@@ -228,7 +228,7 @@
         currentPage.value++;
         await movieRefresh();
         movieData.value?.rows && (movies.value = movies.value.concat(movieData.value.rows));
-        if (movieData.value?.total && movies.value.length >= movieData.value.total) {
+        if (movies.value.length >= (movieData.value?.total ?? 0)) {
           isShowLoading.value = false;
           trigger?.kill();
           trigger = null;
@@ -248,7 +248,7 @@
     currentPage.value = 1;
     await movieRefresh();
     movieData.value?.rows && (movies.value = movies.value.concat(movieData.value.rows));
-    if (movieData.value?.total && movies.value.length >= movieData.value.total) {
+    if (movies.value.length >= (movieData.value?.total ?? 0)) {
       isShowLoading.value = false;
     } else if (!trigger) {
       createTrigger();
