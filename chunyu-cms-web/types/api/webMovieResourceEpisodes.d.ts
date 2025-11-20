@@ -1,4 +1,4 @@
-import { VideoResource } from '../db/schema/movie/videoResource';
+import type { VideoResource } from '~~/server/db/schema/movie/videoResource';
 
 export type WebMovieResourceEpisodesItem = VideoResource;
 export type WebMovieResourceEpisodes = WebMovieResourceEpisodesItem[];

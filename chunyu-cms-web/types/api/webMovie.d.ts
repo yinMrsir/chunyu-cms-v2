@@ -22,6 +22,6 @@ type CastVo = Pick<Cast, 'castId' | 'role'> & { actor: Pick<Actor, 'name' | 'act
 
 export type WebMovie = MovieBasics & { pv: MoviePv } & { movieRate: MovieRateVo } & {
   movieBasicToCountry: movieBasicToCountryVo[];
-} & { genres: Pick<Genre, 'genreId' | 'name'>[] } & { movieVideo: MovieVideoVo } & {
+} & { genres: Pick<Genre, 'genreId' | 'name'>[] } & { movieVideo: MovieVideoVo[] } & {
   casts: CastVo[];
 };

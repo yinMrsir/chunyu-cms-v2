@@ -1,6 +1,7 @@
 import { and, desc, eq, sql, inArray } from 'drizzle-orm';
 import { commentTable, NewComment, Comment } from '~~/server/db/schema/movie/comment';
 import { queryParams } from '~~/server/db/query.helper';
+import type { WebMovieCommentList } from '~~/types/api/webMovieCommentList';
 
 export class CommentServices {
   /* 新增  */
@@ -10,7 +11,7 @@ export class CommentServices {
   }
 
   /* 分页查询 */
-  async pageList(params?: Partial<Comment & { keyword: string } & queryParams>) {
+  async pageList(params?: Partial<Comment & { keyword: string } & queryParams>): Promise<WebMovieCommentList> {
     const { pageNum = 1, limit = 10 } = params || {};
     const offset = (pageNum - 1) * limit;
     const whereList = [];

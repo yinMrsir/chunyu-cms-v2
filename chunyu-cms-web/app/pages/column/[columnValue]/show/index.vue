@@ -161,10 +161,10 @@
         }));
       }
     }),
-    useAsyncData<WebMovieList>(
+    useAsyncData(
       `${params.columnValue}:${query.gid}:${query.cid}:${query.l}:${query.y}:${currentPage.value}:${orderBy.value}`,
       () => {
-        return $fetch('/api/web/movie/list', {
+        return $fetch<WebMovieList>('/api/web/movie/list', {
           query: {
             columnValue: params.columnValue,
             genreId: query.gid,
@@ -174,7 +174,7 @@
             pageNum: currentPage.value,
             limit: 12,
             orderBy: orderBy.value
-          } satisfies Record<string, any>
+          }
         });
       }
     ),
