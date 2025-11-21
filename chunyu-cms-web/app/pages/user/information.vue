@@ -91,11 +91,14 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
   import VueCropper from 'vue-cropperjs';
   import 'cropperjs/dist/cropper.css';
   import { createToken } from '~~/app/utils/request';
   import { WEB_TOKEN, WEB_USER_INFO } from '~~/shared/cookiesName';
+  import type { CookieUserInfo } from '~~/types/hooks';
+  import type { adminCommonUpload } from '~~/types/api/adminCommonUpload';
+  import type { WebMemberUser } from '~~/types/api/webMemberUser';
 
   definePageMeta({
     layout: 'user-center',
@@ -104,11 +107,19 @@
 
   const router = useRouter();
   const token = useCookie(WEB_TOKEN);
-  const userInfo = useCookie(WEB_USER_INFO);
+  const userInfo = useCookie<CookieUserInfo>(WEB_USER_INFO);
 
   const activeTab = ref('information');
   const cropperRef = useTemplateRef('cropperRef');
-  const form = ref({
+  const form = ref<{
+    nickname?: string;
+    phonenumber?: string | null;
+    sex?: string;
+    birthday?: string | null;
+    introduction?: string | null;
+    avatar?: string;
+    email?: string;
+  }>({
     nickname: '',
     phonenumber: '',
     sex: '',
@@ -118,13 +129,19 @@
     email: ''
   });
   const passwordFormRef = useTemplateRef('passwordFormRef');
-  const passwordForm = ref({});
+  const passwordForm = ref<{
+    newPassword?: string;
+    confirmPassword?: string;
+  }>({
+    newPassword: undefined,
+    confirmPassword: undefined
+  });
   const passwordFormRules = ref({
     newPassword: [{ required: true, message: '请输入新密码', trigger: 'change' }],
     confirmPassword: [
       { required: true, message: '请输入确认密码', trigger: 'change' },
       {
-        validator: (_, value, callback) => {
+        validator: (_: any, value: any, callback: any) => {
           if (passwordForm.value.newPassword === value) {
             callback();
           } else {
@@ -136,33 +153,42 @@
     ]
   });
   const avatarDialogVisible = ref(false);
-  const avatarImg = ref('');
+  const avatarImg = ref<string | ArrayBuffer | null | undefined>('');
   const previewImage = ref('');
   const dialogWidth = ref('360px');
 
-  const { data } = await useFetch('/api/web/member/user', {
+  const { data: memberUser } = await useFetch<WebMemberUser>('/api/web/member/user', {
     headers: {
       Token: createToken()
     }
   });
-  if (data.value?.code === 200) {
-    form.value = data.value.data;
-  } else if (data.value?.code === 401) {
+  if (memberUser.value?.code === 200) {
+    const { nickname, phonenumber, sex, birthday, introduction, avatar, email } = memberUser.value.data;
+    form.value = {
+      nickname,
+      phonenumber,
+      sex,
+      birthday,
+      introduction,
+      avatar,
+      email
+    };
+  } else if (memberUser.value?.code === 401) {
     token.value = null;
-    userInfo.value = null;
+    userInfo.value = undefined;
     router.push('/');
   } else {
     throw createError({ statusCode: 500, statusMessage: '服务器错误' });
   }
 
   const handleUpdatePassword = async () => {
-    await passwordFormRef.value.validate();
+    await passwordFormRef.value?.validate();
     await request({
       url: '/api/web/member/user/updatePassword',
       method: 'post',
       body: passwordForm.value
     });
-    await passwordFormRef.value.resetFields();
+    await passwordFormRef.value?.resetFields();
     ElMessage.success('修改成功');
   };
 
@@ -172,7 +198,12 @@
       method: 'put',
       body: form.value
     });
-    userInfo.value = form.value;
+    userInfo.value = {
+      avatar: form.value.avatar ?? '',
+      email: form.value.email ?? '',
+      nickname: form.value.nickname ?? '',
+      memberUserId: userInfo.value!.memberUserId
+    };
     ElMessage.success('修改成功');
   };
 
@@ -182,19 +213,22 @@
   }
 
   /** 覆盖默认上传行为 */
-  function requestUpload() {}
+  function requestUpload() {
+    // 不实际上传，仅用于阻止默认行为
+    return Promise.resolve();
+  }
 
   /** 上传预处理 */
-  function beforeUpload(file) {
+  function beforeUpload(file: InstanceType<typeof File>) {
     if (!file.type.includes('image/')) {
       ElMessage.error('文件格式错误，请上传图片类型,如：JPG，PNG后缀的文件。');
     } else {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = event => {
-        avatarImg.value = event.target.result;
+        avatarImg.value = event.target?.result;
         if (cropperRef.value) {
-          cropperRef.value.replace(event.target.result);
+          cropperRef.value.replace(event.target?.result);
         }
       };
     }
@@ -217,14 +251,24 @@
       return;
     }
     // 将 Canvas 转换为 Blob
-    const blob = await new Promise(resolve => {
-      canvas.toBlob(resolve, 'image/jpeg', 0.9); // 质量参数：0.9
+    const blob = await new Promise<Blob>((resolve, reject) => {
+      canvas.toBlob(
+        (blob: Blob | PromiseLike<Blob>) => {
+          if (blob) {
+            resolve(blob);
+          } else {
+            reject(new Error('Canvas toBlob failed'));
+          }
+        },
+        'image/jpeg',
+        0.9
+      );
     });
     // 创建 FormData
     const formData = new FormData();
     formData.append('file', blob, 'avatar.jpg'); // 设置文件名
 
-    const data = await $fetch('/api/admin/common/upload', {
+    const data = await $fetch<adminCommonUpload>('/api/admin/common/upload', {
       headers: {
         contentType: 'multipart/form-data'
       },

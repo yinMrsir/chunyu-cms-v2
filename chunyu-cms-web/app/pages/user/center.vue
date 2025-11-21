@@ -28,7 +28,9 @@
             @click="handlePreviewVideo(item.videoUrl)"
           >
             <NuxtImg size="200px" format="webp" loading="lazy" :src="item.poster" />
-            <span class="absolute top-10px right-10px text-14px text-white:80">{{ auditStatus[item.status] }}</span>
+            <span class="absolute top-10px right-10px text-14px text-white:80">
+              {{ item.status ?? auditStatus[item.status] }}
+            </span>
           </div>
         </div>
       </el-tab-pane>
@@ -126,7 +128,20 @@
   import { createToken } from '~~/app/utils/request';
   import { WEB_TOKEN, WEB_USER_INFO } from '~~/shared/cookiesName';
   import type { CookieUserInfo } from '~~/types/hooks';
-  import type { WebMemberShortList } from '~~/types/api/webMemberShortList';
+  import type { WebMemberShortList, WebMemberShortListItem } from '~~/types/api/webMemberShortList';
+  import type { adminCommonMergeChunks } from '~~/types/api/adminCommonMergeChunks';
+  import type { adminCommonUpload } from '~~/types/api/adminCommonUpload';
+  import type { WebMemberShortLikeListItem } from '~~/types/api/webMemberShortLikeList';
+  import type { WebMemberShortCollectionListItem } from '~~/types/api/webMemberShortCollectionList';
+
+  interface VideoInfo {
+    videoUrl?: string;
+    size?: number;
+    mimeType?: string;
+    duration?: number;
+    width?: number;
+    height?: number;
+  }
 
   definePageMeta({
     layout: 'user-center',
@@ -138,7 +153,10 @@
   const userInfo = useCookie<CookieUserInfo>(WEB_USER_INFO);
   const uploadShortVisible = ref(false);
   const formRef = useTemplateRef('formRef');
-  const form = ref({});
+  const form = ref<{ poster?: string; description?: string }>({
+    poster: undefined,
+    description: undefined
+  });
   const rules = ref({
     poster: [
       {
@@ -157,19 +175,19 @@
   });
   const activeTab = ref('works');
   const videoRef = useTemplateRef('videoRef');
-  const videoInfo = ref({});
+  const videoInfo = ref<VideoInfo>({});
   const loadingBoxRef = useTemplateRef('loadingBoxRef');
   const loadingNumberRef = useTemplateRef('loadingNumberRef');
-  const shorts = ref([]);
+  const shorts = ref<WebMemberShortListItem[]>([]);
   const auditStatus = ref({
-    0: '审核中',
-    1: '',
-    2: '审核不通过'
+    '0': '审核中',
+    '1': '',
+    '2': '审核不通过'
   });
   const previewVideo = ref('');
   const previewVideoVisible = ref(false);
-  const likes = ref([]);
-  const collections = ref([]);
+  const likes = ref<WebMemberShortLikeListItem[]>([]);
+  const collections = ref<WebMemberShortCollectionListItem[]>([]);
 
   watch(
     () => uploadShortVisible.value,
@@ -208,14 +226,14 @@
       if (activeTab.value === 'like') {
         pageNum.value = 1;
         likes.value = [];
-        const data = await request({
+        const data: { rows: WebMemberShortLikeListItem[]; total: number } = await request({
           url: `/api/web/member/short/like/list?pageNum=${pageNum.value}&limit=12`
         });
         likes.value = likes.value.concat(data.rows);
       } else if (activeTab.value === 'collection') {
         pageNum.value = 1;
         collections.value = [];
-        const data = await request({
+        const data: { rows: WebMemberShortCollectionListItem[]; total: number } = await request({
           url: `/api/web/member/short/collection/list?pageNum=${pageNum.value}&limit=12`
         });
         collections.value = collections.value.concat(data.rows);
@@ -239,7 +257,7 @@
     pageNum.value = 1;
     shorts.value = [];
     await refresh();
-    shorts.value = shorts.value.concat(shortData.value?.rows);
+    shorts.value = shorts.value.concat(shortData.value?.rows ?? []);
   }
 
   const file = ref<File | null>(null);
@@ -299,7 +317,7 @@
     }
 
     // 所有分片上传完成后请求合并
-    const response = await $fetch('/api/admin/common/mergeChunks', {
+    const response = await $fetch<adminCommonMergeChunks>('/api/admin/common/mergeChunks', {
       method: 'POST',
       body: {
         fileId,
@@ -311,12 +329,14 @@
     videoInfo.value.size = response.data.size;
     videoInfo.value.mimeType = response.data.mimeType;
     await nextTick();
-    videoRef.value.onloadedmetadata = () => {
-      // 视频信息
-      videoInfo.value.duration = videoRef.value.duration;
-      videoInfo.value.width = videoRef.value.videoWidth;
-      videoInfo.value.height = videoRef.value.videoHeight;
-    };
+    if (videoRef.value) {
+      videoRef.value.onloadedmetadata = () => {
+        // 视频信息
+        videoInfo.value.duration = videoRef.value?.duration;
+        videoInfo.value.width = videoRef.value?.videoWidth;
+        videoInfo.value.height = videoRef.value?.videoHeight;
+      };
+    }
   };
 
   // 生成唯一文件ID
@@ -329,17 +349,18 @@
   };
 
   // 上传封面
-  async function handleUploadShortPoster(e) {
+  async function handleUploadShortPoster(e: Event) {
+    const target = e.target as HTMLInputElement;
     // 判断上传的文件是不是图片
-    if (!e.target.files[0].type.includes('image')) {
+    if (!target.files || target.files.length === 0 || !target.files[0]?.type.includes('image')) {
       ElMessage.error('请上传图片');
       return;
     }
     try {
-      const file = e.target.files[0];
+      const file = target.files[0];
       const formData = new FormData();
       formData.append('file', file);
-      const data = await $fetch('/api/admin/common/upload', {
+      const data = await $fetch<adminCommonUpload>('/api/admin/common/upload', {
         headers: {
           contentType: 'multipart/form-data'
         },
@@ -354,18 +375,18 @@
     } catch (error) {
       ElMessage.error('上传失败');
     } finally {
-      e.target.value = '';
+      target.value = '';
     }
   }
 
   // 截取封面
   function getCurrentTime() {
-    const currentTime = videoRef.value.currentTime || 1;
+    const currentTime = videoRef.value?.currentTime || 1;
     let dataURL = '';
     const video = document.createElement('video');
-    video.setAttribute('src', videoInfo.value.videoUrl);
-    video.setAttribute('width', videoInfo.value.width);
-    video.setAttribute('height', videoInfo.value.height);
+    videoInfo.value.videoUrl && video.setAttribute('src', videoInfo.value.videoUrl);
+    videoInfo.value.width && video.setAttribute('width', String(videoInfo.value.width));
+    videoInfo.value.height && video.setAttribute('height', String(videoInfo.value.height));
     video.setAttribute('controls', 'controls');
     video.setAttribute('crossOrigin', 'anonymous');
     video.currentTime = currentTime; // 截取的时长
@@ -375,7 +396,7 @@
       const height = video.height;
       canvas.width = width;
       canvas.height = (4 * width) / 3;
-      canvas.getContext('2d').drawImage(video, 0, 0, width, height); // 绘制canvas
+      canvas.getContext('2d')?.drawImage(video, 0, 0, width, height); // 绘制canvas
       dataURL = canvas.toDataURL('image/jpeg', 0.8); // 转换为base64
 
       // 1. 从 Base64 提取 MIME 类型和数据
@@ -387,6 +408,9 @@
       // 2. 转换为 Blob 对象
       const mime = matches[1];
       const b64 = matches[2];
+      if (!b64) {
+        throw new Error('Base64 data is missing');
+      }
       const bin = atob(b64);
       const buffer = new ArrayBuffer(bin.length);
       const uint8Array = new Uint8Array(buffer);
@@ -399,9 +423,9 @@
 
       // 创建 FormData
       const formData = new FormData();
-      formData.append('file', blob, 'file.' + mime.split('/')[1]); // 设置文件名
+      formData.append('file', blob, 'file.' + mime?.split('/')[1]); // 设置文件名
 
-      const data = await $fetch('/api/admin/common/upload', {
+      const data = await $fetch<adminCommonUpload>('/api/admin/common/upload', {
         headers: {
           contentType: 'multipart/form-data'
         },
@@ -416,7 +440,7 @@
     });
   }
 
-  function handlePreviewVideo(videoUrl) {
+  function handlePreviewVideo(videoUrl: string) {
     previewVideo.value = videoUrl;
     previewVideoVisible.value = true;
   }
