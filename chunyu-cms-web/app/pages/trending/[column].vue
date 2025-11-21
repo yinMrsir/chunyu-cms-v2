@@ -31,7 +31,12 @@
           class="grid grid-cols-[120px_1fr] mb-25px relative"
         >
           <div class="relative">
-            <img class="w-100px border-rd-10px aspect-[3/4] object-cover" :src="item.movie.poster" alt="" />
+            <img
+              v-if="item.movie?.poster"
+              class="w-100px border-rd-10px aspect-[3/4] object-cover"
+              :src="item.movie.poster"
+              alt=""
+            />
             <span
               style="font-family: Impact, sans-serif"
               class="absolute left-5px top-5px font-bold text-18px text-shadow-[0_0_5px_#000]"
@@ -64,11 +69,11 @@
           <div class="absolute right-0px top-50% transform-translate-y-[-50%] flex flex-col items-center">
             <span class="text-16px md:text-22px mr-5px flex items-center gap-4px font-bold">
               <i class="i-fxemoji-fire h-16px md:h-20px inline-block"></i>
-              {{ item[[`${trendingActive}Pv`]] || 0 }}
+              {{ (item as any)?.[`${trendingActive}Pv`] || 0 }}
             </span>
             <span class="text-12px md:text-14px color-#ffffff66">
               本{{ trendingActive === 'year' ? '年' : trendingActive === 'month' ? '月' : '周' }}
-              {{ item[`${trendingActive}Increment`] }}
+              {{ (item as any)?.[`${trendingActive}Increment`] }}
             </span>
           </div>
         </nuxt-link>
@@ -84,12 +89,13 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
   import gsap from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
   import { useAsyncData } from '#app';
+  import type { WebMovieTrendingList, WebMovieTrendingListItem } from '~~/types/api/webMovieTrendingList';
 
-  if (process.client) {
+  if (import.meta.client) {
     gsap.registerPlugin(ScrollTrigger);
   }
 
@@ -100,12 +106,12 @@
     { text: '月榜', value: 'month' },
     { text: '年榜', value: 'year' }
   ]);
-  const trendingActive = ref('weekly');
+  const trendingActive = ref<string>('weekly');
   const pageNum = ref(1);
-  const list = ref([]);
+  const list = ref<WebMovieTrendingListItem[]>([]);
   const pageBottomRef = useTemplateRef('pageBottomRef');
   const isShowLoading = ref(true);
-  let trigger = null;
+  let trigger: globalThis.ScrollTrigger | null = null;
 
   const { data: navigation } = await useFetch('/api/web/basic/columns/list?type=1');
   const {
@@ -113,7 +119,7 @@
     status: weeklyStatus,
     refresh: refreshWeeklys
   } = await useAsyncData(route.fullPath, () => {
-    return $fetch('/api/web/movie/trending/list', {
+    return $fetch<WebMovieTrendingList>('/api/web/movie/trending/list', {
       params: {
         columnValue: route.params.column,
         pageNum: pageNum.value,
@@ -122,8 +128,8 @@
     });
   });
   const pending = computed(() => weeklyStatus.value === 'pending');
-  list.value = list.value.concat(weeklys.value.rows);
-  if (list.value.length >= weeklys.value?.total) {
+  list.value = list.value.concat(weeklys.value?.rows ?? []);
+  if (list.value.length >= (weeklys.value?.total ?? 0)) {
     isShowLoading.value = false;
   }
 
@@ -134,8 +140,8 @@
       list.value = [];
       pageNum.value = 1;
       await refreshWeeklys();
-      list.value = list.value.concat(weeklys.value.rows);
-      if (list.value.length >= weeklys.value?.total) {
+      list.value = list.value.concat(weeklys.value?.rows ?? []);
+      if (list.value.length >= (weeklys.value?.total ?? 0)) {
         isShowLoading.value = false;
       } else {
         createTrigger();
@@ -143,7 +149,7 @@
     }
   );
 
-  if (process.client) {
+  if (import.meta.client) {
     onMounted(() => {
       createTrigger();
     });
@@ -161,8 +167,8 @@
         trigger?.disable();
         pageNum.value++;
         await refreshWeeklys();
-        list.value = list.value.concat(weeklys.value.rows);
-        if (list.value.length >= weeklys.value?.total) {
+        list.value = list.value.concat(weeklys.value?.rows ?? []);
+        if (list.value.length >= (weeklys.value?.total ?? 0)) {
           isShowLoading.value = false;
           trigger?.kill();
           trigger = null;
@@ -182,22 +188,22 @@
     @apply h-105px;
     a {
       &.active {
-        @apply color-#00e038;
+        @apply text-[#00e038];
       }
     }
   }
   .trending-box {
-    @apply w-90% md:w-80% m-x-auto;
+    @apply w-[90%] md:w-[80%] m-x-auto;
   }
   .rank-box {
     @apply m-x-auto flex gap-x-15px mt-15px;
     span {
       @apply relative p-5px cursor-pointer;
       &.active {
-        @apply color-#00e038;
+        @apply text-[#00e038];
         &::before {
           content: '';
-          @apply w-10px h-3px bg-#00e038 absolute left-50%  translate-x-[-50%] bottom-0;
+          @apply w-10px h-3px bg-[#00e038] absolute left-[50%]  translate-x-[-50%] bottom-0;
         }
       }
     }
@@ -206,10 +212,10 @@
     @apply flex flex-col justify-between p-y-8px flex-shrink-0;
     .trending-desc {
       &__type {
-        @apply whitespace-nowrap overflow-hidden text-ellipsis inline-block w-[calc(100vw-220px)] md:w-[calc(100vw-580px)] xl:w-50vw;
+        @apply truncate inline-block w-[calc(100vw-220px)] md:w-[calc(100vw-580px)] xl:w-50vw;
       }
       &__info {
-        @apply color-#ffffff66 w-[calc(100vw-240px)] md:w-[calc(100vw-580px)] xl:w-50vw;
+        @apply text-[#ffffff66] w-[calc(100vw-240px)] md:w-[calc(100vw-580px)] xl:w-50vw;
         text-overflow: ellipsis;
         display: -webkit-box;
         overflow: hidden;

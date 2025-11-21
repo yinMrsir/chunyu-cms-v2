@@ -80,7 +80,7 @@ export class ColumnsServices {
   }
 
   /* 根据value查询 */
-  async findByColumnValue(columnValue: string) {
+  async findByColumnValue(columnValue: string): Promise<Columns | undefined> {
     return await db.query.columnsTable.findFirst({
       where: eq(columnsTable.value, columnValue)
     });

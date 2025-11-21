@@ -1,5 +1,5 @@
 <template>
-  <div v-if="userInfoData.data" class="p-20px pt-74px center-index">
+  <div v-if="userInfoData?.data" class="p-20px pt-74px center-index">
     <div class="grid grid-cols-[132px_1fr] mb-20px">
       <div class="center-index__avatar" @click="router.push('/user/information')">
         <el-avatar :size="112" :src="userInfoData.data.avatar" />
@@ -122,9 +122,11 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
   import { createToken } from '~~/app/utils/request';
   import { WEB_TOKEN, WEB_USER_INFO } from '~~/shared/cookiesName';
+  import type { CookieUserInfo } from '~~/types/hooks';
+  import type { WebMemberShortList } from '~~/types/api/webMemberShortList';
 
   definePageMeta({
     layout: 'user-center',
@@ -133,7 +135,7 @@
 
   const router = useRouter();
   const token = useCookie(WEB_TOKEN);
-  const userInfo = useCookie(WEB_USER_INFO);
+  const userInfo = useCookie<CookieUserInfo>(WEB_USER_INFO);
   const uploadShortVisible = ref(false);
   const formRef = useTemplateRef('formRef');
   const form = ref({});
@@ -186,19 +188,19 @@
   });
   if (userInfoData.value?.code === 401) {
     token.value = null;
-    userInfo.value = null;
+    userInfo.value = undefined;
     router.push('/');
   }
 
   const pageNum = ref(1);
   const { data: shortData, refresh } = await useAsyncData(() => {
-    return $fetch(`/api/web/member/short/list?pageNum=${pageNum.value}&limit=12`, {
+    return $fetch<WebMemberShortList>(`/api/web/member/short/list?pageNum=${pageNum.value}&limit=12`, {
       headers: {
         Token: createToken()
       }
     });
   });
-  shorts.value = shorts.value.concat(shortData.value?.rows);
+  shorts.value = shorts.value.concat(shortData.value?.rows ?? []);
 
   watch(
     () => activeTab.value,
@@ -223,7 +225,7 @@
 
   // 新增短视频
   async function handleSubmitUploadShort() {
-    await formRef.value.validate();
+    await formRef.value?.validate();
     await request({
       url: '/api/web/member/short',
       method: 'post',
@@ -240,16 +242,16 @@
     shorts.value = shorts.value.concat(shortData.value?.rows);
   }
 
-  const file = ref(null);
+  const file = ref<File | null>(null);
   const chunkSize = 1024 * 1024 * 2; // 2MB per chunk
 
-  const handleFileChange = async e => {
+  const handleFileChange = async (e: Event) => {
+    const target = e.target as HTMLInputElement;
     // 判断上传的文件是不是视频文件
-    if (!e.target.files[0].type.includes('video')) {
+    if (!target.files || target.files.length === 0 || !target.files[0]?.type.includes('video')) {
       ElMessage.error('请上传视频文件');
       return;
     }
-    const target = e.target;
     if (target.files && target.files.length > 0) {
       file.value = target.files[0];
       await upload();
@@ -283,8 +285,12 @@
           body: formData
         });
         const percentCompleted = Math.round(((i + 1) * 100) / totalChunks);
-        loadingBoxRef.value.style.background = `conic-gradient(#f5036c ${percentCompleted}%, #333 0%)`;
-        loadingNumberRef.value.innerHTML = `${percentCompleted >= 100 ? '99.9' : percentCompleted}<span>%</span>`;
+        if (loadingBoxRef.value) {
+          loadingBoxRef.value.style.background = `conic-gradient(#f5036c ${percentCompleted}%, #333 0%)`;
+        }
+        if (loadingNumberRef.value) {
+          loadingNumberRef.value.innerHTML = `${percentCompleted >= 100 ? '99.9' : percentCompleted}<span>%</span>`;
+        }
       } catch (error) {
         ElMessage.error('上传失败');
         uploadShortVisible.value = false;
@@ -453,7 +459,7 @@
     .poster-box {
       @apply w-full h-full relative;
       span {
-        @apply absolute bg-black:80 w-full left-0 bottom-0 flex justify-center items-center;
+        @apply absolute bg-black/80 w-full left-0 bottom-0 flex justify-center items-center;
       }
     }
 

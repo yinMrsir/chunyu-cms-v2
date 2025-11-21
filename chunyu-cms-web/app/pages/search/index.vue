@@ -9,13 +9,13 @@
           <li v-for="v in movies" :key="v.movieBasicsId">
             <nuxt-link :to="`/column/${v.columnValue}/detail/${v.movieBasicsId}`">
               <div class="relative">
-                <NuxtImg format="webp" loading="lazy" :alt="v?.title" :src="v?.poster" />
+                <NuxtImg v-if="v?.poster" format="webp" loading="lazy" :alt="v?.title" :src="v?.poster" />
                 <span v-if="v.movieRate?.rateUserCount" class="rate"> {{ v.movieRate.rate.toFixed(1) }} </span>
               </div>
               <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
                 <h3>{{ v.title }}</h3>
                 <p>
-                  <template v-for="actor in v.casts"> {{ actor.actor.name }}&nbsp; </template>
+                  <template v-for="actor in v.casts"> {{ actor?.actor?.name }}&nbsp; </template>
                   <span v-if="!v.casts.length">-</span>
                 </p>
               </div>
@@ -38,8 +38,9 @@
 <script setup lang="ts">
   import gsap from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import type { WebMovieList, WebMovieListItem } from '~~/types/api/webMovieList';
 
-  if (process.client) {
+  if (import.meta.client) {
     gsap.registerPlugin(ScrollTrigger);
   }
 
@@ -55,10 +56,10 @@
   const isShowLoading = ref(true);
   let trigger: ScrollTrigger;
 
-  const movies = ref<any[]>([]);
+  const movies = ref<WebMovieListItem[]>([]);
   const [{ data: movieData, refresh: movieRefresh }] = await Promise.all([
     useAsyncData(route.fullPath, () => {
-      return $fetch('/api/web/movie/list', {
+      return $fetch<WebMovieList>('/api/web/movie/list', {
         query: {
           keyword: query.keyword,
           pageNum: currentPage.value,
@@ -68,12 +69,12 @@
       });
     })
   ]);
-  movies.value = movies.value.concat(movieData.value?.rows);
-  if (movies.value.length >= movieData.value?.total) {
+  movies.value = movies.value.concat(movieData.value?.rows ?? []);
+  if (movies.value.length >= (movieData.value?.total ?? 0)) {
     isShowLoading.value = false;
   }
 
-  if (process.client) {
+  if (import.meta.client) {
     onMounted(() => {
       trigger = ScrollTrigger.create({
         trigger: pageBottomRef.value as HTMLDivElement,
@@ -83,8 +84,8 @@
           trigger.disable();
           currentPage.value++;
           await movieRefresh();
-          movies.value = movies.value.concat(movieData.value.rows);
-          if (movies.value.length >= movieData.value?.total) {
+          movies.value = movies.value.concat(movieData.value?.rows ?? []);
+          if (movies.value.length >= (movieData.value?.total ?? 0)) {
             isShowLoading.value = false;
             trigger.kill();
           } else {
@@ -102,10 +103,10 @@
 <style lang="scss">
   .show-search {
     .el-form-item__label {
-      @apply text-#999 text-14px;
+      @apply text-[#999] text-14px;
     }
     .el-tabs__item {
-      @apply text-14px color-#999;
+      @apply text-14px text-[#999];
       &.is-active {
         color: #fff;
       }
@@ -122,7 +123,7 @@
     }
     .show__type-filter {
       li {
-        @apply inline-block mr-6px h-28px p-x-12px relative color-#999 line-height-27px text-14px;
+        @apply inline-block mr-6px h-28px p-x-12px relative text-[#999] leading-[27px] text-14px;
         &.active {
           background: #00c4521a;
           border: 1px solid #00c45229;

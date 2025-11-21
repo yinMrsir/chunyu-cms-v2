@@ -105,7 +105,7 @@
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
   import type { WebMovieList, WebMovieListItem } from '~~/types/api/webMovieList';
 
-  if (process.client) {
+  if (import.meta.client) {
     gsap.registerPlugin(ScrollTrigger);
   }
 
@@ -203,7 +203,7 @@
     return html;
   });
 
-  if (process.client) {
+  if (import.meta.client) {
     onMounted(() => {
       // 处理切换类型时默认从一个滑动
       const elTabActiveBar = document.querySelector('.el-tabs__active-bar');
