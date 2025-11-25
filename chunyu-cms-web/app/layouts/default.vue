@@ -7,14 +7,14 @@
     >
       <nuxt-link to="/" class="flex justify-center items-center gap-x-5px h-74px bg-#111214">
         <img src="../assets/images/logo.png" alt="" class="h-28px border-rd-5px" />
-        <span v-if="textVisible" class="color-#fff text-24px font-bold logo-text">{{ $t('web_name') }}</span>
+        <span v-if="textVisible" class="color-#fff text-24px font-bold logo-text">{{ t('web_name') }}</span>
       </nuxt-link>
       <ul class="sidebar-menu-inner">
         <li :class="route.path === '/' ? 'active' : ''">
-          <el-tooltip :disabled="textVisible" effect="dark" :content="$t('home')" placement="right">
+          <el-tooltip :disabled="textVisible" effect="dark" :content="t('home')" placement="right">
             <nuxt-link to="/">
               <i class="i-flat-color-icons-home w-24px h-24px inline-block"></i>
-              <span v-if="textVisible">{{ $t('home') }}</span>
+              <span v-if="textVisible">{{ t('home') }}</span>
             </nuxt-link>
           </el-tooltip>
         </li>
@@ -31,18 +31,10 @@
         </li>
         <li class="border-solid border-t-1px border-#ffffff40 m-x-10px"></li>
         <li :class="route.path.includes('/trending') ? 'active' : ''">
-          <el-tooltip :disabled="textVisible" effect="dark" :content="$t('ranking_version')" placement="right">
+          <el-tooltip :disabled="textVisible" effect="dark" :content="t('ranking_version')" placement="right">
             <nuxt-link to="/trending/movie">
               <i class="i-flat-color-icons-bar-chart w-24px h-24px"></i>
-              <span v-if="textVisible">{{ $t('ranking_version') }}</span>
-            </nuxt-link>
-          </el-tooltip>
-        </li>
-        <li>
-          <el-tooltip :disabled="textVisible" effect="dark" :content="$t('short_video')" placement="right">
-            <nuxt-link to="/shorts">
-              <i class="i-flat-color-icons-clapperboard w-24px h-24px"></i>
-              <span v-if="textVisible">{{ $t('short_video') }}</span>
+              <span v-if="textVisible">{{ t('ranking_version') }}</span>
             </nuxt-link>
           </el-tooltip>
         </li>
@@ -62,7 +54,7 @@
             <input
               v-model="keyword"
               type="text"
-              :placeholder="$t('please_enter_the_keywords')"
+              :placeholder="t('please_enter_the_keywords')"
               style="outline: 0"
               autocomplete="off"
               @keyup.enter="router.push(`/search?keyword=${keyword}`)"
@@ -77,8 +69,8 @@
             <el-avatar :size="32" :src="userInfo.avatar" />
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item command="userCenter">{{ $t('user_center') }}</el-dropdown-item>
-                <el-dropdown-item divided command="logout">{{ $t('log_out') }}</el-dropdown-item>
+                <el-dropdown-item command="userCenter">{{ t('user_center') }}</el-dropdown-item>
+                <el-dropdown-item divided command="logout">{{ t('log_out') }}</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -89,13 +81,13 @@
           @click="loginVisible = true"
         >
           <ElIconUserFilled class="w-18px"></ElIconUserFilled>
-          {{ $t('login') }}
+          {{ t('login') }}
         </div>
       </div>
       <div class="flex justify-between h-58px items-center p-x-20px md:hidden fixed w-full bg-#111214 z-999">
         <nuxt-link to="/" class="flex items-center gap-x-5px">
           <img src="../assets/images/logo.png" alt="" class="h-28px border-rd-5px" />
-          <span class="color-#fff text-20px font-bold logo-text">{{ $t('web_name') }}</span>
+          <span class="color-#fff text-20px font-bold logo-text">{{ t('web_name') }}</span>
         </nuxt-link>
         <el-icon size="26" color="#f2f2f2" class="cursor-pointer" @click="sidebarMobileOpen = true">
           <ElIconFold v-if="sidebarMobileOpen" />
@@ -127,13 +119,13 @@
     >
       <div class="flex justify-center items-center gap-x-5px h-74px bg-#111214">
         <img src="../assets/images/logo.png" alt="" class="h-34px" />
-        <span class="color-#fff text-24px font-bold logo-text">{{ $t('web_name') }}</span>
+        <span class="color-#fff text-24px font-bold logo-text">{{ t('web_name') }}</span>
       </div>
       <ul class="sidebar-menu-inner">
         <li :class="route.path === '/' ? 'active' : ''">
           <nuxt-link to="/">
             <i class="i-flat-color-icons-home w-24px h-24px inline-block"></i>
-            <span>{{ $t('home') }}</span>
+            <span>{{ t('home') }}</span>
           </nuxt-link>
         </li>
         <li v-for="item in navigation" :key="item.id" :class="route.params.columnValue === item.value ? 'active' : ''">
@@ -149,13 +141,13 @@
         <li>
           <nuxt-link to="/trending/movie">
             <i class="i-flat-color-icons-bar-chart w-24px h-24px"></i>
-            <span>{{ $t('ranking_version') }}</span>
+            <span>{{ t('ranking_version') }}</span>
           </nuxt-link>
         </li>
         <li>
           <nuxt-link to="/shorts">
             <i class="i-flat-color-icons-clapperboard w-24px h-24px"></i>
-            <span>{{ $t('short_video') }}</span>
+            <span>{{ t('short_video') }}</span>
           </nuxt-link>
         </li>
       </ul>
@@ -163,7 +155,7 @@
         <input
           v-model="keyword"
           type="text"
-          :placeholder="$t('please_enter_the_keywords')"
+          :placeholder="t('please_enter_the_keywords')"
           style="outline: 0; width: 100%"
           autocomplete="off"
           @keyup.enter="handleSearch"
@@ -187,7 +179,7 @@
         @click="handleShowLogin"
       >
         <ElIconUserFilled class="w-18px"></ElIconUserFilled>
-        {{ $t('login') }}
+        {{ t('login') }}
       </div>
     </el-drawer>
 
@@ -201,6 +193,7 @@
   import { WEB_TOKEN, WEB_USER_INFO } from '~~/shared/cookiesName';
   import type { CookieUserInfo } from '~~/types/hooks';
 
+  const { t } = useI18n();
   const route = useRoute();
   const router = useRouter();
   const userInfo = useCookie<CookieUserInfo>(WEB_USER_INFO);

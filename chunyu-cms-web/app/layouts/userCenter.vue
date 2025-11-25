@@ -19,6 +19,12 @@
               <span class="text-12px">钱包</span>
             </nuxt-link>
           </li>
+          <li>
+            <nuxt-link to="/user/shorts">
+              <i class="i-fxemoji-filmprojector"></i>
+              <span class="text-12px">短视频</span>
+            </nuxt-link>
+          </li>
         </ul>
       </div>
       <div class="text-12px">
