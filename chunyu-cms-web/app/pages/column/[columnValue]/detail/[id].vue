@@ -30,13 +30,13 @@
 
               <!-- 视频操作按钮 -->
               <div class="flex gap-2 ml-4">
-                <button
+                <!-- <button
                   class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-800 transition-colors"
                   :class="{ 'text-yellow-500': isFavorited }"
                 >
                   <i class="i-el-star text-xl"></i>
                   <span class="text-xs mt-1">{{ formatNumber(videoDetail.favorites || 0) }}</span>
-                </button>
+                </button> -->
                 <button
                   class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-800 transition-colors"
                   @click="handleShare"
