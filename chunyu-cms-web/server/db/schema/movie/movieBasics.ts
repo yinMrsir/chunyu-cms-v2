@@ -3,6 +3,7 @@ import { relations } from 'drizzle-orm';
 import { columnsHelpers } from '../../columns.helpers';
 import { movieBasicToGenreTable } from '../movie/movieBasicToGenre';
 import { columnsTable } from '../basic/columns';
+import { memberFavoriteTable } from '../member/favorite';
 import { movieBasicToCountryTable } from './movieBasicToCountry';
 import { movieVideoTable } from './movieVideo';
 import { castTable } from './cast';
@@ -79,6 +80,7 @@ export const movieBasicsTableRelations = relations(movieBasicsTable, ({ many, on
   movieVideo: many(movieVideoTable),
   casts: many(castTable),
   genres: many(movieBasicToGenreTable),
+  memberFavorites: many(memberFavoriteTable),
   column: one(columnsTable, {
     fields: [movieBasicsTable.columnValue],
     references: [columnsTable.value]

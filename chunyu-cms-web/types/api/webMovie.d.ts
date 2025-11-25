@@ -20,7 +20,7 @@ type CastVo = Pick<Cast, 'castId' | 'role'> & { actor: Pick<Actor, 'name' | 'act
   profession: Pick<Profession, 'professionId' | 'name'>;
 };
 
-export type WebMovie = MovieBasics & { pv: MoviePv } & { movieRate: MovieRateVo } & {
+export type WebMovie = MovieBasics & { favoritesCount: number } & { pv: MoviePv } & { movieRate: MovieRateVo } & {
   movieBasicToCountry: movieBasicToCountryVo[];
 } & { genres: Pick<Genre, 'genreId' | 'name'>[] } & { movieVideo: MovieVideoVo[] } & {
   casts: CastVo[];

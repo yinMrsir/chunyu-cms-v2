@@ -30,13 +30,15 @@
 
               <!-- 视频操作按钮 -->
               <div class="flex gap-2 ml-4">
-                <!-- <button
+                <button
                   class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-800 transition-colors"
                   :class="{ 'text-yellow-500': isFavorited }"
+                  :title="isFavorited ? '取消收藏' : '收藏'"
+                  @click="toggleFavorite"
                 >
                   <i class="i-el-star text-xl"></i>
-                  <span class="text-xs mt-1">{{ formatNumber(videoDetail.favorites || 0) }}</span>
-                </button> -->
+                  <span class="text-xs mt-1">{{ videoDetail?.favoritesCount || 0 }}</span>
+                </button>
                 <button
                   class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-800 transition-colors"
                   @click="handleShare"
@@ -255,47 +257,56 @@
 <script setup lang="ts">
   import type { WebMovie } from '~~/types/api/webMovie';
   import type { WebMovieList } from '~~/types/api/webMovieList';
+  import { WEB_TOKEN } from '#shared/cookiesName';
+  import { useLoginVisible } from '~~/app/composables/states';
+  import { param } from 'drizzle-orm';
 
   definePageMeta({
     key: route => route.fullPath
   });
 
   const route = useRoute();
+  const loginVisible = useLoginVisible();
 
   // 获取视频详情
-  const [{ data: videoDetail }, { data: relatedVideos }, { data: videoTypes }, { data: resourcesSourceType }] =
-    await Promise.all([
-      useFetch<WebMovie>(`/api/web/movie/${route.params.id}`),
-      useFetch<WebMovieList>('/api/web/movie/list', {
-        query: { columnValue: route.params.columnValue, limit: 12, notId: route.params.id }
-      }),
-      useFetch('/api/web/basic/dictData/list', {
-        query: { limit: 100, dictType: 'videos_type' },
-        transform: data => {
-          return data.map(item => ({
-            dictLabel: item.dictLabel,
-            dictValue: item.dictValue
-          }));
-        },
-        getCachedData: key => localCacheData(key)
-      }),
-      useFetch('/api/web/basic/dictData/list', {
-        query: { limit: 100, dictType: 'video_resources_source' },
-        transform: data => {
-          return data.map(item => ({
-            dictLabel: item.dictLabel,
-            dictValue: item.dictValue
-          }));
-        },
-        getCachedData: key => localCacheData(key)
-      }),
-      useFetch(`/api/web/movie/pv`, {
-        method: 'POST',
-        body: {
-          movieBasicsId: route.params.id
-        }
-      })
-    ]);
+  const [
+    { data: videoDetail },
+    { data: relatedVideos },
+    { data: videoTypes },
+    { data: resourcesSourceType },
+    { data: favoriteStatus }
+  ] = await Promise.all([
+    useFetch<WebMovie>(`/api/web/movie/${route.params.id}`),
+    useFetch<WebMovieList>('/api/web/movie/list', {
+      query: { columnValue: route.params.columnValue, limit: 12, notId: route.params.id }
+    }),
+    useFetch('/api/web/basic/dictData/list', {
+      query: { limit: 100, dictType: 'videos_type' },
+      transform: data => {
+        return data.map(item => ({
+          dictLabel: item.dictLabel,
+          dictValue: item.dictValue
+        }));
+      },
+      getCachedData: key => localCacheData(key)
+    }),
+    useFetch('/api/web/basic/dictData/list', {
+      query: { limit: 100, dictType: 'video_resources_source' },
+      transform: data => {
+        return data.map(item => ({
+          dictLabel: item.dictLabel,
+          dictValue: item.dictValue
+        }));
+      },
+      getCachedData: key => localCacheData(key)
+    }),
+    useFetch(`/api/web/movie/pv`, {
+      method: 'POST',
+      body: {
+        movieBasicsId: route.params.id
+      }
+    })
+  ]);
 
   if (!videoDetail.value) {
     throw createError({ statusCode: 404, statusMessage: '视频不存在' });
@@ -303,6 +314,12 @@
 
   const typeId = ref('1');
   const resourcesSource = ref('1');
+
+  // 收藏状态
+  const isFavorited = ref(false);
+
+  // 检查用户是否已登录
+  const token = useCookie(WEB_TOKEN);
 
   // 获取视频
   const { data: movieVideoList, refresh } = await useAsyncData(`videoTypeGetVideo_${route.params.id}_${typeId}`, () =>
@@ -379,6 +396,69 @@
       });
     }
   }
+
+  // 收藏功能
+  async function toggleFavorite() {
+    if (!token.value) {
+      loginVisible.value = true;
+      return;
+    }
+
+    const movieBasicsId = Number(route.params.id);
+
+    if (isFavorited.value) {
+      // 取消收藏
+      await request({
+        url: '/api/web/member/movie/favorite/cancel',
+        method: 'POST',
+        body: { movieBasicsId }
+      });
+      isFavorited.value = false;
+      // 更新视频详情中的收藏数
+      if (videoDetail.value?.favoritesCount) {
+        videoDetail.value.favoritesCount = Math.max(0, (videoDetail.value.favoritesCount as number) - 1);
+      }
+      ElMessage.success('取消收藏成功');
+    } else {
+      // 添加收藏
+      await request({
+        url: '/api/web/member/movie/favorite',
+        method: 'POST',
+        body: { movieBasicsId }
+      });
+      isFavorited.value = true;
+      // 更新视频详情中的收藏数
+      if (videoDetail.value?.favoritesCount !== undefined) {
+        videoDetail.value.favoritesCount = (videoDetail.value.favoritesCount as number) + 1;
+      }
+      ElMessage?.success('收藏成功');
+    }
+  }
+
+  // 初始化收藏状态
+  async function initFavoriteStatus() {
+    if (token.value) {
+      try {
+        isFavorited.value = await getFavoriteStatus();
+      } catch (error) {
+        console.error('获取收藏状态失败:', error);
+        isFavorited.value = false;
+      }
+    }
+  }
+
+  // 获取收藏状态
+  async function getFavoriteStatus() {
+    const { isFavorited } = await request({
+      url: '/api/web/member/movie/favorite/status?movieBasicsId=' + route.params.id
+    });
+    return isFavorited;
+  }
+
+  // 页面加载完成后初始化收藏状态
+  onMounted(() => {
+    initFavoriteStatus();
+  });
 </script>
 
 <style lang="scss">

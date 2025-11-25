@@ -4,6 +4,7 @@ import { queryParams } from '~~/server/db/query.helper';
 import { movieBasicToCountryTable } from '~~/server/db/schema/movie/movieBasicToCountry';
 import { movieVideoTable } from '~~/server/db/schema/movie/movieVideo';
 import { movieBasicToGenreTable } from '~~/server/db/schema/movie/movieBasicToGenre';
+import { memberFavoriteTable } from '~~/server/db/schema/member/favorite';
 
 export class MovieBasicsServices {
   /* 新增 */
@@ -92,6 +93,11 @@ export class MovieBasicsServices {
     };
     return await db.query.movieBasicsTable.findFirst({
       where: eq(movieBasicsTable.movieBasicsId, movieBasicsId),
+      extras: {
+        favoritesCount: db
+          .$count(memberFavoriteTable, sql`member_favorite.movie_basics_id = ${movieBasicsTable.movieBasicsId}`)
+          .as('favoritesCount')
+      },
       with: withData
     });
   }
