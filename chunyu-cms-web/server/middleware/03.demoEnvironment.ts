@@ -21,7 +21,8 @@ const noVerificationRouters = [
   '/api/web/member/short/like/cancel',
   '/api/web/member/short/collection',
   '/api/web/member/short/collection/cancel',
-  '/api/web/member/comment/list'
+  '/api/web/member/movie/favorite/cancel',
+  '/api/web/member/movie/favorite'
 ];
 
 export default defineEventHandler(event => {
