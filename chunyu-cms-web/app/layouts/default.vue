@@ -144,12 +144,6 @@
             <span>{{ t('ranking_version') }}</span>
           </nuxt-link>
         </li>
-        <li>
-          <nuxt-link to="/shorts">
-            <i class="i-flat-color-icons-clapperboard w-24px h-24px"></i>
-            <span>{{ t('short_video') }}</span>
-          </nuxt-link>
-        </li>
       </ul>
       <div class="search-input mt-10px">
         <input

@@ -9,6 +9,7 @@ import { movieVideoTable } from './movieVideo';
 import { castTable } from './cast';
 import { moviePvTable } from './moviePv';
 import { movieRateTable } from './rate';
+import { commentTable } from './comment';
 
 // 定义 MovieBasic 表
 export const movieBasicsTable = mysqlTable('movie_basics', {
@@ -81,6 +82,7 @@ export const movieBasicsTableRelations = relations(movieBasicsTable, ({ many, on
   casts: many(castTable),
   genres: many(movieBasicToGenreTable),
   memberFavorites: many(memberFavoriteTable),
+  comments: many(commentTable),
   column: one(columnsTable, {
     fields: [movieBasicsTable.columnValue],
     references: [columnsTable.value]

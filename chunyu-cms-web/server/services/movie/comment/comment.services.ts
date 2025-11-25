@@ -21,6 +21,9 @@ export class CommentServices {
     if (params?.videoId) {
       whereList.push(eq(commentTable.videoId, params.videoId));
     }
+    if (params?.memberUserId) {
+      whereList.push(eq(commentTable.memberUserId, params.memberUserId));
+    }
     const where = and(...whereList);
 
     const rowsQuery = db.query.commentTable.findMany({
@@ -37,6 +40,15 @@ export class CommentServices {
         video: {
           columns: {
             title: true
+          }
+        },
+        movie: {
+          columns: {
+            movieBasicsId: true,
+            title: true
+          },
+          with: {
+            column: true
           }
         }
       },

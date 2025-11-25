@@ -327,6 +327,7 @@
       body: {
         ...form.value,
         videoId: detail.value?.movieVideo?.[vIndex.value]?.video.videoId,
+        movieBasicsId: route.params.id,
         start
       }
     });
