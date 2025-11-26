@@ -181,10 +181,7 @@
       <el-table-column prop="seasonCount" label="季数"></el-table-column>
       <el-table-column prop="episodeCount" label="集数"></el-table-column>
       <el-table-column prop="pv.pv" label="访问量"></el-table-column>
-      <el-table-column
-        prop="userCollectsCount"
-        label="收藏量"
-      ></el-table-column>
+      <el-table-column prop="favoritesCount" label="收藏量"></el-table-column>
       <el-table-column prop="isPay" label="是否付费">
         <template #default="scope">
           <el-tag :type="scope.row.isPay === 1 ? 'warning' : 'success'">

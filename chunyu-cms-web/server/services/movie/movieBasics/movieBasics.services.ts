@@ -180,7 +180,10 @@ export class MovieBasicsServices {
         id: sql`${movieBasicsTable.movieBasicsId}`.as('id'),
         movieVideosCount: db
           .$count(movieVideoTable, sql`movie_video.movie_id = ${movieBasicsTable.movieBasicsId}`)
-          .as('movieVideosCount')
+          .as('movieVideosCount'),
+        favoritesCount: db
+          .$count(memberFavoriteTable, sql`member_favorite.movie_basics_id = ${movieBasicsTable.movieBasicsId}`)
+          .as('favoritesCount')
       },
       with: {
         movieBasicToCountry: {
