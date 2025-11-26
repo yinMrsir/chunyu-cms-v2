@@ -17,7 +17,12 @@
               v-for="item in favoritesData.rows"
               :key="item.id"
               class="bg-#1a1a1a rounded-lg p-4 flex gap-4 hover:bg-#2a2a2a transition-colors cursor-pointer"
-              @click="navigateToMovie(item.movie.movieBasicsId)"
+              @click="
+                navigateToDetail({
+                  movieBasicsId: item.movie.movieBasicsId,
+                  columnValue: item.movie.columnValue
+                })
+              "
             >
               <img
                 :src="item.movie.poster"
@@ -258,6 +263,12 @@
   };
 
   // 导航到电影详情页
+  const navigateToDetail = (urlObject: { movieBasicsId: number; columnValue: string }) => {
+    if (!urlObject.movieBasicsId) return;
+    router.push(`/column/${urlObject.columnValue}/detail/${urlObject.movieBasicsId}`);
+  };
+
+  // 导航到电影播放详情页
   const navigateToMovie = (urlObject: { videoId: number; movieBasicsId: number; columnValue: string }) => {
     if (!urlObject.movieBasicsId) return;
     router.push(`/column/${urlObject.columnValue}/video/${urlObject.movieBasicsId}?mvid=${urlObject.videoId}`);

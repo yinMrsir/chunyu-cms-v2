@@ -67,12 +67,12 @@
                   <div class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-2 gap-2">
                     <nuxt-link
                       v-for="episode in episodes"
-                      :key="episode.movieVideoId"
+                      :key="episode.resourceId"
                       :to="`/column/${route.params.columnValue}/resources/${route.params.id}?rid=${episode.resourceId}&rtype=${episode.resources}`"
                       class="episode-button"
                       :class="{ 'episode-active': currentEpisodeId === episode.resourceId }"
                     >
-                      {{ episode.title || `第${episode.sort}集` }}
+                      {{ episode.title }}
                     </nuxt-link>
                   </div>
                 </div>
@@ -162,6 +162,7 @@
   });
 
   const route = useRoute();
+  const router = useRouter();
   const token = useCookie(WEB_TOKEN);
   const loginVisible = useLoginVisible();
 
@@ -300,22 +301,12 @@
     if (episodes.value && nextIndex < episodes.value.length) {
       const nextEpisode = episodes.value?.[nextIndex];
 
-      // 更新路由参数
-      route.query.rid = nextEpisode.resourceId.toString();
-      route.query.rtype = nextEpisode.resources.toString();
-
-      // 更新当前集数信息
-      vIndex.value = nextIndex;
-      currentEpisodeId.value = nextEpisode.resourceId;
-
-      // 重新创建播放器以适配新的视频格式
-      if (player) {
-        player.destroy();
-        createPlayer(nextEpisode);
+      if (!nextEpisode) {
+        ElMessage.error('无法获取下一集信息');
+        return;
       }
 
-      // 显示切换提示
-      ElMessage.info(`正在播放：${nextEpisode.title || `第${nextEpisode.sort}集`}`);
+      router.push(`${route.path}?rid=${nextEpisode.resourceId}&rtype=${nextEpisode.resources}`);
     } else {
       ElMessage.info('已经是最后一集了！');
     }
@@ -329,6 +320,11 @@
       import('~~/app/plugins/xgplayer/payTip'),
       import('xgplayer-hls.js')
     ]);
+
+    if (episodeInfo == null) {
+      ElMessage.error('无法获取视频信息');
+      return;
+    }
 
     const videoType = episodeInfo.url.split('.').pop();
     const plugins: any[] = [PayTip.default];
@@ -429,7 +425,7 @@
     text-decoration: none;
 
     &:hover {
-      @apply bg-blue-600 border-blue-500;
+      @apply bg-gray-500 border-gray-500;
     }
 
     &.episode-active {

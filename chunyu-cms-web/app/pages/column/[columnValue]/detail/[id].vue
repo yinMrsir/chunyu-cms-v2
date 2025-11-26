@@ -84,7 +84,7 @@
                 :to="
                   item.typeId === '5'
                     ? item.link
-                    : `/column/${route.params.columnValue}/video/${route.params.id}?mvid=${item.movieVideoId}`
+                    : `/column/${route.params.columnValue}/video/${route.params.id}?mvid=${item.videoId}`
                 "
                 :target="item.typeId === '5' ? '_blank' : '_self'"
                 class="p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
@@ -259,7 +259,6 @@
   import type { WebMovieList } from '~~/types/api/webMovieList';
   import { WEB_TOKEN } from '#shared/cookiesName';
   import { useLoginVisible } from '~~/app/composables/states';
-  import { param } from 'drizzle-orm';
 
   definePageMeta({
     key: route => route.fullPath
@@ -269,44 +268,39 @@
   const loginVisible = useLoginVisible();
 
   // 获取视频详情
-  const [
-    { data: videoDetail },
-    { data: relatedVideos },
-    { data: videoTypes },
-    { data: resourcesSourceType },
-    { data: favoriteStatus }
-  ] = await Promise.all([
-    useFetch<WebMovie>(`/api/web/movie/${route.params.id}`),
-    useFetch<WebMovieList>('/api/web/movie/list', {
-      query: { columnValue: route.params.columnValue, limit: 12, notId: route.params.id }
-    }),
-    useFetch('/api/web/basic/dictData/list', {
-      query: { limit: 100, dictType: 'videos_type' },
-      transform: data => {
-        return data.map(item => ({
-          dictLabel: item.dictLabel,
-          dictValue: item.dictValue
-        }));
-      },
-      getCachedData: key => localCacheData(key)
-    }),
-    useFetch('/api/web/basic/dictData/list', {
-      query: { limit: 100, dictType: 'video_resources_source' },
-      transform: data => {
-        return data.map(item => ({
-          dictLabel: item.dictLabel,
-          dictValue: item.dictValue
-        }));
-      },
-      getCachedData: key => localCacheData(key)
-    }),
-    useFetch(`/api/web/movie/pv`, {
-      method: 'POST',
-      body: {
-        movieBasicsId: route.params.id
-      }
-    })
-  ]);
+  const [{ data: videoDetail }, { data: relatedVideos }, { data: videoTypes }, { data: resourcesSourceType }] =
+    await Promise.all([
+      useFetch<WebMovie>(`/api/web/movie/${route.params.id}`),
+      useFetch<WebMovieList>('/api/web/movie/list', {
+        query: { columnValue: route.params.columnValue, limit: 12, notId: route.params.id }
+      }),
+      useFetch('/api/web/basic/dictData/list', {
+        query: { limit: 100, dictType: 'videos_type' },
+        transform: data => {
+          return data.map(item => ({
+            dictLabel: item.dictLabel,
+            dictValue: item.dictValue
+          }));
+        },
+        getCachedData: key => localCacheData(key)
+      }),
+      useFetch('/api/web/basic/dictData/list', {
+        query: { limit: 100, dictType: 'video_resources_source' },
+        transform: data => {
+          return data.map(item => ({
+            dictLabel: item.dictLabel,
+            dictValue: item.dictValue
+          }));
+        },
+        getCachedData: key => localCacheData(key)
+      }),
+      useFetch(`/api/web/movie/pv`, {
+        method: 'POST',
+        body: {
+          movieBasicsId: route.params.id
+        }
+      })
+    ]);
 
   if (!videoDetail.value) {
     throw createError({ statusCode: 404, statusMessage: '视频不存在' });

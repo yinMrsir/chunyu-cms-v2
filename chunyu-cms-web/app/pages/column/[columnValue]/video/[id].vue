@@ -67,7 +67,7 @@
                   <ul>
                     <li v-for="(item, index) in detail.movieVideo" :key="item.movieVideoId">
                       <nuxt-link
-                        :to="`/column/${detail.columnValue}/video/${detail.movieBasicsId}?mvid=${item.movieVideoId}`"
+                        :to="`/column/${detail.columnValue}/video/${detail.movieBasicsId}?mvid=${item.videoId}`"
                         class="flex gap-x-10px"
                       >
                         <div class="relative w-130px">
@@ -141,7 +141,7 @@
                           loading="lazy"
                           :alt="v?.title"
                           :src="v?.poster"
-                          class="aspect-3/4"
+                          class="aspect-3/4 w-full"
                         />
                         <div class="p-y-8px p-x-8px md:p-y-14px md:p-y-12px">
                           <h3>{{ v.title }}</h3>
@@ -240,6 +240,7 @@
   });
 
   const route = useRoute();
+  const router = useRouter();
   const token = useCookie(WEB_TOKEN);
   const loginVisible = useLoginVisible();
   const form = ref({ isDm: '1', content: '' });
@@ -270,11 +271,11 @@
   }
 
   movieRate.value = detail.value?.movieRate?.rate;
-  if (route.query.mvid) {
-    vIndex.value = detail.value?.movieVideo.findIndex(item => item.movieVideoId === Number(route.query.mvid)) || 0;
+  const videoId = ref(Number(route.query.mvid));
+  if (videoId.value) {
+    vIndex.value = detail.value?.movieVideo.findIndex(item => item.videoId === videoId.value) || 0;
   }
 
-  const videoId = computed(() => detail.value?.movieVideo?.[vIndex.value]?.video?.videoId);
   // 获取视频资源的详情，弹幕，评论
   const [
     { data: videoInfo, refresh: videoInfoRefresh },
@@ -405,46 +406,18 @@
   }
 
   /** 播放下一个视频 */
-  async function playNextVideo() {
+  function playNextVideo() {
     const nextIndex = vIndex.value + 1;
 
     if (detail.value && nextIndex < detail.value.movieVideo.length) {
       const nextVideo = detail.value.movieVideo[nextIndex];
 
-      // 更新当前视频索引
-      vIndex.value = nextIndex;
-
-      // 获取下一个视频的详细信息、弹幕和评论
-      const nextVideoId = nextVideo?.video?.videoId;
-      if (!nextVideoId) {
-        ElMessage.error('无法获取下一个视频信息');
+      if (!nextVideo || !nextVideo?.video?.videoId) {
+        ElMessage.error('无法获取下一集信息');
         return;
       }
 
-      // const [{ data: nextVideoInfo }, { data: nextDms }, { data: nextMemberCommentData }] = await Promise.all([
-      //   useFetch(`/api/web/movie/video/${nextVideoId}`),
-      //   useFetch(`/api/web/movie/comment/dm?videoId=${nextVideoId}`),
-      //   useAsyncData(`${route.fullPath}:${nextVideoId}:${1}`, () => {
-      //     return $fetch(`/api/web/movie/comment/list?videoId=${nextVideoId}&pageNum=1`);
-      //   })
-      // ]);
-      pageNum.value = 1;
-      await Promise.all([videoInfoRefresh(), dmsRefresh(), memberCommentsRefresh()]);
-
-      // 重新创建播放器以适配新的视频
-      if (player) {
-        player.destroy();
-        videoInfo.value && createPlayer(videoInfo.value, dms.value);
-      }
-
-      // 清空并重新加载评论
-      memberComments.value = [];
-      if (memberCommentData.value?.rows) {
-        memberComments.value = memberCommentData.value.rows;
-      }
-
-      // 显示切换提示
-      ElMessage.info(`正在播放：${nextVideo.title}`);
+      router.push(route.path + '?mvid=' + nextVideo?.video?.videoId);
     } else {
       ElMessage.info('已经是最后一个视频了！');
     }
