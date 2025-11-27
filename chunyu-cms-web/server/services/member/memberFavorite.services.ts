@@ -78,7 +78,9 @@ export class MemberFavoriteServices {
       extras: {
         id: sql`${memberFavoriteTable.memberFavoriteId}`.as('id')
       },
-      columns: {},
+      columns: {
+        createTime: true
+      },
       with: {
         movie: {
           columns: {

@@ -25,6 +25,7 @@
               "
             >
               <img
+                v-if="item.movie.poster"
                 :src="item.movie.poster"
                 :alt="item.movie.title"
                 class="w-24 h-32 object-cover rounded-md flex-shrink-0"
@@ -36,14 +37,14 @@
                 <div class="flex items-center gap-4 text-xs text-gray-500">
                   <span>{{ item.movie.year }}年</span>
                   <span>{{ item.movie.languages }}</span>
-                  <span>{{ formatDuration(item.movie.duration) }}</span>
+                  <span v-if="item.movie.duration">{{ formatDuration(item.movie.duration) }}</span>
                 </div>
               </div>
               <div class="flex flex-col items-end justify-between">
                 <el-button size="small" type="danger" @click.stop="cancelFavorite(item.movie.movieBasicsId)">
                   取消收藏
                 </el-button>
-                <span class="text-xs text-gray-500">
+                <span v-if="item.createTime" class="text-xs text-gray-500">
                   {{ formatTime(item.createTime) }}
                 </span>
               </div>
@@ -51,7 +52,7 @@
           </div>
           <el-empty v-else description="暂无收藏内容" />
 
-          <div v-if="favoritesData?.total > 10" class="flex justify-center mt-6">
+          <div v-if="favoritesData && favoritesData?.total > 10" class="flex justify-center mt-6">
             <el-pagination
               v-model:current-page="favoritesPage.current"
               v-model:page-size="favoritesPage.size"
@@ -77,7 +78,7 @@
                 <div class="flex-1">
                   <div class="flex items-center justify-between mb-2">
                     <h4 class="font-semibold text-white">{{ item.memberUser.nickname }}</h4>
-                    <span class="text-xs text-gray-500">{{ formatTime(item.createTime) }}</span>
+                    <span v-if="item.createTime" class="text-xs text-gray-500">{{ formatTime(item.createTime) }}</span>
                   </div>
                   <p class="text-gray-300 mb-2">{{ item.content }}</p>
                   <div class="flex items-center gap-2">
@@ -100,7 +101,7 @@
           </div>
           <el-empty v-else description="暂无评论内容" />
 
-          <div v-if="commentsData?.total > 10" class="flex justify-center mt-6">
+          <div v-if="commentsData && commentsData?.total > 10" class="flex justify-center mt-6">
             <el-pagination
               v-model:current-page="commentsPage.current"
               v-model:page-size="commentsPage.size"
@@ -122,6 +123,8 @@
   import { createToken } from '~~/app/utils/request';
   import { WEB_TOKEN, WEB_USER_INFO } from '~~/shared/cookiesName';
   import type { CookieUserInfo } from '~~/types/hooks';
+  import type { WebMemberMovieFavoriteList } from '~~/types/api/webMemberMovieFavoriteList';
+  import type { WebMovieCommentList } from '~~/types/api/webMemberCommentList';
 
   definePageMeta({
     layout: 'user-center',
@@ -135,7 +138,7 @@
 
   // 收藏相关状态
   const favoritesLoading = ref(false);
-  const favoritesData = ref<any>(null);
+  const favoritesData = ref<WebMemberMovieFavoriteList>();
   const favoritesPage = ref({
     current: 1,
     size: 10
@@ -143,7 +146,7 @@
 
   // 评论相关状态
   const commentsLoading = ref(false);
-  const commentsData = ref<any>(null);
+  const commentsData = ref<WebMovieCommentList>();
   const commentsPage = ref({
     current: 1,
     size: 10
@@ -166,11 +169,9 @@
   const fetchFavorites = async () => {
     try {
       favoritesLoading.value = true;
-      const { data } = await $fetch('/api/web/member/movie/favorite/list', {
+      const data = await request<WebMemberMovieFavoriteList>({
+        url: '/api/web/member/movie/favorite/list',
         method: 'GET',
-        headers: {
-          Token: createToken()
-        },
         query: {
           pageNum: favoritesPage.value.current,
           limit: favoritesPage.value.size
@@ -189,11 +190,9 @@
   const fetchComments = async () => {
     try {
       commentsLoading.value = true;
-      const { data } = await $fetch('/api/web/member/comment/list', {
+      const data = await request<WebMovieCommentList>({
+        url: '/api/web/member/comment/list',
         method: 'GET',
-        headers: {
-          Token: createToken()
-        },
         query: {
           pageNum: commentsPage.value.current,
           limit: commentsPage.value.size
@@ -201,7 +200,6 @@
       });
       commentsData.value = data;
     } catch (error) {
-      console.error('获取评论列表失败:', error);
       ElMessage.error('获取评论列表失败');
     } finally {
       commentsLoading.value = false;
@@ -245,11 +243,9 @@
   // 取消收藏
   const cancelFavorite = async (movieBasicsId: number) => {
     try {
-      await $fetch('/api/web/member/movie/favorite/cancel', {
+      await request({
+        url: '/api/web/member/movie/favorite/cancel',
         method: 'POST',
-        headers: {
-          Token: createToken()
-        },
         body: {
           movieBasicsId
         }
@@ -263,19 +259,23 @@
   };
 
   // 导航到电影详情页
-  const navigateToDetail = (urlObject: { movieBasicsId: number; columnValue: string }) => {
-    if (!urlObject.movieBasicsId) return;
+  const navigateToDetail = (urlObject: { movieBasicsId: number; columnValue: string | null }) => {
+    if (!urlObject.movieBasicsId || !urlObject.columnValue) return;
     router.push(`/column/${urlObject.columnValue}/detail/${urlObject.movieBasicsId}`);
   };
 
   // 导航到电影播放详情页
-  const navigateToMovie = (urlObject: { videoId: number; movieBasicsId: number; columnValue: string }) => {
-    if (!urlObject.movieBasicsId) return;
+  const navigateToMovie = (urlObject: {
+    videoId: number;
+    movieBasicsId: number | null;
+    columnValue: string | null;
+  }) => {
+    if (!urlObject.movieBasicsId || !urlObject.columnValue) return;
     router.push(`/column/${urlObject.columnValue}/video/${urlObject.movieBasicsId}?mvid=${urlObject.videoId}`);
   };
 
   // 格式化时间
-  const formatTime = (time: string) => {
+  const formatTime = (time: string | Date) => {
     if (!time) return '';
     const date = new Date(time);
     return date.toLocaleDateString('zh-CN', {
@@ -286,10 +286,11 @@
   };
 
   // 格式化时长
-  const formatDuration = (duration?: number) => {
+  const formatDuration = (duration?: number | string) => {
     if (!duration) return '未知';
-    const hours = Math.floor(duration / 60);
-    const minutes = duration % 60;
+    const _duration = Number(duration);
+    const hours = Math.floor(_duration / 60);
+    const minutes = _duration % 60;
     if (hours > 0) {
       return `${hours}小时${minutes}分钟`;
     }
@@ -299,7 +300,7 @@
   // 处理图片加载错误
   const handleImageError = (event: Event) => {
     const img = event.target as HTMLImageElement;
-    img.src = '/images/default-poster.jpg'; // 设置默认图片
+    img.src = '/images/toux.png'; // 设置默认图片
   };
 
   // 初始加载第一个tab的数据

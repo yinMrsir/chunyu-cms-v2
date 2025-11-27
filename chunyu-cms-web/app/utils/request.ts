@@ -5,11 +5,12 @@ export const createToken = () => {
   return token.value ? 'Bearer ' + token.value : '';
 };
 
-export const request = (options: { url: any; method?: any; body?: any }) => {
-  return new Promise<any>((resolve, reject) => {
+export const request = <T = any>(options: { url: any; method?: any; body?: any; query?: any }) => {
+  return new Promise<T>((resolve, reject) => {
     $fetch(options.url, {
       method: options.method || 'get',
       body: options.body,
+      query: options.query || {},
       headers: {
         'Content-Type': 'application/json',
         token: createToken()

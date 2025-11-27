@@ -177,8 +177,6 @@
         prop="movieRate.rateUserCount"
         label="评分人数"
       ></el-table-column>
-      <el-table-column prop="duration" label="时长"></el-table-column>
-      <el-table-column prop="seasonCount" label="季数"></el-table-column>
       <el-table-column prop="episodeCount" label="集数"></el-table-column>
       <el-table-column prop="pv.pv" label="访问量"></el-table-column>
       <el-table-column prop="favoritesCount" label="收藏量"></el-table-column>

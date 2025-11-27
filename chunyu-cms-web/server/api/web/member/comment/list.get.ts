@@ -14,7 +14,6 @@ export default defineEventHandler(async event => {
     });
     return createApiResponse(result);
   } catch (error) {
-    console.error(error);
     return createApiResponse(null, 500, '获取评论列表失败');
   }
 });
