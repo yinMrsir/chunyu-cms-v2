@@ -1,7 +1,7 @@
+import { ApiResponse } from '~~/server/utils/apiResponse';
 import type { Actor } from '~~/server/db/schema/movie/actor';
 import type { MovieBasics } from '~~/server/db/schema/movie/movieBasics';
 import type { MemberFavorite } from '~~/server/db/schema/member/favorite';
-import { ApiResponse } from '~~/server/utils/apiResponse';
 
 type ActorVo = Pick<Actor, 'actorId' | 'name' | 'avatar'>;
 
