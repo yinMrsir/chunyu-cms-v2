@@ -4,7 +4,10 @@
       <template #header>
         <div class="flex justify-between items-center">
           <span>金币概况</span>
-          <el-button type="primary" @click="handleTopUp">充值</el-button>
+          <div class="flex gap-8px">
+            <el-button type="success" @click="handleCouponExchange">兑换券</el-button>
+            <el-button type="primary" @click="handleTopUp">充值</el-button>
+          </div>
         </div>
       </template>
       <div class="flex items-center gap-8px">
@@ -36,6 +39,16 @@
         </el-table>
       </el-tab-pane>
     </el-tabs>
+    <el-dialog v-model="couponDialogVisible" title="兑换券兑换" width="400px">
+      <div class="flex flex-col gap-20px">
+        <el-input v-model="couponCode" placeholder="请输入兑换券码" size="large" clearable />
+        <div class="text-gray-500 text-sm">兑换券码为8位字母数字组合，不区分大小写</div>
+        <div class="flex justify-end gap-10px">
+          <el-button @click="couponDialogVisible = false">取消</el-button>
+          <el-button type="primary" :loading="exchangeLoading" @click="handleExchangeSubmit"> 立即兑换 </el-button>
+        </div>
+      </div>
+    </el-dialog>
     <el-dialog v-model="payDialogVisible" title="支付" width="300px">
       <div class="flex flex-col gap-30px justify-center items-center">
         <qrcode-vue v-if="payDialogVisible" :value="qrcodeUrl" :size="160" level="H" />
@@ -62,6 +75,9 @@
     }
   });
 
+  const couponDialogVisible = ref(false);
+  const couponCode = ref('');
+  const exchangeLoading = ref(false);
   const payDialogVisible = ref(false);
   const qrcodeUrl = ref('');
   const movieList = ref([]);
@@ -136,6 +152,45 @@
     if (data.trade_state === 'SUCCESS') {
       await refreshWallet();
       payDialogVisible.value = false;
+    }
+  }
+
+  // 兑换券相关函数
+  function handleCouponExchange() {
+    couponCode.value = '';
+    couponDialogVisible.value = true;
+  }
+
+  async function handleExchangeSubmit() {
+    if (!couponCode.value.trim()) {
+      ElMessage.error('请输入兑换券码');
+      return;
+    }
+
+    exchangeLoading.value = true;
+    try {
+      const data = await request({
+        url: '/api/web/coupon/exchange',
+        method: 'POST',
+        body: {
+          couponCode: couponCode.value.trim().toUpperCase()
+        }
+      });
+
+      if (data) {
+        ElMessage.success(`兑换成功！获得 ${data.goldAmount} 金币`);
+        couponDialogVisible.value = false;
+        // 刷新钱包信息
+        await refreshWallet();
+        // 刷新金币明细
+        goldList.value = [];
+        goldPageNum.value = 1;
+        await getMemberGoldLogList();
+      }
+    } catch (error) {
+      ElMessage.error(error.message || '兑换失败');
+    } finally {
+      exchangeLoading.value = false;
     }
   }
 

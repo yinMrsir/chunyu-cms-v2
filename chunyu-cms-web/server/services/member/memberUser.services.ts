@@ -93,6 +93,9 @@ export class MemberUserServices {
     if (params?.email || params?.keyword) {
       whereList.push(like(memberUserTable.email, `%${params.email || params.keyword}%`));
     }
+    if (params?.nickname) {
+      whereList.push(like(memberUserTable.nickname, `%${params.nickname}%`));
+    }
     const where = and(...whereList);
     const rowsQuery = await db.query.memberUserTable.findMany({
       extras: {

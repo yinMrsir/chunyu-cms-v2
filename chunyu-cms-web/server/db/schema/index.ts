@@ -39,6 +39,7 @@ import * as memberUserSchema from './member/user';
 import * as memberRateSchema from './member/rate';
 import * as memberWalletSchema from './member/wallet';
 import * as memberWalletLogSchema from './member/walletLog';
+import * as memberCouponSchema from './member/coupon';
 import * as memberMovieSchema from './member/movie';
 import * as memberOrderSchema from './member/order';
 import * as memberLikeSchema from './member/like';
@@ -90,6 +91,7 @@ export default {
   ...memberRateSchema,
   ...memberWalletSchema,
   ...memberWalletLogSchema,
+  ...memberCouponSchema,
   ...memberMovieSchema,
   ...memberOrderSchema,
   ...memberLikeSchema,
