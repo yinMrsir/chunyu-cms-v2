@@ -4,13 +4,19 @@ import { MemberUser, memberUserTable, NewMemberUser } from '~~/server/db/schema/
 import { queryParams } from '~~/server/db/query.helper';
 import { USER_WEB_TOKEN_KEY } from '~~/server/contants/redis.contant';
 import { MemberWalletServices } from '~~/server/services/member/memberWallet.services';
+import { MemberWalletLogServices } from '~~/server/services/member/memberWalletLog.services';
+import { SysConfigServices } from '~~/server/services/admin/system/sysConfig/sys.config.services';
 
 export class MemberUserServices {
   private redis: Storage<any>;
   private memberWalletServices: MemberWalletServices;
+  private memberWalletLogServices: MemberWalletLogServices;
+  private sysConfigServices: SysConfigServices;
   constructor() {
     this.redis = useStorage('redis');
     this.memberWalletServices = new MemberWalletServices();
+    this.memberWalletLogServices = new MemberWalletLogServices();
+    this.sysConfigServices = new SysConfigServices();
   }
 
   // 通过邮箱查询用户
@@ -43,7 +49,22 @@ export class MemberUserServices {
   async add(user: NewMemberUser): Promise<Number> {
     return await db.transaction(async tx => {
       const [{ memberUserId }] = await tx.insert(memberUserTable).values(user).$returningId();
-      await this.memberWalletServices.add({ memberUserId, gold: 0 });
+      let gold = 0;
+      const regGold = await this.sysConfigServices.findByConfigKey('regGold');
+      if (regGold && regGold.configValue) {
+        gold = Number(regGold.configValue);
+      }
+      await this.memberWalletServices.add({ memberUserId, gold });
+      // 写入到金币明细
+      if (gold > 0) {
+        await this.memberWalletLogServices.add({
+          memberUserId,
+          gold,
+          type: '1',
+          remark: `注册奖励 +${gold}`,
+          createTime: new Date()
+        });
+      }
       return memberUserId;
     });
   }

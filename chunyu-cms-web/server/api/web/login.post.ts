@@ -81,5 +81,5 @@ export default defineEventHandler(async event => {
       return createApiResponse(null, 400, '密码错误');
     }
   }
-  return createApiResponse(null, 400, '开发中...');
+  return createApiResponse(null, 400, '异常错误');
 });
