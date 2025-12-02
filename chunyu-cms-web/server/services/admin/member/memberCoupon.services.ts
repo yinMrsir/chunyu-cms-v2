@@ -80,7 +80,7 @@ export class MemberCouponServices {
       where,
       offset,
       limit: Number(limit),
-      orderBy: [desc(memberCouponTable.createTime)]
+      orderBy: [desc(memberCouponTable.createTime), desc(memberCouponTable.memberCouponId)]
     });
 
     const totalQuery = await db.$count(memberCouponTable, where);

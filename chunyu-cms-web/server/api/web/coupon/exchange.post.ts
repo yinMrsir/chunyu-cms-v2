@@ -24,16 +24,7 @@ export default defineEventHandler(async event => {
     const goldAmount = await memberCouponServices.exchange(couponCode, memberUserId);
 
     // 给用户充值金币
-    await memberWalletServices.recharge(memberUserId, goldAmount);
-
-    // 记录金币明细
-    await memberWalletLogServices.add({
-      memberUserId,
-      gold: goldAmount,
-      type: '1',
-      remark: `兑换券兑换 +${goldAmount}`,
-      createTime: new Date()
-    });
+    await memberWalletServices.recharge(memberUserId, goldAmount, '兑换券兑换');
 
     return createApiResponse({ goldAmount }, 200, '兑换成功');
   } catch (error: any) {

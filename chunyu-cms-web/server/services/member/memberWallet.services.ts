@@ -18,7 +18,7 @@ export class MemberWalletServices {
   }
 
   // 充值
-  async recharge(memberUserId: number, gold: number) {
+  async recharge(memberUserId: number, gold: number, text?: string) {
     const memberWallet = await this.getByMemberUserId(memberUserId);
     if (!memberWallet) {
       await this.add({
@@ -29,7 +29,7 @@ export class MemberWalletServices {
         memberUserId,
         gold,
         type: '1',
-        remark: `充值 +${gold}`,
+        remark: `${text || '充值'} +${gold}`,
         createTime: new Date()
       });
     } else {

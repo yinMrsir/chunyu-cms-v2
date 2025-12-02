@@ -225,9 +225,9 @@ const columns = ref([
     props: { width: "100px" },
     type: "select",
     options: [
-      { label: "未使用", value: "0", type: "info" },
-      { label: "已使用", value: "1", type: "success" },
-      { label: "已过期", value: "2", type: "danger" },
+      { label: "未使用", value: "0", elTagType: "info" },
+      { label: "已使用", value: "1", elTagType: "success" },
+      { label: "已过期", value: "2", elTagType: "danger" },
     ],
     search: true,
   },
