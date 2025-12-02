@@ -1,4 +1,4 @@
-import { and, eq, like, desc, sql, inArray } from 'drizzle-orm';
+import { and, eq, like, desc, sql, inArray, lt } from 'drizzle-orm';
 import { MemberCoupon, memberCouponTable, NewMemberCoupon } from '~~/server/db/schema/member/coupon';
 import { queryParams } from '~~/server/db/query.helper';
 
@@ -65,6 +65,9 @@ export class MemberCouponServices {
 
     const where = whereList.length > 0 ? and(...whereList) : undefined;
 
+    // 先自动更新过期状态
+    await this.updateExpiredCoupons();
+
     const rowsQuery = await db.query.memberCouponTable.findMany({
       extras: {
         id: sql`${memberCouponTable.memberCouponId}`.as('id')
@@ -126,6 +129,43 @@ export class MemberCouponServices {
     });
 
     return coupon.goldAmount;
+  }
+
+  // 自动更新过期兑换券状态
+  async updateExpiredCoupons() {
+    const now = new Date();
+
+    // 查找已过期但状态仍为未使用的兑换券
+    await db
+      .update(memberCouponTable)
+      .set({
+        status: 2, // 已过期
+        updateTime: now
+      })
+      .where(
+        and(
+          eq(memberCouponTable.status, 0), // 未使用状态
+          lt(memberCouponTable.expireTime, now), // 过期时间小于当前时间
+          // 确保expireTime不为空
+          sql`${memberCouponTable.expireTime} IS NOT NULL`
+        )
+      );
+  }
+
+  // 获取过期状态的兑换券数量
+  async getExpiredCount() {
+    const now = new Date();
+
+    const result = await db.$count(
+      memberCouponTable,
+      and(
+        eq(memberCouponTable.status, 0),
+        lt(memberCouponTable.expireTime, now),
+        sql`${memberCouponTable.expireTime} IS NOT NULL`
+      )
+    );
+
+    return result;
   }
 
   // 生成随机券码

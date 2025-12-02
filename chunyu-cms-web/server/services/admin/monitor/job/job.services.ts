@@ -9,6 +9,7 @@ import { WxPayServices } from '~~/server/services/wxPay/wxPay.services';
 import { MovieWeeklyVisitsServices } from '~~/server/services/movie/movieWeeklyVisits/movieWeeklyVisits.services';
 import { MovieMonthVisitsServices } from '~~/server/services/movie/movieMonthVisits/movieMonthVisits.services';
 import { MovieYearVisitsServices } from '~~/server/services/movie/movieYearVisits/movieYearVisits.services';
+import { MemberCouponServices } from '~~/server/services/admin/member/memberCoupon.services';
 
 export class JobServices {
   private static instance: any;
@@ -18,6 +19,7 @@ export class JobServices {
   private movieWeeklyVisitsServices: MovieWeeklyVisitsServices;
   private movieMontVisitsServices: MovieMonthVisitsServices;
   private movieYearVisitsServices: MovieYearVisitsServices;
+  private memberCouponServices: MemberCouponServices;
   private constructor() {
     this.jobs = {};
     this.memberOrderServices = new MemberOrderServices();
@@ -25,6 +27,7 @@ export class JobServices {
     this.movieWeeklyVisitsServices = new MovieWeeklyVisitsServices();
     this.movieMontVisitsServices = new MovieMonthVisitsServices();
     this.movieYearVisitsServices = new MovieYearVisitsServices();
+    this.memberCouponServices = new MemberCouponServices();
   }
 
   public static getInstance(): JobServices {
@@ -303,6 +306,17 @@ export class JobServices {
   // 生成年排名
   async generateYearStatistics() {
     await this.movieYearVisitsServices.updateVisits();
+  }
+
+  // 更新过期兑换券状态
+  async updateExpiredCoupons() {
+    try {
+      await this.memberCouponServices.updateExpiredCoupons();
+      console.log('成功更新过期兑换券状态');
+    } catch (error) {
+      console.error('更新过期兑换券状态失败:', error);
+      throw error;
+    }
   }
 }
 

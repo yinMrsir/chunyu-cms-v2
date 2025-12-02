@@ -187,8 +187,6 @@
         goldPageNum.value = 1;
         await getMemberGoldLogList();
       }
-    } catch (error) {
-      ElMessage.error(error.message || '兑换失败');
     } finally {
       exchangeLoading.value = false;
     }
