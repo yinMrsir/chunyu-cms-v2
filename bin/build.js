@@ -63,8 +63,8 @@ const mainProcess = () => {
   console.log("文件复制完成");
 
   // 进入chunyu-cms-web目录执行相关操作
-  execSync(`cd ${webDir} && pnpm install && pnpm build`, { stdio: "inherit" });
-  console.log("chunyu-cms-web构建完成");
+  execSync(`cd ${webDir} && pnpm install && pnpm build:pro`, { stdio: "inherit" });
+  console.log("构建完成, 请将[chunyu-cms-web/.output]上传到服务器");
 };
 
 (async () => {
