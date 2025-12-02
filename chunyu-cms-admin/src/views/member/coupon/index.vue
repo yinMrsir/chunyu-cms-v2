@@ -146,7 +146,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {
   getCouponList,
   createCoupon,
@@ -154,7 +154,7 @@ import {
   deleteCoupon,
   batchCreateCoupons,
 } from "./services";
-import { ElMessage, ElMessageBox } from "element-plus";
+import { ElMessage } from "element-plus";
 
 const tableRef = ref();
 const formRef = ref();
@@ -193,23 +193,6 @@ const batchFormRules = {
   ],
 };
 
-// 编辑表单
-const editForm = ref({
-  memberCouponId: 0,
-  couponCode: "",
-  goldAmount: 0,
-  status: 0,
-  expireTime: "",
-});
-
-const editFormRules = {
-  goldAmount: [
-    { required: true, message: "请输入金币数量", trigger: "blur" },
-    { type: "number", min: 1, message: "金币数量最少为1", trigger: "blur" },
-  ],
-  status: [{ required: true, message: "请选择状态", trigger: "change" }],
-};
-
 // 列表列配置
 const columns = ref([
   {
@@ -235,7 +218,7 @@ const columns = ref([
     title: "使用者",
     field: "usedBy",
     props: { width: "100px" },
-    render: (row: any) => row.memberUser?.nickname,
+    render: (row) => row.memberUser?.nickname,
   },
   {
     title: "使用时间",
@@ -265,35 +248,28 @@ const columns = ref([
 ]);
 
 // 对话框状态
-const editDialogVisible = ref(false);
 const batchResultVisible = ref(false);
-const couponCodes = ref<string[]>([]);
+const couponCodes = ref([]);
 const couponCodesText = computed(() => couponCodes.value.join("\n"));
 
 // 加载状态
 const batchLoading = ref(false);
-const updateLoading = ref(false);
 
 // 创建单个兑换券
 async function handleCreate() {
   if (!formRef.value) return;
 
-  await formRef.value.validate(async (valid: boolean) => {
+  await formRef.value.validate(async (valid) => {
     if (valid) {
-      try {
-        const data = { ...createForm.value };
-        const result = await createCoupon(data);
-        if (result.couponCode) {
-          ElMessage.success(`创建成功！券码：${result.couponCode}`);
-        } else {
-          ElMessage.success("创建成功");
-        }
-        resetForm();
-        tableRef.value?.getList();
-      } catch (error) {
-        console.error("创建失败:", error);
-        ElMessage.error(error.message || "创建失败");
+      const data = { ...createForm.value };
+      const result = await createCoupon(data);
+      if (result.couponCode) {
+        ElMessage.success(`创建成功！券码：${result.couponCode}`);
+      } else {
+        ElMessage.success("创建成功");
       }
+      resetForm();
+      tableRef.value?.getList();
     }
   });
 }
@@ -302,7 +278,7 @@ async function handleCreate() {
 async function handleBatchCreate() {
   if (!batchFormRef.value) return;
 
-  await batchFormRef.value.validate(async (valid: boolean) => {
+  await batchFormRef.value.validate(async (valid) => {
     if (valid) {
       batchLoading.value = true;
       try {
@@ -312,49 +288,8 @@ async function handleBatchCreate() {
         ElMessage.success(`成功创建 ${result.count} 个兑换券`);
         resetBatchForm();
         tableRef.value?.getList();
-      } catch (error) {
-        console.error("批量创建失败:", error);
       } finally {
         batchLoading.value = false;
-      }
-    }
-  });
-}
-
-// 编辑兑换券
-function handleEdit(row: any) {
-  editForm.value = {
-    memberCouponId: row.memberCouponId,
-    couponCode: row.couponCode,
-    goldAmount: row.goldAmount,
-    status: row.status,
-    expireTime: row.expireTime
-      ? new Date(row.expireTime).toISOString().slice(0, 19)
-      : "",
-  };
-  editDialogVisible.value = true;
-}
-
-// 更新兑换券
-async function handleUpdate() {
-  if (!editFormRef.value) return;
-
-  await editFormRef.value.validate(async (valid: boolean) => {
-    if (valid) {
-      updateLoading.value = true;
-      try {
-        const data = { ...editForm.value };
-        if (data.expireTime) {
-          data.expireTime = new Date(data.expireTime).toISOString();
-        }
-        await updateCoupon(data.memberCouponId, data);
-        ElMessage.success("更新成功");
-        editDialogVisible.value = false;
-        tableRef.value?.getList();
-      } catch (error) {
-        console.error("更新失败:", error);
-      } finally {
-        updateLoading.value = false;
       }
     }
   });

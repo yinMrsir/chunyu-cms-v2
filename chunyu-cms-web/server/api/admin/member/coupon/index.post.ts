@@ -20,6 +20,13 @@ export default defineEventHandler(async event => {
     body.couponCode = couponCode;
   }
 
+  if (body.couponCode.length < 8) {
+    return createError({
+      statusCode: 400,
+      message: '券码长度不能小于8位'
+    });
+  }
+
   // 处理日期格式
   if (body.expireTime) {
     // 如果是字符串，转换为Date对象
