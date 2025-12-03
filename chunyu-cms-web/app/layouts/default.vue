@@ -199,9 +199,10 @@
   const sidebarMobileOpen = ref(false);
   const keyword = ref('');
 
-  // 反调试保护（仅在非开发模式下启用）
+  // 反调试保护（通过环境变量控制是否启用）
   onMounted(() => {
-    if (process.env.NODE_ENV !== 'development') {
+    const $config = useRuntimeConfig();
+    if ($config.public.antiDebugEnabled && process.env.NODE_ENV !== 'development') {
       antiDebug();
     }
   });

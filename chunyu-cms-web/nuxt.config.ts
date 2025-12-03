@@ -95,7 +95,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       globalTitle: '淳渔影视',
-      serverHost: process.env.SERVER_HOST || 'http://localhost:3000'
+      serverHost: process.env.SERVER_HOST || 'http://localhost:3000',
+      antiDebugEnabled: process.env.ANTI_DEBUG_ENABLED === 'true'
     },
     // mysql连接配置
     mysql: {

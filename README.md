@@ -80,6 +80,8 @@ WECHAT_PAY_PRIVATE_KEY=
 
 # 百度统计：百度统计的ID
 BAIDU_STATISTICS_ID=
+# 是否开启反调试保护
+ANTI_DEBUG_ENABLED=true
 ```
 
 **注意：** `mysql`和`redis`的端口号，用户名，密码，数据库名称，jwt 加密密钥等配置信息，请自行修改。

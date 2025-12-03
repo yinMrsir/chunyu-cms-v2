@@ -12,8 +12,9 @@ onMounted(() => {
     handleThemeStyle(useSettingsStore().theme);
   });
 
-  // 反调试保护（仅在非开发模式下启用）
-  if (process.env.NODE_ENV !== "development") {
+  // 反调试保护（通过环境变量控制是否启用）
+  const antiDebugEnabled = import.meta.env.VITE_ANTI_DEBUG_ENABLED === "true";
+  if (antiDebugEnabled && process.env.NODE_ENV !== "development") {
     antiDebug();
   }
 });
