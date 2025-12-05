@@ -2,9 +2,12 @@ import * as schedule from 'node-schedule';
 import { and, eq, inArray } from 'drizzle-orm';
 import { Job, jobTable, NewJob } from '~~/server/db/schema/monitor/job';
 import { JobLog, jobLogTable } from '~~/server/db/schema/monitor/jobLog';
+import { memberInviteRecordTable } from '~~/server/db/schema/member/inviteRecord';
 import { queryParams } from '~~/server/db/query.helper';
 import { MemberOrderServices } from '~~/server/services/member/memberOrder.services';
 import { MemberWalletServices } from '~~/server/services/member/memberWallet.services';
+import { MemberWalletLogServices } from '~~/server/services/member/memberWalletLog.services';
+import { MemberInviteRecordServices } from '~~/server/services/member/memberInviteRecord.services';
 import { WxPayServices } from '~~/server/services/wxPay/wxPay.services';
 import { MovieWeeklyVisitsServices } from '~~/server/services/movie/movieWeeklyVisits/movieWeeklyVisits.services';
 import { MovieMonthVisitsServices } from '~~/server/services/movie/movieMonthVisits/movieMonthVisits.services';
@@ -16,6 +19,8 @@ export class JobServices {
   private readonly jobs: any;
   private memberOrderServices: MemberOrderServices;
   private memberWalletServices: MemberWalletServices;
+  private memberWalletLogServices: MemberWalletLogServices;
+  private memberInviteRecordServices: MemberInviteRecordServices;
   private movieWeeklyVisitsServices: MovieWeeklyVisitsServices;
   private movieMontVisitsServices: MovieMonthVisitsServices;
   private movieYearVisitsServices: MovieYearVisitsServices;
@@ -24,6 +29,8 @@ export class JobServices {
     this.jobs = {};
     this.memberOrderServices = new MemberOrderServices();
     this.memberWalletServices = new MemberWalletServices();
+    this.memberWalletLogServices = new MemberWalletLogServices();
+    this.memberInviteRecordServices = new MemberInviteRecordServices();
     this.movieWeeklyVisitsServices = new MovieWeeklyVisitsServices();
     this.movieMontVisitsServices = new MovieMonthVisitsServices();
     this.movieYearVisitsServices = new MovieYearVisitsServices();
@@ -315,6 +322,52 @@ export class JobServices {
       console.log('成功更新过期兑换券状态');
     } catch (error) {
       console.error('更新过期兑换券状态失败:', error);
+      throw error;
+    }
+  }
+
+  // 发放邀请奖励
+  async processInviteRewards() {
+    try {
+      // 查询所有待发放奖励的邀请记录（状态为0，注册时间超过24小时）
+      const pendingRecords = await db.query.memberInviteRecordTable.findMany({
+        where: and(
+          eq(memberInviteRecordTable.status, '0')
+          // sql`${memberInviteRecordTable.registerTime} < DATE_SUB(NOW(), INTERVAL 24 HOUR)`
+        )
+      });
+
+      console.log(`发现 ${pendingRecords.length} 条待发放的邀请奖励记录`);
+
+      for (const record of pendingRecords) {
+        try {
+          // 给邀请者发放奖励并记录金币变动日志
+          if (record.inviterReward > 0) {
+            await this.memberWalletServices.recharge(
+              record.inviterId,
+              record.inviterReward,
+              `邀请奖励 (被邀请者ID: ${record.inviteeId})`
+            );
+          }
+
+          // 更新邀请记录状态为已发放
+          await this.memberInviteRecordServices.rewardInvite(record.memberInviteRecordId);
+
+          console.log(`成功发放邀请奖励：邀请者 ${record.inviterId} 获得 ${record.inviterReward} 金币`);
+        } catch (error) {
+          console.error(`发放邀请奖励失败，记录ID: ${record.memberInviteRecordId}`, error);
+
+          // 更新记录状态为已取消，避免重复处理
+          await this.memberInviteRecordServices.cancelInvite(
+            record.memberInviteRecordId,
+            `系统处理失败: ${(error as any).message}`
+          );
+        }
+      }
+
+      console.log('邀请奖励发放任务执行完成');
+    } catch (error) {
+      console.error('邀请奖励发放任务执行失败:', error);
       throw error;
     }
   }

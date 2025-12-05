@@ -64,6 +64,13 @@
       "when": 1764665824078,
       "tag": "0008_amazing_wrecking_crew",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1764924852692,
+      "tag": "0009_real_vindicator",
+      "breakpoints": true
     }
   ]
 }

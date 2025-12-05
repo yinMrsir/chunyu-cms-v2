@@ -5,8 +5,11 @@
         <el-avatar :size="112" :src="userInfoData.data.avatar" />
       </div>
       <div class="pt-10px">
-        <h1>{{ userInfoData.data.nickname }}</h1>
-        <p class="text-12px color-#FFFFFF59 mt-6px">{{ userInfoData.data.introduction }}</p>
+        <h1>
+          {{ userInfoData.data.nickname }}
+          <span class="text-[12px] text-[#FFFFFF59]">ID: {{ userInfoData.data.memberUserId }}</span>
+        </h1>
+        <p class="text-12px text-[#FFFFFF59] mt-6px">{{ userInfoData.data.introduction }}</p>
       </div>
     </div>
     <el-tabs v-model="activeTab" @tab-change="handleTabChange">

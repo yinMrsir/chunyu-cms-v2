@@ -14,13 +14,16 @@
             <el-form-item prop="email">
               <el-input v-model="verificationLoginForm.email" :placeholder="$t('please_enter_email')" />
             </el-form-item>
-            <el-form-item prop="code" class="!mb-6px relative">
+            <el-form-item prop="code" class="relative">
               <el-input v-model="verificationLoginForm.code" :placeholder="$t('please_enter_verification_code')" />
               <div class="absolute right-8px top-[2px] z-10">
                 <el-button link size="small" :loading="sendCodeLoading" @click="handleSendCode">
                   {{ codeTime === 0 ? $t('get_verification_code') : codeTime + $t('seconds_before_retry') }}
                 </el-button>
               </div>
+            </el-form-item>
+            <el-form-item class="!mb-6px">
+              <el-input v-model="verificationLoginForm.inviteCode" placeholder="输入邀请码，额外获得金币（可选）" />
             </el-form-item>
             <el-button class="login-button" type="primary" :loading="submitLoading" @click="handleLogin">
               {{ $t('login_register') }}
@@ -90,7 +93,8 @@
   const isAgree = ref('0');
   const loginForm = ref({
     email: '542968439@qq.com',
-    password: ''
+    password: '',
+    inviteCode: ''
   });
   const { t } = useI18n();
   const loginFormRules = ref({
@@ -107,7 +111,8 @@
   const loginFormRef = useTemplateRef('loginFormRef');
   const verificationLoginForm = ref({
     email: undefined,
-    code: undefined
+    code: undefined,
+    inviteCode: ''
   });
   const verificationLoginFormRef = useTemplateRef('verificationLoginFormRef');
   const verificationLoginRules = ref({
@@ -208,7 +213,14 @@
       }
       token.value = data.token;
       userInfo.value = data.userInfo;
-      ElMessage.success(t('login_successful'));
+
+      // 显示登录成功消息
+      if (data.inviteInfo?.usedInviteCode) {
+        ElMessage.success(`${t('login_successful')}！${data.inviteInfo.message}`);
+      } else {
+        ElMessage.success(t('login_successful'));
+      }
+
       loginVisible.value = false;
       window.location.reload();
     } finally {
@@ -273,10 +285,6 @@
     }
     .el-checkbox__inner {
       border: none;
-      &::after {
-        top: 2px;
-        left: 5px;
-      }
     }
     input {
       color: #ffffff;

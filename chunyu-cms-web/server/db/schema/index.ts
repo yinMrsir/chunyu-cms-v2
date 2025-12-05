@@ -45,6 +45,8 @@ import * as memberOrderSchema from './member/order';
 import * as memberLikeSchema from './member/like';
 import * as memberCollectionSchema from './member/collection';
 import * as memberFavoriteSchema from './member/favorite';
+import * as memberInviteCodeSchema from './member/inviteCode';
+import * as memberInviteRecordSchema from './member/inviteRecord';
 import * as movieRateSchema from './movie/rate';
 import * as commentSchema from './movie/comment';
 import * as shortSchema from './shorts/short';
@@ -97,6 +99,8 @@ export default {
   ...memberLikeSchema,
   ...memberCollectionSchema,
   ...memberFavoriteSchema,
+  ...memberInviteCodeSchema,
+  ...memberInviteRecordSchema,
   ...movieRateSchema,
   ...commentSchema,
   ...shortSchema

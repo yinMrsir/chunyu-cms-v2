@@ -41,7 +41,7 @@ export class MemberWalletServices {
         memberUserId,
         gold: memberWallet.gold + gold,
         type: '1',
-        remark: `充值 +${gold}`,
+        remark: `${text || '充值'} +${gold}`,
         createTime: new Date()
       });
     }

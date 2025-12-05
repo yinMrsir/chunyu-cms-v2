@@ -31,7 +31,10 @@ const noVerificationRouters = [
   '/api/web/member/movie/favorite/cancel',
   '/api/web/member/movie/favorite/status',
   '/api/web/member/comment/list',
-  '/api/web/coupon/exchange'
+  '/api/web/coupon/exchange',
+  '/api/web/member/invite/code',
+  '/api/web/member/invite/stats',
+  '/api/web/member/invite/records'
 ];
 
 export default defineEventHandler(async event => {
