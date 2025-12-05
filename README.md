@@ -18,7 +18,7 @@ V2 相比[V1 版本](https://github.com/yinMrsir/chunyu-cms)使用[DrizzleOrm](h
 - 邀请好友得金币功能：用户邀请好友注册，好友注册成功后，系统会发放邀请者奖励和被邀请者奖励。
 - 短视频：支持短视频的播放，用户可以上传短视频。
 
-## 在线体验
+## 在线体验(网络带宽有限，请耐心等待 🍵)
 
 - [用户端演示地址](https://cms.yinchunyu.com)
 - [管理端演示地址 1](https://cms-admin.yinchunyu.com)
