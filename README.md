@@ -60,9 +60,9 @@ REDIS_PASSWORD=
 REDIS_DB=0
 # 是否演示环境
 IS_DEMO_ENVIRONMENT=false
-# 服务端域名
+# 服务端接口域名（支付回调域名时使用）
 SERVER_HOST=http://localhost:3000
-# 图片域名
+# 图片、视频文件等静态资源域名
 IMG_HOST=http://localhost:3000
 # 用户发送邮件的邮箱
 FORM_USER_EMAIL=
