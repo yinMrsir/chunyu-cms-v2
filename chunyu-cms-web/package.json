@@ -2,6 +2,7 @@
   "name": "chunyu-cms",
   "private": false,
   "scripts": {
+    "clear:ossTS": "find node_modules/ali-oss/lib -name \"*.ts\" -type f -delete",
     "build": "nuxt build",
     "build:pro": "nuxt build --dotenv .env.pro",
     "dev:pro": "nuxt dev --host 0.0.0.0 --dotenv .env.pro",
@@ -38,6 +39,7 @@
     "@unocss/preset-icons": "^66.5.4",
     "@unocss/transformer-directives": "^66.5.4",
     "@unocss/transformer-variant-group": "^66.5.4",
+    "baseline-browser-mapping": "^2.9.11",
     "drizzle-kit": "^0.28.1",
     "eslint": "8.57.1",
     "eslint-config-prettier": "9.1.0",

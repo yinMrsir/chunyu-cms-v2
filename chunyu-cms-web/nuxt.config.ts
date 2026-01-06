@@ -16,9 +16,9 @@ export default defineNuxtConfig({
   ],
   modules: ['@element-plus/nuxt', '@unocss/nuxt', '@nuxt/image', '@nuxtjs/i18n'],
   i18n: {
-    defaultLocale: 'cn',
+    defaultLocale: 'zh',
     locales: [
-      { code: 'cn', name: 'china', file: 'cn.json' },
+      { code: 'zh', name: 'china', file: 'zh.json' },
       { code: 'en', name: 'English', file: 'en.json' }
     ]
   },
