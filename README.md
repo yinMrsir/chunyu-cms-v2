@@ -21,8 +21,7 @@ V2 相比[V1 版本](https://github.com/yinMrsir/chunyu-cms)使用[DrizzleOrm](h
 ## 在线体验(网络带宽有限，请耐心等待 🍵)
 
 - [用户端演示地址](https://cms.yinchunyu.com)
-- [管理端演示地址 1](https://cms-admin.yinchunyu.com)
-- [管理端演示地址 2](https://cms.yinchunyu.com/admin)
+- [管理端演示地址](https://cms.yinchunyu.com/admin)
 - 源码地址 1: [GitHub](https://github.com/yinMrsir/chunyu-cms-v2)
 - 源码地址 2: [Gitee](https://gitee.com/chunyu-cms/chunyu-cms-v2)
 

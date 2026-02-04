@@ -26,6 +26,7 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
+          // @ts-ignore
           api: 'modern-compiler' // 修复 Deprecation Warning: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
         }
       }
