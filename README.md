@@ -23,7 +23,7 @@ V2 相比[V1 版本](https://github.com/yinMrsir/chunyu-cms)使用[DrizzleOrm](h
 - [用户端演示地址](https://cms.yinchunyu.com)
 - [管理端演示地址](https://cms.yinchunyu.com/admin)
 - 源码地址 1: [GitHub](https://github.com/yinMrsir/chunyu-cms-v2)
-- 源码地址 2: [Gitee](https://gitee.com/chunyu-cms/chunyu-cms-v2)
+- 源码地址 2: [gitcode](https://gitcode.com/a542968439/chunyu-cms-v2)
 
 ## 为什么有 V2 版本？
 
